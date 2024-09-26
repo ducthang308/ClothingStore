@@ -1,0 +1,148 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/register"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:gravity="center"
+    android:padding="16dp"
+    tools:context=".View.RegisterActivity">
+
+    <LinearLayout
+        android:layout_width="373dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp"
+            android:text="REGISTER"
+            android:textAlignment="center"
+            android:textColor="@color/colorRed"
+            android:textSize="40dp"></TextView>
+
+        <EditText
+            android:id="@+id/edt_name"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/custom_edittext"
+            android:drawableLeft="@drawable/baseline_name_24"
+            android:hint="Full name"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:paddingLeft="5dp"></EditText>
+
+        <EditText
+            android:id="@+id/edt_birth"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/custom_edittext"
+            android:drawableLeft="@drawable/baseline_cake_24"
+            android:hint="Birth day"
+            android:inputType="date"
+            android:minHeight="48dp"
+            android:paddingLeft="5dp"></EditText>
+
+        <EditText
+            android:id="@+id/edt_phone"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/custom_edittext"
+            android:drawableLeft="@drawable/baseline_phone_24"
+            android:hint="Phone number"
+            android:inputType="phone|number"
+            android:minHeight="48dp"
+            android:paddingLeft="5dp"></EditText>
+
+        <EditText
+            android:id="@+id/edt_email"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/custom_edittext"
+            android:drawableLeft="@drawable/baseline_email_24"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp"
+            android:paddingLeft="5dp"></EditText>
+
+        <EditText
+            android:id="@+id/edt_user"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/custom_edittext"
+            android:drawableLeft="@drawable/baseline_person_24"
+            android:hint="User"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:paddingLeft="5dp"></EditText>
+
+        <EditText
+            android:id="@+id/edt_password"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/custom_edittext"
+            android:drawableLeft="@drawable/baseline_security_24"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:minHeight="48dp"
+            android:paddingLeft="5dp"></EditText>
+
+        <EditText
+            android:id="@+id/edt_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/custom_edittext"
+            android:drawableLeft="@drawable/baseline_security_24"
+            android:hint="Confirm password"
+            android:inputType="textPassword"
+            android:minHeight="48dp"
+            android:paddingLeft="5dp"></EditText>
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="191dp"
+            android:layout_height="58dp"
+            android:layout_margin="10dp"
+            android:text="Register"></Button>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:textAlignment="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:text="Already have an account? "></TextView>
+
+            <TextView
+                android:id="@+id/tv_signup"
+                android:layout_width="84dp"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="Sign In"
+                android:textColor="@color/colorRed"></TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:orientation="horizontal"></LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
