@@ -1,6 +1,5 @@
 package com.example.android_project;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class mainpageActivity extends AppCompatActivity {
 
     private RecyclerView productRecyclerView;
     private ProductAdapter productAdapter;
