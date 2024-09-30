@@ -12,9 +12,9 @@
     $stmt->bind_param("i", $category_id);
 
     if ($stmt->execute() === TRUE) {
-        echo "Delete thành công";
+        echo "Delete successfully";
     } else {
-        echo "Lỗi: " . $con->error;
+        echo "Error: " . $con->error;
     }
 
     $stmt->close();
