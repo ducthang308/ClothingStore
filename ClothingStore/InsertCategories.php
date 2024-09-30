@@ -6,10 +6,10 @@
     $sql = "Insert into Categories (category_name) VALUES ('$category_name')";
 
     if($con->query($sql)==TRUE){
-        echo"insert thanh cong";
+        echo"Insert successfully";
     }
     else{
-        echo"loi: ".$con->error;
+        echo"Error: ".$con->error;
     }
     $con->close();
 ?>

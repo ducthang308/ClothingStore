@@ -17,11 +17,10 @@
             VALUES ('$user_id', '$total_money', '$note','$order_date', '$payment_method')";
 
     if ($con->query($sql) === TRUE) {
-        echo "Insert thành công";
+        echo "Insert successfully";
     } else {
-        echo "Lỗi: " . $con->error;
+        echo "Error: " . $con->error;
     }
 
-    // Close the database connection
     $con->close();
 ?>

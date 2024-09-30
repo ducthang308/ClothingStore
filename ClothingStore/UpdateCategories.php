@@ -19,9 +19,9 @@
     $sql = "UPDATE Categories SET category_name = '$category_name' WHERE id = '$category_id'";
 
     if ($con->query($sql) === TRUE) {
-        echo "Update thành công";
+        echo "Update successfully";
     } else {
-        echo "Lỗi: " . $con->error;
+        echo "Error: " . $con->error;
     }
 
     $con->close();

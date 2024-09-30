@@ -10,10 +10,10 @@
     $sql = "INSERT INTO Product (product_name, category_id, color, price) VALUES ('$product_name', '$category_id', '$color', '$price')";
 
     if($con->query($sql)==TRUE){
-        echo"insert thanh cong";
+        echo"Insert successfully";
     }
     else{
-        echo"loi: ".$con->error;
+        echo"Error: ".$con->error;
     }
     $con->close();
 ?>
