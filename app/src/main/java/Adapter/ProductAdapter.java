@@ -1,4 +1,4 @@
-package com.example.android_project;
+package com.example.duanandroid.View;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.android_project.Product;
+import com.example.duanandroid.R;
 
 import java.util.List;
 
