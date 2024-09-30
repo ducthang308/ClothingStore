@@ -1,4 +1,4 @@
-package com.example.duanandroid.View;
+package Adapter;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -43,7 +43,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         // Xử lý khi người dùng nhấn vào sản phẩm
         holder.itemView.setOnClickListener(v -> {
             // Tạo Intent để mở Activity chi tiết sản phẩm
-            Intent intent = new Intent(v.getContext(), ChiTietSanPhamActivity.class);
+            Intent intent = new Intent(v.getContext(), com.example.android_project.ChiTietSanPhamActivity.class);
 
             // Truyền dữ liệu sản phẩm qua Intent
             intent.putExtra("productName", product.getName());

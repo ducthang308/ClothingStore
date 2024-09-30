@@ -1,4 +1,4 @@
-package com.example.android_project;
+package com.example.duanandroid.View;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,8 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.android_project.Product;
+import com.example.duanandroid.R;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import Adapter.ProductAdapter;
 
 public class mainpageActivity extends AppCompatActivity {
 

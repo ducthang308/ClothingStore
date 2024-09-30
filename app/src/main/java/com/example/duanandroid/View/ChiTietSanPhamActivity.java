@@ -1,4 +1,4 @@
-package com.example.android_project;
+package com.example.duanandroid.View;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.duanandroid.R;
 
 public class ChiTietSanPhamActivity extends AppCompatActivity {
 
