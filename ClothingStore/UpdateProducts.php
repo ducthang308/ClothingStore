@@ -18,6 +18,11 @@
         $updates[] = "product_name = '$product_name'";
     }
     
+    if (isset($data['category_id']) && !empty($data['category_id'])) {
+        $category_id = $data['category_id'];
+        $updates[] = "category_id = '$category_id'";
+    }
+
     if (isset($data['color']) && !empty($data['color'])) {
         $color = $data['color'];
         $updates[] = "color = '$color'";

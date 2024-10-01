@@ -8,7 +8,7 @@
         die("ID not provided.");
     }
 
-    $stmt = $con->prepare("DELETE FROM Categories WHERE id = ?");
+    $stmt = $con->prepare("DELETE FROM Product WHERE id = ?");
     $stmt->bind_param("i", $product_id);
 
     if ($stmt->execute() === TRUE) {
