@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class Messages {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     @Column(name = "sender_id", nullable = false)
     private int senderId;
