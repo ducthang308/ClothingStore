@@ -10,10 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.android_project.Product;
 import com.example.duanandroid.R;
 
 import java.util.List;
+
+import Model.Product;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
@@ -43,7 +44,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         // Xử lý khi người dùng nhấn vào sản phẩm
         holder.itemView.setOnClickListener(v -> {
             // Tạo Intent để mở Activity chi tiết sản phẩm
-            Intent intent = new Intent(v.getContext(), com.example.android_project.ChiTietSanPhamActivity.class);
+            Intent intent = new Intent(v.getContext(), com.example.duanandroid.View.ChiTietSanPhamActivity.class);
 
             // Truyền dữ liệu sản phẩm qua Intent
             intent.putExtra("productName", product.getName());

@@ -10,13 +10,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.android_project.Product;
+
 import com.example.duanandroid.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import Adapter.ProductAdapter;
+import Model.Product;
 
 public class mainpageActivity extends AppCompatActivity {
 
@@ -46,7 +47,7 @@ public class mainpageActivity extends AppCompatActivity {
         LayoutInflater inflater = LayoutInflater.from(this);
 
         // Giả sử bạn có 4 sản phẩm trong layout
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 12; i++) {
             View view = inflater.inflate(R.layout.model1, null);
             TextView productName = view.findViewById(R.id.product_name);
             TextView productPrice = view.findViewById(R.id.product_price);

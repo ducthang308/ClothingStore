@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFF"
-    tools:context=".MainActivity">
+    tools:context=".View.mainpageActivity">
 
     <LinearLayout
         android:id="@+id/firstLinearLayout"
@@ -88,7 +88,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="10dp">
 
@@ -99,15 +99,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:text="Sản phẩm mới"
+                android:textColor="@color/black"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/black" />
+                android:textStyle="bold" />
 
             <!-- RecyclerView hiển thị sản phẩm -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/items"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_margin="7dp"
                 android:padding="5dp"
                 android:scrollbars="vertical" />

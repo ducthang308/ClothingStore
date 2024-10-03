@@ -3,44 +3,67 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:padding="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!-- Tên người đánh giá -->
-        <TextView
-            android:id="@+id/reviewer_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Reviewer name"
-            android:textStyle="bold"
-            android:textSize="16sp" />
+        <!-- Hình ảnh người dùng -->
+        <ImageView
+            android:id="@+id/reviewer_image"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="top"
+            android:src="@drawable/user"
+            android:scaleType="centerCrop"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="User Image" />
 
-        <!-- Nội dung đánh giá -->
-        <TextView
-            android:id="@+id/review_content"
-            android:layout_width="wrap_content"
+        <!-- Layout dọc chứa thông tin đánh giá -->
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Review content"
-            android:textSize="14sp"
-            android:layout_marginTop="4dp" />
+            android:orientation="vertical"
+            android:layout_weight="1">
 
-        <!-- Đánh giá bằng sao -->
-        <RatingBar
-            android:id="@+id/review_rating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:numStars="5"
-            android:rating="4.5"
-            android:isIndicator="true"
-            android:layout_gravity="left" />
+            <!-- Tên người đánh giá -->
+            <TextView
+                android:id="@+id/reviewer_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reviewer name"
+                android:textStyle="bold"
+                android:textSize="16sp" />
+
+            <!-- Đánh giá bằng sao -->
+            <RatingBar
+                android:id="@+id/review_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:numStars="5"
+                android:rating="4.5"
+                android:isIndicator="true"
+                android:layout_gravity="left"
+                
+             />
+
+            <!-- Nội dung đánh giá -->
+            <TextView
+                android:id="@+id/review_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Review content"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.example.android_project;
+package Model;
 
 public class Product {
     private String name;
