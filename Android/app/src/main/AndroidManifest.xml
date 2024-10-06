@@ -26,17 +26,15 @@
         <activity
             android:name=".View.RegisterActivity"
             android:exported="false" />
+
         <activity
-            android:name=".View.CartActivity"
-            android:exported="false" />
-        <activity
-            android:name=".View.LoginActivity"
+            android:name=".View.mainpageActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".View.ChitietsanphamActivity"/>
     </application>
 </manifest>
