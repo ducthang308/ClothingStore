@@ -1,7 +1,6 @@
 package com.example.demo.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,13 +29,12 @@ public class Review {
     @JsonIgnore
     private Orders orders;
 
-    @Column(name = "image_url", length = 300)
-    @JsonProperty("image_url")
+    @Column(name = "image_url")
     private String imageUrl;
 
     @Column(name = "note", length = 100)
     private String note;
 
-    @Column(name = "number_of_stars", length = 100)
+    @Column(name = "number_of_stars")
     private float numberOfStars;
 }
