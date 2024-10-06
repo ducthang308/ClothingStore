@@ -1,5 +1,6 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -153,26 +154,30 @@
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:layout_marginTop="20dp">
+
                 <ImageButton
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginRight="20dp"
+                    android:background="@drawable/rounded_button"
                     android:src="@drawable/facebook"
-                    android:background="@drawable/rounded_button"/>
+                    tools:ignore="SpeakableTextPresentCheck" />
 
                 <ImageButton
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginRight="20dp"
+                    android:background="@drawable/rounded_button"
                     android:src="@drawable/instagram"
-                    android:background="@drawable/rounded_button"/>
+                    tools:ignore="SpeakableTextPresentCheck" />
 
                 <ImageButton
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginRight="20dp"
+                    android:background="@drawable/rounded_button"
                     android:src="@drawable/telegram"
-                    android:background="@drawable/rounded_button"/>
+                    tools:ignore="SpeakableTextPresentCheck" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
