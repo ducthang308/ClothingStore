@@ -34,16 +34,16 @@ public class Users {
     private String password;
 
     @Column(name = "active")
-    private boolean active;
+    private String active;
 
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
 
-    @Column(name = "fb_account_id")
-    private int facebookAccountId;
+    @Column(name = "facebook_account_id")
+    private Integer facebookAccountId;
 
-    @Column(name = "gg_account_id")
-    private int googleAccountId;
+    @Column(name = "google_account_id")
+    private Integer googleAccountId;
 
     @ManyToOne
     @JoinColumn(name = "role_id")

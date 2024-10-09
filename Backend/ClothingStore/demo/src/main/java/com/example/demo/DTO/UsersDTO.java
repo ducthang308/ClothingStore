@@ -33,10 +33,10 @@ public class UsersDTO {
     @JsonProperty("date_of_birth")
     private Date dateOfBirth;
 
-    @JsonProperty("fb_account_id")
+    @JsonProperty("facebook_account_id")
     private int facebookAccountId;
 
-    @JsonProperty("gg_account_id")
+    @JsonProperty("google_account_id")
     private int googleAccountId;
 
     @JsonProperty("role_id")
