@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main"
+    android:id="@+id/changePass"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorwhite"
@@ -30,7 +30,8 @@
             android:layout_height="wrap_content"
             android:text="Admin"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            />
     </LinearLayout>
 
     <!-- Menu List -->
@@ -54,6 +55,7 @@
             android:padding="12dp">
 
             <TextView
+                android:id="@+id/tv_personInfor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -65,6 +67,7 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/tv_changePass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -136,6 +139,8 @@
                 android:textSize="15sp" />
 
             <TextView
+
+                android:id="@+id/tv_cus_manager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"

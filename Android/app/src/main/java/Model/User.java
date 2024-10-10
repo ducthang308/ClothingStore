@@ -1,5 +1,4 @@
 package Model;
-
 import java.util.Date;
 
 public class User {
@@ -31,7 +30,7 @@ public class User {
         this.facebookAccountId = facebookAccountId;
     }
 
-    public User() {
+    public User(String nguyenThiThao, String number) {
     }
 
     public int getId() {

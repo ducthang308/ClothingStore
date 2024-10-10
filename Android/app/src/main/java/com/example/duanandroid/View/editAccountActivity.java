@@ -1,5 +1,6 @@
 package com.example.duanandroid.View;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -13,22 +14,23 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.duanandroid.R;
 
-public class changePassActivity extends AppCompatActivity {
+public class editAccountActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_change_pass);
-        ImageButton img_arrow = findViewById(R.id.arrow_changepass);
+        setContentView(R.layout.activity_edit_account);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
+        ImageButton img_arrow = findViewById(R.id.arrow_profile);
         img_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent_profile = new Intent(changePassActivity.this, adminAcountActivity.class);
+                Intent intent_profile = new Intent(editAccountActivity.this, adminAcountActivity.class);
                 startActivity(intent_profile);
             }
         });
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.changePass), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.edit_account), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
