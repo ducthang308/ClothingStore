@@ -13,7 +13,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("${api.prefix}/product")
@@ -77,6 +79,19 @@ public class ProductController {
         try {
             productService.deleteProduct(id);
             return ResponseEntity.ok("Delete successfully");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/by-ids")
+    public ResponseEntity<?> getProdutcByIds(@RequestParam("ids") String ids){
+        try{
+            List<Long> productIds = Arrays.stream(ids.split(","))
+                    .map(Long::parseLong)
+                    .collect(Collectors.toList());
+            List<Product> products = productService.findProductsByIds(productIds);
+            return ResponseEntity.ok(products);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

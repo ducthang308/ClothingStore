@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
-
 @Data //toString
 @Getter
 @Setter
@@ -37,6 +35,4 @@ public class OrderDetail {
     @Column(name = "total_money", nullable = false)
     private Float totalMoney;
 
-    @Column(name = "color")
-    private String color;
 }
