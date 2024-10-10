@@ -17,7 +17,7 @@ public class Review {
     }
 
     // Constructor
-    public Review(int id, int productId, int userId, int orderId, String imageUrl, String note, float numberOfStars, String sizeProduct, int serviceStars, int deliveryStars, int applicationStars) {
+    public Review(String imageUrl, String note, float numberOfStars, int serviceStars) {
         this.id = id;
         this.productId = productId;
         this.userId = userId;
