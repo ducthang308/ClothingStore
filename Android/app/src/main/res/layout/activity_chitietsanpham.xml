@@ -18,7 +18,7 @@
         <!-- EditText cho tìm kiếm -->
         <EditText
             android:id="@+id/search"
-            android:layout_width="0dp"
+            android:layout_width="319dp"
             android:layout_height="50dp"
             android:layout_weight="1"
             android:background="@drawable/custom_edittext"
@@ -27,8 +27,7 @@
             android:drawablePadding="8dp"
             android:hint="Tìm kiếm"
             android:padding="10dp"
-            android:textColor="@color/colorblack"
-            android:textColorHint="#B3B3B3"/>
+            android:textColorHint="#B3B3B3" />
 
         <!-- Icon giỏ hàng -->
         <ImageView
@@ -42,7 +41,7 @@
 
         <!-- Menu thả xuống -->
         <ImageView
-            android:id="@+id/dropdown_menu"
+            android:id="@+id/chat"
             android:background="#FFFF"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -95,6 +94,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/review_list"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

@@ -20,6 +20,7 @@
             android:exported="false"
             />
         <activity
+<<<<<<< HEAD
             android:name=".View.customerManagerActivity"
             android:exported="true"
              />
@@ -32,13 +33,17 @@
                 android:name=".View.editAccountActivity"
                 android:exported="true"
                  />
+=======
+            android:name=".View.ReviewActivity" />
+        <activity
+            android:name=".View.HelpActivity" />
+>>>>>>> NguyenVanThang
         <activity
 <<<<<<< HEAD
             android:name=".View.RegisterActivity"
-            android:exported="false" />
-
+             />
         <activity
-            android:name=".View.mainpageActivity"
+            android:name=".View.LoginActivity"
             android:exported="true">
 =======
 
@@ -80,11 +85,26 @@
             </intent-filter>
         </activity>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <activity android:name=".View.ChitietsanphamActivity"/>
 =======
 
 
 >>>>>>> ThaoNguyen
+=======
+        <activity android:name=".View.ReasoncancelActivity"/>
+        <activity android:name=".View.StatusPaymentActivity"/>
+        <activity android:name=".View.ManageAccountActivity"/>
+        <activity android:name=".View.BuyandpaymentActivity"/>
+        <activity android:name=".View.CartActivity"/>
+        <activity android:name=".View.mainpageActivity"/>
+        <activity android:name=".View.ChitietsanphamActivity"/>
+        <activity android:name=".View.OrderDetailActivity"/>
+        <activity android:name=".View.WaitingForShippingAcitivity"/>
+        <activity android:name=".View.WaitingForDeliveryActivity"/>
+        <activity android:name=".View.ReviewStatusActivity"/>
+        <activity android:name=".View.Return_cancel_goodsActivity"/>
+>>>>>>> NguyenVanThang
     </application>
 
 </manifest>
