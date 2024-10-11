@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
-
 @Data //toString
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Entity
+@Table(name = "order_detail")
 public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +35,4 @@ public class OrderDetail {
     @Column(name = "total_money", nullable = false)
     private Float totalMoney;
 
-    @Column(name = "color")
-    private String color;
 }

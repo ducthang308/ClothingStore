@@ -8,7 +8,7 @@ import com.example.demo.Models.ProductImages;
 import java.util.List;
 
 public interface IProductService {
-    Product createProduct(ProductDTO productDTO);
+    Product createProduct(ProductDTO productDTO) throws Exception;
     Product getProductById(long productId) throws Exception;
     List<Product> getAllProducts(String keyword, Long categoryId);
     Product updateProduct(long productId, ProductDTO productDTO) throws Exception;

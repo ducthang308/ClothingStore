@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -15,23 +16,82 @@
         android:theme="@style/Theme.DuAnAndroid"
         tools:targetApi="31">
         <activity
-            android:name=".View.MainActivity"
-            android:exported="false" />
+            android:name=".View.chatUserActivity"
+            android:exported="false"
+            />
         <activity
+<<<<<<< HEAD
+            android:name=".View.customerManagerActivity"
+            android:exported="true"
+             />
+
+        <activity
+            android:name=".View.detailChatAdminActivity"
+            android:exported="true"
+             />
+            <activity
+                android:name=".View.editAccountActivity"
+                android:exported="true"
+                 />
+=======
             android:name=".View.ReviewActivity" />
         <activity
             android:name=".View.HelpActivity" />
+>>>>>>> NguyenVanThang
         <activity
+<<<<<<< HEAD
             android:name=".View.RegisterActivity"
              />
         <activity
             android:name=".View.LoginActivity"
             android:exported="true">
+=======
+
+            android:name=".View.ChatAdminActivity"
+            android:exported="true"
+            />
+<!--        <activity-->
+<!--            android:name=".View.MainActivity"-->
+<!--            android:exported="false"-->
+<!--            />-->
+            <activity
+                android:name=".View.changePassActivity"
+                android:exported="true"
+                 />
+<!--        <activity-->
+<!--            android:name=".View.ReviewActivity"-->
+<!--            android:exported="false"-->
+<!--             />-->
+<!--        <activity-->
+<!--            android:name=".View.HelpActivity"-->
+<!--            android:exported="false"-->
+<!--             />-->
+<!--        <activity-->
+<!--            android:name=".View.RegisterActivity"-->
+<!--            android:exported="false"-->
+<!--             />-->
+<!--        <activity-->
+<!--            android:name=".View.CartActivity"-->
+<!--            android:exported="false"-->
+<!--             />-->
+        <activity
+            android:name=".View.adminAcountActivity"
+            android:exported="true"
+            >
+>>>>>>> ThaoNguyen
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
+<<<<<<< HEAD
+        <activity android:name=".View.ChitietsanphamActivity"/>
+=======
+
+
+>>>>>>> ThaoNguyen
+=======
         <activity android:name=".View.ReasoncancelActivity"/>
         <activity android:name=".View.StatusPaymentActivity"/>
         <activity android:name=".View.ManageAccountActivity"/>
@@ -44,5 +104,7 @@
         <activity android:name=".View.WaitingForDeliveryActivity"/>
         <activity android:name=".View.ReviewStatusActivity"/>
         <activity android:name=".View.Return_cancel_goodsActivity"/>
+>>>>>>> NguyenVanThang
     </application>
+
 </manifest>
