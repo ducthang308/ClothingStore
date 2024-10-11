@@ -15,76 +15,59 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DuAnAndroid"
         tools:targetApi="31">
+
         <activity
             android:name=".View.chatUserActivity"
-            android:exported="false"
-            />
+            android:exported="false" />
         <activity
             android:name=".View.customerManagerActivity"
-            android:exported="true"
-             />
-
+            android:exported="true" />
         <activity
             android:name=".View.detailChatAdminActivity"
-            android:exported="true"
-             />
-            <activity
-                android:name=".View.editAccountActivity"
-                android:exported="true"
-                 />
+            android:exported="true" />
         <activity
-<<<<<<< HEAD
+            android:name=".View.editAccountActivity"
+            android:exported="true" />
+        <activity
             android:name=".View.RegisterActivity"
             android:exported="false" />
-
         <activity
             android:name=".View.mainpageActivity"
-            android:exported="true">
-=======
-
-            android:name=".View.ChatAdminActivity"
-            android:exported="true"
-            />
-<!--        <activity-->
-<!--            android:name=".View.MainActivity"-->
-<!--            android:exported="false"-->
-<!--            />-->
-            <activity
-                android:name=".View.changePassActivity"
-                android:exported="true"
-                 />
-<!--        <activity-->
-<!--            android:name=".View.ReviewActivity"-->
-<!--            android:exported="false"-->
-<!--             />-->
-<!--        <activity-->
-<!--            android:name=".View.HelpActivity"-->
-<!--            android:exported="false"-->
-<!--             />-->
-<!--        <activity-->
-<!--            android:name=".View.RegisterActivity"-->
-<!--            android:exported="false"-->
-<!--             />-->
-<!--        <activity-->
-<!--            android:name=".View.CartActivity"-->
-<!--            android:exported="false"-->
-<!--             />-->
+            android:exported="true" />
         <activity
-            android:name=".View.adminAcountActivity"
-            android:exported="true"
-            >
->>>>>>> ThaoNguyen
+            android:name=".View.ChatAdminActivity"
+            android:exported="true" /> <!-- <activity -->
+        <!-- android:name=".View.MainActivity" -->
+        <!-- android:exported="false" -->
+        <!-- /> -->
+        <activity
+            android:name=".View.changePassActivity"
+            android:exported="true" /> <!-- <activity -->
+        <!-- android:name=".View.ReviewActivity" -->
+        <!-- android:exported="false" -->
+        <!-- /> -->
+        <!-- <activity -->
+        <!-- android:name=".View.HelpActivity" -->
+        <!-- android:exported="false" -->
+        <!-- /> -->
+        <!-- <activity -->
+        <!-- android:name=".View.RegisterActivity" -->
+        <!-- android:exported="false" -->
+        <!-- /> -->
+        <!-- <activity -->
+        <!-- android:name=".View.CartActivity" -->
+        <!-- android:exported="false" -->
+        <!-- /> -->
+        <activity
+            android:name=".View.detailOrderActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-        <activity android:name=".View.ChitietsanphamActivity"/>
-=======
-
-
->>>>>>> ThaoNguyen
+        <activity android:name=".View.ChitietsanphamActivity" />
     </application>
 
 </manifest>
