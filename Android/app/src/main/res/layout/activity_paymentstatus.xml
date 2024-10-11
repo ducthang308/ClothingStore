@@ -16,6 +16,7 @@
 
         <!-- Back Arrow Icon -->
         <ImageView
+            android:id="@+id/back_arrow"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/baseline_arrow_back_24"
@@ -44,6 +45,7 @@
 
             <!-- Tab 1: Waiting for payment -->
             <TextView
+                android:id="@+id/tab_waiting_patment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Waiting for payment"
@@ -64,6 +66,7 @@
 
             <!-- Tab 3: Waiting for delivery -->
             <TextView
+                android:id="@+id/waiting_delivery"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Waiting for delivery"
@@ -73,18 +76,20 @@
 
             <!-- Tab 4: Cancelled Orders -->
             <TextView
+                android:id="@+id/tab_review"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Cancelled Orders"
+                android:text="Review"
                 android:gravity="center"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="8dp" />
 
             <!-- Tab 5: Returned Orders -->
             <TextView
+                android:id="@+id/return_cancel_goods"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Returned Orders"
+                android:text="Return/Cancel goods"
                 android:gravity="center"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="8dp" />

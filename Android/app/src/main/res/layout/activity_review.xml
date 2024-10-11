@@ -1,179 +1,157 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/review">
+    android:background="#FFFFFF">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="10dp">
+            android:padding="8dp"
+            android:gravity="center_vertical">
+
+            <!-- Back Arrow Icon -->
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:src="@drawable/baseline_arrow_back_24"
                 android:contentDescription="Back" />
+
+            <!-- Title -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Product reviews"
+                android:text="Review"
+                android:textStyle="bold"
                 android:textSize="18sp"
-                android:textColor="@android:color/black"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Send"
-                android:textSize="16sp"
-                android:textColor="#FF0000"
-            android:layout_marginEnd="8dp"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="10dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Product quality:" />
-            <RatingBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:numStars="5"
-                android:stepSize="1.0"
-                android:layout_gravity="center"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableTop="@drawable/baseline_photo_camera_24"
-                android:text="Add photo" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:drawableTop="@drawable/baseline_videocam_24"
-                android:text="Add video" />
+                android:layout_marginStart="16dp" />
         </LinearLayout>
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Material"
-            tools:ignore="TouchTargetSizeCheck" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Color"
-            tools:ignore="TouchTargetSizeCheck" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Describe"
-            android:minLines="3"
-            android:gravity="top" />
-
+        <!-- Rating question -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Size product"
-            android:textSize="15dp"
-            tools:ignore="TextSizeCheck" />
+            android:text="What is your opinion on product quality?"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:layout_marginTop="24dp"
+            android:layout_gravity="center_horizontal"/>
 
-        <RadioGroup
-            android:layout_width="match_parent"
+        <!-- Star Rating -->
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center">
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            >
 
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Medium"
-                android:layout_marginRight="20dp"/>
+            <ImageView
+                android:id="@+id/star1"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
 
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tight"
-                android:layout_marginRight="20dp"/>
+                android:src="@drawable/baseline_star_rate_24"/> <!-- Icon cho sao đầy -->
 
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Big" />
-        </RadioGroup>
+            <ImageView
+                android:id="@+id/star2"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
 
+                android:src="@drawable/baseline_star_rate_24"/>
+
+            <ImageView
+                android:id="@+id/star3"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/baseline_star_rate_24"/>
+
+            <ImageView
+                android:id="@+id/star4"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/baseline_star_rate_24"/> <!-- Icon cho sao rỗng -->
+
+            <ImageView
+                android:id="@+id/star5"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/baseline_star_rate_24"/>
+        </LinearLayout>
+
+        <!-- Review question -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please share your review for this product!"
+            android:textSize="16sp"
+            android:textColor="#000000"
+            android:layout_marginTop="24dp"
+            android:layout_marginLeft="25dp"/>
+
+        <!-- Review input -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="292dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="Service:"
-                android:textSize="15dp"
-                tools:ignore="TextSizeCheck" />
-
-            <RatingBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:numStars="5"
-                android:stepSize="1.0" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="Delivery speed:"
-                android:textSize="15dp"
-                tools:ignore="TextSizeCheck" />
-
-            <RatingBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:numStars="5"
-                android:stepSize="1.0" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="Application"
-                android:textSize="15dp"
-                tools:ignore="TextSizeCheck" />
-
-            <RatingBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:numStars="5"
-                android:stepSize="1.0" />
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:padding="20dp">
+        <!-- Add photo section -->
+        <EditText
+            android:id="@+id/et_review_input"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/custom_edittext"
+            android:gravity="top|start"
+            android:hint="Your Review"
+            android:inputType="textMultiLine"
+            android:lines="5"
+            android:padding="12dp" />
     </LinearLayout>
-</RelativeLayout>
+        <LinearLayout
+            android:background="@drawable/custom_edittext"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="16dp">
+
+            <ImageView
+                android:id="@+id/iv_add_photo"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/baseline_add_a_photo_24"
+            android:contentDescription="Add your photo"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add your photo"
+                android:textSize="14sp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="0dp"/>
+        </LinearLayout>
+
+        <!-- Submit button -->
+        <Button
+            android:id="@+id/btn_send_review"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Send Review"
+            android:textAllCaps="false"
+            android:backgroundTint="@android:color/holo_blue_light"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="24dp"/>
+    </LinearLayout>
+
+</ScrollView>

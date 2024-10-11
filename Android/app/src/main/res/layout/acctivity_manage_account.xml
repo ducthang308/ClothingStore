@@ -65,6 +65,7 @@
             android:layout_weight="1" />
 
         <TextView
+            android:id="@+id/view_all_oders"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="View all orders >"
@@ -84,6 +85,7 @@
 
         <!-- Order Waiting for Payment -->
         <LinearLayout
+            android:id="@+id/waiting_payment_icon"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -107,6 +109,7 @@
 
         <!-- Order Shipping -->
         <LinearLayout
+            android:id="@+id/waiting_shipping_icon"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -129,6 +132,7 @@
 
         <!-- Order Waiting for Delivery -->
         <LinearLayout
+            android:id="@+id/waiting_delivery_icon"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -151,6 +155,7 @@
 
         <!-- Order Return/Cancel -->
         <LinearLayout
+            android:id="@+id/review_icon"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -194,7 +199,7 @@
         android:background="#F7F7F7"
         android:layout_margin="10dp">
         <RelativeLayout
-            android:id="@+id/icon_1"
+            android:id="@+id/My_review"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -227,11 +232,11 @@
                 android:layout_marginEnd="8dp"/>
         </RelativeLayout>
         <RelativeLayout
-            android:id="@+id/icon_2"
+            android:id="@+id/Chat_with_shop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/icon_1"
+            app:layout_constraintTop_toBottomOf="@id/My_review"
             android:background="#F7F7F7"
             android:layout_marginTop="20dp">
 
@@ -262,11 +267,11 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/icon_3"
+            android:id="@+id/My_shopping_cart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/icon_2"
+            app:layout_constraintTop_toBottomOf="@id/Chat_with_shop"
             android:background="#F7F7F7"
             android:layout_marginTop="20dp">
 
@@ -301,7 +306,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintTop_toBottomOf="@id/icon_3"
+            app:layout_constraintTop_toBottomOf="@id/My_review"
             android:background="#F7F7F7"
             android:layout_marginTop="20dp">
 
@@ -402,7 +407,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/icon_7"
+            android:id="@+id/change_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -425,6 +430,42 @@
                 android:layout_centerVertical="true"
                 android:textSize="18sp"
                 android:layout_toEndOf="@id/danhgiatrongtienich7" />
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/img_7"
+                android:padding="5dp"
+                android:layout_marginEnd="8dp" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/support"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/support"
+            android:background="#F7F7F7"
+            android:layout_marginTop="20dp">
+
+            <ImageView
+                android:id="@+id/changepassword"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/changepassword"
+                android:layout_marginStart="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Change password"
+                android:layout_marginStart="16dp"
+                android:layout_centerVertical="true"
+                android:textSize="18sp"
+                android:layout_toEndOf="@id/changepassword" />
 
             <ImageView
                 android:layout_width="32dp"
@@ -491,6 +532,7 @@
         </LinearLayout>
         <!-- Example Utility 2 -->
         <LinearLayout
+            android:id="@+id/home"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -502,7 +544,7 @@
                 android:id="@+id/logo"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
-                android:src="@drawable/logo"
+                android:src="@drawable/home"
 
                 android:contentDescription="Example Utility 2"
                 />

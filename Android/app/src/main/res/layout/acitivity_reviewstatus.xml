@@ -1,8 +1,100 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Toolbar with back button and title -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:gravity="center_vertical">
+
+        <!-- Back Arrow Icon -->
+        <ImageView
+            android:id="@+id/back_arrow"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/baseline_arrow_back_24"
+            android:contentDescription="Back" />
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Purchased Order"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginStart="16dp" />
+    </LinearLayout>
+
+    <!-- Horizontal Scrollable Tab layout for order status -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Tab 1: Waiting for payment -->
+            <TextView
+                android:id="@+id/tab_waiting_patment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Waiting for payment"
+                android:gravity="center"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp" />
+
+            <!-- Tab 2: Waiting for shipping -->
+            <TextView
+                android:id="@+id/tab_waiting_shipping"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Waiting for shipping"
+                android:gravity="center"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp" />
+
+            <!-- Tab 3: Waiting for delivery -->
+            <TextView
+                android:id="@+id/waiting_delivery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Waiting for delivery"
+                android:gravity="center"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp" />
+
+            <!-- Tab 4: review Orders -->
+            <TextView
+                android:id="@+id/tab_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Review"
+                android:gravity="center"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp"
+                android:textStyle="bold"/>
+
+            <!-- Tab 5: Returned Orders -->
+            <TextView
+                android:id="@+id/return_cancel_goods"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Return/Cancel goods"
+                android:gravity="center"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="8dp" />
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -43,22 +135,22 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                <!-- Product Name -->
-                <TextView
-                    android:id="@+id/product_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Áo thun ngắn tay nữ trắng,"
-                    android:textSize="16sp"
-                    android:textStyle="" />
+                    <!-- Product Name -->
+                    <TextView
+                        android:id="@+id/product_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Áo thun ngắn tay nữ trắng,"
+                        android:textSize="16sp"
+                        android:textStyle="" />
 
-                <TextView
-                    android:id="@+id/product_size"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Size M"
-                    android:textSize="14sp"
-                   />
+                    <TextView
+                        android:id="@+id/product_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Size M"
+                        android:textSize="14sp"
+                        />
                 </LinearLayout>
                 <!-- Quantity -->
                 <TextView
@@ -121,32 +213,33 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="right">
+            android:gravity="right"
+            android:orientation="horizontal">
 
             <!-- Group 1: Buttons for product info -->
             <LinearLayout
                 android:id="@+id/layout_product_buttons"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <!-- Cancel order button -->
                 <Button
                     android:id="@+id/btn_cancel_order"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cancel order"
-                    android:backgroundTint="@android:color/holo_blue_light" />
+                    android:backgroundTint="@android:color/holo_blue_light"
+                    android:text="Cancel order" />
 
                 <!-- Payment button -->
                 <Button
                     android:id="@+id/btn_payment"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Payment"
                     android:layout_marginStart="16dp"
-                    android:backgroundTint="@android:color/holo_blue_light" />
+                    android:backgroundTint="@android:color/holo_blue_light"
+                    android:text="Payment" />
             </LinearLayout>
 
             <!-- Group 2: Buttons for "Waiting for shipping" -->
@@ -162,8 +255,8 @@
                     android:id="@+id/btn_cancel_shipping"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cancel order"
-                    android:backgroundTint="@android:color/holo_red_light" />
+                    android:backgroundTint="@android:color/holo_blue_light"
+                    android:text="Cancel order" />
             </LinearLayout>
 
             <!-- Group 3: Buttons for "Waiting for delivery" -->
@@ -179,8 +272,8 @@
                     android:id="@+id/btn_delivery"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Received"
-                    android:backgroundTint="@android:color/holo_red_light"/>
+                    android:backgroundTint="@android:color/holo_blue_light"
+                    android:text="Received" />
             </LinearLayout>
 
             <!-- Group 4: Buttons for "Waiting for review" -->
@@ -190,15 +283,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:visibility="gone">
+                >
 
                 <!-- Received button -->
                 <Button
                     android:id="@+id/btn_review"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Review"
-                    android:backgroundTint="@android:color/holo_red_light"/>
+                    android:backgroundTint="@android:color/holo_blue_light"
+                    android:text="Review" />
             </LinearLayout>
 
             <!--Group 5 : Reason and note review -->
@@ -209,6 +302,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone">
+
                 <LinearLayout
 
                     android:layout_width="match_parent"
@@ -225,37 +319,37 @@
                             android:id="@+id/tv_reason_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
                             android:text="Reason"
-                            android:textSize="16sp"
                             android:textColor="#000"
-                            android:layout_alignParentStart="true"/>
+                            android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/tv_choose_reason"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Choose a reason"
-                            android:textColor="#000"
-                            android:textSize="16sp"
+                            android:layout_alignParentEnd="true"
                             android:drawableEnd="@drawable/img"
                             android:drawablePadding="8dp"
-                            android:layout_alignParentEnd="true"/>
+                            android:text="Choose a reason"
+                            android:textColor="#000"
+                            android:textSize="16sp" />
                     </RelativeLayout>
 
                     <EditText
                         android:id="@+id/et_reason"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/border"
                         android:hint="Enter reason here..."
                         android:padding="12dp"
-                        android:background="@drawable/border"
-                        android:textColorHint="#A9A9A9"
-                        android:layout_marginTop="8dp"/>
-                </LinearLayout
-                    >
+                        android:textColorHint="#A9A9A9" />
+                </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

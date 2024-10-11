@@ -18,23 +18,31 @@
             android:name=".View.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".View.ReviewActivity"
-            android:exported="false" />
+            android:name=".View.ReviewActivity" />
         <activity
-            android:name=".View.HelpActivity"
-            android:exported="false" />
+            android:name=".View.HelpActivity" />
         <activity
             android:name=".View.RegisterActivity"
-            android:exported="false" />
-
+             />
         <activity
-            android:name=".View.mainpageActivity"
+            android:name=".View.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".View.ReasoncancelActivity"/>
+        <activity android:name=".View.StatusPaymentActivity"/>
+        <activity android:name=".View.ManageAccountActivity"/>
+        <activity android:name=".View.BuyandpaymentActivity"/>
+        <activity android:name=".View.CartActivity"/>
+        <activity android:name=".View.mainpageActivity"/>
         <activity android:name=".View.ChitietsanphamActivity"/>
+        <activity android:name=".View.OrderDetailActivity"/>
+        <activity android:name=".View.WaitingForShippingAcitivity"/>
+        <activity android:name=".View.WaitingForDeliveryActivity"/>
+        <activity android:name=".View.ReviewStatusActivity"/>
+        <activity android:name=".View.Return_cancel_goodsActivity"/>
     </application>
 </manifest>
