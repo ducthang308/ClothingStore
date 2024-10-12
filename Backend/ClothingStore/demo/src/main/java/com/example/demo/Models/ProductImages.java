@@ -5,13 +5,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Data //toString
+@Entity // Mark this class as a JPA entity
+@Data // Includes toString, equals, hashcode, etc.
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Table(name = "productimages")
 public class ProductImages {
     public static final int MAXIMUM_IMAGES_PER_PRODUCT = 5;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,4 +28,5 @@ public class ProductImages {
     @Column(name = "image_url", length = 300)
     @JsonProperty("image_url")
     private String imageUrl;
+
 }

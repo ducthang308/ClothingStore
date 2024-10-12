@@ -10,6 +10,9 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Entity
+@Table(name = "product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,7 +21,7 @@ public class Product {
     @Column(name = "product_name", nullable = false, length = 350)
     private String productName;
 
-    @Column(name = "product_name")
+    @Column(name = "price")
     private Float price;
 
     @Column(name = "color")

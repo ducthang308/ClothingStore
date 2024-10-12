@@ -1,9 +1,6 @@
 package com.example.demo.Models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Data //toString
@@ -11,6 +8,9 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Table(name = "categories")
+@Entity
 public class Categories {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

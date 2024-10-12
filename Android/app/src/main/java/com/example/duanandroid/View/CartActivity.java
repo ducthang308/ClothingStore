@@ -1,6 +1,9 @@
 package com.example.duanandroid.View;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,9 +37,26 @@ public class CartActivity extends AppCompatActivity {
 
         // Sample cart items data
         cartItems = new ArrayList<>();
-        cartItems.add(new CartItem("Áo thun ngắn tay nữ", "trắng, size M", "200.000đ", "image_url"));
+        cartItems.add(new CartItem("Áo thun ngắn tay nữ", "trắng, size M", "200.000đ", R.drawable.ao));
+        cartItems.add(new CartItem("Áo thun ngắn tay nữ", "trắng, size M", "200.000đ", R.drawable.ao));
+        cartItems.add(new CartItem("Áo thun ngắn tay nữ", "trắng, size M", "200.000đ", R.drawable.ao));
+        cartItems.add(new CartItem("Áo thun ngắn tay nữ", "trắng, size M", "200.000đ", R.drawable.ao));
+        cartItems.add(new CartItem("Áo thun ngắn tay nữ", "trắng, size M", "200.000đ", R.drawable.ao));
+        cartItems.add(new CartItem("Áo thun ngắn tay nữ", "trắng, size M", "200.000đ", R.drawable.ao));
+        cartItems.add(new CartItem("Áo thun ngắn tay nữ", "trắng, size M", "200.000đ", R.drawable.ao));
 
         cartAdapter = new CartAdapter(cartItems);
         recyclerCartItems.setAdapter(cartAdapter);
+
+        TextView btn=  findViewById(R.id.btn_checkout);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CartActivity.this, BuyandpaymentActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
+
 }

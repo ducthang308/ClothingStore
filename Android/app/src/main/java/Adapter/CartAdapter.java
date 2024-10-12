@@ -40,7 +40,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
         holder.tvName.setText(cartItem.getName());
         holder.tvSize.setText(cartItem.getSize());
         holder.tvPrice.setText(cartItem.getPrice());
-
+        holder.ivImage.setImageResource(cartItem.getImageUrl());
         // Handle checkbox and image loading (use Glide or similar library)
         // Glide.with(holder.productImage.getContext()).load(cartItem.getImageUrl()).into(holder.productImage);
     }
@@ -64,9 +64,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             tvName = itemView.findViewById(R.id.tv_name);
             tvSize = itemView.findViewById(R.id.tv_size);
             tvPrice = itemView.findViewById(R.id.tv_price);
-            btnIncrease = itemView.findViewById(R.id.btn_increase);
-            btnDecrease = itemView.findViewById(R.id.btn_decrease);
+//            btnIncrease = itemView.findViewById(R.id.btn_increase);
+//            btnDecrease = itemView.findViewById(R.id.btn_decrease);
             tvQuantity = itemView.findViewById(R.id.tv_quantity);
+            ivImage =itemView.findViewById(R.id.iv_image);
         }
     }
 }

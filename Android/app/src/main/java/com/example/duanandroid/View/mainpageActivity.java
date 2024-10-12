@@ -1,9 +1,11 @@
 package com.example.duanandroid.View;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapter.ProductAdapter;
-import Model.OrderDetail;
 import Model.Product;
 import Model.ProductImage;
 
@@ -27,7 +28,6 @@ public class mainpageActivity extends AppCompatActivity {
     private List<Product> productList;
     private List<ProductImage> productImageList; // Danh sách hình ảnh
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,13 +37,42 @@ public class mainpageActivity extends AppCompatActivity {
         productRecyclerView = findViewById(R.id.items);
         productRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
-        // Lấy dữ liệu từ layout
+        // Tạo danh sách sản phẩm và danh sách hình ảnh
         productList = loadDataFromLayout();
-        productImageList = loadProductImages(); // Gọi phương thức tải hình ảnh
+        productImageList = loadProductImages(); // Tạo dữ liệu hình ảnh
 
         // Tạo Adapter và kết nối với RecyclerView
-        productAdapter = new ProductAdapter(productList,productImageList);
+        productAdapter = new ProductAdapter(productList, productImageList);
         productRecyclerView.setAdapter(productAdapter);
+
+
+        LinearLayout btn=  findViewById(R.id.account_user);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mainpageActivity.this, ManageAccountActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ImageView imv=  findViewById(R.id.chat);
+        imv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mainpageActivity.this, chatUserActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ImageView shoppingcart=  findViewById(R.id.shopping_cart);
+        shoppingcart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mainpageActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private List<Product> loadDataFromLayout() {
@@ -67,4 +96,6 @@ public class mainpageActivity extends AppCompatActivity {
         }
         return productImages;
     }
+
+
 }

@@ -1,8 +1,5 @@
 package com.example.demo.Models;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -12,6 +9,9 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@Entity
+@Table(name = "messages")
 public class Messages {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

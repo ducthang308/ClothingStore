@@ -4,17 +4,19 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.duanandroid.R;
-import com.example.duanandroid.databinding.ActivityAdminAcountBinding;
+//import com.example.duanandroid.databinding.ActivityAdminAcountBinding;
 
 public class adminAcountActivity extends AppCompatActivity {
 
-    private ActivityAdminAcountBinding binding;
+//    private ActivityAdminAcountBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +51,35 @@ public class adminAcountActivity extends AppCompatActivity {
                 startActivity(intent2);
             }
         });
+
+        TextView odermanage=  findViewById(R.id.oder_manage);
+        odermanage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(adminAcountActivity.this, ManageoderActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+        TextView manageproduct=  findViewById(R.id.manage_product);
+        manageproduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(adminAcountActivity.this, ManageProductActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        LinearLayout backhome=  findViewById(R.id.home);
+        backhome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(adminAcountActivity.this, mainpageAdminActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
 

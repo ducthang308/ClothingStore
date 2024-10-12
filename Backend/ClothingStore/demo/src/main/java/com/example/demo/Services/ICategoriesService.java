@@ -9,6 +9,6 @@ public interface ICategoriesService {
     Categories createCategory(CategoriesDTO categoryDTO);
     Categories getCategoryById(long id);
     List<Categories> getAllCategories();
-    Categories updateCategory(long categoryId, CategoriesDTO categoryDTO);
+    Categories updateCategory(long id, CategoriesDTO categoryDTO);
     void deleteCategory(long id);
 }

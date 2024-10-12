@@ -18,6 +18,7 @@
 
         <activity
             android:name=".View.chatUserActivity"
+<<<<<<< HEAD
             android:exported="false" />
         <activity
             android:name=".View.customerManagerActivity"
@@ -61,13 +62,85 @@
         <activity
             android:name=".View.detailOrderActivity"
             android:exported="true">
+=======
+
+            />
+        <activity
+            android:name=".View.customerManagerActivity"
+
+             />
+
+        <activity
+            android:name=".View.detailChatAdminActivity"
+
+             />
+            <activity
+                android:name=".View.editAccountActivity"
+
+                 />
+
+        <activity
+            android:name=".View.HelpActivity" />
+
+
+
+
+
+<!--        <activity-->
+<!--            android:name=".View.MainActivity"-->
+<!--            android:exported="false"-->
+<!--            />-->
+            <activity
+                android:name=".View.changePassActivity"
+
+                 />
+<!--        <activity-->
+<!--            android:name=".View.ReviewActivity"-->
+<!--            android:exported="false"-->
+<!--             />-->
+<!--        <activity-->
+<!--            android:name=".View.HelpActivity"-->
+<!--            android:exported="false"-->
+<!--             />-->
+<!--        <activity-->
+<!--            android:name=".View.RegisterActivity"-->
+<!--            android:exported="false"-->
+<!--             />-->
+<!--        <activity-->
+<!--            android:name=".View.CartActivity"-->
+<!--            android:exported="false"-->
+<!--             />-->
+        <activity
+            android:name=".View.LoginActivity"
+            android:exported="true"
+            >
+>>>>>>> main
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
         <activity android:name=".View.ChitietsanphamActivity" />
+=======
+        <activity android:name=".View.ChitietsanphamActivity"/>
+        <activity android:name=".View.ReasoncancelActivity"/>
+        <activity android:name=".View.StatusPaymentActivity"/>
+        <activity android:name=".View.ManageAccountActivity"/>
+        <activity android:name=".View.BuyandpaymentActivity"/>
+        <activity android:name=".View.CartActivity"/>
+        <activity android:name=".View.mainpageActivity"/>
+        <activity android:name=".View.OrderDetailActivity"/>
+        <activity android:name=".View.WaitingForShippingAcitivity"/>
+        <activity android:name=".View.WaitingForDeliveryActivity"/>
+        <activity android:name=".View.ReviewStatusActivity"/>
+        <activity android:name=".View.Return_cancel_goodsActivity"/>
+        <activity android:name=".View.mainpageAdminActivity"/>
+        <activity android:name=".View.ManageoderActivity"/>
+        <activity android:name=".View.adminAcountActivity"/>
+        <activity android:name=".View.ManageProductActivity"/>
+>>>>>>> main
     </application>
 
 </manifest>
