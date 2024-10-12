@@ -82,7 +82,7 @@ public class ReviewStatusActivity extends AppCompatActivity {
 
         Button btnreview = findViewById(R.id.btn_review);
         // Handle "Waiting for review" tab click
-        btnback.setOnClickListener(new View.OnClickListener() {
+        btnreview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ReviewStatusActivity.this, ReviewActivity.class);

@@ -3,6 +3,7 @@ package com.example.duanandroid.View;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -80,6 +81,24 @@ public class ManageAccountActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(ManageAccountActivity.this, HelpActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+            RelativeLayout changepass=  findViewById(R.id.changepassword);
+            changepass.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(ManageAccountActivity.this, changePassActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+            ImageView user=  findViewById(R.id.avatarImage);
+            user.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(ManageAccountActivity.this, editAccountActivity.class);
                     startActivity(intent);
                 }
             });

@@ -137,120 +137,46 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <!-- Example Utility 1 -->
         <LinearLayout
+            android:id="@+id/nav_home"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical"
-            android:layout_marginTop="10sp">
+            android:orientation="vertical">
 
             <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/storemap"
-                android:contentDescription="Example Utility 1" />
-
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="store map"
-                android:textSize="12sp"
-                android:layout_marginTop="8dp" />
-        </LinearLayout>
-
-        <!-- Example Utility 2 -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:layout_marginTop="10sp">
-
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/shop"
-                android:contentDescription="Example Utility 2" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="shop"
-                android:textSize="12sp"
-                android:layout_marginTop="8dp" />
-        </LinearLayout>
-
-        <!-- Example Utility 3 -->
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:layout_marginTop="10sp">
-
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/logo"
-                android:contentDescription="Example Utility 3" />
+                android:src="@drawable/ic_home_black_24dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Home"
-                android:textSize="12sp"
-                android:layout_marginTop="8dp" />
+                android:textSize="14sp" />
+
         </LinearLayout>
 
-        <!-- Example Utility 4 -->
         <LinearLayout
+            android:id="@+id/nav_account"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical"
-            android:layout_marginTop="10sp">
+            android:orientation="vertical">
 
             <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/notice"
-                android:contentDescription="Example Utility 4" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_person_24" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Notice"
-                android:textSize="12sp"
-                android:layout_marginTop="8dp" />
-        </LinearLayout>
+                android:text="Account"
+                android:textSize="14sp" />
 
-        <!-- Example Utility 5 -->
-        <LinearLayout
-            android:id="@+id/account_user"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:layout_marginTop="10sp">
-
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/user_account"
-                android:contentDescription="Example Utility 5" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="account"
-                android:textSize="12sp"
-                android:layout_marginTop="8dp" />
         </LinearLayout>
     </LinearLayout>
 

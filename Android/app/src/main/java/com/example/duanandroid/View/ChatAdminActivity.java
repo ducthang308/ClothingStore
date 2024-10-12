@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
@@ -26,6 +28,16 @@ public class ChatAdminActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent_chat = new Intent(ChatAdminActivity.this, detailChatAdminActivity.class);
                 startActivity(intent_chat);
+            }
+        });
+
+        ImageButton btnback = findViewById(R.id.back_arrow);
+        // Handle "Waiting for review" tab click
+        btnback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ChatAdminActivity.this, ManageAccountActivity.class);
+                startActivity(intent);
             }
         });
     }
