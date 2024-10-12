@@ -7,6 +7,7 @@ import com.example.demo.Models.Categories;
 import com.example.demo.Models.Product;
 import com.example.demo.Models.ProductImages;
 import com.example.demo.Repository.CategoriesRepository;
+import com.example.demo.Repository.ProductImagesRepository;
 import com.example.demo.Repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class ProductService implements IProductService{
 
     private final ProductRepository productRepository;
     private final CategoriesRepository categoriesRepository;
+    private final ProductImagesRepository productImagesRepository;
 
     @Override
     public Product createProduct(ProductDTO productDTO) throws DataNotFoundException {
@@ -75,7 +77,18 @@ public class ProductService implements IProductService{
 
     @Override
     public ProductImages creatProductImage(Long productId, ProductImageDTO productImageDTO) throws Exception {
-        return null;
+        Product existingProduct = productRepository.findById(productId)
+                .orElseThrow(()->
+                        new DataNotFoundException("Cannot find product with id: "+productImageDTO.getProductId()));
+        ProductImages newProductImage = ProductImages.builder()
+                .product(existingProduct)
+                .imageUrl(productImageDTO.getImageUrl())
+                .build();
+        int size = productImagesRepository.findByProductId(productId).size();
+        if(size >= ProductImages.MAXIMUM_IMAGES_PER_PRODUCT){
+            throw new DataNotFoundException("Numbers of images must be <= "+ ProductImages.MAXIMUM_IMAGES_PER_PRODUCT);
+        }
+        return productImagesRepository.save(newProductImage);
     }
 
     @Override

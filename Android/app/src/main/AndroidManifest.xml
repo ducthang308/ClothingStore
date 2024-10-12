@@ -33,15 +33,13 @@
                 android:exported="true"
                  />
         <activity
-<<<<<<< HEAD
             android:name=".View.RegisterActivity"
             android:exported="false" />
 
         <activity
             android:name=".View.mainpageActivity"
-            android:exported="true">
-=======
-
+            android:exported="true"/>
+        <activity
             android:name=".View.ChatAdminActivity"
             android:exported="true"
             />
@@ -73,18 +71,11 @@
             android:name=".View.adminAcountActivity"
             android:exported="true"
             >
->>>>>>> ThaoNguyen
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
         <activity android:name=".View.ChitietsanphamActivity"/>
-=======
-
-
->>>>>>> ThaoNguyen
     </application>
-
 </manifest>
