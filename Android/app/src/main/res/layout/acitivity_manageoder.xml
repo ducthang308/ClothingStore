@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="8dp">
+    >
 
     <!-- Toolbar with back button and title -->
     <LinearLayout
@@ -16,6 +16,7 @@
 
         <!-- Back Arrow Icon -->
         <ImageView
+            android:id="@+id/back_arrow"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/baseline_arrow_back_24"
@@ -32,46 +33,51 @@
     </LinearLayout>
 
     <!-- Search bar -->
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="8dp"
-        android:gravity="center_vertical">
+        android:padding="8dp">
 
-        <!-- Search input -->
+        <!-- Search input with icons inside -->
         <EditText
-            android:layout_width="0dp"
+            android:id="@+id/search_input"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:background="@drawable/custom_edittext"
             android:hint="Enter name or order code"
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp"
             android:padding="8dp"
             tools:ignore="TouchTargetSizeCheck" />
 
-        <!-- Search button -->
+        <!-- Search icon (left side) -->
         <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:id="@+id/search_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="start|center_vertical"
+            android:layout_marginStart="8dp"
             android:src="@drawable/baseline_search_24"
             android:contentDescription="Search" />
 
-        <!-- Filter button -->
+        <!-- Filter icon (right side) -->
         <ImageView
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:id="@+id/filter_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="8dp"
             android:src="@drawable/baseline_filter_list_alt_24"
-            android:contentDescription="Filter"
-            android:layout_marginStart="8dp" />
-    </LinearLayout>
+            android:contentDescription="Filter" />
+    </FrameLayout>
 
     <!-- Order List -->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="1"
         android:paddingTop="8dp"
-        tools:ignore="ExtraText">>
+        tools:ignore="ExtraText">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -80,6 +86,7 @@
 
             <!-- Order Item 1 -->
             <LinearLayout
+                android:background="@drawable/border"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -193,58 +200,8 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Bottom Navigation -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="#E0F7FA"
-        android:gravity="center">
 
-        <!-- Home Button -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="16dp"
-            android:layout_weight="1">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/home"
-                android:contentDescription="Home" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Home"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <!-- Account Button -->
-        <LinearLayout
-            android:layout_width="48dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="16dp"
-            android:layout_weight="1">
-
-            <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/user_account"
-                android:contentDescription="Account" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Account"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-    </LinearLayout>
 
 </LinearLayout>

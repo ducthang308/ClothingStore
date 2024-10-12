@@ -1,13 +1,12 @@
 package com.example.duanandroid.View;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,58 +20,48 @@ import Adapter.ProductAdapter;
 import Model.Product;
 import Model.ProductImage;
 
-public class mainpageActivity extends AppCompatActivity {
-
+public class mainpageAdminActivity extends AppCompatActivity {
     private RecyclerView productRecyclerView;
     private ProductAdapter productAdapter;
     private List<Product> productList;
     private List<ProductImage> productImageList; // Danh sách hình ảnh
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pagemain);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_mainpageadmin);
+        {
+// Khởi tạo RecyclerView
+            productRecyclerView = findViewById(R.id.items);
+            productRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
 
-        // Khởi tạo RecyclerView
-        productRecyclerView = findViewById(R.id.items);
-        productRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+            // Tạo danh sách sản phẩm và danh sách hình ảnh
+            productList = loadDataFromLayout();
+            productImageList = loadProductImages(); // Tạo dữ liệu hình ảnh
 
-        // Tạo danh sách sản phẩm và danh sách hình ảnh
-        productList = loadDataFromLayout();
-        productImageList = loadProductImages(); // Tạo dữ liệu hình ảnh
-
-        // Tạo Adapter và kết nối với RecyclerView
-        productAdapter = new ProductAdapter(productList, productImageList);
-        productRecyclerView.setAdapter(productAdapter);
+            // Tạo Adapter và kết nối với RecyclerView
+            productAdapter = new ProductAdapter(productList, productImageList);
+            productRecyclerView.setAdapter(productAdapter);
 
 
-        LinearLayout btn=  findViewById(R.id.account_user);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mainpageActivity.this, ManageAccountActivity.class);
-                startActivity(intent);
-            }
-        });
+            LinearLayout btn=  findViewById(R.id.nav_account);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(mainpageAdminActivity.this, adminAcountActivity.class);
+                    startActivity(intent);
+                }
+            });
 
-        ImageView imv=  findViewById(R.id.chat);
-        imv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mainpageActivity.this, chatUserActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        ImageView shoppingcart=  findViewById(R.id.shopping_cart);
-        shoppingcart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mainpageActivity.this, CartActivity.class);
-                startActivity(intent);
-            }
-        });
-
+            ImageView imv=  findViewById(R.id.chat);
+            imv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(mainpageAdminActivity.this, ChatAdminActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
     private List<Product> loadDataFromLayout() {
@@ -96,6 +85,4 @@ public class mainpageActivity extends AppCompatActivity {
         }
         return productImages;
     }
-
-
 }

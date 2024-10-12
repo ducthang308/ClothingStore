@@ -85,13 +85,22 @@ public class ChitietsanphamActivity extends AppCompatActivity {
             }
         });
 
-//        ImageView imv=  findViewById(R.id.chat);
-//        imv.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(ChitietsanphamActivity.this, .class);
-//                startActivity(intent);
-//            }
-//        });
+        ImageView imv=  findViewById(R.id.chat);
+        imv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ChitietsanphamActivity.this, chatUserActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ImageView shoppingcart=  findViewById(R.id.shopping_cart);
+        shoppingcart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ChitietsanphamActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
