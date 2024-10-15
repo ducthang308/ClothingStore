@@ -24,26 +24,26 @@ public class adminAcountActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_admin_acount);
 
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
-        TextView tv_PersonInfo = findViewById(R.id.tv_personInfor);
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
-        TextView tv_changePass = findViewById(R.id.tv_changePass);
+//        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
+//        TextView tv_PersonInfo = findViewById(R.id.tv_personInfor);
+//        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
+//        TextView tv_changePass = findViewById(R.id.tv_changePass);
         @SuppressLint({"MissingInflatedId", "LocalSuppress"})
         TextView tv_cus_manager = findViewById(R.id.tv_cus_manager);
-        tv_PersonInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(adminAcountActivity.this, editAccountActivity.class);
-                startActivity(intent);
-            }
-        });
-        tv_changePass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent1 = new Intent(adminAcountActivity.this, changePassActivity.class);
-                startActivity(intent1);
-            }
-        });
+//        tv_PersonInfo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(adminAcountActivity.this, editAccountActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//        tv_changePass.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent1 = new Intent(adminAcountActivity.this, changePassActivity.class);
+//                startActivity(intent1);
+//            }
+//        });
         tv_cus_manager.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
