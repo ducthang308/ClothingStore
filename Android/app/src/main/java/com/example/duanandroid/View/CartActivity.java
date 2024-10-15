@@ -3,6 +3,8 @@ package com.example.duanandroid.View;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -56,7 +58,27 @@ public class CartActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+        ImageView backArrow = findViewById(R.id.btn_back);
+
+        // Gán sự kiện click cho nút mũi tên
+        backArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CartActivity.this, mainpageActivity.class);
+                startActivity(intent);
+                // Quay lại trang trước đó
+//                finish();
+            }
+        });
+        ImageView imv=  findViewById(R.id.chat);
+        imv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(CartActivity.this, chatUserActivity.class);
+                startActivity(intent);
+            }
+        });
     }
-
-
 }

@@ -3,6 +3,7 @@ package com.example.duanandroid.View;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -24,6 +25,15 @@ public class BuyandpaymentActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(BuyandpaymentActivity.this, mainpageActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+            ImageView back=  findViewById(R.id.back_arrow);
+            back.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(BuyandpaymentActivity.this, CartActivity.class);
                     startActivity(intent);
                 }
             });
