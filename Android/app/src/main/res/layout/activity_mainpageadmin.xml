@@ -131,11 +131,12 @@
         android:id="@+id/bottomLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/lightblue"
         android:orientation="horizontal"
-        android:background="#FFFF"
+        android:gravity="bottom"
+
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        >
 
         <LinearLayout
             android:id="@+id/nav_home"
@@ -143,7 +144,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -164,7 +166,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <ImageView
                 android:layout_width="wrap_content"

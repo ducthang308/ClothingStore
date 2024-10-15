@@ -27,7 +27,7 @@ public class editAccountActivity extends AppCompatActivity {
         img_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent_profile = new Intent(editAccountActivity.this, adminAcountActivity.class);
+                Intent intent_profile = new Intent(editAccountActivity.this, ManageAccountActivity.class);
                 startActivity(intent_profile);
             }
         });

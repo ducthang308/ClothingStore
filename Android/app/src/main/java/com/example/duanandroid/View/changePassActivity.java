@@ -25,7 +25,7 @@ public class changePassActivity extends AppCompatActivity {
         img_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent_profile = new Intent(changePassActivity.this, adminAcountActivity.class);
+                Intent intent_profile = new Intent(changePassActivity.this, ManageAccountActivity.class);
                 startActivity(intent_profile);
             }
         });

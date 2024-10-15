@@ -140,7 +140,14 @@
         <activity android:name=".View.ManageoderActivity"/>
         <activity android:name=".View.adminAcountActivity"/>
         <activity android:name=".View.ManageProductActivity"/>
+<<<<<<< HEAD
 >>>>>>> main
+=======
+        <activity android:name=".View.ChatAdminActivity"/>
+        <activity android:name=".View.RegisterActivity"/>
+        <activity android:name=".View.ReviewActivity"/>
+
+>>>>>>> origin/main
     </application>
 
 </manifest>

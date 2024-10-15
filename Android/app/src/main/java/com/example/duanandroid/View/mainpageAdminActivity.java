@@ -28,13 +28,13 @@ public class mainpageAdminActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+
         setContentView(R.layout.activity_mainpageadmin);
         {
 // Khởi tạo RecyclerView
             productRecyclerView = findViewById(R.id.items);
             productRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-
+            productRecyclerView.addItemDecoration(new ItemDecoration(2, 24, true)); // 2 cột, khoảng cách 16dp
             // Tạo danh sách sản phẩm và danh sách hình ảnh
             productList = loadDataFromLayout();
             productImageList = loadProductImages(); // Tạo dữ liệu hình ảnh
@@ -67,7 +67,7 @@ public class mainpageAdminActivity extends AppCompatActivity {
     private List<Product> loadDataFromLayout() {
         List<Product> products = new ArrayList<>();
         // Tạo dữ liệu sản phẩm mẫu
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 8; i++) {
             // Chỉ cần tên sản phẩm và giá
             products.add(new Product("Tên sản phẩm " + (i + 1), "M", (i + 1) * 100000));
         }
@@ -77,7 +77,7 @@ public class mainpageAdminActivity extends AppCompatActivity {
     private List<ProductImage> loadProductImages() {
         List<ProductImage> productImages = new ArrayList<>();
         // Tạo dữ liệu hình ảnh mẫu
-        for (int i = 0; i < 12; i++) {
+        for (int i = 0; i < 8; i++) {
             // Giả sử bạn có hình ảnh tương ứng trong drawable với tên aokhoac1, aokhoac2, ...
             String imageName = "ao" ; // Giả sử bạn có ba hình ảnh aokhoac1, aokhoac2, aokhoac3
             int imageResId = getResources().getIdentifier(imageName, "drawable", getPackageName());

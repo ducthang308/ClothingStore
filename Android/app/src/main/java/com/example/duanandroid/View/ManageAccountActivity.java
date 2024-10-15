@@ -102,6 +102,52 @@ public class ManageAccountActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
+
+            RelativeLayout chatwithshop=  findViewById(R.id.Chat_with_shop);
+            chatwithshop.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(ManageAccountActivity.this, chatUserActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+
+            RelativeLayout myreview=  findViewById(R.id.My_review);
+            myreview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(ManageAccountActivity.this, ReviewStatusActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+
+            RelativeLayout myshoppingcart=  findViewById(R.id.My_shopping_cart);
+            myshoppingcart.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(ManageAccountActivity.this, CartActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+
+//            LinearLayout userTab = findViewById(R.id.home);  // Tab user/account
+//            ImageView userIcon = findViewById(R.id.userIcon);
+//
+//// Set OnClickListener for user tab
+//            userTab.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    // Set selected state for user icon
+//                    userIcon.setSelected(true);
+//                    // Deselect other tabs if needed
+//                    // Example:
+//                    ImageView homeIcon = findViewById(R.id.logo);  // Another tab
+//                    homeIcon.setSelected(false);  // Deselect other tabs
+//                }
+//            });
         }
     }
 }
