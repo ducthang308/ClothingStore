@@ -1,15 +1,14 @@
 package com.example.demo.Models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Data //toString
 @Getter
@@ -19,7 +18,7 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "users")
-public class Users implements UserDetails {
+public class Users implements UserDetails, OAuth2User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -60,7 +59,7 @@ public class Users implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities =new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_"+getRoles().getRoleName().toUpperCase()));
+        authorities.add(new SimpleGrantedAuthority("ROLE_"+getRoles().getRoleName()));
         return authorities;
     }
 
@@ -92,5 +91,14 @@ public class Users implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public Map<String, Object> getAttributes() {
+        return new HashMap<String, Object>();
+    }
+    @Override
+    public String getName() {
+        return getAttribute("name");
     }
 }

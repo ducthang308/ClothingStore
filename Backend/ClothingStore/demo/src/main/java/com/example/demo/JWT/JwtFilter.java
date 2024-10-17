@@ -33,45 +33,49 @@ public class JwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NotNull HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain)
-            throws ServletException, IOException
-    {
+            throws ServletException, IOException {
         try {
-            if(CorsUtils.isPreFlightRequest(request)){
-                response.setStatus(HttpServletResponse.SC_OK);
-            }
-            if(isByPassToken(request)){
+            if (isByPassToken(request)) {
                 filterChain.doFilter(request, response);
                 return;
             }
+
             final String authHeader = request.getHeader("Authorization");
-            if(authHeader == null || !authHeader.startsWith("Bear ")){
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "authHeader null or not started with Bearer");
                 return;
             }
+
             final String token = authHeader.substring(7);
-            final String phoneNumber = jwtToken.extractPhone(token);
-            if(phoneNumber != null && SecurityContextHolder.getContext().getAuthentication() == null){
-                Users users = (Users) userDetailsService.loadUserByUsername(phoneNumber);
-                if(jwtToken.validateToken(token, users)){
+            final String phone = jwtToken.extractPhone(token);
+            if (phone != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                Users userDetails = (Users) userDetailsService.loadUserByUsername(phone);
+                if (jwtToken.validateToken(token, userDetails)) {
+                    // Log các authorities của người dùng
+                    System.out.println("Authorities: " + userDetails.getAuthorities());
                     UsernamePasswordAuthenticationToken authenticationToken =
                             new UsernamePasswordAuthenticationToken(
-                                    users,
+                                    userDetails,
                                     null,
-                                    users.getAuthorities()
+                                    userDetails.getAuthorities()
                             );
                     authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                } else {
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token is invalid");
+                    return;
                 }
             }
-        }catch (Exception e){
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+            filterChain.doFilter(request, response);
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write(e.getMessage());
         }
     }
+
     private boolean isByPassToken( @NotNull HttpServletRequest request) {
         final List<Pair<String,String>> byPassTokens = Arrays.asList(
-                Pair.of(String.format("%s/roles", apiPrefix), "GET"),
-                Pair.of(String.format("%s/products", apiPrefix), "GET"),
-                Pair.of(String.format("%s/products/uploads", apiPrefix), "POST"),
+                Pair.of(String.format("%s/product", apiPrefix), "GET"),
                 Pair.of(String.format("%s/categories", apiPrefix), "GET"),
                 Pair.of(String.format("%s/users/login", apiPrefix), "POST"),
                 Pair.of(String.format("%s/users/register", apiPrefix), "POST")
@@ -82,6 +86,18 @@ public class JwtFilter extends OncePerRequestFilter {
                 return true;
             }
         }
+//        String requestPath = request.getServletPath();
+//        String requestMethod = request.getMethod();
+
+//        for (Pair<String, String> token : byPassTokens) {
+//            String path = token.getFirst();
+//            String method = token.getSecond();
+//            // Check if the request path and method match any pair in the bypassTokens list
+//            if (requestPath.matches(path.replace("**", ".*"))
+//                    && requestMethod.equalsIgnoreCase(method)) {
+//                return true;
+//            }
+//        }
         return false;
     }
 }
