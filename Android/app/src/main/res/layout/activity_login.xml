@@ -4,7 +4,7 @@
     android:id="@+id/login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
+    android:background="#D9F3FF"
     android:gravity="center"
     android:padding="16dp"
     tools:context=".View.LoginActivity">
@@ -17,19 +17,12 @@
 
         <TextView
             android:id="@+id/tv_name"
-            android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:paddingBottom="20dp"
-            android:text="SHOPPING ONLINE"
-            android:textAlignment="center"
-            android:textColor="@color/colorRed"
-            android:textSize="40dp"></TextView>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/imglogin"
+            android:layout_gravity="center"/>
 
-        <ImageView
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:src="@drawable/logo">
-        </ImageView>
+
 
         <EditText
             android:id="@+id/edt_email"
@@ -40,7 +33,10 @@
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
             android:paddingLeft="5dp"
-            android:background="@drawable/custom_edittext">
+            android:drawableLeft="@drawable/baseline_person_24"
+            android:background="@drawable/border_black"
+            >
+
         </EditText>
         <!--android:drawableLeft="@drawable/baseline_person_24"-->
         <EditText
@@ -50,11 +46,14 @@
             android:layout_margin="8dp"
             android:drawableEnd="@drawable/hide"
             android:hint="Password"
+            android:drawableStart="@drawable/baseline_security_24"
             android:inputType="textPassword"
             android:paddingLeft="5dp"
-            android:background="@drawable/custom_edittext"
+            android:background="@drawable/border_black"
             android:paddingRight="12dp"
-            android:drawablePadding="10dp" />
+            >
+
+        </EditText>
 
         <TextView
             android:id="@+id/textView"
@@ -67,10 +66,16 @@
 
         <Button
             android:id="@+id/btn_login"
-            android:layout_width="191dp"
+            android:layout_width="300dp"
             android:layout_height="58dp"
             android:layout_margin="10dp"
-            android:text="Login"></Button>
+            android:text="Login"
+            android:backgroundTint="#FFFFFF"
+            android:textColor="@color/colorblack"
+
+            />
+
+
 
         <LinearLayout
             android:layout_width="match_parent"

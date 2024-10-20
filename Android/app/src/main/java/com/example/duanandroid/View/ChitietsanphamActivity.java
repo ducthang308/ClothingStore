@@ -1,6 +1,9 @@
 package com.example.duanandroid.View;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -60,8 +63,44 @@ public class ChitietsanphamActivity extends AppCompatActivity {
         userList.add(new User(2, "Jane Smith", "Address", "0123456789", "jane@example.com", 1, null, "jane", "password", "active", 0, 0));
         userList.add(new User(3, "Alice Brown", "Address", "0123456789", "alice@example.com", 1, null, "alice", "password", "active", 0, 0));
 
+
         // Thiết lập Adapter cho RecyclerView
         reviewAdapter = new ReviewAdapter(reviewList, userList);
         reviewRecyclerView.setAdapter(reviewAdapter);
+
+        TextView btn=  findViewById(R.id.btn_add_to_cart);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ChitietsanphamActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
+        });
+        TextView btn1=  findViewById(R.id.btn_buy_now);
+        btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ChitietsanphamActivity.this, BuyandpaymentActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ImageView imv=  findViewById(R.id.chat);
+        imv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ChitietsanphamActivity.this, chatUserActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ImageView shoppingcart=  findViewById(R.id.shopping_cart);
+        shoppingcart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ChitietsanphamActivity.this, CartActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

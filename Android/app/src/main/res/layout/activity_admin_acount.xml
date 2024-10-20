@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/changePass"
     android:layout_width="match_parent"
@@ -66,17 +65,6 @@
                 android:text="Personal Information"
                 android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/tv_changePass"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:drawableLeft="@drawable/baseline_security_24"
-                android:drawableRight="@drawable/arrow_right_icon"
-                android:gravity="center_vertical"
-                android:padding="10dp"
-                android:text="Change Password"
-                android:textSize="15sp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -115,6 +103,7 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/manage_product"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -127,6 +116,7 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/oder_manage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -135,7 +125,7 @@
                 android:drawablePadding="2dp"
                 android:gravity="center_vertical"
                 android:padding="10dp"
-                android:text="Order Manager"
+                android:text="Order Manage"
                 android:textSize="15sp" />
 
             <TextView
@@ -160,16 +150,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/lightblue"
-        android:gravity="center"
+        android:gravity="bottom"
         android:orientation="horizontal"
-        android:padding="8dp">
+        >
 
         <LinearLayout
+            android:id="@+id/home"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
+            android:layout_marginBottom="16dp"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -189,6 +181,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_marginBottom="16dp"
             android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:gravity="center"

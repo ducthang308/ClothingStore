@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFF"
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
@@ -98,7 +99,7 @@
 
             <!-- Total Payment Label -->
             <TextView
-                android:id="@+id/total_money"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Total payment:"
@@ -107,9 +108,10 @@
 
             <!-- Total Payment Amount -->
             <TextView
+                android:id="@+id/total_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="200.00đ"
+                android:text=""
                 android:textColor="@android:color/holo_red_dark"
                 android:textSize="16sp"
                 android:layout_marginStart="8dp" />
@@ -201,6 +203,60 @@
                     android:backgroundTint="@android:color/holo_red_light"/>
             </LinearLayout>
 
+            <!--Group 5 : Reason and note review -->
+
+
+            <LinearLayout
+                android:id="@+id/layout_review_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp">
+
+                        <TextView
+                            android:id="@+id/tv_reason_label"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Reason"
+                            android:textSize="16sp"
+                            android:textColor="#000"
+                            android:layout_alignParentStart="true"/>
+
+                        <TextView
+                            android:id="@+id/tv_choose_reason"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Choose a reason"
+                            android:textColor="#000"
+                            android:textSize="16sp"
+                            android:drawableEnd="@drawable/img"
+                            android:drawablePadding="8dp"
+                            android:layout_alignParentEnd="true"/>
+                    </RelativeLayout>
+
+                    <EditText
+                        android:id="@+id/et_reason"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:hint="Enter reason here..."
+                        android:padding="12dp"
+                        android:background="@drawable/border"
+                        android:textColorHint="#A9A9A9"
+                        android:layout_marginTop="8dp"/>
+                </LinearLayout
+                    >
+
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
