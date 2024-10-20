@@ -14,6 +14,6 @@ public interface IProductService {
     Product updateProduct(long productId, ProductDTO productDTO) throws Exception;
     void deleteProduct(long id);
     boolean existsByName(String name);
-    ProductImages creatProductImage(Long productId, ProductImageDTO productImageDTO) throws Exception;
+    ProductImages createProductImage(Long productId, ProductImageDTO productImageDTO) throws Exception;
     List<Product> findProductsByIds(List<Long> productIds);
 }
