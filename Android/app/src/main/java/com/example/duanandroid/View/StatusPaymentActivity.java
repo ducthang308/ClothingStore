@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapter.PaymentStatusAdapter;
-import Model.Order;
 import Model.OrderDetail;
 import Model.Product;
 import Model.ProductImage;
@@ -122,15 +121,16 @@ public class StatusPaymentActivity extends AppCompatActivity {
             }
         });
 
-//        Button btcancel = findViewById(R.id.btn_cancel_order);
-//        // Handle "Waiting for review" tab click
-//        btcancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(StatusPaymentActivity.this, Return_cancel_goodsActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        Button btcancel = findViewById(R.id.btn_cancel_order);
+        // Handle "Waiting for review" tab click
+        btcancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StatusPaymentActivity.this, Return_cancel_goodsActivity.class);
+//                intent.putExtra("origin", "returnFromStatusPayment");
+                startActivity(intent);
+            }
+        });
 
 
     }

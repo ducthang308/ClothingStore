@@ -18,27 +18,32 @@ public class ReasoncancelActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.acitvity_reasoncancel);
-        {
-            ImageView btnback = findViewById(R.id.back_arrow);
-            // Handle "Waiting for review" tab click
-            btnback.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(ReasoncancelActivity.this, Return_cancel_goodsActivity.class);
-                    startActivity(intent);
-                }
-            });
 
+        ImageView btnback = findViewById(R.id.back_arrow);
+        Button btnsubmit = findViewById(R.id.btn_submit);
 
-            Button btnsubmit = findViewById(R.id.btn_submit);
-            // Handle "Waiting for review" tab click
-            btnsubmit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(ReasoncancelActivity.this, Return_cancel_goodsActivity.class);
-                    startActivity(intent);
-                }
-            });
-        }
+        // Lấy thông tin tab hiện tại từ Intent
+        Intent intent = getIntent();
+        int tabPosition = intent.getIntExtra("tabPosition", 0); // Giá trị mặc định là 0 (WaitingForPayment)
+
+//         /Xử lý nút back
+//        btnback.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Quay lại TabLayOutActivity với tab tương ứng
+//                Intent backIntent = new Intent(ReasoncancelActivity.this, TabLayOutActivity.class);
+//                backIntent.putExtra("tabPosition", tabPosition);
+//                startActivity(backIntent);
+//            }
+//        });
+
+        // Xử lý nút submit
+        btnsubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent submitIntent = new Intent(ReasoncancelActivity.this, Return_cancel_goodsActivity.class);
+                startActivity(submitIntent);
+            }
+        });
     }
 }

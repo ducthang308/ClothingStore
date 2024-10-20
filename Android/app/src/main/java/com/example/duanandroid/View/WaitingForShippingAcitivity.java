@@ -3,7 +3,6 @@ package com.example.duanandroid.View;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,9 +12,11 @@ import com.example.duanandroid.R;
 
 public class WaitingForShippingAcitivity extends AppCompatActivity {
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shippingstaytus);
+
         TextView tab_waiting_payment = findViewById(R.id.tab_waiting_patment);
 
         // Handle "Waiting for shipping" tab click
@@ -26,7 +27,6 @@ public class WaitingForShippingAcitivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
 
         TextView tabwaitingdelivery = findViewById(R.id.waiting_delivery);
         // Handle "Waiting for delivery" tab click
@@ -49,7 +49,7 @@ public class WaitingForShippingAcitivity extends AppCompatActivity {
         });
 
         TextView tab_return_cancel_goods = findViewById(R.id.return_cancel_goods);
-        // Handle "Waiting for review" tab click
+        // Handle "Return/cancel goods" tab click
         tab_return_cancel_goods.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,7 +59,7 @@ public class WaitingForShippingAcitivity extends AppCompatActivity {
         });
 
         ImageView btnback = findViewById(R.id.back_arrow);
-        // Handle "Waiting for review" tab click
+        // Handle "Back" button click
         btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,14 +68,14 @@ public class WaitingForShippingAcitivity extends AppCompatActivity {
             }
         });
 
-        Button btcancel = findViewById(R.id.btn_cancel_shipping);
-        // Handle "Waiting for review" tab click
-        btcancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(WaitingForShippingAcitivity.this, Return_cancel_goodsActivity.class);
-                startActivity(intent);
-            }
-        });
+//        Button btcancel = findViewById(R.id.btn_cancel_order);
+//        // Handle "Cancel order" button click
+//        btcancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(WaitingForShippingAcitivity.this, ReasoncancelActivity.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 }

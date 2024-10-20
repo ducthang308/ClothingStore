@@ -18,25 +18,34 @@ public class BuyandpaymentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_buyandpayment);
-        {
 
-            TextView btn=  findViewById(R.id.btn_oder);
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(BuyandpaymentActivity.this, mainpageActivity.class);
-                    startActivity(intent);
-                }
-            });
+        // Lấy giá trị "origin" từ intent
+        Intent intent = getIntent();
+        String origin = intent.getStringExtra("origin");
 
-            ImageView back=  findViewById(R.id.back_arrow);
-            back.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+        TextView btn = findViewById(R.id.btn_oder);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BuyandpaymentActivity.this, mainpageActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ImageView back = findViewById(R.id.back_arrow);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Kiểm tra "origin" và điều hướng về trang phù hợp
+                if ("cart".equals(origin)) {
                     Intent intent = new Intent(BuyandpaymentActivity.this, CartActivity.class);
                     startActivity(intent);
+                } else if ("order_details".equals(origin)) {
+                    Intent intent = new Intent(BuyandpaymentActivity.this, ChitietsanphamActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                 }
-            });
-        }
+            }
+        });
     }
 }

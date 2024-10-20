@@ -44,22 +44,22 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                <!-- Product Name -->
-                <TextView
-                    android:id="@+id/product_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Áo thun ngắn tay nữ trắng,"
-                    android:textSize="16sp"
-                    android:textStyle="" />
+                    <!-- Product Name -->
+                    <TextView
+                        android:id="@+id/product_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Áo thun ngắn tay nữ trắng,"
+                        android:textSize="16sp"
+                        android:textStyle="" />
 
-                <TextView
-                    android:id="@+id/product_size"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Size M"
-                    android:textSize="14sp"
-                   />
+                    <TextView
+                        android:id="@+id/product_size"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Size M"
+                        android:textSize="14sp"
+                        />
                 </LinearLayout>
                 <!-- Quantity -->
                 <TextView
@@ -134,19 +134,13 @@
                 android:orientation="horizontal">
 
                 <!-- Cancel order button -->
-                <Button
-                    android:id="@+id/btn_cancel_order"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cancel order"
-                    android:backgroundTint="@android:color/holo_blue_light" />
 
                 <!-- Payment button -->
                 <Button
-                    android:id="@+id/btn_payment"
+                    android:id="@+id/btn_review"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Payment"
+                    android:text="Review"
                     android:layout_marginStart="16dp"
                     android:backgroundTint="@android:color/holo_blue_light" />
             </LinearLayout>

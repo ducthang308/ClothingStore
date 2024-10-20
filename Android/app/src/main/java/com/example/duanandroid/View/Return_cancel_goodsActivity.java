@@ -17,6 +17,8 @@ public class Return_cancel_goodsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_canceloder);
 
+        Intent intent = getIntent();
+        String origin = intent.getStringExtra("origin");
         LinearLayout btn = findViewById(R.id.item_oder);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,13 +62,20 @@ public class Return_cancel_goodsActivity extends AppCompatActivity {
 
         ImageView btnback = findViewById(R.id.back_arrow);
         // Handle "Waiting for review" tab click
-        btnback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Return_cancel_goodsActivity.this, ManageAccountActivity.class);
-                startActivity(intent);
-            }
-        });
+//        btnback.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                // Kiểm tra "origin" và điều hướng về trang phù hợp
+//                if ("returnFromStatusPayment".equals(origin)) {
+//                    Intent intent = new Intent(Return_cancel_goodsActivity.this, StatusPaymentActivity.class);
+//                    startActivity(intent);
+//                } else if ("returnFromStatus_shipping".equals(origin)) {
+//                    Intent intent = new Intent(Return_cancel_goodsActivity.this, WaitingForShippingAcitivity.class);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    startActivity(intent);
+//                }
+//            }
+//        });
 
         TextView tab_return_cancel_goods = findViewById(R.id.tab_waiting_patment);
         // Handle "Waiting for review" tab click

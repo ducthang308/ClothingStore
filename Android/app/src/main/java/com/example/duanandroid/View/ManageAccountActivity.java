@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.duanandroid.R;
 
+import Fragment.TabLayOutActivity;
+
 public class ManageAccountActivity extends AppCompatActivity {
 
     @Override
@@ -25,7 +27,8 @@ public class ManageAccountActivity extends AppCompatActivity {
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(ManageAccountActivity.this, StatusPaymentActivity.class);
+                    Intent intent = new Intent(ManageAccountActivity.this, TabLayOutActivity.class);
+                    intent.putExtra("tabPosition", 3);
                     startActivity(intent);
                 }
             });
@@ -34,7 +37,8 @@ public class ManageAccountActivity extends AppCompatActivity {
             btn1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(ManageAccountActivity.this, StatusPaymentActivity.class);
+                    Intent intent = new Intent(ManageAccountActivity.this, TabLayOutActivity.class);
+                    intent.putExtra("tabPosition", 0);
                     startActivity(intent);
                 }
             });
@@ -43,7 +47,8 @@ public class ManageAccountActivity extends AppCompatActivity {
             btn2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(ManageAccountActivity.this, WaitingForShippingAcitivity.class);
+                    Intent intent = new Intent(ManageAccountActivity.this, TabLayOutActivity.class);
+                    intent.putExtra("tabPosition", 1);
                     startActivity(intent);
                 }
             });
@@ -52,7 +57,8 @@ public class ManageAccountActivity extends AppCompatActivity {
             btn3.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(ManageAccountActivity.this, WaitingForDeliveryActivity.class);
+                    Intent intent = new Intent(ManageAccountActivity.this, TabLayOutActivity.class);
+                    intent.putExtra("tabPosition", 2);
                     startActivity(intent);
                 }
             });
@@ -61,7 +67,8 @@ public class ManageAccountActivity extends AppCompatActivity {
             btn4.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(ManageAccountActivity.this, ReviewStatusActivity.class);
+                    Intent intent = new Intent(ManageAccountActivity.this, TabLayOutActivity.class);
+                    intent.putExtra("tabPosition", 3);
                     startActivity(intent);
                 }
             });
@@ -71,7 +78,8 @@ public class ManageAccountActivity extends AppCompatActivity {
             backhome.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(ManageAccountActivity.this, mainpageActivity.class);
+                    Intent intent = new Intent(ManageAccountActivity.this, TabLayOutActivity.class);
+                    intent.putExtra("tabPosition", 4);
                     startActivity(intent);
                 }
             });
@@ -117,7 +125,8 @@ public class ManageAccountActivity extends AppCompatActivity {
             myreview.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(ManageAccountActivity.this, ReviewStatusActivity.class);
+                    Intent intent = new Intent(ManageAccountActivity.this, TabLayOutActivity.class);
+
                     startActivity(intent);
                 }
             });
@@ -128,6 +137,7 @@ public class ManageAccountActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(ManageAccountActivity.this, CartActivity.class);
+                    intent.putExtra("origin", "CartToAccount");
                     startActivity(intent);
                 }
             });

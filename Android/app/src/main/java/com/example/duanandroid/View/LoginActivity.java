@@ -3,6 +3,7 @@ package com.example.duanandroid.View;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
         // Các trường nhập liệu
         EditText edtUsername = findViewById(R.id.edt_email);
         EditText edtPassword = findViewById(R.id.edt_password);
-        TextView btnLogin = findViewById(R.id.btn_login);
+        Button btnLogin = findViewById(R.id.btn_login);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
                 if ("user".equals(username) && "1234".equals(password)) {
                     // Đăng nhập thành công cho user
                     Intent intent = new Intent(LoginActivity.this, mainpageActivity.class);
+                    intent.putExtra("tabPosition", 2);
                     startActivity(intent);
                 } else if ("admin".equals(username) && "1235".equals(password)) {
                     // Đăng nhập thành công cho admin

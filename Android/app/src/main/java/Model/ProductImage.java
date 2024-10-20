@@ -5,7 +5,7 @@ public class ProductImage {
     private int productId;
     private String imageUrl;
 
-    public ProductImage() {
+    public ProductImage(int i, int productId, int imageResId) {
     }
 
     // Constructor
