@@ -5,5 +5,5 @@ import com.example.demo.Models.Users;
 
 public interface IUsersService {
     Users createUser(UsersDTO usersDTO) throws Exception;
-    String login(String phone, String password) throws Exception;
+    String login(String phoneNumber, String password) throws Exception;
 }

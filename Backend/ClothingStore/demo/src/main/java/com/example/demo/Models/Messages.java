@@ -17,12 +17,16 @@ public class Messages {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "sender_id", nullable = false)
+    @Column(name = "sender_id")
     private int senderId;
-    @Column(name = "receiver_id", nullable = false)
+    @Column(name = "receiver_id")
     private int receiverId;
     @Column(name = "content", nullable = false)
     private String content;
-    @Column(name = "sentAt", nullable = false)
-    private LocalDateTime sentAt;
+    @Column(name = "createAt", nullable = false)
+    private LocalDateTime createAt;
+
+    @ManyToOne
+    @JoinColumn(name = "conversation_id")
+    private Conversation conversation;
 }

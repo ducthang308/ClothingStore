@@ -18,9 +18,6 @@ public class ReviewDTO {
     @JsonProperty("order_id")
     private Long orderId;
 
-    @JsonProperty("image_url")
-    private String imageUrl;
-
     @JsonProperty("note")
     private String note;
 
