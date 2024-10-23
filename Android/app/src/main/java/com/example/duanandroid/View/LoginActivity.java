@@ -2,6 +2,7 @@ package com.example.duanandroid.View;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -12,7 +13,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.duanandroid.R;
 
+import java.util.List;
+
+//import Interface.APIservice;
+import Interface.APIservice;
+import Model.User;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class LoginActivity extends AppCompatActivity {
+    private EditText edtUsername = findViewById(R.id.edt_email);
+    private EditText edtPassword = findViewById(R.id.edt_password);
+    private TextView btnLogin = findViewById(R.id.btn_login);
+    private List<User> userList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,9 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         // Các trường nhập liệu
-        EditText edtUsername = findViewById(R.id.edt_email);
-        EditText edtPassword = findViewById(R.id.edt_password);
-        TextView btnLogin = findViewById(R.id.btn_login);
+
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +65,23 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
+            }
+        });
+    }
+
+
+    private void getListuser(){
+        APIservice.apiservice.getListuser("")
+        .enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                 userList = response.body();
+                Log.e("userList" , userList.size()+"");
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                Toast.makeText(LoginActivity.this  ,"call api failed",Toast.LENGTH_SHORT).show();
             }
         });
     }
