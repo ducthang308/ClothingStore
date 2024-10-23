@@ -71,6 +71,7 @@ public class WebSecurityConfig {
                                     String.format("%s/review/**", apiPrefix)).permitAll()
 
 
+
                             .anyRequest()
                             .authenticated();
                     //.anyRequest().permitAll();

@@ -95,4 +95,9 @@ public class ProductService implements IProductService{
     public List<Product> findProductsByIds(List<Long> productIds) {
         return productRepository.findProductsByIds(productIds);
     }
+
+    @Override
+    public ProductImages getUrl(String imageName) {
+        return productImagesRepository.findByImageUrl(imageName);
+    }
 }
