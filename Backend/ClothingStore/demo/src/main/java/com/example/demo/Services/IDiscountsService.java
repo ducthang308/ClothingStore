@@ -10,5 +10,5 @@ public interface IDiscountsService {
     Discounts createDiscount(DiscountsDTO discountsDTO) throws DataNotFoundException;
     Discounts updateDiscount(long id, DiscountsDTO discountsDTO) throws DataNotFoundException;
     void deleteDiscount(long id);
-    List<Discounts> getAllDiscountsByUsersId(Long userId);
+    List<Discounts> getAllDiscounts();
 }

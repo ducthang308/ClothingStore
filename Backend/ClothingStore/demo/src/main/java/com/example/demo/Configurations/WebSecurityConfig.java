@@ -70,7 +70,8 @@ public class WebSecurityConfig {
                             .requestMatchers(POST,
                                     String.format("%s/review/**", apiPrefix)).permitAll()
 
-
+                            .requestMatchers(GET,
+                                    String.format("%s/discounts/**", apiPrefix)).permitAll()
 
                             .anyRequest()
                             .authenticated();

@@ -21,12 +21,9 @@ public class DiscountsService implements IDiscountsService {
 
     @Override
     public Discounts createDiscount(DiscountsDTO discountsDTO) throws DataNotFoundException {
-        Users existingUser = usersRepository.findById(discountsDTO.getUserId())
-                .orElseThrow(()->
-                        new DataNotFoundException("Not found user id: "+discountsDTO.getUserId()));
         Discounts discounts = Discounts.builder()
                 .percent(discountsDTO.getPercent())
-                .users(existingUser)
+                .note(discountsDTO.getNote())
                 .build();
         return discountsRepository.save(discounts);
     }
@@ -37,6 +34,7 @@ public class DiscountsService implements IDiscountsService {
                 .orElseThrow(()->
                         new DataNotFoundException("Not found discount id: "+id));
         existingDiscount.setPercent(discountsDTO.getPercent());
+        existingDiscount.setNote(discountsDTO.getNote());
         return discountsRepository.save(existingDiscount);
     }
 
@@ -46,7 +44,7 @@ public class DiscountsService implements IDiscountsService {
     }
 
     @Override
-    public List<Discounts> getAllDiscountsByUsersId(Long userId) {
-        return discountsRepository.findByUsersId(userId);
+    public List<Discounts> getAllDiscounts() {
+        return discountsRepository.findAll();
     }
 }

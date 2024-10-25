@@ -19,7 +19,6 @@ public class Discounts {
     @Column(name = "percent")
     private float percent;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private Users users;
+    @Column(name = "note")
+    private String note;
 }

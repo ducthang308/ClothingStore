@@ -12,6 +12,6 @@ public class DiscountsDTO {
     @JsonProperty("percent")
     private float percent;
 
-    @JsonProperty("user_id")
-    private Long userId;
+    @JsonProperty("note")
+    private String note;
 }

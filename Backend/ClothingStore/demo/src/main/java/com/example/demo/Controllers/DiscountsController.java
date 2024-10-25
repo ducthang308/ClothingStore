@@ -38,14 +38,13 @@ public class DiscountsController {
         }
     }
 
-    @GetMapping("/user/{id}")
-    @PreAuthorize("hasRole('ROLE_User')")
-    public ResponseEntity<List<Discounts>> getAllDiscountByUserId(@Valid @PathVariable("id") Long id){
-        List<Discounts> discounts = discountsService.getAllDiscountsByUsersId(id);
+    @GetMapping("")
+    public ResponseEntity<List<Discounts>> getAllDiscountByUserId(){
+        List<Discounts> discounts = discountsService.getAllDiscounts();
         return ResponseEntity.ok(discounts);
     }
 
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_Admin')")
     public ResponseEntity<?> updateDiscount(@PathVariable("id") Long id,
                                            @Valid @RequestBody DiscountsDTO discountsDTO)
