@@ -9,16 +9,17 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "discounts")
 @Entity
-@Table(name = "roles")
-public class Roles {
+public class Discounts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "role_name")
-    private String roleName;
+    @Column(name = "percent")
+    private float percent;
 
-    public static String Admin = "Admin";
-    public static String User = "User";
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Users users;
 }

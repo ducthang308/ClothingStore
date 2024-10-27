@@ -6,6 +6,7 @@ import com.example.demo.Services.OrderDetailService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +21,7 @@ public class OrderDetailController {
     private final OrderDetailService orderDetailService;
 
     @PostMapping("")
+    @PreAuthorize("hasRole('ROLE_Admin')")
     public ResponseEntity<?> createOrderDetail(@Valid @RequestBody OrderDetailDTO orderDetailDTO,
                                                BindingResult result ){
         try {
@@ -54,6 +56,7 @@ public class OrderDetailController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_Admin')")
     public ResponseEntity<?> updateOrderDetail(@PathVariable("id") Long id,
                                                @Valid @RequestBody OrderDetailDTO orderDetailDTO){
         try {
@@ -65,6 +68,7 @@ public class OrderDetailController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_Admin')")
     public ResponseEntity<?> deleteOrderDetail(@Valid @PathVariable("id") Long id){
         try {
             orderDetailService.deleteById(id);

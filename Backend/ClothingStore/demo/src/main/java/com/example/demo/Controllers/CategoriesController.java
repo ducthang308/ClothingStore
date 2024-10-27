@@ -6,6 +6,7 @@ import com.example.demo.Services.CategoriesService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,9 @@ public class CategoriesController {
     private final CategoriesService categoriesService;
 
     @PostMapping("")
+    @PreAuthorize("hasRole('ROLE_Admin')")
     public ResponseEntity<?> createCategories(@Valid @RequestBody CategoriesDTO categoriesDTO, BindingResult result){
+        System.out.println("Received category: " + categoriesDTO);
         if(result.hasErrors()){
             List<String> errorMessage = result.getFieldErrors()
                     .stream()
@@ -39,6 +42,7 @@ public class CategoriesController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_Admin')")
     public ResponseEntity<?> updateCategories(@PathVariable Long id,
                                               @Valid @RequestBody CategoriesDTO categoriesDTO)
     {
@@ -47,6 +51,7 @@ public class CategoriesController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_Admin')")
     public ResponseEntity<String> deleteCategories(@PathVariable Long id){
         categoriesService.deleteCategory(id);
         return ResponseEntity.ok("Delete successfully");

@@ -32,9 +32,6 @@ public class Review {
     @JsonIgnore
     private Orders orders;
 
-    @Column(name = "image_url")
-    private String imageUrl;
-
     @Column(name = "note", length = 100)
     private String note;
 
