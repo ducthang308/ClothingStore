@@ -82,7 +82,7 @@
                 android:name=".View.editAccountActivity"
 
                  />
-<<<<<<< HEAD
+
         <activity
             android:name=".View.RegisterActivity"
             android:exported="false" />
@@ -94,7 +94,7 @@
             android:name=".View.ChatAdminActivity"
             android:exported="true"
             />
-=======
+
 
         <activity
             android:name=".View.HelpActivity" />
@@ -103,7 +103,7 @@
 
 
 
->>>>>>> main
+
 <!--        <activity-->
 <!--            android:name=".View.MainActivity"-->
 <!--            android:exported="false"-->
@@ -152,14 +152,13 @@
         <activity android:name=".View.RegisterActivity" />
 =======
         <activity android:name=".View.ChitietsanphamActivity"/>
-<<<<<<< HEAD
-=======
+
         <activity android:name=".View.ReasoncancelActivity"/>
         <activity android:name=".View.StatusPaymentActivity"/>
         <activity android:name=".View.ManageAccountActivity"/>
         <activity android:name=".View.BuyandpaymentActivity"/>
         <activity android:name=".View.CartActivity"/>
-        <activity android:name=".View.mainpageActivity"/>
+
         <activity android:name=".View.OrderDetailActivity"/>
         <activity android:name=".View.WaitingForShippingAcitivity"/>
         <activity android:name=".View.WaitingForDeliveryActivity"/>
@@ -169,10 +168,12 @@
         <activity android:name=".View.ManageoderActivity"/>
         <activity android:name=".View.adminAcountActivity"/>
         <activity android:name=".View.ManageProductActivity"/>
-        <activity android:name=".View.ChatAdminActivity"/>
-        <activity android:name=".View.RegisterActivity"/>
+
         <activity android:name=".View.ReviewActivity"/>
 
+<<<<<<< HEAD
+=======
+>>>>>>> main
 >>>>>>> main
 >>>>>>> main
     </application>
