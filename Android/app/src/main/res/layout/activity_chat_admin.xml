@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
-            android:text="Chat"
+            android:text="Trò chuyện"
             android:textSize="20sp" />
     </LinearLayout>
 
@@ -76,7 +76,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Is this shirt still available in size M?"
+                        android:text="Chiếc áo này hiện còn size M không?"
                         android:textSize="13sp"
                         android:textColor="@color/colorblack"
                         android:padding="5dp"
@@ -112,7 +112,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text="Do you have any promotions today?"
+                        android:text="Hôm nay có chương trình khuyến mãi nào không?"
                         android:textColor="#838181"
                         android:textSize="13sp"
                         android:textStyle="italic" />
@@ -147,7 +147,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="5dp"
-                        android:text="Can I change the delivery address?"
+                        android:text="Tôi có thể thay đổi địa chỉ giao hàng không?"
                         android:textColor="#838181"
                         android:textSize="13sp"
                         android:textStyle="italic" />
@@ -182,7 +182,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="What are the shipping fees?"
+                    android:text="Phí vận chuyển là bao nhiêu?"
                     android:textSize="13sp"
                     android:padding="5dp"
                     android:textStyle="italic" />
@@ -220,7 +220,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="When will my order arrive?"
+                    android:text="Khi nào đơn hàng của tôi sẽ đến?"
                     android:textColor="#838181"
                     android:textSize="13sp"
                     android:textStyle="italic" />
@@ -256,7 +256,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Can I add more items to my order?"
+                    android:text="Tôi có thể thêm sản phẩm vào đơn hàng của mình không?"
                     android:textSize="13sp"
                     android:padding="5dp"
                     android:textStyle="italic" />

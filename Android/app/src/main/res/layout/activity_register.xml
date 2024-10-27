@@ -31,7 +31,7 @@
             android:layout_margin="8dp"
             android:background="@drawable/border_black"
             android:drawableLeft="@drawable/baseline_name_24"
-            android:hint="Full name"
+            android:hint="Họ tên"
             android:inputType="text"
             android:minHeight="48dp"
             android:paddingLeft="5dp">
@@ -45,7 +45,7 @@
             android:layout_margin="8dp"
             android:background="@drawable/border_black"
             android:drawableLeft="@drawable/baseline_cake_24"
-            android:hint="Birth day"
+            android:hint="Ngày sinh"
             android:inputType="date"
             android:minHeight="48dp"
             android:paddingLeft="5dp">
@@ -59,7 +59,7 @@
             android:layout_margin="8dp"
             android:background="@drawable/border_black"
             android:drawableLeft="@drawable/baseline_phone_24"
-            android:hint="Phone number"
+            android:hint="Số điện thoại"
             android:inputType="phone|number"
             android:minHeight="48dp"
             android:paddingLeft="5dp">
@@ -87,7 +87,7 @@
             android:layout_margin="8dp"
             android:background="@drawable/border_black"
             android:drawableLeft="@drawable/baseline_person_24"
-            android:hint="User"
+            android:hint="Tên đăng nhập"
             android:inputType="text"
             android:minHeight="48dp"
             android:paddingLeft="5dp">
@@ -101,7 +101,7 @@
             android:layout_margin="8dp"
             android:background="@drawable/border_black"
             android:drawableLeft="@drawable/baseline_security_24"
-            android:hint="Password"
+            android:hint="Mật khẩu"
             android:inputType="textPassword"
             android:minHeight="48dp"
             android:paddingLeft="5dp">
@@ -115,7 +115,7 @@
             android:layout_margin="8dp"
             android:background="@drawable/border_black"
             android:drawableLeft="@drawable/baseline_security_24"
-            android:hint="Confirm password"
+            android:hint="Xác nhận mật khẩu"
             android:inputType="textPassword"
             android:minHeight="48dp"
             android:paddingLeft="5dp">
@@ -127,7 +127,7 @@
             android:layout_width="300dp"
             android:layout_height="58dp"
             android:layout_margin="10dp"
-            android:text="Register"
+            android:text="Đăng ký"
             android:textColor="@color/colorblack"
             android:backgroundTint="#FFFF">
 
@@ -144,7 +144,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="20dp"
-                android:text="Already have an account? ">
+                android:text="Bạn đã có tài khoản? ">
 
             </TextView>
 
@@ -153,7 +153,7 @@
                 android:layout_width="84dp"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
-                android:text="Sign In"
+                android:text="Đăng nhập"
                 android:textColor="@color/colorRed">
 
             </TextView>

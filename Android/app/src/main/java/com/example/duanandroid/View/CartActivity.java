@@ -1,5 +1,6 @@
 package com.example.duanandroid.View;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -7,21 +8,17 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.duanandroid.R;
 
-import Adapter.CartAdapter;
-import Model.CartItem;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import Adapter.CartAdapter;
+import Model.CartItem;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -49,29 +46,38 @@ public class CartActivity extends AppCompatActivity {
 
         cartAdapter = new CartAdapter(cartItems);
         recyclerCartItems.setAdapter(cartAdapter);
-
+        Intent intent = getIntent();
+        String origin = intent.getStringExtra("origin");
         TextView btn=  findViewById(R.id.btn_checkout);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(CartActivity.this, BuyandpaymentActivity.class);
+                intent.putExtra("origin", "cart");
                 startActivity(intent);
             }
         });
 
 
-        ImageView backArrow = findViewById(R.id.btn_back);
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
+        ImageButton backArrow = findViewById(R.id.btn_back);
 
-        // Gán sự kiện click cho nút mũi tên
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CartActivity.this, mainpageActivity.class);
-                startActivity(intent);
-                // Quay lại trang trước đó
-//                finish();
+            public void onClick(View view) {
+                if ("CartToAccount".equals(origin)) {
+                    Intent intent = new Intent(CartActivity.this, ManageAccountActivity.class);
+                    startActivity(intent);
+                } else if ("CartToHome".equals(origin)) {
+                    Intent intent = new Intent(CartActivity.this, mainpageActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                } else {
+                    finish();
+                }
             }
         });
+
         ImageView imv=  findViewById(R.id.chat);
         imv.setOnClickListener(new View.OnClickListener() {
             @Override
