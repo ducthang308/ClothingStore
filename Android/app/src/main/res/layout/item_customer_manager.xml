@@ -44,7 +44,7 @@
             android:id="@+id/btnOpen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Open"
+            android:text="Mở"
             android:textSize="16sp"
             android:backgroundTint="@color/colorRed"
             />
@@ -52,7 +52,7 @@
             android:id="@+id/btnLock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lock"
+            android:text="Khóa"
             android:textSize="16sp"
             android:backgroundTint="@color/blue"
             />

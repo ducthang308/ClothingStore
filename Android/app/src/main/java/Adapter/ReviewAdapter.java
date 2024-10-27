@@ -20,6 +20,7 @@ import Model.User;
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder> {
     private List<Review> reviewList;
     private List<User> userList;
+
     public ReviewAdapter(List<Review> reviewList, List<User> userList) {
         this.reviewList = reviewList;
         this.userList = userList;
@@ -51,14 +52,8 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
             // Set reviewer name
             holder.reviewerName.setText(user.getUserName());
         }
-
-        // Set review rating
         holder.reviewRating.setRating(review.getNumberOfStars());
-
-        // Set review content
         holder.reviewContent.setText(review.getNote());
-
-        // Set reviewer image (using a placeholder or loading image from URL)
         holder.reviewerImage.setImageResource(R.drawable.user); // Placeholder image
     }
 
@@ -79,6 +74,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
             reviewerName = itemView.findViewById(R.id.reviewer_name);
             reviewContent = itemView.findViewById(R.id.review_content);
             reviewRating = itemView.findViewById(R.id.review_rating);
+
         }
     }
 }

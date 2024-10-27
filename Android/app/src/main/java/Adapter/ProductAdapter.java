@@ -53,7 +53,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         // Load the product image from drawable using its resource ID
         int imageResId = Integer.parseInt(productImage.getImageUrl());
         holder.productImage.setImageResource(Integer.parseInt(productImage.getImageUrl()));
-
+//        int imageResId = Integer.parseInt(productImage.getImageUrl());
+//        holder.productImage.setImageResource(imageResId);
         // Set click listener for item
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

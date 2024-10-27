@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="Fragment.TabLayOutActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:background="@color/colorwhite"
+        android:gravity="center_vertical">
+
+        <!-- Back Arrow Icon -->
+        <ImageView
+            android:id="@+id/back_arrow_account"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/baseline_arrow_back_24"
+            android:contentDescription="Back" />
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Purchased Order"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginStart="16dp" />
+    </LinearLayout>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorwhite"
+        app:tabSelectedTextColor="@color/colorRed"
+        app:tabIndicatorColor="@color/lightblue"
+        android:padding="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        app:tabMode="scrollable">
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabPayment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chờ thanh toán"
+            />
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabShipping"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chờ vận chuyển"
+            />
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabDelivery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chờ giao hàng"
+            />
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabReview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đánh giá"
+            />
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trả /Hủy hàng"
+            />
+
+    </com.google.android.material.tabs.TabLayout>
+
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

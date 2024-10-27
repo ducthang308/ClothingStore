@@ -69,7 +69,7 @@
                     android:layout_height="wrap_content"
                     android:padding="10dp"
 
-                    android:text="Hello, thank you for contacting TTT shop, please let us know what advice you need?"
+                    android:text="Xin chào, cảm ơn bạn đã liên hệ với cửa hàng TTT, vui lòng cho chúng tôi biết bạn cần tư vấn gì?"
                     android:background="@drawable/bg_corner_chat_sendme"
                     android:textColor="#333333"
                     android:textSize="14sp"
@@ -89,7 +89,7 @@
                     android:layout_height="wrap_content"
                     android:padding="10dp"
                     android:layout_margin="10dp"
-                    android:text="I didn't see my order arrive?"
+                    android:text="Tôi không thấy đơn hàng của mình đến?"
                     android:background="@drawable/bg_corner_chat"
                     android:textSize="14sp"
                     android:layout_marginRight="10dp" />
@@ -117,7 +117,7 @@
                     android:paddingRight="10dp"
                     android:paddingTop="8dp"
                     android:paddingBottom="8dp"
-                    android:text="Sorry for the inconvenience, we will check right away."
+                    android:text="Xin lỗi vì sự bất tiện này, chúng tôi sẽ kiểm tra ngay."
                     android:background="@drawable/bg_corner_chat_sendme"
                     android:textColor="#333333"
                     android:textSize="14sp"
@@ -150,7 +150,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/stroke"
-            android:hint="Enter message"
+            android:hint="Nhập tin nhắn"
             android:padding="8dp"
             android:verticalScrollbarPosition="defaultPosition" />
 
@@ -159,7 +159,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorwhite"
-            android:contentDescription="Send"
+            android:contentDescription="Gửi"
             android:padding="5dp"
             android:src="@drawable/baseline_send_24" />
     </LinearLayout>

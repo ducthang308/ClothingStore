@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="20dp"
+    android:layout_margin="5dp"
+    android:background="@drawable/stroke"
+    >
+
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_weight="3">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phiếu giảm giá"
+                android:layout_marginLeft="10dp"
+                android:textSize="16sp"
+                android:textAlignment="center" />
+            <TextView
+                android:id="@+id/txtDiscount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5%"
+                android:textSize="16sp"
+                android:layout_marginLeft="10dp"
+                android:textAlignment="center" />
+
+        </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_mota"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Đơn hàng trên 100k"
+        android:textColor="@android:color/darker_gray"
+        android:padding="5dp"
+        android:textSize="16sp"
+        android:layout_marginLeft="10dp"
+        />
+</LinearLayout>
+    <Button
+        android:id="@+id/btn_use"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:backgroundTint="@color/blue"
+        android:textSize="16sp"
+        android:text="Dùng"/>
+
+</LinearLayout>

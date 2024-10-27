@@ -1,6 +1,5 @@
 package com.example.duanandroid.View;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,7 +15,6 @@ import com.example.duanandroid.R;
 import java.util.ArrayList;
 import java.util.List;
 
-//import Adapter.ReviewAdapter;
 import Adapter.ReviewAdapter;
 import Model.Review;
 import Model.User;
@@ -81,6 +79,7 @@ public class ChitietsanphamActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ChitietsanphamActivity.this, BuyandpaymentActivity.class);
+                intent.putExtra("origin", "order_details");
                 startActivity(intent);
             }
         });
