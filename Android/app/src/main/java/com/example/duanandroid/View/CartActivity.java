@@ -1,5 +1,6 @@
 package com.example.duanandroid.View;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -58,13 +59,12 @@ public class CartActivity extends AppCompatActivity {
         });
 
 
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
         ImageButton backArrow = findViewById(R.id.btn_back);
 
-        // Gán sự kiện click cho nút mũi tên
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Kiểm tra "origin" và điều hướng về trang phù hợp
                 if ("CartToAccount".equals(origin)) {
                     Intent intent = new Intent(CartActivity.this, ManageAccountActivity.class);
                     startActivity(intent);
@@ -72,9 +72,12 @@ public class CartActivity extends AppCompatActivity {
                     Intent intent = new Intent(CartActivity.this, mainpageActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
+                } else {
+                    finish();
                 }
             }
         });
+
         ImageView imv=  findViewById(R.id.chat);
         imv.setOnClickListener(new View.OnClickListener() {
             @Override

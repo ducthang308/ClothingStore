@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.duanandroid.R;
 import com.example.duanandroid.View.ReasoncancelActivity;
+import com.example.duanandroid.View.detailOrderActivity;
 
 import java.util.List;
 
@@ -62,7 +63,6 @@ public class WaitingPaymentAdapter extends RecyclerView.Adapter<WaitingPaymentAd
             holder.productImage.setImageResource(R.drawable.ao); // Hình mặc định
         }
 
-
         holder.btnCancelOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,9 +70,17 @@ public class WaitingPaymentAdapter extends RecyclerView.Adapter<WaitingPaymentAd
                 // Optional: Truyền thêm thông tin nếu cần
 //                intent.putExtra("orderDetailId", orderDetail.getId());
                 context.startActivity(intent);
-
             }
         });
+
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(context, detailOrderActivity.class);
+//                intent.putExtra("product", productList.get(position));
+//                context.startActivity(intent);
+//            }
+//        });
     }
 
     @Override

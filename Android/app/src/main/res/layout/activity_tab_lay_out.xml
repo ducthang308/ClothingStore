@@ -48,31 +48,31 @@
             android:id="@+id/tabPayment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Waiting for payment"
+            android:text="Chờ thanh toán"
             />
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabShipping"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Waiting for shipping"
+            android:text="Chờ vận chuyển"
             />
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabDelivery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Waiting for delivery"
+            android:text="Chờ giao hàng"
             />
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabReview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Review"
+            android:text="Đánh giá"
             />
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Return/Cancel goods"
+            android:text="Trả /Hủy hàng"
             />
 
     </com.google.android.material.tabs.TabLayout>

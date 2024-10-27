@@ -62,7 +62,7 @@
                 android:drawableRight="@drawable/arrow_right_icon"
                 android:gravity="center_vertical"
                 android:padding="10dp"
-                android:text="Personal Information"
+                android:text="Thông tin cá nhân"
                 android:textSize="15sp" />
 
 
@@ -75,7 +75,7 @@
                 android:drawablePadding="2dp"
                 android:gravity="center_vertical"
                 android:padding="10dp"
-                android:text="Approve Order Status"
+                android:text="Duyệt trạng thái đơn hàng"
                 android:textSize="15sp" />
 
             <TextView
@@ -87,7 +87,7 @@
                 android:drawablePadding="2dp"
                 android:gravity="center_vertical"
                 android:padding="10dp"
-                android:text="Customer Support"
+                android:text="Hỗ trợ khách hàng"
                 android:textSize="15sp" />
 
             <TextView
@@ -99,7 +99,7 @@
                 android:drawablePadding="2dp"
                 android:gravity="center_vertical"
                 android:padding="10dp"
-                android:text="See Shop Review"
+                android:text="Xem đánh giá cửa hàng"
                 android:textSize="15sp" />
 
             <TextView
@@ -112,7 +112,7 @@
                 android:drawablePadding="2dp"
                 android:gravity="center_vertical"
                 android:padding="10dp"
-                android:text="Product Manager"
+                android:text="Quản lý sản phẩm"
                 android:textSize="15sp" />
 
             <TextView
@@ -125,7 +125,7 @@
                 android:drawablePadding="2dp"
                 android:gravity="center_vertical"
                 android:padding="10dp"
-                android:text="Order Manage"
+                android:text="Quản lý đơn hàng"
                 android:textSize="15sp" />
 
             <TextView
@@ -139,7 +139,20 @@
                 android:drawablePadding="2dp"
                 android:gravity="center_vertical"
                 android:padding="10dp"
-                android:text="Customer Manager"
+                android:text="Quản lý khách hàng"
+                android:textSize="15sp" />
+            <TextView
+
+                android:id="@+id/tv_discount_manage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:drawableLeft="@drawable/baseline_discount_24"
+                android:drawableRight="@drawable/arrow_right_icon"
+                android:drawablePadding="2dp"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:text="Quản lý phiếu giảm giá"
                 android:textSize="15sp" />
         </LinearLayout>
     </LinearLayout>
@@ -173,11 +186,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Home"
+                android:text="Trang chủ"
                 android:textSize="12sp" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/account"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -195,7 +209,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Account"
+                android:text="Tài khoản"
                 android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>

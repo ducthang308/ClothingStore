@@ -23,7 +23,7 @@ public class ManageAccountActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.acctivity_manage_account);
         {
-            TextView btn=  findViewById(R.id.view_all_oders);
+            TextView btn = findViewById(R.id.view_all_oders);
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -33,7 +33,7 @@ public class ManageAccountActivity extends AppCompatActivity {
                 }
             });
 
-            LinearLayout btn1=  findViewById(R.id.waiting_payment_icon);
+            LinearLayout btn1 = findViewById(R.id.waiting_payment_icon);
             btn1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -42,7 +42,7 @@ public class ManageAccountActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-
+        }
             LinearLayout btn2=  findViewById(R.id.waiting_shipping_icon);
             btn2.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -160,4 +160,3 @@ public class ManageAccountActivity extends AppCompatActivity {
 //            });
         }
     }
-}

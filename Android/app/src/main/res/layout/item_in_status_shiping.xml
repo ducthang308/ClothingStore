@@ -102,7 +102,7 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total payment:"
+                android:text="Tổng thanh toán::"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
@@ -140,7 +140,7 @@
                     android:id="@+id/btn_cancel_inShiping"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cancel order"
+                    android:text="Hủy đơn hàng"
                     android:layout_marginStart="16dp"
                     android:backgroundTint="@android:color/holo_blue_light" />
             </LinearLayout>

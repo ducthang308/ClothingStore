@@ -1,6 +1,8 @@
 package Model;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
     private int id;
     private String productName;
     private int categoryId;
@@ -19,7 +21,7 @@ public class Product {
         this.discount = discount;
     }
 
-    public Product() {
+    public Product(int i, String áoThunNam, int i1, int i2, String m, String number, String s) {
     }
 
     public int getId() {

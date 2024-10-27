@@ -56,7 +56,7 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/bg_corner_chat"
                 android:padding="10dp"
-                android:text="Hello, thank you for contacting TTT shop, please let us know what advice you need? "
+                android:text="Xin chào, cảm ơn bạn đã liên hệ với cửa hàng TTT, vui lòng cho chúng tôi biết bạn cần tư vấn gì?"
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -78,7 +78,7 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/bg_corner_chat_sendme"
                 android:padding="10dp"
-                android:text="I didn't see my order arrive?"
+                android:text="Tôi không thấy đơn hàng của mình đến?"
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -96,7 +96,7 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/bg_corner_chat"
                 android:padding="10dp"
-                android:text="Sorry for the inconvenience, we will check right away. "
+                android:text="Xin lỗi vì sự bất tiện này, chúng tôi sẽ kiểm tra ngay. "
                 android:textSize="15sp" />
 
             <TextView
@@ -106,7 +106,7 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/bg_corner_chat"
                 android:padding="10dp"
-                android:text="Your order had some problems but it's okay, you will receive the goods soon."
+                android:text="Đơn hàng của bạn có một số vấn đề nhưng không sao, bạn sẽ sớm nhận được hàng."
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -128,7 +128,7 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/bg_corner_chat_sendme"
                 android:padding="10dp"
-                android:text="Is this shirt still available in size M?"
+                android:text="Chiếc áo này hiện còn size M không?"
 
                 android:textSize="15sp" />
         </LinearLayout>
@@ -146,7 +146,7 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/bg_corner_chat"
                 android:padding="10dp"
-                android:text="Size M is temporarily out of stock, it will be back in stock in a few days. "
+                android:text="Size M tạm thời hết hàng, sẽ có hàng trở lại sau vài ngày. "
                 android:textSize="15sp" />
         </LinearLayout>
 

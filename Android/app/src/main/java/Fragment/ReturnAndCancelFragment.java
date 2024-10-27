@@ -95,49 +95,7 @@ public class ReturnAndCancelFragment extends Fragment {
         statusCancelReturnGoodsAdapter = new StatusCancelReturnGoodsAdapter(getContext(), productList, orderDetailList, productImageList);
         recyclerView.setAdapter(statusCancelReturnGoodsAdapter);
 
-        // Initialize button layouts
-//        layoutProductButtons = view.findViewById(R.id.layout_product_buttons);
-//        layoutShippingButtons = view.findViewById(R.id.layout_shipping_buttons);
-//        layoutDeliveryButtons = view.findViewById(R.id.layout_delivery_buttons);
-//        layoutReviewButtons = view.findViewById(R.id.layout_review_buttons);
-//        layoutReviewnote = view.findViewById(R.id.layout_review_note);
 
-        // Handle "Waiting for shipping" tab click
-//        TextView tabWaitingShipping = view.findViewById(R.id.tab_waiting_shipping);
-//        tabWaitingShipping.setOnClickListener(v -> {
-//            // Chuyển sang Fragment khác
-//            // FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-//            // transaction.replace(R.id.fragment_container, new WaitingForShippingFragment());
-//            // transaction.addToBackStack(null);
-//            // transaction.commit();
-//        });
-//
-//        TextView tabwaitingdelivery = view.findViewById(R.id.waiting_delivery);
-//        tabwaitingdelivery.setOnClickListener(v -> {
-//            // Tương tự như trên, bạn có thể sử dụng FragmentTransaction
-//        });
-//
-//        TextView tabreviewstatus = view.findViewById(R.id.tab_review);
-//        tabreviewstatus.setOnClickListener(v -> {
-//            // Tương tự như trên, bạn có thể sử dụng FragmentTransaction
-//        });
-//
-//        TextView tab_return_cancel_goods = view.findViewById(R.id.return_cancel_goods);
-//        tab_return_cancel_goods.setOnClickListener(v -> {
-//            // Tương tự như trên, bạn có thể sử dụng FragmentTransaction
-//        });
-//
-//        ImageView btnback = view.findViewById(R.id.back_arrow);
-//        btnback.setOnClickListener(v -> {
-//            // Chuyển về Fragment trước đó nếu cần
-//            // getActivity().onBackPressed();
-//        });
-//
-//        Button btcancel = view.findViewById(R.id.btn_cancel_order);
-//        btcancel.setOnClickListener(v -> {
-//            // Tương tự như trên, bạn có thể sử dụng FragmentTransaction
-//        });
-//
         return view; // Trả về View
     }
 }

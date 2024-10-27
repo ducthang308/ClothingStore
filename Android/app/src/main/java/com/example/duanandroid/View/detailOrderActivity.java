@@ -2,25 +2,38 @@ package com.example.duanandroid.View;
 
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.example.duanandroid.R;
+import com.example.duanandroid.databinding.ActivityDetailOrderBinding;
+
+import Model.Product;
 
 public class detailOrderActivity extends AppCompatActivity {
-
+    private Product product;
+    ActivityDetailOrderBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_detail_order);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+        binding = ActivityDetailOrderBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        getVariable();
+        setVariable();
+    }
+
+    private void getVariable() {
+        binding.productName.setText(product.getProductName());
+        binding.productColor.setText(product.getColor());
+        binding.size.setText(product.getSize());
+        //binding.productSoluong.setText(product.getsoLuong);
+        binding.productPrice.setText(product.getPrice()+"đ");
+
+        //Glide.with(detailOrderActivity.this)
+          //      .load(product.getImage())
+            //    .into(binding.pic);
+    }
+
+    private void setVariable() {
+        product = (Product) getIntent().getSerializableExtra("product");
     }
 }

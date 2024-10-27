@@ -48,6 +48,7 @@ public class HomeFragment extends Fragment {
         productRecyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
         productRecyclerView.addItemDecoration(new ItemDecoration(2, 24, true));
 
+
         productList = loadDataFromLayout();
         productImageList = loadProductImages();
 
@@ -82,11 +83,12 @@ public class HomeFragment extends Fragment {
         return products;
     }
 
-    private List<ProductImage> loadProductImages()
-    { List<ProductImage> productImages = new ArrayList<>();
-        for (int i = 0; i < 8; i++)
-        { String imageName = "ao" + (i + 1);
+    private List<ProductImage> loadProductImages() {
+        List<ProductImage> productImages = new ArrayList<>();
+        for (int i = 0; i < 8; i++) {
+            String imageName = "ao" + (i + 1);
             int imageResId = getResources().getIdentifier(imageName, "drawable", requireContext().getPackageName());
+
             productImages.add(new ProductImage(i, i, String.valueOf(imageResId)));
         }
         return productImages;

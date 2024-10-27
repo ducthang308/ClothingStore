@@ -1,5 +1,6 @@
 package Fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import com.example.duanandroid.R;
 import com.example.duanandroid.View.CartActivity;
 import com.example.duanandroid.View.HelpActivity;
+import com.example.duanandroid.View.KhoVoucherActivity;
 import com.example.duanandroid.View.changePassActivity;
 import com.example.duanandroid.View.chatUserActivity;
 import com.example.duanandroid.View.editAccountActivity;
@@ -125,6 +127,15 @@ public class AccountUserFragment extends Fragment {
             }
         });
 
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
+        RelativeLayout khoVoucher = view.findViewById(R.id.khovoucher);
+        khoVoucher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), KhoVoucherActivity.class);
+                startActivity(intent);
+            }
+        });
         RelativeLayout myshoppingcart = view.findViewById(R.id.My_shopping_cart);
         myshoppingcart.setOnClickListener(new View.OnClickListener() {
             @Override

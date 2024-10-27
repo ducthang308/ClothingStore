@@ -97,5 +97,7 @@ public class TabLayOutActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
     }
 }

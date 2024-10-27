@@ -21,12 +21,13 @@
             tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
         <!-- LinearLayout to contain Edit and Chat ImageView -->
+
         <TextView
             android:id="@+id/tv_cart_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cart"
             android:layout_marginLeft="35dp"
+            android:text="Giỏ hàng"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
 
@@ -40,8 +41,8 @@
                 android:id="@+id/edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Delete"
-                android:textSize="24dp"
+                android:text="Xóa"
+                android:textSize="20dp"
                 android:textColor="#FF0000"
                 android:layout_gravity="center_vertical" />
 

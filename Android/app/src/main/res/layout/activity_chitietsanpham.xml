@@ -88,7 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Product reviews"
+        android:text="Đánh giá sản phẩm"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/product_description" />
@@ -117,7 +117,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:backgroundTint="#2A80FF"
-            android:text="Buy now"
+            android:text="Mua ngay"
             android:textColor="#FFFFFF" />
 
         <Button
@@ -125,7 +125,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#2A80FF"
-            android:text="Add to cart"
+            android:text="Thêm vào giỏ hàng"
             android:textColor="#FFFFFF" />
     </LinearLayout>
 

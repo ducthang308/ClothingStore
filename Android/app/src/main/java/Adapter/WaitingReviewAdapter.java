@@ -3,6 +3,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,6 +27,7 @@ public class WaitingReviewAdapter extends RecyclerView.Adapter<WaitingReviewAdap
         private List<Product> productList;
         private List<OrderDetail> orderDetailList;
         private List<ProductImage> productImageList;
+
 
         // Constructor
         public WaitingReviewAdapter(Context context, List<Product> productList, List<OrderDetail> orderDetailList, List<ProductImage> productImageList) {
@@ -72,6 +74,7 @@ public class WaitingReviewAdapter extends RecyclerView.Adapter<WaitingReviewAdap
 
             TextView productName, productSize, productPrice, productQuantity, totalPayment;
             ImageView productImage;
+            Button danhgia;
 
             public WaitingReviewViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -81,6 +84,7 @@ public class WaitingReviewAdapter extends RecyclerView.Adapter<WaitingReviewAdap
                 productQuantity = itemView.findViewById(R.id.product_quantity);
                 totalPayment = itemView.findViewById(R.id.total_money);
                 productImage = itemView.findViewById(R.id.product_image);
+                danhgia = itemView.findViewById(R.id.btn_review);
             }
         }
 
