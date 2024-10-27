@@ -1,7 +1,8 @@
 package Model;
+import java.io.Serializable;
 import java.util.Date;
 
-public class User {
+public class User implements Serializable {
     private int id;
     private String fullname;
     private String address;
@@ -127,5 +128,24 @@ public class User {
 
     public void setFacebookAccountId(int facebookAccountId) {
         this.facebookAccountId = facebookAccountId;
+    }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", fullname='" + fullname + '\'' +
+                ", address='" + address + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", email='" + email + '\'' +
+                ", roleId=" + roleId +
+                ", dateOfBirth=" + dateOfBirth +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", active='" + active + '\'' +
+                ", googleAccountId=" + googleAccountId +
+                ", facebookAccountId=" + facebookAccountId +
+                '}';
     }
 }

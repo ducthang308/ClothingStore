@@ -16,17 +16,17 @@ import retrofit2.http.Query;
 
 public interface APIservice {
 
-    Gson gson = new GsonBuilder()
-            .setDateFormat("yy-mm-dd HH:mm:ss ")
-            .create();
-
-    APIservice apiservice = new Retrofit.Builder()
-            .baseUrl("")
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
-            .create(APIservice.class);
-
-
-    @GET("User")
-    Call<List<User>> getListuser(@Query("") String key);
+//    Gson gson = new GsonBuilder()
+//            .setDateFormat("yy-mm-dd HH:mm:ss ")
+//            .create();
+//
+//    APIservice apiservice = new Retrofit.Builder()
+//            .baseUrl("")
+//            .addConverterFactory(GsonConverterFactory.create(gson))
+//            .build()
+//            .create(APIservice.class);
+//
+//
+//    @GET("User")
+//    Call<List<User>> getListuser(@Query("") String key);
 }
