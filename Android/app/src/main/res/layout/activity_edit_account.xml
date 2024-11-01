@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="Profile"
+            android:text="Hồ sơ"
             android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -72,7 +72,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Name"
+                android:text="Tên"
                 />
 
             <EditText
@@ -82,7 +82,9 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/stroke"
                 android:inputType="text"
-                android:padding="15dp" />
+                android:padding="15dp"
+                android:text="Nguyễn A"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -99,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/stroke"
-
+                android:text="1234abc@gmail.com"
                 android:inputType="textEmailAddress"
                 android:padding="15dp" />
         </LinearLayout>
@@ -110,7 +112,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Phone number"
+                android:text="Số điện thoại"
                 />
             <EditText
                 android:id="@+id/et_inputPhone"
@@ -119,17 +121,19 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/stroke"
                 android:inputType="phone"
+                android:text="012345699"
                 android:padding="15dp" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Birthday"
-                />
+                android:text="Ngày sinh" />
+
             <EditText
                 android:id="@+id/etBirthday"
                 android:layout_width="match_parent"
@@ -137,6 +141,7 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/stroke"
                 android:inputType="date"
+                android:text="12/12/2001"
                 android:padding="15dp" />
         </LinearLayout>
         <LinearLayout
@@ -147,7 +152,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Gender"
+                android:text="Giới tính"
                 android:layout_marginRight="20dp"
                 />
             <RadioGroup
@@ -157,12 +162,12 @@
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Male"
+                    android:text="Nam"
                     android:textSize="15sp"/>
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Female"
+                    android:text="Nữ"
                     android:layout_marginLeft="70dp"
                     android:textSize="15sp"/>
             </RadioGroup>
@@ -180,7 +185,7 @@
             android:backgroundTint="@color/blue"
             android:gravity="center"
             android:padding="15dp"
-            android:text="Save"
+            android:text="Lưu"
             android:textColor="@android:color/white"
             android:textSize="16sp" />
     </LinearLayout>

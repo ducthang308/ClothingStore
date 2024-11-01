@@ -25,8 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="64dp"
             android:layout_marginRight="64dp"
-            android:text="Get help with TTT"
-            android:textSize="24sp"
+            android:text="Nhận trợ giúp với TTT"
+            android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Live chat" />
+                android:text="Trò chuyện trực tiếp" />
         </LinearLayout>
 
         <LinearLayout
@@ -76,7 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Call support" />
+                android:text="Gọi hỗ trợ" />
         </LinearLayout>
 
         <LinearLayout
@@ -97,7 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Email support" />
+                android:text="Hỗ trợ qua email" />
         </LinearLayout>
 
     </LinearLayout>
@@ -108,30 +108,35 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
+        android:layout_weight="1"
         android:padding="16dp"> <!-- Thêm layout_weight để đẩy phần dưới cùng -->
 
         <TextView
             android:layout_width="300dp"
             android:layout_height="80dp"
-            android:background="@drawable/buttonforhelp"
+            android:layout_margin="20dp"
+            android:background="@drawable/buttonhelp"
 
             />
         <TextView
             android:layout_width="300dp"
             android:layout_height="80dp"
-            android:background="@drawable/buttonforhelp1"
+            android:layout_margin="20dp"
+            android:background="@drawable/buttonhelp1"
 
             />
         <TextView
             android:layout_width="300dp"
             android:layout_height="80dp"
-            android:background="@drawable/buttonforhelp2"
+            android:layout_margin="20dp"
+            android:background="@drawable/buttonhelp2"
 
             />
         <TextView
             android:layout_width="300dp"
             android:layout_height="80dp"
-            android:background="@drawable/buttonforhelp3"
+            android:layout_margin="20dp"
+            android:background="@drawable/buttonhelp3"
 
             />
     </LinearLayout>
@@ -141,17 +146,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+
         android:background="@color/colorgray"
-        android:orientation="vertical"
-        android:layout_gravity="bottom"> <!-- Thêm layout_gravity="bottom" -->
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="16dp"
-            android:text="The world's largest shopping application"
-            android:textSize="20dp"
+            android:text="Ứng dụng mua sắm lớn nhất thế giới"
+            android:textSize="20sp"
             android:textStyle="bold"/>
 
         <LinearLayout
@@ -203,9 +208,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="C\u00A92024 The world's largest shopping application. All rights reserved"
+                    android:text="C\u00A92024 Ứng dụng mua sắm lớn nhất thế giới. Mọi quyền được bảo lưu"
                     android:textAlignment="center"
-                    android:textSize="17dp" />
+                    android:textSize="17sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -44,6 +43,9 @@ public class adminAcountActivity extends AppCompatActivity {
 //                startActivity(intent1);
 //            }
 //        });
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
+        LinearLayout nav_account = findViewById(R.id.account);
+        nav_account.setBackgroundColor(getResources().getColor(R.color.colorgray));
         tv_cus_manager.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,7 +81,14 @@ public class adminAcountActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        TextView tv_discount = findViewById(R.id.tv_discount_manage);
+            tv_discount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(adminAcountActivity.this, DiscountManageActivity.class);
+                    startActivity(intent);
+                }
+            });
     }
 
 

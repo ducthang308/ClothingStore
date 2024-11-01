@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,7 +43,10 @@ public class mainpageAdminActivity extends AppCompatActivity {
             productRecyclerView.setAdapter(productAdapter);
 
 
-            LinearLayout btn=  findViewById(R.id.nav_account);
+            LinearLayout nav_home = findViewById(R.id.nav_home);
+            nav_home.setBackgroundColor(getResources().getColor(R.color.colorgray));
+            LinearLayout btn = findViewById(R.id.nav_account);
+
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -61,6 +63,7 @@ public class mainpageAdminActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
+//
         }
     }
 
