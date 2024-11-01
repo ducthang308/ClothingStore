@@ -3,17 +3,13 @@ package com.example.demo.Services;
 import com.example.demo.DTO.CartItemDTO;
 import com.example.demo.DTO.OrdersDTO;
 import com.example.demo.Exception.DataNotFoundException;
-import com.example.demo.Models.OrderDetail;
-import com.example.demo.Models.OrderStatus;
-import com.example.demo.Models.Orders;
-import com.example.demo.Models.Users;
+import com.example.demo.Models.*;
+import com.example.demo.Repository.DiscountsRepository;
 import com.example.demo.Repository.OrdersRepository;
 import com.example.demo.Repository.UsersRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,12 +18,15 @@ public class OrderService implements IOrdersService {
 
     private final OrdersRepository ordersRepository;
     private final UsersRepository usersRepository;
+    private final DiscountsRepository discountsRepository;
 
     @Override
     @Transactional
     public Orders createOrder(OrdersDTO orderDTO) throws Exception {
         Users existingUser = usersRepository.findById(orderDTO.getUserId())
                 .orElseThrow(() -> new DataNotFoundException("Not found userId: " + orderDTO.getUserId()));
+        Discounts existingDiscount = discountsRepository.findById(orderDTO.getDiscountId())
+                .orElseThrow(() -> new DataNotFoundException("Not found userId: " + orderDTO.getDiscountId()));
         Orders orders = Orders.builder()
                 .users(existingUser)
                 .note(orderDTO.getNote())
@@ -35,6 +34,7 @@ public class OrderService implements IOrdersService {
                 .status(OrderStatus.WAITING)
                 .totalMoney(orderDTO.getTotalMoney())
                 .paymentMethod(orderDTO.getPaymentMethod())
+                .discounts(existingDiscount)
                 .build();
         ordersRepository.save(orders);
 //        List<OrderDetail> orderDetails = new ArrayList<>();
@@ -67,6 +67,8 @@ public class OrderService implements IOrdersService {
         Orders orders = ordersRepository.findById(id)
                 .orElseThrow(()->
                         new DataNotFoundException("Not found orderId: "+id));
+        Discounts existingDiscount = discountsRepository.findById(orderDTO.getDiscountId())
+                .orElseThrow(() -> new DataNotFoundException("Not found userId: " + orderDTO.getDiscountId()));
 //        Users existUser = usersRepository.findById(orderDTO.getUserId())
 //                .orElseThrow(()->
 //                        new DataNotFoundException("Not found userId: "+orderDTO.getUserId()));
@@ -76,6 +78,7 @@ public class OrderService implements IOrdersService {
             orders.setStatus(orderDTO.getStatus());
             orders.setTotalMoney(orderDTO.getTotalMoney());
             orders.setPaymentMethod(orderDTO.getPaymentMethod());
+            orders.setDiscounts(existingDiscount);
             return ordersRepository.save(orders);
         }
         return null;

@@ -43,4 +43,8 @@ public class Orders {
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<OrderDetail> orderDetails;
+
+    @ManyToOne
+    @JoinColumn(name = "discount_id")
+    private Discounts discounts;
 }
