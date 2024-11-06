@@ -18,7 +18,7 @@ public class Discounts {
 
     @Column(name = "percent")
     private float percent;
-    
+
     @Column(name = "note")
     private String note;
 }

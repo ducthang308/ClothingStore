@@ -8,6 +8,10 @@ spring:
     username: ducthang
     password: 'Thang@3008'
     driver-class-name: com.mysql.cj.jdbc.Driver
+  #    url: jdbc:mysql://localhost:3306/ClothingStore?useSSL=false&serverTimezone=UTC
+  #    username: root
+  #    password: 'Thang@3008'
+  #    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
