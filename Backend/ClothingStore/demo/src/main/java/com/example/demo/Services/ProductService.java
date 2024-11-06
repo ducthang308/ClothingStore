@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -99,5 +100,13 @@ public class ProductService implements IProductService{
     @Override
     public ProductImages getUrl(String imageName) {
         return productImagesRepository.findByImageUrl(imageName);
+    }
+
+    @Override
+    public List<String> getImageUrlsByProductId(Long productId) {
+        return productImagesRepository.findByProductId(productId)
+                .stream()
+                .map(ProductImages::getImageUrl)
+                .collect(Collectors.toList());
     }
 }

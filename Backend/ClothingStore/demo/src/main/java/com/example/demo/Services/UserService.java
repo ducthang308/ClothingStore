@@ -1,5 +1,6 @@
 package com.example.demo.Services;
 
+import com.example.demo.DTO.LoginResponseDTO;
 import com.example.demo.DTO.UsersDTO;
 import com.example.demo.Exception.DataNotFoundException;
 import com.example.demo.Exception.PermissonDenyException;
@@ -29,11 +30,18 @@ public class UserService implements IUsersService{
 
     @Override
     public Users createUser(UsersDTO usersDTO) throws Exception {
+
+        Long roleId = usersDTO.getRoleId();
+        if (roleId == null) {
+            roleId = 2L;
+            usersDTO.setRoleId(roleId);
+        }
+
         String phoneNumber = usersDTO.getPhoneNumber();
         if(usersRepository.existsByPhoneNumber(phoneNumber)){
             throw new DataIntegrityViolationException("Phone number already exists");
         }
-        Roles role = rolesRepository.findById(usersDTO.getRoleId())
+        Roles role = rolesRepository.findById(roleId)
                 .orElseThrow(()->new DataNotFoundException("Role not found"));
         if(role.getRoleName().toUpperCase().equals(Roles.Admin)){
             throw new PermissonDenyException("You cannot register an ADMIN account");
@@ -59,23 +67,30 @@ public class UserService implements IUsersService{
     }
 
     @Override
-    public String login(String phoneNumber, String password) throws Exception {
+    public LoginResponseDTO login(String phoneNumber, String password) throws Exception {
         Optional<Users> users = usersRepository.findByPhoneNumber(phoneNumber);
-        if(users.isEmpty()){
-            throw new DataNotFoundException("Invalid phone number Or password");
+        if (users.isEmpty()) {
+            throw new DataNotFoundException("Invalid phone number or password");
         }
+
         Users existingUser = users.get();
 
-        if(existingUser.getFacebookAccountId() == 0 && existingUser.getGoogleAccountId() == 0){
-            if(!passwordEncoder.matches(password, existingUser.getPassword())){
+        if (existingUser.getFacebookAccountId() == 0 && existingUser.getGoogleAccountId() == 0) {
+            if (!passwordEncoder.matches(password, existingUser.getPassword())) {
                 throw new BadCredentialsException("Wrong phone number or password");
             }
         }
+
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 phoneNumber, password, existingUser.getAuthorities()
         );
-        //authenticate with java spring security
+        // Authenticate with Spring Security
         authenticationManager.authenticate(authenticationToken);
-        return jwtToken.generationToken(existingUser);
+
+        // Generate token and create response DTO with roleId
+        String token = jwtToken.generationToken(existingUser);
+        Long roleId = existingUser.getRoles().getId(); // assuming roleId is accessible like this
+        return new LoginResponseDTO(token, roleId);
     }
+
 }
