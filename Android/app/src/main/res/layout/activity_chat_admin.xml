@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:paddingLeft="10dp"
             android:text="Trò chuyện"
+            android:textColor="@color/colorblack"
             android:textSize="20sp" />
     </LinearLayout>
 

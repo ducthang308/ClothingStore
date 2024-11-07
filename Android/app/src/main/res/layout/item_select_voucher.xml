@@ -18,19 +18,23 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="5dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Phiếu giảm giá"
                 android:layout_marginLeft="10dp"
-                android:textSize="16sp"
-                android:textAlignment="center" />
+                android:text="Phiếu giảm giá"
+                android:textAlignment="center"
+                android:textColor="@color/colorblack"
+                android:textSize="16sp" />
+
             <TextView
                 android:id="@+id/txtDiscount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="5%"
                 android:textSize="16sp"
+                android:textColor="@color/colorblack"
                 android:layout_marginLeft="10dp"
                 android:textAlignment="center" />
 

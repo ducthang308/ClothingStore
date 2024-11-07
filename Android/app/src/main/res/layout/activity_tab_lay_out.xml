@@ -28,7 +28,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Purchased Order"
+            android:text="Đơn hàng đã mua"
+            android:textColor="@color/colorblack"
             android:textStyle="bold"
             android:textSize="18sp"
             android:layout_marginStart="16dp" />
@@ -49,29 +50,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Chờ thanh toán"
+            android:textColor="@color/colorblack"
             />
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabShipping"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Chờ vận chuyển"
+            android:textColor="@color/colorblack"
             />
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabDelivery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Chờ giao hàng"
+            android:textColor="@color/colorblack"
             />
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabReview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorblack"
             android:text="Đánh giá"
             />
         <com.google.android.material.tabs.TabItem
             android:id="@+id/tabCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorblack"
             android:text="Trả /Hủy hàng"
             />
 

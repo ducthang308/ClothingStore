@@ -48,7 +48,8 @@ public class SelectVoucherActivity extends AppCompatActivity implements SelectVo
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SelectVoucherActivity.this, BuyandpaymentActivity.class);
-                startActivity(intent);
+//                startActivity(intent);
+                finish();
             }
         });
 //        btn_use.setOnClickListener(new View.OnClickListener() {
