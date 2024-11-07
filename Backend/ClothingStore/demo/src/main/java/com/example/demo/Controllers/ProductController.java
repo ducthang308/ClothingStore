@@ -12,8 +12,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.UrlResource;
 import com.example.demo.DTO.ProductImageDTO;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -116,22 +121,29 @@ public class ProductController {
         }
     }
 
-//    @GetMapping("/images/{imageName}")
-//    public ResponseEntity<?> viewImage(@PathVariable String imageName) {
-//        try {
-//            // Tìm kiếm URL của ảnh trong cơ sở dữ liệu dựa trên tên ảnh
-//            String imageUrl = productService.getImageUrlByImageName(imageName);
-//
-//            if (imageUrl != null) {
-//                // Trả về URL của ảnh đã được lưu trên Cloudinary
-//                return ResponseEntity.status(HttpStatus.FOUND).header("Location", imageUrl).build();
-//            } else {
-//                return ResponseEntity.status(HttpStatus.FOUND).header("Not found location image").build();
-//            }
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving image.");
-//        }
-//    }
+    @GetMapping("/images/{imageName}")
+    @PreAuthorize("hasRole('ROLE_Admin')")
+    public ResponseEntity<?> viewImage(@PathVariable ProductImages productImages) {
+        try {
+            // Tìm kiếm URL của ảnh trong cơ sở dữ liệu dựa trên tên ảnh
+            ProductImages imageUrl = productService.getUrl(productImages.getImageUrl());
+
+            if (imageUrl != null) {
+                // Trả về URL của ảnh đã được lưu trên Cloudinary
+                return ResponseEntity.status(HttpStatus.FOUND).header("Location").build();
+            } else {
+                return ResponseEntity.status(HttpStatus.FOUND).header("Not found location image").build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving image.");
+        }
+    }
+
+    @GetMapping("/images/{productId}")
+    public ResponseEntity<List<String>> getImagesByProductId(@PathVariable Long productId) {
+        List<String> imageUrls = productService.getImageUrlsByProductId(productId);
+        return imageUrls.isEmpty() ? ResponseEntity.notFound().build() : ResponseEntity.ok(imageUrls);
+    }
 
 
     @PostMapping(value = "uploads/{id}", consumes = "multipart/form-data")

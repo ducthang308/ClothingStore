@@ -3,6 +3,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data //toString
 @Getter
@@ -18,13 +19,13 @@ public class Messages {
     private Long id;
 
     @Column(name = "sender_id")
-    private int senderId;
+    private Users senderId;
     @Column(name = "receiver_id")
-    private int receiverId;
+    private Users receiverId;
     @Column(name = "content", nullable = false)
     private String content;
-    @Column(name = "createAt", nullable = false)
-    private LocalDateTime createAt;
+    @Column(name = "create_at", nullable = false)
+    private Date createAt;
 
     @ManyToOne
     @JoinColumn(name = "conversation_id")

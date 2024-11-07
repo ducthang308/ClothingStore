@@ -32,4 +32,7 @@ public class OrdersDTO {
 
     @JsonProperty("cart_items")
     private List<CartItemDTO> cartItems;
+
+    @JsonProperty("discount_id")
+    private Long discountId;
 }

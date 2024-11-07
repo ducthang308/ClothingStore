@@ -6,6 +6,7 @@ import com.example.demo.Models.Product;
 import com.example.demo.Models.ProductImages;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IProductService {
     Product createProduct(ProductDTO productDTO) throws Exception;
@@ -16,4 +17,7 @@ public interface IProductService {
     boolean existsByName(String name);
     ProductImages createProductImage(Long productId, ProductImageDTO productImageDTO) throws Exception;
     List<Product> findProductsByIds(List<Long> productIds);
+    ProductImages getUrl(String imageName);
+    //    List<ProductImages> getImageUrlByProductId(Long productId);
+    List<String> getImageUrlsByProductId(Long productId);
 }
