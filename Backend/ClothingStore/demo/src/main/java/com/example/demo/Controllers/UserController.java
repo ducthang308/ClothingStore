@@ -1,5 +1,6 @@
 package com.example.demo.Controllers;
 
+import com.example.demo.DTO.LoginResponseDTO;
 import com.example.demo.DTO.UsersDTO;
 import com.example.demo.Models.Users;
 import com.example.demo.Services.UserService;
@@ -43,14 +44,13 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody UsersDTO usersDTO){
+    public ResponseEntity<?> login(@Valid @RequestBody UsersDTO usersDTO) {
         try {
-            String users = userService.login(
-                    usersDTO.getPhoneNumber(),
-                    usersDTO.getPassword());
-            return ResponseEntity.ok(users);
-        }catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
+            LoginResponseDTO responseDTO = userService.login(usersDTO.getPhoneNumber(), usersDTO.getPassword());
+            return ResponseEntity.ok(responseDTO);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Login failed: " + e.getMessage());
         }
     }
+
 }
