@@ -22,7 +22,7 @@ public class Conversation implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "create_at")
     private Date createAt;
 
     @ManyToOne

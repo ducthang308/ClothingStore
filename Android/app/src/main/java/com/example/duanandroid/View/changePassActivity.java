@@ -8,9 +8,6 @@ import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.duanandroid.R;
 
@@ -26,7 +23,8 @@ public class changePassActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent_profile = new Intent(changePassActivity.this, ManageAccountActivity.class);
-                startActivity(intent_profile);
+//                startActivity(intent_profile);
+                finish();
             }
         });
 
@@ -37,6 +35,7 @@ public class changePassActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(changePassActivity.this, ManageAccountActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 

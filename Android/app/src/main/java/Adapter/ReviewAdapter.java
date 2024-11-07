@@ -50,7 +50,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
 
         if (user != null) {
             // Set reviewer name
-            holder.reviewerName.setText(user.getUserName());
+            holder.reviewerName.setText(user.getFullname());
         }
         holder.reviewRating.setRating(review.getNumberOfStars());
         holder.reviewContent.setText(review.getNote());

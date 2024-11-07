@@ -100,6 +100,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:background="@color/colorwhite"
                     android:padding="10dp">
 
                     <!-- Tên danh sách sản phẩm -->
@@ -156,7 +157,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Home"
+                android:text="Trang chủ"
                 android:textSize="14sp" />
 
         </LinearLayout>
@@ -179,7 +180,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Account"
+                android:text="Tài khoản"
                 android:textSize="14sp" />
 
         </LinearLayout>

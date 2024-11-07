@@ -67,7 +67,8 @@ public class CartActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if ("CartToAccount".equals(origin)) {
                     Intent intent = new Intent(CartActivity.this, ManageAccountActivity.class);
-                    startActivity(intent);
+//                    startActivity(intent);
+                    finish();
                 } else if ("CartToHome".equals(origin)) {
                     Intent intent = new Intent(CartActivity.this, mainpageActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);

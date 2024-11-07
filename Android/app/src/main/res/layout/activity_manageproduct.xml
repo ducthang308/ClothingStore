@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:text="Quản lý sản phẩm"
             android:textStyle="bold"
+            android:textColor="@color/colorblack"
             android:textSize="18sp"
             android:layout_marginStart="16dp"
             android:layout_weight="1" />
@@ -54,6 +55,7 @@
             android:background="@drawable/custom_edittext"
             android:hint="Nhập tên hoặc mã sản phẩm"
             android:padding="8dp"
+            android:textColorHint="@color/colorblack"
             android:paddingStart="40dp"
             android:paddingEnd="40dp"
             tools:ignore="TouchTargetSizeCheck" />

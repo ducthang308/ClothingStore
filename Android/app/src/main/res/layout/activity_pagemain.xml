@@ -5,7 +5,7 @@
     android:background="@color/lightblue"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".View.mainpageActivity">
+    >
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
@@ -17,7 +17,6 @@
         android:layout_height="wrap_content"
         android:background="@color/colorwhite"
         android:elevation="5dp"
-        android:padding="5dp"
         app:menu="@menu/bottom_navigation"
 
         android:layout_alignParentBottom="true"/>

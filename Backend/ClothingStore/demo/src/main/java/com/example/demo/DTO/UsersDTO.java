@@ -1,5 +1,6 @@
 package com.example.demo.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -34,13 +35,14 @@ public class UsersDTO {
     private String retypePass;
 
     @JsonProperty("date_of_birth")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date dateOfBirth;
 
     @JsonProperty("facebook_account_id")
-    private int facebookAccountId;
+    private int facebookAccountId = 0;
 
     @JsonProperty("google_account_id")
-    private int googleAccountId;
+    private int googleAccountId = 0;
 
     @JsonProperty("role_id")
     private Long roleId;

@@ -15,7 +15,7 @@ import com.example.duanandroid.R;
 
 public class adminAcountActivity extends AppCompatActivity {
 
-//    private ActivityAdminAcountBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,26 +23,9 @@ public class adminAcountActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_admin_acount);
 
-//        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
-//        TextView tv_PersonInfo = findViewById(R.id.tv_personInfor);
-//        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
-//        TextView tv_changePass = findViewById(R.id.tv_changePass);
         @SuppressLint({"MissingInflatedId", "LocalSuppress"})
         TextView tv_cus_manager = findViewById(R.id.tv_cus_manager);
-//        tv_PersonInfo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(adminAcountActivity.this, editAccountActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        tv_changePass.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent1 = new Intent(adminAcountActivity.this, changePassActivity.class);
-//                startActivity(intent1);
-//            }
-//        });
+
         @SuppressLint({"MissingInflatedId", "LocalSuppress"})
         LinearLayout nav_account = findViewById(R.id.account);
         nav_account.setBackgroundColor(getResources().getColor(R.color.colorgray));
@@ -73,7 +56,7 @@ public class adminAcountActivity extends AppCompatActivity {
             }
         });
 
-        LinearLayout backhome=  findViewById(R.id.home);
+        LinearLayout backhome=  findViewById(R.id.nav_home);
         backhome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,6 +72,24 @@ public class adminAcountActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
+        TextView tv_quanlydanhmuc = findViewById(R.id.tv_quanlydanhmuc);
+        tv_quanlydanhmuc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(adminAcountActivity.this, QuanLiDanhMucSPActivity.class);
+                startActivity(intent);
+            }
+        });
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
+        TextView Admin_logout = findViewById(R.id.Admin_logout);
+        Admin_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(adminAcountActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 

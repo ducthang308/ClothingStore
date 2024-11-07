@@ -1,5 +1,6 @@
 package com.example.duanandroid.View;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -74,15 +75,8 @@ public class ManageAccountActivity extends AppCompatActivity {
             });
 
 
-            LinearLayout backhome=  findViewById(R.id.home);
-            backhome.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(ManageAccountActivity.this, TabLayOutActivity.class);
-                    intent.putExtra("tabPosition", 4);
-                    startActivity(intent);
-                }
-            });
+            @SuppressLint("WrongViewCast")
+
 
             RelativeLayout support=  findViewById(R.id.support);
             support.setOnClickListener(new View.OnClickListener() {

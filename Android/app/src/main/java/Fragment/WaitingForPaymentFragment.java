@@ -51,6 +51,7 @@ public class WaitingForPaymentFragment extends Fragment {
         orderDetailList.add(new OrderDetail(1, 1, 1, 200000, 100, 200000, null));
         productImageList.add(new ProductImage(1, 1, "url_image_here"));
 
+
         // Initialize Adapter
         waitingPaymentAdapter = new WaitingPaymentAdapter(getContext(), productList, orderDetailList, productImageList);
         recyclerView.setAdapter(waitingPaymentAdapter);

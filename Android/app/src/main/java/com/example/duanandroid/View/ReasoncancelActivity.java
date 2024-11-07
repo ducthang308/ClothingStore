@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapter.ReasonCancelAdapter;
-import Fragment.ReturnAndCancelFragment;
+import Fragment.TabLayOutActivity;
 import Model.OrderDetail;
 import Model.Product;
 import Model.ProductImage;
@@ -38,7 +38,7 @@ public class ReasoncancelActivity extends AppCompatActivity {
 
         rcv_reasonCancel = findViewById(R.id.rcv_reasonCancel);
         rcv_reasonCancel.setLayoutManager(new LinearLayoutManager(this));
-        ImageView btnback = findViewById(R.id.back_arrow);
+        ImageView btnback = findViewById(R.id.back_arrow_trangthai);
         Button btnsubmit = findViewById(R.id.btn_submit);
 
         productList = new ArrayList<>();
@@ -58,8 +58,19 @@ public class ReasoncancelActivity extends AppCompatActivity {
         btnsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent submitIntent = new Intent(ReasoncancelActivity.this, ReturnAndCancelFragment.class);
+                Intent submitIntent = new Intent(ReasoncancelActivity.this, TabLayOutActivity.class);
+                submitIntent.putExtra("tabPosition", 4);
                 startActivity(submitIntent);
+                finish();
+            }
+        });
+        btnback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ReasoncancelActivity.this, TabLayOutActivity.class);
+//                intent.putExtra("tabPosition", 0);
+//                startActivity(intent);
+                finish();
             }
         });
     }

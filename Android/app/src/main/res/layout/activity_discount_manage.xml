@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="Quản lí voucher"
+            android:textColor="@color/colorblack"
             android:textSize="18sp"
             android:textStyle="bold" />
     </LinearLayout>
