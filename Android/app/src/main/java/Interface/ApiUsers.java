@@ -7,7 +7,7 @@ import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
-public interface ApiService_Users {
+public interface ApiUsers {
     @POST("api/v1/users/login")
     @Headers("Content-Type: application/json")
     Call<LoginResponseDTO> login(@Body UsersDTO usersDTO);
