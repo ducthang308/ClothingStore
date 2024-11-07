@@ -25,12 +25,11 @@
 
 
         <EditText
-            android:id="@+id/edt_email"
+            android:id="@+id/edt_phone"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_margin="8dp"
-            android:hint="Tên đăng nhập"
-            android:inputType="textEmailAddress"
+            android:hint="Nhập số điện thoại"
             android:minHeight="48dp"
             android:paddingLeft="5dp"
             android:drawableLeft="@drawable/baseline_person_24"
