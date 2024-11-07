@@ -17,11 +17,11 @@ public class APIClient {
         }
         return retrofit;
     }
-    public static ApiService_Users getLoginService() {
-        return getClient().create(ApiService_Users.class);
+    public static ApiUsers getLoginService() {
+        return getClient().create(ApiUsers.class);
     }
 
-    public static ApiService_Users getRegisterService() {
-        return getClient().create(ApiService_Users.class);
+    public static ApiUsers getRegisterService() {
+        return getClient().create(ApiUsers.class);
     }
 }

@@ -20,7 +20,7 @@ import java.io.IOException;
 import DTO.UsersDTO;
 
 import Interface.APIClient;
-import Interface.ApiService_Users;
+import Interface.ApiUsers;
 import Reponse.LoginResponseDTO;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText edtPhone;
     private EditText edtPassword;
     private Button btnLogin;
-    private ApiService_Users apiService;
+    private ApiUsers apiService;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -94,7 +94,6 @@ public class LoginActivity extends AppCompatActivity {
                         finish();
                     } else {
                         Intent intent = new Intent(LoginActivity.this, mainpageAdminActivity.class);
-                        intent.putExtra("tabPosition", 2);
                         startActivity(intent);
                         finish();
                     }

@@ -16,7 +16,7 @@ import java.util.Date;
 import DTO.UsersDTO;
 
 import Interface.APIClient;
-import Interface.ApiService_Users;
+import Interface.ApiUsers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,7 +24,7 @@ import retrofit2.Response;
 public class RegisterActivity extends AppCompatActivity {
     private EditText edtFullName, edtDateOfBirth, edtPhone, edtEmail, edtAddress, edtPassword, edtRetypePassword;
     private Button btnRegister;
-    private ApiService_Users apiServiceRegister;
+    private ApiUsers apiServiceRegister;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
