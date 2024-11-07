@@ -26,6 +26,7 @@
             android:layout_marginLeft="64dp"
             android:layout_marginRight="64dp"
             android:text="Nhận trợ giúp với TTT"
+            android:textColor="@color/colorblack"
             android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>

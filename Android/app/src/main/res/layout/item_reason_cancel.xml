@@ -44,6 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Áo thun ngắn tay nữ trắng,"
+                    android:textColor="@color/colorblack"
                     android:textSize="16sp"
                     android:textStyle="" />
 
@@ -52,6 +53,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Size M"
+                    android:textColor="@color/colorblack"
                     android:textSize="14sp" />
             </LinearLayout>
             <!-- Quantity -->
@@ -61,6 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="x1"
+                android:textColor="@color/colorblack"
                 android:textSize="14sp" />
 
             <!-- Product Price -->

@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.duanandroid.R;
+import com.example.duanandroid.View.AdminChitietSpActivity;
 import com.example.duanandroid.View.ChitietsanphamActivity;
 
 import java.util.List;
@@ -24,17 +25,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     private List<Product> productList;
     private List<ProductImage> productImageList;
     private Context context;
+    private boolean isAdmin;
 
-    // Constructor
-    public ProductAdapter(List<Product> productList, List<ProductImage> productImageList) {
+    public ProductAdapter(List<Product> productList, List<ProductImage> productImageList, boolean isAdmin) {
         this.productList = productList;
         this.productImageList = productImageList;
+        this.isAdmin = isAdmin;
     }
 
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Inflate the item layout
+
         context = parent.getContext();
         View view = LayoutInflater.from(context).inflate(R.layout.item_product, parent, false);
         return new ProductViewHolder(view);
@@ -42,31 +44,34 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
-        // Get current product and product image
+
         Product product = productList.get(position);
         ProductImage productImage = productImageList.get(position);
 
-        // Bind data to the views
+
         holder.productName.setText(product.getProductName());
         holder.productPrice.setText(String.format("₫%,.0f", product.getPrice()));
 
         // Load the product image from drawable using its resource ID
         int imageResId = Integer.parseInt(productImage.getImageUrl());
-        holder.productImage.setImageResource(Integer.parseInt(productImage.getImageUrl()));
-//        int imageResId = Integer.parseInt(productImage.getImageUrl());
-//        holder.productImage.setImageResource(imageResId);
+        holder.productImage.setImageResource(imageResId);
+
         // Set click listener for item
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Create an Intent to go to chitietsanpham activity
-                Intent intent = new Intent(context, ChitietsanphamActivity.class);
+                Intent intent;
+                if (isAdmin) {
+                    intent = new Intent(context, AdminChitietSpActivity.class);
+                } else {
+                    intent = new Intent(context, ChitietsanphamActivity.class);
+                }
                 // Pass product details to the new activity
                 intent.putExtra("productName", product.getProductName());
                 intent.putExtra("productPrice", product.getPrice());
-                intent.putExtra("productImage",productImage.getImageUrl() ); // Pass image resource ID
+                intent.putExtra("productImage", productImage.getImageUrl());
 
-                // Start chitietsanpham activity
+                // Start the target activity
                 context.startActivity(intent);
             }
         });

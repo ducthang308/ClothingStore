@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="Hồ sơ"
+            android:textColor="@color/colorblack"
             android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -55,6 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="Nguyễn A"
+            android:textColor="@color/colorblack"
             android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -73,6 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tên"
+                android:textColor="@color/colorblack"
                 />
 
             <EditText
@@ -84,6 +87,7 @@
                 android:inputType="text"
                 android:padding="15dp"
                 android:text="Nguyễn A"
+                android:textColor="@color/colorblack"
                 />
         </LinearLayout>
 
@@ -94,7 +98,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Email"/>
+                android:text="Email"
+                android:textColor="@color/colorblack"/>
             <EditText
                 android:id="@+id/etInput_email"
                 android:layout_width="match_parent"
@@ -102,6 +107,7 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/stroke"
                 android:text="1234abc@gmail.com"
+                android:textColor="@color/colorblack"
                 android:inputType="textEmailAddress"
                 android:padding="15dp" />
         </LinearLayout>
@@ -113,6 +119,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Số điện thoại"
+                android:textColor="@color/colorblack"
                 />
             <EditText
                 android:id="@+id/et_inputPhone"
@@ -122,6 +129,7 @@
                 android:background="@drawable/stroke"
                 android:inputType="phone"
                 android:text="012345699"
+                android:textColor="@color/colorblack"
                 android:padding="15dp" />
         </LinearLayout>
         <LinearLayout
@@ -132,7 +140,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ngày sinh" />
+                android:text="Ngày sinh"
+                android:textColor="@color/colorblack"/>
 
             <EditText
                 android:id="@+id/etBirthday"
@@ -142,6 +151,7 @@
                 android:background="@drawable/stroke"
                 android:inputType="date"
                 android:text="12/12/2001"
+                android:textColor="@color/colorblack"
                 android:padding="15dp" />
         </LinearLayout>
         <LinearLayout
@@ -153,6 +163,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Giới tính"
+                android:textColor="@color/colorblack"
                 android:layout_marginRight="20dp"
                 />
             <RadioGroup
@@ -163,11 +174,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nam"
+                    android:textColor="@color/colorblack"
                     android:textSize="15sp"/>
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nữ"
+                    android:textColor="@color/colorblack"
                     android:layout_marginLeft="70dp"
                     android:textSize="15sp"/>
             </RadioGroup>

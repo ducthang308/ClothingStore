@@ -1,5 +1,7 @@
 package Adapter;
+
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.duanandroid.R;
+import com.example.duanandroid.View.PageDanhgiaActivity;
 
 import java.util.List;
 
@@ -62,7 +65,13 @@ public class WaitingReviewAdapter extends RecyclerView.Adapter<WaitingReviewAdap
                 ProductImage productImage = productImageList.get(position);
                 holder.productImage.setImageResource(R.drawable.ao); // Hình mặc định
             }
-
+            holder.danhgia.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, PageDanhgiaActivity.class);
+                    context.startActivity(intent);
+                }
+            });
         }
 
         @Override

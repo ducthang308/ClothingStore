@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,11 +29,13 @@ public class BuyandpaymentActivity extends AppCompatActivity {
     private List<Product1> productList;
     private List<OrderDetail> orderDetailList;
     private List<ProductImage> productImageList;
+    private String origin;
+
+    private static final int REQUEST_VOUCHER_SELECTION = 1; // Thêm hằng số để xác định request code
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_buyandpayment);
 
         // Ánh xạ RecyclerView từ layout
@@ -46,10 +47,10 @@ public class BuyandpaymentActivity extends AppCompatActivity {
         productList = new ArrayList<>();
         orderDetailList = new ArrayList<>();
         productImageList = loadProductImages();
+
         // Thêm dữ liệu mẫu vào danh sách sản phẩm
         Product1 pr1 = new Product1(1, "Áo thun ngắn tay cho nữ", 2, "Red", "M", 200000, 20, 100);
         productList.add(pr1);
-
 
         orderDetailList.add(new OrderDetail(1, 1, 1, 200000, 1, 200000, null));
 
@@ -60,8 +61,9 @@ public class BuyandpaymentActivity extends AppCompatActivity {
 
         // Lấy giá trị "origin" từ intent
         Intent intent = getIntent();
-        String origin = intent.getStringExtra("origin");
+        origin = intent.getStringExtra("origin");
 
+        // Thiết lập sự kiện cho nút "Đặt hàng"
         TextView btn = findViewById(R.id.btn_order);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,34 +73,57 @@ public class BuyandpaymentActivity extends AppCompatActivity {
             }
         });
 
+        // Thiết lập sự kiện chọn voucher và dùng startActivityForResult
         @SuppressLint({"MissingInflatedId", "LocalSuppress"})
         LinearLayout selectVoucher = findViewById(R.id.click_voucher);
         selectVoucher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(BuyandpaymentActivity.this, SelectVoucherActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, REQUEST_VOUCHER_SELECTION);
             }
         });
+
+        // Thiết lập sự kiện nút back
         ImageView back = findViewById(R.id.back_arrow);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ("cart".equals(origin)) {
-                    finish(); // Quay lại trang trước đó (CartActivity)
-                } else if ("order_details".equals(origin)) {
-                    finish(); // Quay lại trang trước đó (ChitietsanphamActivity)
-                }
+                handleBackNavigation();
             }
         });
+    }
+
+    private void handleBackNavigation() {
+        if ("cart".equals(origin)) {
+            finish();
+        } else if ("order_details".equals(origin)) {
+            finish();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_VOUCHER_SELECTION) {
+            // Xử lý dữ liệu khi quay lại từ SelectVoucherActivity
+            if (resultCode == RESULT_OK) {
+                // Nhận dữ liệu voucher nếu có và xử lý ở đây
+            }
+        }
     }
 
     // Tạo dữ liệu hình ảnh mẫu
     private List<ProductImage> loadProductImages() {
         List<ProductImage> productImages = new ArrayList<>();
+<<<<<<< HEAD
+        for (int i = 0; i <= 1; i++) {
+            String imageName = "ao";
+=======
         for (int i = 0; i <=1; i++) {
             // Giả sử bạn có hình ảnh tương ứng trong drawable với tên ao1, ao2, ...
             String imageName = "ao" ; // Tạo tên hình ảnh (ao1, ao2,...)
+>>>>>>> origin/main
             int imageResId = getResources().getIdentifier(imageName, "drawable", getPackageName());
             productImages.add(new ProductImage(i, i, String.valueOf(imageResId)));
         }

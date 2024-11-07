@@ -63,40 +63,43 @@ public class TabLayOutActivity extends AppCompatActivity {
                 // Thiết lập tiêu đề cho từng tab
                 switch (position) {
                     case 0:
-                        return "Waiting for payment";
+                        return "Chờ thanh toán";
                     case 1:
-                        return "Waiting for shipping";
+                        return "Chờ vận chuyển";
                     case 2:
-                        return "Waiting for delivery";
+                        return "Chờ giao hàng";
                     case 3:
-                        return "Review";
+                        return "Đánh giá";
                     case 4:
-                        return "Return/Cancel goods";
+                        return "Hủy/ Trả hàng";
                     default:
-                        return "Waiting for payment";
+                        return "Chờ thanh toán";
                 }
             }
         });
-        // Đồng bộ hóa TabLayout với ViewPager
+
         tabLayout.setupWithViewPager(viewPager);
         int tabPosition = getIntent().getIntExtra("tabPosition", 0); // Mặc định là tab 0 nếu không có dữ liệu
         viewPager.setCurrentItem(tabPosition);
-        // Áp dụng hệ thống insets
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        /////////////////
+
         ImageView btn_back = findViewById(R.id.back_arrow_account);
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(TabLayOutActivity.this, AccountUserFragment.class);
-                startActivity(intent);
+                Intent intent = new Intent(TabLayOutActivity.this,AccountUserFragment.class);
+//                intent.putExtra("tabPosition", 4);
+//                startActivity(intent);
+                finish();
             }
         });
+
 
 
     }

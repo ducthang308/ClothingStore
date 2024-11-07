@@ -1,8 +1,11 @@
 package com.example.duanandroid.View;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,6 +45,15 @@ public class QuanLiDanhMucSPActivity extends AppCompatActivity {
         btnAdd.setOnClickListener(v -> {
             Intent intent = new Intent(QuanLiDanhMucSPActivity.this, addDanhmucActivity.class);
             startActivity(intent);
+        });
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
+        ImageView back_accountAdmin = findViewById(R.id.back_accountAdmin);
+        back_accountAdmin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(QuanLiDanhMucSPActivity.this, adminAcountActivity.class);
+                startActivity(intent);
+            }
         });
     }
 

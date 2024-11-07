@@ -17,7 +17,6 @@
         android:layout_height="wrap_content"
         android:background="@color/colorwhite"
         android:elevation="5dp"
-        android:padding="5dp"
         app:menu="@menu/bottom_navigation"
 
         android:layout_alignParentBottom="true"/>

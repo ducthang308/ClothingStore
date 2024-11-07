@@ -53,7 +53,7 @@ public class HomeFragment extends Fragment {
         productList = loadDataFromLayout();
         productImageList = loadProductImages();
 
-        productAdapter = new ProductAdapter(productList, productImageList);
+        productAdapter = new ProductAdapter(productList, productImageList, false);
         productRecyclerView.setAdapter(productAdapter);
 
         binding.chat.setOnClickListener(new View.OnClickListener() {

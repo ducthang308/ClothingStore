@@ -3,7 +3,9 @@ package com.example.duanandroid.View;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,14 +49,14 @@ public class DiscountManageActivity extends AppCompatActivity {
             Intent intent = new Intent(DiscountManageActivity.this, AddDiscountActivity.class);
             startActivity(intent);
         });
-//        ImageView arrow_account = findViewById(R.id.arrow_account);
-//        arrow_account.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(DiscountManageActivity.this, adminAcountActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        ImageView arrow_account = findViewById(R.id.arrow_account);
+        arrow_account.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DiscountManageActivity.this, adminAcountActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 

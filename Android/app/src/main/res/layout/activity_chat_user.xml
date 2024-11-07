@@ -29,6 +29,7 @@
             android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:text="TTT Shop"
+            android:textColor="@color/colorblack"
             android:textSize="18sp"
             android:textStyle="bold"
             android:paddingLeft="10dp" />
