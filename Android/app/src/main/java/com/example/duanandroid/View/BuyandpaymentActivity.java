@@ -98,7 +98,7 @@ public class BuyandpaymentActivity extends AppCompatActivity {
         List<ProductImage> productImages = new ArrayList<>();
         for (int i = 0; i <=1; i++) {
             // Giả sử bạn có hình ảnh tương ứng trong drawable với tên ao1, ao2, ...
-            String imageName = "ao" + (i + 1); // Tạo tên hình ảnh (ao1, ao2,...)
+            String imageName = "ao" ; // Tạo tên hình ảnh (ao1, ao2,...)
             int imageResId = getResources().getIdentifier(imageName, "drawable", getPackageName());
             productImages.add(new ProductImage(i, i, String.valueOf(imageResId)));
         }

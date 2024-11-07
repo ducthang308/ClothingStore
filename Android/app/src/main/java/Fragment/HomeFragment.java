@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.duanandroid.R;
 import com.example.duanandroid.View.CartActivity;
 import com.example.duanandroid.View.ItemDecoration;
 import com.example.duanandroid.View.chatUserActivity;
@@ -86,7 +87,7 @@ public class HomeFragment extends Fragment {
     private List<ProductImage> loadProductImages() {
         List<ProductImage> productImages = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
-            String imageName = "ao" + (i + 1);
+            String imageName = "ao" ;
             int imageResId = getResources().getIdentifier(imageName, "drawable", requireContext().getPackageName());
 
             productImages.add(new ProductImage(i, i, String.valueOf(imageResId)));
