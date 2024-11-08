@@ -76,7 +76,8 @@
             android:id="@+id/cbx_select_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="tất cả" />
+            android:text="tất cả"
+            android:textColor="@color/colorblack"/>
 
         <TextView
             android:id="@+id/tv_total_price"
@@ -85,6 +86,7 @@
             android:text=" tổng thanh toán:"
             android:layout_weight="1"
             android:layout_gravity="center"
+            android:textColor="@color/colorblack"
             android:textSize="16sp" />
 
         <Button

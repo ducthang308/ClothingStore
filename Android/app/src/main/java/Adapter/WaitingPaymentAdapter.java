@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.duanandroid.R;
 import com.example.duanandroid.View.ReasoncancelActivity;
-import com.example.duanandroid.View.detailOrderActivity;
 
 import java.util.List;
 
@@ -67,8 +66,6 @@ public class WaitingPaymentAdapter extends RecyclerView.Adapter<WaitingPaymentAd
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, ReasoncancelActivity.class);
-                // Optional: Truyền thêm thông tin nếu cần
-//                intent.putExtra("orderDetailId", orderDetail.getId());
                 context.startActivity(intent);
             }
         });

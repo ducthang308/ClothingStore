@@ -38,6 +38,7 @@
                 android:layout_height="wrap_content"
                 android:text="Áo thun ngắn tay nữ"
                 android:textSize="16sp"
+                android:textColor="@color/colorblack"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -48,19 +49,22 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Size  " />
+                    android:text="Size  "
+                    android:textColor="@color/colorblack"/>
 
                 <TextView
                     android:id="@+id/size"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="S " />
+                    android:text="S "
+                    android:textColor="@color/colorblack"/>
 
                 <TextView
                     android:id="@+id/soluong_sizeS"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" 10" />
+                    android:text=" 10"
+                    android:textColor="@color/colorblack"/>
             </LinearLayout>
 
             <TextView

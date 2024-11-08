@@ -45,8 +45,8 @@ public class LichSuVoucherActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LichSuVoucherActivity.this, KhoVoucherActivity.class);
-                startActivity(intent);
-//                finish();
+//                startActivity(intent);
+                finish();
             }
         });
     }

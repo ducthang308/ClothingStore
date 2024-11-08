@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Quản lí đơn hàng"
-            android:textSize="18sp"
+            android:textColor="@color/colorblack"            android:textSize="18sp"
             android:layout_marginStart="16dp" />
     </LinearLayout>
 
@@ -46,6 +46,7 @@
             android:background="@drawable/custom_edittext"
             android:hint="Nhập tên hoặc mã đơn hàng"
             android:paddingStart="40dp"
+            android:textColor="@color/colorblack"
             android:paddingEnd="40dp"
             android:padding="8dp"
             tools:ignore="TouchTargetSizeCheck" />

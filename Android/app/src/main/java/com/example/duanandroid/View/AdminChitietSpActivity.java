@@ -17,10 +17,9 @@ import java.util.List;
 
 import Adapter.ReviewAdapter;
 import Model.Review;
-
 import Model.User;
 
-public class ChitietsanphamActivity extends AppCompatActivity {
+public class AdminChitietSpActivity extends AppCompatActivity {
     private RecyclerView reviewRecyclerView;
     private ReviewAdapter reviewAdapter;
     private List<Review> reviewList;
@@ -29,11 +28,11 @@ public class ChitietsanphamActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chitietsanpham);
+        setContentView(R.layout.activity_admin_chitiet_sp);
 
         // Nhận dữ liệu từ Intent
         String productName = getIntent().getStringExtra("productName");
-        float productPrice = getIntent().getFloatExtra("productPrice", 0);
+        float productPrice = getIntent().getFloatExtra("productPrice", 200000);
         String productImageResource = getIntent().getStringExtra("imageURL");
 
         // Tham chiếu đến các view trong layout chitietsanpham
@@ -43,54 +42,37 @@ public class ChitietsanphamActivity extends AppCompatActivity {
 
         // Hiển thị dữ liệu vào các view
         nameTextView.setText(productName);
-        priceTextView.setText(String.format("₫%,.0f", productPrice)); // Định dạng giá thành chuỗi
-        imageView.setImageResource(R.drawable.ao); // Hiển thị hình ảnh (placeholder)
+        priceTextView.setText(String.format("đ%,.0f", productPrice));
+        imageView.setImageResource(R.drawable.ao);
 
         // Khởi tạo RecyclerView
         reviewRecyclerView = findViewById(R.id.review_list);
         reviewRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        // Tạo danh sách đánh giá (ví dụ tạm thời)
+        reviewList = new ArrayList<>();
+        reviewList.add(new Review("imageUrl", "Great product!", 4.5f, 0));
+        reviewList.add(new Review("imageUrl", "Very satisfied!", 5.0f, 0));
+        reviewList.add(new Review("imageUrl", "Good quality.", 4.0f, 0));
 
-
+        // Tạo danh sách người dùng (ví dụ tạm thời)
+        userList = new ArrayList<>();
+        userList.add(new User(1, "John Doe", "Address", "0123456789", "john@example.com", 1, null, "john", "password", "active", 0, 0));
+        userList.add(new User(2, "Jane Smith", "Address", "0123456789", "jane@example.com", 1, null, "jane", "password", "active", 0, 0));
+        userList.add(new User(3, "Alice Brown", "Address", "0123456789", "alice@example.com", 1, null, "alice", "password", "active", 0, 0));
 
         // Thiết lập Adapter cho RecyclerView
         reviewAdapter = new ReviewAdapter(reviewList, userList);
         reviewRecyclerView.setAdapter(reviewAdapter);
 
-        TextView btn=  findViewById(R.id.btn_add_to_cart);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ChitietsanphamActivity.this, CartActivity.class);
-                startActivity(intent);
-            }
-        });
-        TextView btn1=  findViewById(R.id.btn_buy_now);
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ChitietsanphamActivity.this, BuyandpaymentActivity.class);
-                intent.putExtra("origin", "order_details");
-                startActivity(intent);
-            }
-        });
-
-        ImageView imv=  findViewById(R.id.chat);
+        ImageView imv = findViewById(R.id.chat);
         imv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ChitietsanphamActivity.this, chatUserActivity.class);
+                Intent intent = new Intent(AdminChitietSpActivity.this, ChatAdminActivity.class);
                 startActivity(intent);
             }
         });
 
-        ImageView shoppingcart=  findViewById(R.id.shopping_cart);
-        shoppingcart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ChitietsanphamActivity.this, CartActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 }

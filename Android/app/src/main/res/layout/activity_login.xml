@@ -25,12 +25,18 @@
 
 
         <EditText
-            android:id="@+id/edt_email"
+            android:id="@+id/edt_phone"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_margin="8dp"
+<<<<<<< HEAD
             android:hint="Tên đăng nhập"
+            android:textColorHint="@color/colorblack"
+            android:textColor="@color/colorblack"
             android:inputType="textEmailAddress"
+=======
+            android:hint="Nhập số điện thoại"
+>>>>>>> origin/main
             android:minHeight="48dp"
             android:paddingLeft="5dp"
             android:drawableLeft="@drawable/baseline_person_24"
@@ -46,6 +52,8 @@
             android:layout_margin="8dp"
             android:drawableEnd="@drawable/hide"
             android:hint="Mật khẩu"
+            android:textColorHint="@color/colorblack"
+            android:textColor="@color/colorblack"
             android:drawableStart="@drawable/baseline_security_24"
             android:inputType="textPassword"
             android:paddingLeft="5dp"

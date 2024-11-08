@@ -1,22 +1,44 @@
 package Model;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.Date;
 
 public class User implements Serializable {
+    @SerializedName("id")
     private int id;
+
+    @SerializedName("fullname")
     private String fullname;
+
+    @SerializedName("address")
     private String address;
+
+    @SerializedName("phone_number")
     private String phoneNumber;
+
+    @SerializedName("email")
     private String email;
-    private int roleId;
-    private Date dateOfBirth;
-    private String userName;
+
+    @SerializedName("role_id")
+    private Roles roleId;
+
+    @SerializedName("date_of_birth")
+    private Date dateOfBirth; // Nếu cần, có thể đổi thành String
+
+    @SerializedName("password")
     private String password;
+
+    @SerializedName("active")
     private String active;
+
+    @SerializedName("google_account_id")
     private int googleAccountId;
+
+    @SerializedName("facebook_account_id")
     private int facebookAccountId;
 
-    public User(int id, String fullname, String address, String phoneNumber, String email, int roleId, java.sql.Date dateOfBirth, String userName, String password, String active, int googleAccountId, int facebookAccountId) {
+    public User(int id, String fullname, String address, String phoneNumber, String email, Roles roleId, Date dateOfBirth, String userName, String password, String active, int googleAccountId, int facebookAccountId) {
         this.id = id;
         this.fullname = fullname;
         this.address = address;
@@ -24,15 +46,13 @@ public class User implements Serializable {
         this.email = email;
         this.roleId = roleId;
         this.dateOfBirth = dateOfBirth;
-        this.userName = userName;
         this.password = password;
         this.active = active;
         this.googleAccountId = googleAccountId;
         this.facebookAccountId = facebookAccountId;
     }
 
-    public User(String nguyenThiThao, String number) {
-    }
+
 
     public int getId() {
         return id;
@@ -74,11 +94,11 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public int getRoleId() {
+    public Roles getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(int roleId) {
+    public void setRoleId(Roles roleId) {
         this.roleId = roleId;
     }
 
@@ -90,13 +110,6 @@ public class User implements Serializable {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 
     public String getPassword() {
         return password;
@@ -141,7 +154,6 @@ public class User implements Serializable {
                 ", email='" + email + '\'' +
                 ", roleId=" + roleId +
                 ", dateOfBirth=" + dateOfBirth +
-                ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 ", active='" + active + '\'' +
                 ", googleAccountId=" + googleAccountId +

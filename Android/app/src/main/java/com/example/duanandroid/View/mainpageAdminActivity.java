@@ -39,7 +39,7 @@ public class mainpageAdminActivity extends AppCompatActivity {
             productImageList = loadProductImages(); // Tạo dữ liệu hình ảnh
 
             // Tạo Adapter và kết nối với RecyclerView
-            productAdapter = new ProductAdapter(productList, productImageList);
+            productAdapter = new ProductAdapter(productList, productImageList,true);
             productRecyclerView.setAdapter(productAdapter);
 
 
