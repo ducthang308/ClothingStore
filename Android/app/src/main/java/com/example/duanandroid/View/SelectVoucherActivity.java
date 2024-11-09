@@ -75,6 +75,6 @@ public class SelectVoucherActivity extends AppCompatActivity implements SelectVo
     @Override
     public void onVoucherSelected(Discount discount) {
         // Thực hiện xử lý khi voucher được chọn
-        Toast.makeText(this, "Voucher đã chọn: " + discount.getDiscount() + "% - " + discount.getMota(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Voucher đã chọn: " + discount.getPercent() + "% - " + discount.getNote(), Toast.LENGTH_SHORT).show();
     }
 }

@@ -17,35 +17,3 @@ public interface ApiUsers {
     Call<String> register(@Body UsersDTO usersDTO);
 }
 
-
-
-//    Gson gson = new GsonBuilder()
-//            .setDateFormat("yy-mm-dd HH:mm:ss ")
-//            .create();
-//
-//    APIservice apiservice = new Retrofit.Builder()
-//            .baseUrl("http://localhost/APILogin/")
-//            .addConverterFactory(GsonConverterFactory.create(gson))
-//            .build()
-//            .create(APIservice.class);
-//
-//
-//    @GET("User")
-//    Call<List<User>> getListuser(String key);
-
-
-
-//    Gson gson = new GsonBuilder()
-//            .setDateFormat("yy-mm-dd HH:mm:ss ")
-//            .create();
-//
-//    APIservice apiservice = new Retrofit.Builder()
-//            .baseUrl("")
-//            .addConverterFactory(GsonConverterFactory.create(gson))
-//            .build()
-//            .create(APIservice.class);
-//
-//
-//    @GET("User")
-//    Call<List<User>> getListuser(@Query("") String key);
-

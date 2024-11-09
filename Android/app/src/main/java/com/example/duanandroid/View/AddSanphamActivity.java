@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -49,7 +51,6 @@ public class AddSanphamActivity extends AppCompatActivity {
 
     private void checkAndRequestStoragePermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            // Android 11 trở lên cần quyền MANAGE_EXTERNAL_STORAGE
             if (!android.os.Environment.isExternalStorageManager()) {
                 Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
                         Uri.parse("package:" + getPackageName()));
@@ -58,7 +59,6 @@ public class AddSanphamActivity extends AppCompatActivity {
                 openImagePicker();
             }
         } else {
-            // Android 10 trở xuống dùng quyền READ_EXTERNAL_STORAGE
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this,
@@ -101,8 +101,6 @@ public class AddSanphamActivity extends AppCompatActivity {
             }
         }
     }
-
-    // Xử lý yêu cầu quyền
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

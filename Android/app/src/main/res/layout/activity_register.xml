@@ -89,16 +89,10 @@
             android:layout_height="48dp"
             android:layout_margin="8dp"
             android:background="@drawable/border_black"
-<<<<<<< HEAD
-            android:drawableLeft="@drawable/baseline_person_24"
-            android:hint="Tên đăng nhập"
             android:textColorHint="@color/colorblack"
-            android:inputType="text"
-=======
             android:drawableLeft="@drawable/address"
             android:hint="Địa chỉ"
             android:inputType="textEmailAddress"
->>>>>>> origin/main
             android:minHeight="48dp"
             android:paddingLeft="5dp">
 
