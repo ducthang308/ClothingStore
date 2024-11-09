@@ -39,7 +39,7 @@ public class DiscountsController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<Discounts>> getAllDiscountByUserId(){
+    public ResponseEntity<List<Discounts>> getAllDiscount(){
         List<Discounts> discounts = discountsService.getAllDiscounts();
         return ResponseEntity.ok(discounts);
     }

@@ -21,6 +21,7 @@ import DTO.UsersDTO;
 
 import Interface.APIClient;
 import Interface.ApiUsers;
+import Interface.PreferenceManager;
 import Reponse.LoginResponseDTO;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -81,12 +82,9 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("Login", "Token: " + token);
 
                     // Lưu token vào SharedPreferences
-                    SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("token", token);
-                    editor.apply();
+                    PreferenceManager preferenceManager = new PreferenceManager(LoginActivity.this);
+                    preferenceManager.saveToken(token);
 
-                    // Điều hướng dựa trên roleId
                     if (roleId == 2) {
                         Intent intent = new Intent(LoginActivity.this, mainpageActivity.class);
                         intent.putExtra("tabPosition", 2);

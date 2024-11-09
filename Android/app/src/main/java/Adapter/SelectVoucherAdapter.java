@@ -37,8 +37,8 @@ public class SelectVoucherAdapter extends RecyclerView.Adapter<SelectVoucherAdap
         Discount discount = discountList.get(position);
         if (discount == null) return;
 
-        holder.txtDiscount.setText(String.format("%s%%", discount.getDiscount()));
-        holder.tvMota.setText(discount.getMota());
+        holder.txtDiscount.setText(String.format("%s%%", discount.getPercent()));
+        holder.tvMota.setText(discount.getNote());
 
         holder.btnUse.setOnClickListener(new View.OnClickListener() {
             @Override

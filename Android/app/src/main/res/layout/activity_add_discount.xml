@@ -44,17 +44,7 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/edt_madm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/stroke"
-            android:hint="Nhập mã phiếu giảm giá"
-            android:textColor="@color/colorblack"
-            android:padding="20dp" />
-
-        <EditText
-            android:id="@+id/edt_tendm"
+            android:id="@+id/edt_percent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"

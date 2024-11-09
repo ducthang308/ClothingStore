@@ -2,13 +2,21 @@ package Model;
 
 public class Discount {
     private int id;
-    private float discount;
-    private String mota;
+    private float percent;
+    private String note;
 
-    public Discount(int id, float discount, String mota) {
+    public Discount(int id, float percent, String note) {
         this.id = id;
-        this.discount = discount;
-        this.mota = mota;
+        this.percent = percent;
+        this.note = note;
+    }
+
+    public Discount(float percent, String note) {
+        this.percent = percent;
+        this.note = note;
+    }
+
+    public Discount() {
     }
 
     public int getId() {
@@ -19,19 +27,19 @@ public class Discount {
         this.id = id;
     }
 
-    public float getDiscount() {
-        return discount;
+    public float getPercent() { // Đổi tên phương thức cho nhất quán
+        return percent;
     }
 
-    public void setDiscount(float discount) {
-        this.discount = discount;
+    public void setPercent(float percent) { // Đổi tên phương thức cho nhất quán
+        this.percent = percent;
     }
 
-    public String getMota() {
-        return mota;
+    public String getNote() {
+        return note;
     }
 
-    public void setMota(String mota) {
-        this.mota = mota;
+    public void setNote(String note) {
+        this.note = note;
     }
 }

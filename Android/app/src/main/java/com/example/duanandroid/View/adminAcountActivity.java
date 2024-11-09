@@ -92,5 +92,4 @@ public class adminAcountActivity extends AppCompatActivity {
         });
     }
 
-
 }

@@ -38,7 +38,9 @@ public class KhoVoucherActivity extends AppCompatActivity {
             throw new NullPointerException("RecyclerView not found. Check if the ID 'recycleView' exists in activity_kho_voucher.xml");
         }
         discountList = new ArrayList<>();
-        adapter = new DiscountManageAdapter(discountList, 2);
+        adapter = new DiscountManageAdapter(this, discountList, discount -> {
+            // Handle discount selection for edit/delete
+        });
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         loadVouchers();
