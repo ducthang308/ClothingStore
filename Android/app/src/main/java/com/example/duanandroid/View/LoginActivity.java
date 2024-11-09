@@ -21,6 +21,7 @@ import DTO.UsersDTO;
 
 import Interface.APIClient;
 import Interface.ApiUsers;
+import Interface.PreferenceManager;
 import Reponse.LoginResponseDTO;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -81,6 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (token != null && !token.isEmpty()) {
                         Log.d("Login", "Token: " + token);
 
+<<<<<<< HEAD
                         // Lưu token vào SharedPreferences
                         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -98,6 +100,17 @@ public class LoginActivity extends AppCompatActivity {
                             startActivity(intent);
                             finish();
                         }
+=======
+                    // Lưu token vào SharedPreferences
+                    PreferenceManager preferenceManager = new PreferenceManager(LoginActivity.this);
+                    preferenceManager.saveToken(token);
+
+                    if (roleId == 2) {
+                        Intent intent = new Intent(LoginActivity.this, mainpageActivity.class);
+                        intent.putExtra("tabPosition", 2);
+                        startActivity(intent);
+                        finish();
+>>>>>>> origin/main
                     } else {
                         Toast.makeText(LoginActivity.this, "Lỗi: Token không hợp lệ.", Toast.LENGTH_SHORT).show();
                     }

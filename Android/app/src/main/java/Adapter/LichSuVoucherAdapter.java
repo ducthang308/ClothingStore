@@ -33,8 +33,8 @@ public class LichSuVoucherAdapter extends RecyclerView.Adapter<LichSuVoucherAdap
     public void onBindViewHolder(@NonNull LichSuVoucherViewHolder holder, int position) {
         Discount discount = discountList.get(position);
         if (discount != null) {
-            holder.txtDiscount.setText(String.format("%s%%", discount.getDiscount()));
-            holder.tvMota.setText(discount.getMota());
+            holder.txtDiscount.setText(String.format("%s%%", discount.getPercent()));
+            holder.tvMota.setText(discount.getNote());
         }
     }
 

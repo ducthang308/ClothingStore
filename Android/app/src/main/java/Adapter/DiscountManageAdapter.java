@@ -1,5 +1,7 @@
 package Adapter;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,42 +13,52 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.duanandroid.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import Model.Discount;
 
 public class DiscountManageAdapter extends RecyclerView.Adapter<DiscountManageAdapter.DiscountViewHolder> {
-    private List<Discount> discountList;
-    private int activityType;
 
-    public DiscountManageAdapter(List<Discount> discountList, int activityType) {
-        this.discountList = discountList != null ? discountList : new ArrayList<>();
-        this.activityType = activityType;
+    private List<Discount> discountList;
+    private Context context;
+    private OnDiscountSelectedListener listener;
+    private int selectedPosition = -1; // Track the selected position
+
+    public DiscountManageAdapter(Context context, List<Discount> discountList, OnDiscountSelectedListener listener) {
+        this.context = context;
+        this.discountList = discountList;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
     public DiscountViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_discount_manage, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_discount_manage, parent, false);
         return new DiscountViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull DiscountViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull DiscountViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Discount discount = discountList.get(position);
-        if (discount == null) return;
+        holder.tvPercent.setText(discount.getPercent() + "%");
+        holder.tvNote.setText(discount.getNote());
 
-        holder.txtDiscount.setText(String.format("%s%%", discount.getDiscount()));
-        holder.tv_mota.setText(discount.getMota());
+        // Set the checkbox checked state based on the selected position
+        holder.checkbox.setChecked(position == selectedPosition);
 
-        // Phân biệt logic hiển thị dựa trên activityType
-        if (activityType == 1) { // DiscountManageActivity
-            holder.checkBox.setVisibility(View.VISIBLE);
-            holder.checkBox.setChecked(false);
-        } else if (activityType == 2) { // KhoVoucherActivity
-            holder.checkBox.setVisibility(View.GONE); // Ẩn CheckBox
-        }
+        // Checkbox click listener
+        holder.checkbox.setOnClickListener(v -> {
+            if (selectedPosition == position) {
+                // If the current item is already selected, deselect it
+                selectedPosition = -1;
+                listener.onDiscountSelected(null); // No discount selected
+            } else {
+                // Select the new item
+                selectedPosition = position;
+                listener.onDiscountSelected(discount);
+            }
+            notifyDataSetChanged(); // Update the UI to reflect the selection change
+        });
     }
 
     @Override
@@ -55,15 +67,18 @@ public class DiscountManageAdapter extends RecyclerView.Adapter<DiscountManageAd
     }
 
     public static class DiscountViewHolder extends RecyclerView.ViewHolder {
-        private CheckBox checkBox;
-        private TextView txtDiscount;
-        private TextView tv_mota;
+        CheckBox checkbox;
+        TextView tvPercent, tvNote;
 
-        public DiscountViewHolder(@NonNull View itemView) {
+        public DiscountViewHolder(View itemView) {
             super(itemView);
-            checkBox = itemView.findViewById(R.id.checkbox);
-            txtDiscount = itemView.findViewById(R.id.txtdiscount);
-            tv_mota = itemView.findViewById(R.id.tv_mota);
+            checkbox = itemView.findViewById(R.id.checkbox);
+            tvPercent = itemView.findViewById(R.id.tv_percent);
+            tvNote = itemView.findViewById(R.id.tv_note);
         }
+    }
+
+    public interface OnDiscountSelectedListener {
+        void onDiscountSelected(Discount discount);
     }
 }
