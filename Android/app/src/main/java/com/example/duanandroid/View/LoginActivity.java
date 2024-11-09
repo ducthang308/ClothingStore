@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btn_login);
 
         // Khởi tạo ApiService một lần
-        apiService = APIClient.getLoginService();
+        apiService = APIClient.getLoginService(getApplicationContext());
 
         TextView tvSignup = findViewById(R.id.tv_signup);
         tvSignup.setOnClickListener(new View.OnClickListener() {
@@ -78,30 +78,35 @@ public class LoginActivity extends AppCompatActivity {
                     String token = loginResponse.getToken();
                     int roleId = loginResponse.getRoleId();
 
-                    Log.d("Login", "Token: " + token);
+                    if (token != null && !token.isEmpty()) {
+                        Log.d("Login", "Token: " + token);
 
-                    // Lưu token vào SharedPreferences
-                    SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("token", token);
-                    editor.apply();
+                        // Lưu token vào SharedPreferences
+                        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("token", token);
+                        editor.apply();
 
-                    // Điều hướng dựa trên roleId
-                    if (roleId == 2) {
-                        Intent intent = new Intent(LoginActivity.this, mainpageActivity.class);
-                        intent.putExtra("tabPosition", 2);
-                        startActivity(intent);
-                        finish();
+                        // Điều hướng dựa trên roleId
+                        if (roleId == 2) {
+                            Intent intent = new Intent(LoginActivity.this, mainpageActivity.class);
+                            intent.putExtra("tabPosition", 2);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            Intent intent = new Intent(LoginActivity.this, mainpageAdminActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
                     } else {
-                        Intent intent = new Intent(LoginActivity.this, mainpageAdminActivity.class);
-                        startActivity(intent);
-                        finish();
+                        Toast.makeText(LoginActivity.this, "Lỗi: Token không hợp lệ.", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Log.e("Login", "Error - Status Code: " + response.code() + ", Message: " + response.message());
                     handleErrorResponse(response);
                 }
             }
+
 
             @Override
             public void onFailure(Call<LoginResponseDTO> call, Throwable t) {
