@@ -39,11 +39,15 @@ public class APIClient {
 
             retrofit = new Retrofit.Builder()
 <<<<<<< HEAD
+                    .baseUrl("http://192.168.1.111:8088/")
+=======
+<<<<<<< HEAD
                     .baseUrl("http://192.168.1.215:8088/")
                     .client(client)
 =======
                     .baseUrl("http://192.168.1.100:8088/")
 >>>>>>> origin/main
+>>>>>>> main
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
@@ -73,4 +77,9 @@ public class APIClient {
     public static ApiDiscounts getDiscounts(){ return getClient().create(ApiDiscounts.class);}
     public static ApiDiscounts updateDiscounts(){ return getClient().create(ApiDiscounts.class);}
     public static ApiDiscounts deleteDiscounts(){ return getClient().create(ApiDiscounts.class);}
+
+    public static ApiCategories createCategory(){ return getClient().create(ApiCategories.class);}
+    public static ApiCategories getCategories(){ return getClient().create(ApiCategories.class);}
+    public static ApiCategories updateCategory(){ return getClient().create(ApiCategories.class);}
+    public static ApiCategories deleteCategory(){ return getClient().create(ApiCategories.class);}
 };
