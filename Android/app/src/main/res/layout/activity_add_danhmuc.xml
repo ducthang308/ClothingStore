@@ -44,16 +44,6 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/edt_madm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:textColor="@color/colorblack"
-            android:background="@drawable/stroke"
-            android:hint="Nhâp mã danh mục"
-            android:padding="20dp" />
-
-        <EditText
             android:id="@+id/edt_tendm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
