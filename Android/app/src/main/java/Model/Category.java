@@ -1,7 +1,14 @@
 package Model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Category {
     private int id;
+
+    public Category(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
     private String categoryName;
 
     public Category() {

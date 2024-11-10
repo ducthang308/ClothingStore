@@ -33,7 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         initViews();
-        apiServiceRegister = APIClient.getRegisterService(getApplicationContext());
+        apiServiceRegister = APIClient.getRegisterService();
 
         btnRegister.setOnClickListener(view -> handleRegistration());
 

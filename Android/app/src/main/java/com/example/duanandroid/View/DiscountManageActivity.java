@@ -153,5 +153,3 @@ public class DiscountManageActivity extends AppCompatActivity {
 
 
 }
-
-

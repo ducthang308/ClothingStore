@@ -65,14 +65,14 @@ public class adminAcountActivity extends AppCompatActivity {
             }
         });
         TextView tv_discount = findViewById(R.id.tv_discount_manage);
-            tv_discount.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(adminAcountActivity.this, DiscountManageActivity.class);
-                    startActivity(intent);
-                }
-            });
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
+        tv_discount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(adminAcountActivity.this, DiscountManageActivity.class);
+                startActivity(intent);
+            }
+        });
+
         TextView tv_quanlydanhmuc = findViewById(R.id.tv_quanlydanhmuc);
         tv_quanlydanhmuc.setOnClickListener(new View.OnClickListener() {
             @Override
