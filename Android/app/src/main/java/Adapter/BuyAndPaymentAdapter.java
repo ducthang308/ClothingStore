@@ -15,7 +15,6 @@ import com.example.duanandroid.R;
 import java.util.List;
 
 import Model.OrderDetail;
-import Model.Product1;
 import Model.ProductImage;
 
 public class BuyAndPaymentAdapter extends RecyclerView.Adapter<BuyAndPaymentAdapter.BuyAndPaymentHolder> {

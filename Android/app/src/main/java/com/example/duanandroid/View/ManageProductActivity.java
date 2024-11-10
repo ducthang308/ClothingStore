@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapter.ProductManageAdapter;
-import Model.Product1;
 import Model.ProductImage;
 
 public class ManageProductActivity extends AppCompatActivity {

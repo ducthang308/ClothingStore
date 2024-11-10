@@ -1,17 +1,17 @@
-package Model;
+package DTO;
 
-public class ProductImage {
+public class ProductImageDTO {
     private int id;
-    private Product product;
+    private int productId;
     private String imageUrl;
 
-    public ProductImage(int id, Product product, String imageUrl) {
+    public ProductImageDTO(int id, int productId, String imageUrl) {
         this.id = id;
-        this.product = product;
+        this.productId = productId;
         this.imageUrl = imageUrl;
     }
 
-    public ProductImage() {
+    public ProductImageDTO() {
     }
 
     public int getId() {
@@ -22,12 +22,12 @@ public class ProductImage {
         this.id = id;
     }
 
-    public Product getProduct() {
-        return product;
+    public int getProductId() {
+        return productId;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
     public String getImageUrl() {
@@ -38,4 +38,3 @@ public class ProductImage {
         this.imageUrl = imageUrl;
     }
 }
-
