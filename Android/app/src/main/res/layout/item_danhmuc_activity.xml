@@ -13,11 +13,12 @@
         android:layout_gravity="center" />
 
     <TextView
-        android:id="@+id/txtCategoryName"
+        android:id="@+id/tv_name1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/colorblack"
         android:textSize="16sp"
+        android:text=""
         android:layout_gravity="center"
         android:layout_marginStart="10dp"
         android:textAlignment="center" />

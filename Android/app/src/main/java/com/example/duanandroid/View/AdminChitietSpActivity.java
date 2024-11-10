@@ -49,11 +49,7 @@ public class AdminChitietSpActivity extends AppCompatActivity {
         reviewRecyclerView = findViewById(R.id.review_list);
         reviewRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-<<<<<<< HEAD
 
-
-=======
->>>>>>> origin/main
         // Thiết lập Adapter cho RecyclerView
         reviewAdapter = new ReviewAdapter(reviewList, userList);
         reviewRecyclerView.setAdapter(reviewAdapter);

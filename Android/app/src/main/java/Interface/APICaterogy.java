@@ -3,6 +3,8 @@ package Interface;
 import java.util.List;
 
 import DTO.CategoriesDTO;
+import Model.Category;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -18,11 +20,12 @@ public interface APICaterogy {
     Call<String> createCategory(@Header("Authorization") String token, @Body CategoriesDTO categoriesDTO);
 
     @GET("api/v1/categories")
-    Call<List<CategoriesDTO>> getAllCategories();
+    Call<List<Category>> getAllCategories();
 
-    @PUT("categories/{id}")
-    Call<String> updateCategory(@Header("Authorization") String token, @Path("id") Long id, @Body CategoriesDTO categoriesDTO);
+    @PUT("api/v1/categories/{id}")
+    Call<ResponseBody> updateCategory(@Header("Authorization") String token, @Path("id") int id, @Body CategoriesDTO categoriesDTO);
 
-    @DELETE("categories/{id}")
-    Call<Void> deleteCategory(@Header("Authorization") String token, @Path("id") Long id);
+    @DELETE("api/v1/categories/{id}")
+    @Headers("Content-Type: application/json")
+    Call<Void> deleteCategory(@Header("Authorization") String token, @Path("id") int id);
 }
