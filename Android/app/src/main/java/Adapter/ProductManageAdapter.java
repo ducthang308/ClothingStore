@@ -14,7 +14,6 @@ import com.example.duanandroid.R;
 
 import java.util.List;
 
-import Model.Product1;
 import Model.ProductImage;
 
 public class ProductManageAdapter extends RecyclerView.Adapter<ProductManageAdapter.ProductManageHolder> {

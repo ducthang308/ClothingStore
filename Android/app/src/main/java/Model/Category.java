@@ -4,14 +4,22 @@ import com.google.gson.annotations.SerializedName;
 
 public class Category {
     private int id;
+<<<<<<< HEAD
 
     public Category(String categoryName) {
         this.categoryName = categoryName;
     }
 
+=======
+    @SerializedName("category_name")
+>>>>>>> main
     private String categoryName;
 
     public Category() {
+    }
+
+    public Category(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public Category(int id, String categoryName) {

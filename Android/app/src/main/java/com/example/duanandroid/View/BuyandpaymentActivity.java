@@ -20,7 +20,6 @@ import java.util.List;
 
 import Adapter.BuyAndPaymentAdapter;
 import Model.OrderDetail;
-import Model.Product1;
 import Model.ProductImage;
 
 public class BuyandpaymentActivity extends AppCompatActivity {

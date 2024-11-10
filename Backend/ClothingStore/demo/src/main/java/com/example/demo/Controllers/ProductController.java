@@ -86,6 +86,7 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_Admin')")
     public ResponseEntity<?> updateProduct(@PathVariable("id") Long id,
                                            @Valid @RequestBody ProductDTO productDTO)
     {
@@ -98,6 +99,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_Admin')")
     public ResponseEntity<?> deleteProduct(@PathVariable("id") Long id)
     {
         try {

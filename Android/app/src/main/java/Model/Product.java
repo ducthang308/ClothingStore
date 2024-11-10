@@ -5,23 +5,19 @@ import java.io.Serializable;
 public class Product implements Serializable {
     private int id;
     private String productName;
-    private int categoryId;
+    private Category category;
     private String color;
-    private String size;
     private float price;
-    private float discount;
 
-    public Product(String productName, String size, float price) {
+    public Product(int id, String productName, Category category, String color, float price) {
         this.id = id;
         this.productName = productName;
-        this.categoryId = categoryId;
-        this.size = size;
+        this.category = category;
         this.color = color;
         this.price = price;
-        this.discount = discount;
     }
 
-    public Product(int i, String áoThunNam, int i1, int i2, String m, String number, String s) {
+    public Product() {
     }
 
     public int getId() {
@@ -40,6 +36,14 @@ public class Product implements Serializable {
         this.productName = productName;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     public String getColor() {
         return color;
     }
@@ -48,35 +52,11 @@ public class Product implements Serializable {
         this.color = color;
     }
 
-    public int getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(int categoryId) {
-        this.categoryId = categoryId;
-    }
-
     public float getPrice() {
         return price;
     }
 
     public void setPrice(float price) {
         this.price = price;
-    }
-
-    public String getSize() {
-        return size;
-    }
-
-    public void setSize(String size) {
-        this.size = size;
-    }
-
-    public float getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(float discount) {
-        this.discount = discount;
     }
 }

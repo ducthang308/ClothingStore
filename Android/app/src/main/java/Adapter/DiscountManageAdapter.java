@@ -22,7 +22,7 @@ public class DiscountManageAdapter extends RecyclerView.Adapter<DiscountManageAd
     private List<Discount> discountList;
     private Context context;
     private OnDiscountSelectedListener listener;
-    private int selectedPosition = -1; // Track the selected position
+    private int selectedPosition = -1;
 
     public DiscountManageAdapter(Context context, List<Discount> discountList, OnDiscountSelectedListener listener) {
         this.context = context;
@@ -43,21 +43,18 @@ public class DiscountManageAdapter extends RecyclerView.Adapter<DiscountManageAd
         holder.tvPercent.setText(discount.getPercent() + "%");
         holder.tvNote.setText(discount.getNote());
 
-        // Set the checkbox checked state based on the selected position
         holder.checkbox.setChecked(position == selectedPosition);
 
-        // Checkbox click listener
         holder.checkbox.setOnClickListener(v -> {
             if (selectedPosition == position) {
-                // If the current item is already selected, deselect it
                 selectedPosition = -1;
-                listener.onDiscountSelected(null); // No discount selected
+                listener.onDiscountSelected(null);
             } else {
                 // Select the new item
                 selectedPosition = position;
                 listener.onDiscountSelected(discount);
             }
-            notifyDataSetChanged(); // Update the UI to reflect the selection change
+            notifyDataSetChanged();
         });
     }
 
