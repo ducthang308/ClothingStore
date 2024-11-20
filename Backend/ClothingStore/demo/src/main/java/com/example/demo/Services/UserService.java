@@ -1,6 +1,7 @@
 package com.example.demo.Services;
 
 import com.example.demo.DTO.LoginResponseDTO;
+import com.example.demo.DTO.UpdatePassDTO;
 import com.example.demo.DTO.UsersDTO;
 import com.example.demo.Exception.DataNotFoundException;
 import com.example.demo.Exception.PermissonDenyException;
@@ -17,6 +18,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -91,6 +93,24 @@ public class UserService implements IUsersService{
         String token = jwtToken.generationToken(existingUser);
         Long roleId = existingUser.getRoles().getId(); // assuming roleId is accessible like this
         return new LoginResponseDTO(token, roleId);
+    }
+
+    @Override
+    public Users updatePass(UpdatePassDTO updatePassDTO, Long id) throws Exception {
+        Users existUser = usersRepository.findById(id).
+                orElseThrow(()->new DataNotFoundException("Not found userId: "+id));
+        if (!passwordEncoder.matches(updatePassDTO.getPassword(), existUser.getPassword())) {
+            throw new BadCredentialsException("Wrong password");
+        }
+        String password = updatePassDTO.getNewPass();
+        String encodedPassword = passwordEncoder.encode(password);
+        existUser.setPassword(encodedPassword);
+        return usersRepository.save(existUser);
+    }
+
+    @Override
+    public List<Users> getAllUser(UsersDTO usersDTO) throws Exception {
+        return usersRepository.findAll();
     }
 
 }
