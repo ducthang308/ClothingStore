@@ -22,11 +22,11 @@ public class detailOrderActivity extends AppCompatActivity {
     }
 
     private void getVariable() {
-        binding.productName.setText(product.getProductName());
-        binding.productColor.setText(product.getColor());
-        binding.size.setText(product.getSize());
-        //binding.productSoluong.setText(product.getsoLuong);
-        binding.productPrice.setText(product.getPrice()+"đ");
+//        binding.productName.setText(product.getProductName());
+//        binding.productColor.setText(product.getColor());
+//        binding.size.setText(product.getSize());
+//        //binding.productSoluong.setText(product.getsoLuong);
+//        binding.productPrice.setText(product.getPrice()+"đ");
 
         //Glide.with(detailOrderActivity.this)
           //      .load(product.getImage())

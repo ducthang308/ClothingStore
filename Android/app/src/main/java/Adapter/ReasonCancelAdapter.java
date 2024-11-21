@@ -40,22 +40,22 @@ public class ReasonCancelAdapter extends RecyclerView.Adapter<ReasonCancelAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ReasonCancelHolder holder, int position) {
-        Product product = productList.get(position);
-        OrderDetail orderDetail = orderDetailList.get(position);
-
-        // Set thông tin sản phẩm
-        holder.productName.setText(product.getProductName());
-        holder.productSize.setText("Size: " + product.getSize());
-        holder.productPrice.setText(String.valueOf(product.getPrice()) + "đ");
-        holder.productQuantity.setText("x" + orderDetail.getNumberOfProduct());
-        holder.totalPayment.setText(String.valueOf(orderDetail.getTotalMoney()) + "đ");
-
-        // Gán ảnh sản phẩm nếu có
-        if (productImageList != null && !productImageList.isEmpty()) {
-            // Lấy ảnh sản phẩm theo productId
-            ProductImage productImage = productImageList.get(position);
-            holder.productImage.setImageResource(R.drawable.ao); // Hình mặc định
-        }
+//        Product product = productList.get(position);
+//        OrderDetail orderDetail = orderDetailList.get(position);
+//
+//        // Set thông tin sản phẩm
+//        holder.productName.setText(product.getProductName());
+//        holder.productSize.setText("Size: " + product.getSize());
+//        holder.productPrice.setText(String.valueOf(product.getPrice()) + "đ");
+//        holder.productQuantity.setText("x" + orderDetail.getNumberOfProduct());
+//        holder.totalPayment.setText(String.valueOf(orderDetail.getTotalMoney()) + "đ");
+//
+//        // Gán ảnh sản phẩm nếu có
+//        if (productImageList != null && !productImageList.isEmpty()) {
+//            // Lấy ảnh sản phẩm theo productId
+//            ProductImage productImage = productImageList.get(position);
+//            holder.productImage.setImageResource(R.drawable.ao); // Hình mặc định
+//        }
     }
 
     @Override

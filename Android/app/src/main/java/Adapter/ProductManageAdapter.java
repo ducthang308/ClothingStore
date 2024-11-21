@@ -14,6 +14,8 @@ import com.example.duanandroid.R;
 
 import java.util.List;
 
+import Model.Product;
+import Model.Product1;
 import Model.ProductImage;
 
 public class ProductManageAdapter extends RecyclerView.Adapter<ProductManageAdapter.ProductManageHolder> {
@@ -40,14 +42,13 @@ public class ProductManageAdapter extends RecyclerView.Adapter<ProductManageAdap
     // Bind dữ liệu sản phẩm và hình ảnh vào ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ProductManageHolder holder, int position) {
-        Product1 product = productList.get(position);
-        ProductImage productImage = productImageList.get(position);
-        holder.productName.setText(product.getProductName());
-        holder.productPrice.setText(String.format("₫%,.0f", product.getPrice()));
-        holder.productSize.setText(product.getSize()); // Set kích thước sản phẩm
-        holder.soluong.setText(String.valueOf(product.getSoluong()));
-        int imageResId = Integer.parseInt(productImage.getImageUrl());
-        holder.productImage.setImageResource(Integer.parseInt(productImage.getImageUrl()));
+//        Product product = productList.get(position);
+//        ProductImage productImage = productImageList.get(position);
+//        holder.productName.setText(product.getProductName());
+//        holder.productPrice.setText(String.format("₫%,.0f", product.getPrice()));
+//        holder.soluong.setText(String.valueOf(product.getSoluong()));
+//        int imageResId = Integer.parseInt(productImage.getImageUrl());
+//        holder.productImage.setImageResource(Integer.parseInt(productImage.getImageUrl()));
     }
 
 

@@ -1,8 +1,6 @@
 package Model;
 
-import java.io.Serializable;
-
-public class Product implements Serializable {
+public class Product1 {
     private int id;
     private String productName;
     private int categoryId;
@@ -10,19 +8,19 @@ public class Product implements Serializable {
     private String size;
     private float price;
     private float discount;
+    private int soluong;
 
-    public Product(String productName, String size, float price) {
+    public Product1(int id, String productName, int categoryId, String color, String size, float price, float discount, int soluong) {
         this.id = id;
         this.productName = productName;
         this.categoryId = categoryId;
-        this.size = size;
         this.color = color;
+        this.size = size;
         this.price = price;
         this.discount = discount;
+        this.soluong = soluong;
     }
 
-    public Product(int i, String áoThunNam, int i1, int i2, String m, String number, String s) {
-    }
 
     public int getId() {
         return id;
@@ -40,14 +38,6 @@ public class Product implements Serializable {
         this.productName = productName;
     }
 
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
     public int getCategoryId() {
         return categoryId;
     }
@@ -56,12 +46,12 @@ public class Product implements Serializable {
         this.categoryId = categoryId;
     }
 
-    public float getPrice() {
-        return price;
+    public String getColor() {
+        return color;
     }
 
-    public void setPrice(float price) {
-        this.price = price;
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public String getSize() {
@@ -72,11 +62,27 @@ public class Product implements Serializable {
         this.size = size;
     }
 
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
     public float getDiscount() {
         return discount;
     }
 
     public void setDiscount(float discount) {
         this.discount = discount;
+    }
+
+    public int getSoluong() {
+        return soluong;
+    }
+
+    public void setSoluong(int soluong) {
+        this.soluong = soluong;
     }
 }

@@ -15,6 +15,8 @@ import com.example.duanandroid.R;
 import java.util.List;
 
 import Model.OrderDetail;
+import Model.Product;
+import Model.Product1;
 import Model.ProductImage;
 
 public class BuyAndPaymentAdapter extends RecyclerView.Adapter<BuyAndPaymentAdapter.BuyAndPaymentHolder> {
@@ -50,7 +52,6 @@ public class BuyAndPaymentAdapter extends RecyclerView.Adapter<BuyAndPaymentAdap
         // Set dữ liệu vào các view
         holder.productName.setText(product.getProductName());
         holder.productPrice.setText(String.format("₫%,.0f", orderDetail.getPrice()));
-        holder.productSize.setText(product.getSize());
         holder.productQuantity.setText(String.valueOf(orderDetail.getNumberOfProduct()));
         int imageResId = Integer.parseInt(productImage.getImageUrl());
         holder.productImage.setImageResource(Integer.parseInt(productImage.getImageUrl()));
