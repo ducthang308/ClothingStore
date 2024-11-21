@@ -44,33 +44,33 @@ public class WaitingShipingAdapter extends RecyclerView.Adapter<WaitingShipingAd
 
     @Override
     public void onBindViewHolder(@NonNull WaitingShipingAdapter.WaitingShipingViewHolder holder, int position) {
-        Product product = productList.get(position);
-        OrderDetail orderDetail = orderDetailList.get(position);
-
-        // Set thông tin sản phẩm
-        holder.productName.setText(product.getProductName());
-        holder.productSize.setText("Size: " + product.getSize());
-        holder.productPrice.setText(String.valueOf(product.getPrice()) + "đ");
-        holder.productQuantity.setText("x" + orderDetail.getNumberOfProduct());
-        holder.totalPayment.setText(String.valueOf(orderDetail.getTotalMoney()) + "đ");
-
-        // Gán ảnh sản phẩm nếu có
-        if (productImageList != null && !productImageList.isEmpty()) {
-            ProductImage productImage = productImageList.get(position);
-            holder.productImage.setImageResource(R.drawable.ao); // Hình mặc định
-        }
-
-        // Thêm sự kiện OnClick cho nút btnCancelOrder
-        holder.btnCancelOrderinShip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Chuyển sang ReasoncancelActivity khi người dùng click vào nút
-                Intent intent = new Intent(context, ReasoncancelActivity.class);
-//                intent.putExtra("productName", product.getProductName());
-//                intent.putExtra("orderDetailId", orderDetail.getId());  // Gửi thêm thông tin nếu cần
-                context.startActivity(intent);
-            }
-        });
+//        Product product = productList.get(position);
+//        OrderDetail orderDetail = orderDetailList.get(position);
+//
+//        // Set thông tin sản phẩm
+//        holder.productName.setText(product.getProductName());
+//        holder.productSize.setText("Size: " + product.getSize());
+//        holder.productPrice.setText(String.valueOf(product.getPrice()) + "đ");
+//        holder.productQuantity.setText("x" + orderDetail.getNumberOfProduct());
+//        holder.totalPayment.setText(String.valueOf(orderDetail.getTotalMoney()) + "đ");
+//
+//        // Gán ảnh sản phẩm nếu có
+//        if (productImageList != null && !productImageList.isEmpty()) {
+//            ProductImage productImage = productImageList.get(position);
+//            holder.productImage.setImageResource(R.drawable.ao); // Hình mặc định
+//        }
+//
+//        // Thêm sự kiện OnClick cho nút btnCancelOrder
+//        holder.btnCancelOrderinShip.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Chuyển sang ReasoncancelActivity khi người dùng click vào nút
+//                Intent intent = new Intent(context, ReasoncancelActivity.class);
+////                intent.putExtra("productName", product.getProductName());
+////                intent.putExtra("orderDetailId", orderDetail.getId());  // Gửi thêm thông tin nếu cần
+//                context.startActivity(intent);
+//            }
+//        });
     }
 
     @Override

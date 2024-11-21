@@ -1,5 +1,6 @@
 package Interface;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
@@ -11,7 +12,6 @@ public class APIClient {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl("http://192.168.1.215:8088/")
-                    .client(client)
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
@@ -25,6 +25,7 @@ public class APIClient {
         return getClient().create(ApiUsers.class);
     }
 
+    //Category
     public static APICaterogy createcategory() {
         return getClient().create(APICaterogy.class);
     }
@@ -37,6 +38,8 @@ public class APIClient {
     public static APICaterogy deletecategory(){
         return getClient().create(APICaterogy.class);
     }
+
+    //Discount
     public static ApiDiscounts createDiscount(){
         return getClient().create(ApiDiscounts.class);
     }
@@ -49,17 +52,21 @@ public class APIClient {
     public static ApiDiscounts deleteDiscounts(){
         return getClient().create(ApiDiscounts.class);
     }
-};
 
-
-    public static ApiDiscounts createDiscount(){ return getClient().create(ApiDiscounts.class);}
-    public static ApiDiscounts getDiscounts(){ return getClient().create(ApiDiscounts.class);}
-    public static ApiDiscounts updateDiscounts(){ return getClient().create(ApiDiscounts.class);}
-    public static ApiDiscounts deleteDiscounts(){ return getClient().create(ApiDiscounts.class);}
-
-    public static ApiCategories createCategory(){ return getClient().create(ApiCategories.class);}
-    public static ApiCategories getCategories(){ return getClient().create(ApiCategories.class);}
-    public static ApiCategories updateCategory(){ return getClient().create(ApiCategories.class);}
-    public static ApiCategories deleteCategory(){ return getClient().create(ApiCategories.class);}
-};
-
+    //Product
+    public static ApiProduct createProduct(){
+        return getClient().create(ApiProduct.class);
+    }
+    public static ApiProduct getProduct(){
+        return getClient().create(ApiProduct.class);
+    }
+    public static ApiProduct updateProduct(){
+        return getClient().create(ApiProduct.class);
+    }
+    public static ApiProduct deleteProduct(){
+        return getClient().create(ApiProduct.class);
+    }
+    public static ApiProduct uploadImages(){
+        return getClient().create(ApiProduct.class);
+    }
+}

@@ -49,29 +49,29 @@ public class WaitingReviewAdapter extends RecyclerView.Adapter<WaitingReviewAdap
 
         @Override
         public void onBindViewHolder(@NonNull WaitingReviewAdapter.WaitingReviewViewHolder holder, int position) {
-            Product product = productList.get(position);
-            OrderDetail orderDetail = orderDetailList.get(position);
-
-            // Set thông tin sản phẩm
-            holder.productName.setText(product.getProductName());
-            holder.productSize.setText("Size: " + product.getSize());
-            holder.productPrice.setText(String.valueOf(product.getPrice()) + "đ");
-            holder.productQuantity.setText("x" + orderDetail.getNumberOfProduct());
-            holder.totalPayment.setText(String.valueOf(orderDetail.getTotalMoney()) + "đ");
-
-            // Gán ảnh sản phẩm nếu có
-            if (productImageList != null && !productImageList.isEmpty()) {
-                // Lấy ảnh sản phẩm theo productId
-                ProductImage productImage = productImageList.get(position);
-                holder.productImage.setImageResource(R.drawable.ao); // Hình mặc định
-            }
-            holder.danhgia.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, PageDanhgiaActivity.class);
-                    context.startActivity(intent);
-                }
-            });
+//            Product product = productList.get(position);
+//            OrderDetail orderDetail = orderDetailList.get(position);
+//
+//            // Set thông tin sản phẩm
+//            holder.productName.setText(product.getProductName());
+//            holder.productSize.setText("Size: " + product.getSize());
+//            holder.productPrice.setText(String.valueOf(product.getPrice()) + "đ");
+//            holder.productQuantity.setText("x" + orderDetail.getNumberOfProduct());
+//            holder.totalPayment.setText(String.valueOf(orderDetail.getTotalMoney()) + "đ");
+//
+//            // Gán ảnh sản phẩm nếu có
+//            if (productImageList != null && !productImageList.isEmpty()) {
+//                // Lấy ảnh sản phẩm theo productId
+//                ProductImage productImage = productImageList.get(position);
+//                holder.productImage.setImageResource(R.drawable.ao); // Hình mặc định
+//            }
+//            holder.danhgia.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent(context, PageDanhgiaActivity.class);
+//                    context.startActivity(intent);
+//                }
+//            });
         }
 
         @Override
