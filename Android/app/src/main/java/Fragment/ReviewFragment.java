@@ -85,10 +85,10 @@ public class ReviewFragment extends Fragment {
         orderDetailList = new ArrayList<>();
         productImageList = new ArrayList<>();
 
-        // Add Dummy Data (for testing)
-        productList.add(new Product("Áo thun ngắn tay nữ trắng", "M", 200000));
-        orderDetailList.add(new OrderDetail(1, 1, 1, 200000, 100, 200000, null));
-        productImageList.add(new ProductImage(1, 1, "url_image_here"));
+//        // Add Dummy Data (for testing)
+//        productList.add(new Product("Áo thun ngắn tay nữ trắng", "M", 200000));
+//        orderDetailList.add(new OrderDetail(1, 1, 1, 200000, 100, 200000, null));
+//        productImageList.add(new ProductImage(1, 1, "url_image_here"));
 
 
 

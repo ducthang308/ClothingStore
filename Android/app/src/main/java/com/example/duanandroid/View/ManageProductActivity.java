@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapter.ProductManageAdapter;
+import Model.Product1;
 import Model.ProductImage;
 
 public class ManageProductActivity extends AppCompatActivity {
@@ -34,7 +35,7 @@ public class ManageProductActivity extends AppCompatActivity {
         // Ánh xạ RecyclerView từ layout
         productManageRecyclerView = findViewById(R.id.rcv_productManage);
         productManageRecyclerView.setLayoutManager(new GridLayoutManager(this, 1));
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+       // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         // Khởi tạo danh sách sản phẩm và hình ảnh
         productList = new ArrayList<>();
         productImageList = new ArrayList<>();
@@ -62,7 +63,7 @@ public class ManageProductActivity extends AppCompatActivity {
 
         // Khởi tạo Adapter và kết nối với RecyclerView
         productManageAdapter = new ProductManageAdapter(this,productList, productImageList);
-        productManageRecyclerView.setLayoutManager(linearLayoutManager);
+//        productManageRecyclerView.setLayoutManager(linearLayoutManager);
         productManageRecyclerView.setAdapter(productManageAdapter);
         // Xử lý sự kiện khi nhấn nút quay lại
         ImageView btnback = findViewById(R.id.back_arrow);

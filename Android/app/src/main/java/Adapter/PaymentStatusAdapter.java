@@ -45,27 +45,27 @@ public class PaymentStatusAdapter extends RecyclerView.Adapter<PaymentStatusAdap
 
     @Override
     public void onBindViewHolder(@NonNull PaymentStatusViewHolder holder, int position) {
-        // Lấy product, orderDetail từ danh sách tương ứng
-        Product product = productList.get(position);
-        OrderDetail orderDetail = orderDetailList.get(position);
-//        Order oder = orderList.get(position);
-
-        // Set thông tin sản phẩm
-        holder.productName.setText(product.getProductName());
-        holder.productSize.setText("Size: " + product.getSize());
-        holder.productPrice.setText(String.valueOf(product.getPrice()) + "đ");
-        holder.productQuantity.setText("x" + orderDetail.getNumberOfProduct());
-        holder.totalPayment.setText(String.valueOf(orderDetail.getTotalMoney()) + "đ");
-
-        // Gán ảnh sản phẩm nếu có
-        if (productImageList != null && !productImageList.isEmpty()) {
-            // Lấy ảnh sản phẩm theo productId
-            ProductImage productImage = productImageList.get(position);
-            // Nếu sử dụng image URL hoặc drawable, bạn có thể set ảnh vào ImageView như sau
-            // Glide.with(context).load(productImage.getImageUrl()).into(holder.productImage);
-            // Ví dụ set ảnh tạm thời
-            holder.productImage.setImageResource(R.drawable.ao); // Hình mặc định
-        }
+//        // Lấy product, orderDetail từ danh sách tương ứng
+//        Product product = productList.get(position);
+//        OrderDetail orderDetail = orderDetailList.get(position);
+////        Order oder = orderList.get(position);
+//
+//        // Set thông tin sản phẩm
+//        holder.productName.setText(product.getProductName());
+//        holder.productSize.setText("Size: " + product.getSize());
+//        holder.productPrice.setText(String.valueOf(product.getPrice()) + "đ");
+//        holder.productQuantity.setText("x" + orderDetail.getNumberOfProduct());
+//        holder.totalPayment.setText(String.valueOf(orderDetail.getTotalMoney()) + "đ");
+//
+//        // Gán ảnh sản phẩm nếu có
+//        if (productImageList != null && !productImageList.isEmpty()) {
+//            // Lấy ảnh sản phẩm theo productId
+//            ProductImage productImage = productImageList.get(position);
+//            // Nếu sử dụng image URL hoặc drawable, bạn có thể set ảnh vào ImageView như sau
+//            // Glide.with(context).load(productImage.getImageUrl()).into(holder.productImage);
+//            // Ví dụ set ảnh tạm thời
+//            holder.productImage.setImageResource(R.drawable.ao); // Hình mặc định
+//        }
 
 
 //        holder.itemView.setOnClickListener(new View.OnClickListener() {

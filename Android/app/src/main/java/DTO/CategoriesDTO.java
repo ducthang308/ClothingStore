@@ -6,10 +6,23 @@ public class CategoriesDTO {
     @SerializedName("id")
     private long id;
 
-    @SerializedName("category_name") // Đổi "caterogy_name" thành "category_name" để khớp với backend
-    private String name;
+    @SerializedName("category_name")  // Đảm bảo khớp với backend
+    private String categoryName;
 
-    public CategoriesDTO() {}
+    // Constructor chỉ có tham số name (dùng cho tạo mới)
+    public CategoriesDTO(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    // Constructor có cả id và name (dùng cho cập nhật nếu cần)
+    public CategoriesDTO(long id, String categoryName) {
+        this.id = id;
+        this.categoryName = categoryName;
+    }
+
+    // Default constructor
+    public CategoriesDTO() {
+    }
 
     public long getId() {
         return id;
@@ -19,17 +32,12 @@ public class CategoriesDTO {
         this.id = id;
     }
 
-    // Constructor thêm name
-    public CategoriesDTO( String name) {
 
-        this.name = name;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }

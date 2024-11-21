@@ -34,17 +34,9 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/stroke"
-            android:hint="Mã sản phẩm"
-            android:textColor="@color/colorblack"
-            android:textColorHint="@color/colorblack"
-            android:padding="12dp" />
 
         <EditText
+            android:id="@+id/edt_productname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -54,17 +46,20 @@
             android:textColorHint="@color/colorblack"
             android:padding="12dp" />
 
-        <EditText
+
+        <Spinner
+            android:id="@+id/spinner_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@drawable/stroke"
-            android:hint="Mã danh mục"
             android:textColor="@color/colorblack"
             android:textColorHint="@color/colorblack"
-            android:padding="12dp" />
+            android:padding="12dp"
+            />
 
         <EditText
+            android:id="@+id/product_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -75,6 +70,7 @@
             android:padding="12dp" />
 
         <EditText
+            android:id="@+id/product_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -84,60 +80,6 @@
             android:textColorHint="@color/colorblack"
             android:inputType="number"
             android:padding="12dp" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/stroke"
-            android:hint="Số lượng"
-            android:textColor="@color/colorblack"
-            android:textColorHint="@color/colorblack"
-            android:inputType="number"
-            android:padding="12dp" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/stroke"
-            android:hint="Phiếu giảm giá"
-            android:textColor="@color/colorblack"
-            android:textColorHint="@color/colorblack"
-            android:padding="12dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Size"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="size S" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="size M" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="size L" />
-        </RadioGroup>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -210,6 +152,7 @@
             </LinearLayout>
         </HorizontalScrollView>
         <Button
+            android:id="@+id/btn_AddProduct"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
