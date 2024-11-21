@@ -59,7 +59,7 @@ public class ProductController {
                 return ResponseEntity.badRequest().body(errorMessage);
             }
             Product newProduct = productService.createProduct(productDTO);
-            return ResponseEntity.ok(newProduct);
+            return ResponseEntity.ok(newProduct.getId());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -152,6 +152,8 @@ public class ProductController {
     @PreAuthorize("hasRole('ROLE_Admin')")
     public ResponseEntity<?> uploadImages(@RequestParam("files") List<MultipartFile> files,
                                           @PathVariable("id") Long productId) {
+        log.info("Product ID: {}", productId);
+        log.info("Number of files received: {}", files != null ? files.size() : 0);
         if (files == null || files.isEmpty()) {
             return ResponseEntity.badRequest().body("No files provided for upload.");
         }
@@ -173,9 +175,12 @@ public class ProductController {
                 productImages.add(productImage);
             }
             return ResponseEntity.ok(productImages);
+        } catch (IOException e) {
+            log.error("File processing error", e);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid file format.");
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).body("An error occurred while uploading images.");
+            log.error("Unexpected error", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Unexpected error occurred.");
         }
     }
 
