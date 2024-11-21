@@ -28,7 +28,7 @@ public interface ApiProduct {
     @Multipart
     @POST("api/v1/uploads/{id}")
     Call<List<ProductImageDTO>> uploadImages(
-//            @Header("Authorization") String token,
+            @Header("Authorization") String token,
             @Path("id") Long productId,
             @Part List<MultipartBody.Part> files
     );

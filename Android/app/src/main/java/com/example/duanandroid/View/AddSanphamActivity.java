@@ -313,7 +313,7 @@ public class AddSanphamActivity extends AppCompatActivity {
             return;
         }
 
-        apiProduct.uploadImages( productId, imageParts).enqueue(new Callback<List<ProductImageDTO>>() {
+        apiProduct.uploadImages("Bearer " + token, productId, imageParts).enqueue(new Callback<List<ProductImageDTO>>() {
             @Override
             public void onResponse(Call<List<ProductImageDTO>> call, Response<List<ProductImageDTO>> response) {
                 if (response.isSuccessful() && response.body() != null) {
