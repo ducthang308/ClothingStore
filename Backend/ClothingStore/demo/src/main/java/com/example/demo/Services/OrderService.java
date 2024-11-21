@@ -88,4 +88,9 @@ public class OrderService implements IOrdersService {
     public void deleteOrder(long id) {
         ordersRepository.deleteById(id);
     }
+
+    @Override
+    public List<Orders> getAllOrders() {
+        return ordersRepository.findAll();
+    }
 }

@@ -6,6 +6,7 @@ import com.example.demo.Services.ReviewService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping("")
+    @PreAuthorize("hasAnyRole('Admin', 'User')")
     public ResponseEntity<?> createReview(@Valid @RequestBody ReviewDTO reviewDTO,
                                           BindingResult result){
         try {
