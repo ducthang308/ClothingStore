@@ -10,7 +10,7 @@ spring:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
       url: jdbc:mysql://localhost:3306/ClothingStore?useSSL=false&serverTimezone=UTC
       username: root
-      password:
+      password: "Thang@3008"
       driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -24,8 +24,8 @@ spring:
   servlet:
     multipart:
       enabled: true
-      max-file-size: 10MB
-      max-request-size: 10MB
+      max-file-size: 20MB
+      max-request-size: 50MB
 
 logging:
   level:

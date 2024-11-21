@@ -13,8 +13,7 @@ public class ProductImageDTO {
         this.productId = productId;
     }
 
-    public ProductImageDTO(int id, int productId, String imageUrl) {
-        this.id = id;
+    public ProductImageDTO(int productId, String imageUrl) {
         this.productId = productId;
         this.imageUrl = imageUrl;
     }

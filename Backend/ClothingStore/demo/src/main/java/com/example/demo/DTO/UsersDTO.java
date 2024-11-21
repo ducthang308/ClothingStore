@@ -34,6 +34,9 @@ public class UsersDTO {
     @JsonProperty("retype_pass")
     private String retypePass;
 
+    @JsonProperty("new_pass")
+    private String newPass;
+
     @JsonProperty("date_of_birth")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date dateOfBirth;

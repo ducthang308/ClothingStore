@@ -21,7 +21,7 @@ public class OrderDetailController {
     private final OrderDetailService orderDetailService;
 
     @PostMapping("")
-    @PreAuthorize("hasRole('ROLE_Admin')")
+    @PreAuthorize("hasAnyRole('Admin', 'User')")
     public ResponseEntity<?> createOrderDetail(@Valid @RequestBody OrderDetailDTO orderDetailDTO,
                                                BindingResult result ){
         try {
@@ -40,6 +40,7 @@ public class OrderDetailController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('Admin', 'User')")
     public ResponseEntity<?> getOrderDetailById(@Valid @PathVariable("id") Long id){
         try {
             OrderDetail orderDetail = orderDetailService.getOrderDetail(id);
@@ -50,6 +51,7 @@ public class OrderDetailController {
     }
 
     @GetMapping("/orders/{orderId}")
+    @PreAuthorize("hasAnyRole('Admin', 'User')")
     public ResponseEntity<?> getOrderDetailByOrderId(@Valid @PathVariable("orderId") Long orderId){
         List<OrderDetail> orderDetails =orderDetailService.findByOrdersId(orderId);
         return ResponseEntity.ok(orderDetails);
