@@ -1,18 +1,17 @@
 package com.example.demo.Controllers;
 
 import com.example.demo.DTO.LoginResponseDTO;
+import com.example.demo.DTO.UpdatePassDTO;
 import com.example.demo.DTO.UsersDTO;
 import com.example.demo.Models.Users;
 import com.example.demo.Services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -50,6 +49,20 @@ public class UserController {
             return ResponseEntity.ok(responseDTO);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Login failed: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_User')")
+    public ResponseEntity<?> updatePass(@PathVariable("id") Long id, @Valid @RequestBody UpdatePassDTO updatePassDTO){
+        try {
+            if(!updatePassDTO.getNewPass().equals(updatePassDTO.getRetypePass())){
+                return ResponseEntity.badRequest().body("New password and retype password not same");
+            }
+            Users users = userService.updatePass(updatePassDTO, id);
+            return ResponseEntity.ok(users);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
