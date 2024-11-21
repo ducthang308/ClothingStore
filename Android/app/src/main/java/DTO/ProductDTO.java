@@ -3,7 +3,7 @@ package DTO;
 import com.google.gson.annotations.SerializedName;
 
 public class ProductDTO {
-    private int id;
+    private Long id;
     @SerializedName("product_name")
     private String productName;
     @SerializedName("category_id")
@@ -11,7 +11,7 @@ public class ProductDTO {
     private String color;
     private float price;
 
-    public ProductDTO(int id, String productName, int categoryId, String color, float price) {
+    public ProductDTO(Long id, String productName, int categoryId, String color, float price) {
         this.id = id;
         this.productName = productName;
         this.categoryId = categoryId;
@@ -22,11 +22,11 @@ public class ProductDTO {
     public ProductDTO() {
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
