@@ -20,6 +20,7 @@ public class OrdersController {
     private final OrderService orderService;
 
     @PostMapping("")
+    @PreAuthorize("hasAnyRole('Admin', 'User')")
     public ResponseEntity<?> createOrders(@Valid @RequestBody OrdersDTO ordersDTO, BindingResult result){
         try {
             if (result.hasErrors()) {
@@ -37,18 +38,28 @@ public class OrdersController {
     }
 
     @GetMapping("/user/{user_id}")
-    public ResponseEntity<?> getAllOrders(@Valid @PathVariable("user_id") Long userId){
+    @PreAuthorize("hasAnyRole('Admin', 'User')")
+    public ResponseEntity<?> getAllOrderByUserId(@Valid @PathVariable("user_id") Long userId){
         List<Orders> orders = orderService.findByUserId(userId);
         return ResponseEntity.ok(orders);
     }
 
+    @GetMapping("")
+    @PreAuthorize("hasRole('ROLE_Admin')")
+    public ResponseEntity<List<Orders>> getAllOrders(){
+        List<Orders> orders = orderService.getAllOrders();
+        return ResponseEntity.ok(orders);
+    }
+
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('Admin', 'User')")
     public ResponseEntity<?> getOrderById(@Valid @PathVariable("id") Long id){
         Orders orders = orderService.getOrder(id);
         return ResponseEntity.ok(orders);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('Admin', 'User')")
     public ResponseEntity<?> updateProduct(@PathVariable("id") Long id,
                                            @Valid @RequestBody OrdersDTO ordersDTO)
     {
