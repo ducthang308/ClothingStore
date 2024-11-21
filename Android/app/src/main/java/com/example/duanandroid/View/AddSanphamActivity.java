@@ -324,6 +324,7 @@ public class AddSanphamActivity extends AppCompatActivity {
             return;
         }
 
+<<<<<<< HEAD
         // Chuẩn bị danh sách MultipartBody.Part[]
         MultipartBody.Part[] imageParts = prepareImagePartsArray();
         if (imageParts.length == 0) {
@@ -334,6 +335,8 @@ public class AddSanphamActivity extends AppCompatActivity {
 
         Log.d("UploadImages", "Số ảnh chuẩn bị tải lên: " + imageParts.length);
 
+=======
+>>>>>>> NguyenVanThang
         apiProduct.uploadImages("Bearer " + token, productId, imageParts).enqueue(new Callback<List<ProductImageDTO>>() {
             @Override
             public void onResponse(Call<List<ProductImageDTO>> call, Response<List<ProductImageDTO>> response) {

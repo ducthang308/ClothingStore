@@ -1,6 +1,5 @@
 package Interface;
 
-import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
@@ -69,4 +68,26 @@ public class APIClient {
     public static ApiProduct uploadImages(){
         return getClient().create(ApiProduct.class);
     }
+
+    // Orders
+    public static ApiOrders createOrder() {
+        return getClient().create(ApiOrders.class);
+    }
+
+    public static ApiOrders getOrderById() {
+        return getClient().create(ApiOrders.class);
+    }
+
+    public static ApiOrders getAllOrdersByUser() {
+        return getClient().create(ApiOrders.class);
+    }
+
+    public static ApiOrders updateOrder() {
+        return getClient().create(ApiOrders.class);
+    }
+
+    public static ApiOrders deleteOrder() {
+        return getClient().create(ApiOrders.class);
+    }
+
 }
