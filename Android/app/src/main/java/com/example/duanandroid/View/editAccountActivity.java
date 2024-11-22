@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.duanandroid.R;
 
+import Fragment.AccountUserFragment;
+
 public class editAccountActivity extends AppCompatActivity {
 
     @Override
@@ -24,7 +26,7 @@ public class editAccountActivity extends AppCompatActivity {
         img_arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent_profile = new Intent(editAccountActivity.this, ManageAccountActivity.class);
+                Intent intent_profile = new Intent(editAccountActivity.this, AccountUserFragment.class);
 //                startActivity(intent_profile);
                 finish();
             }
@@ -37,8 +39,9 @@ public class editAccountActivity extends AppCompatActivity {
         btnsave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(editAccountActivity.this, ManageAccountActivity.class);
-                startActivity(intent);
+                Intent intent = new Intent(editAccountActivity.this, AccountUserFragment.class);
+//                startActivity(intent);
+                finish();
             }
         });
     }

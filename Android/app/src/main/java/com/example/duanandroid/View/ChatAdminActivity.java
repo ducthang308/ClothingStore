@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.activity.EdgeToEdge;
@@ -15,12 +14,16 @@ import com.example.duanandroid.R;
 
 public class ChatAdminActivity extends AppCompatActivity {
 
-
+    private String previousActivity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_chat_admin);
+
+        previousActivity = getIntent().getStringExtra("previousActivity");
+
+
         @SuppressLint({"MissingInflatedId", "LocalSuppress"})
         LinearLayout ln_chat_admin= findViewById(R.id.item_chat);
         ln_chat_admin.setOnClickListener(new View.OnClickListener() {

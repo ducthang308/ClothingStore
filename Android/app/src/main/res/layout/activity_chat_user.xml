@@ -1,10 +1,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/colorwhite"
-    android:orientation="vertical">
+    android:fitsSystemWindows="true"> <!-- Đảm bảo không bị che khi hiển thị bàn phím -->
 
-
+    <!-- Thanh Header -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,16 +14,13 @@
         android:background="#FFFFFF"
         android:gravity="center_vertical">
 
-        <!-- Nút Quay lại -->
         <ImageButton
             android:id="@+id/arrow_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorwhite"
-            android:src="@drawable/baseline_arrow_back_24"
-           />
+            android:src="@drawable/baseline_arrow_back_24" />
 
-        <!-- Tên shop -->
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -34,104 +32,99 @@
             android:textStyle="bold"
             android:paddingLeft="10dp" />
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:gravity="center">
 
-        <ImageView
-            android:layout_width="46dp"
-            android:layout_height="42dp"
-            android:layout_gravity="center"
-            android:src="@drawable/logo_shop" />
-    </LinearLayout>
+    <!-- Phần cuộn nội dung -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_weight="1">
+            android:padding="10dp">
 
-
+            <!-- Tin nhắn từ shop -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_gravity="start"
+                android:gravity="start"
                 android:padding="8dp">
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/logo_shop"/>
+                    android:src="@drawable/logo_shop" />
 
                 <TextView
-                    android:layout_width="250dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:maxWidth="250dp"
                     android:padding="10dp"
-
-                    android:text="Xin chào, cảm ơn bạn đã liên hệ với cửa hàng TTT, vui lòng cho chúng tôi biết bạn cần tư vấn gì?"
+                    android:text="Xin chào, cảm ơn bạn đã liên hệ với cửa hàng TTT!"
                     android:background="@drawable/bg_corner_chat_sendme"
                     android:textColor="#333333"
                     android:textSize="14sp"
                     android:layout_marginLeft="10dp" />
             </LinearLayout>
 
-
+            <!-- Tin nhắn từ người dùng -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_gravity="end"
-                android:padding="8dp">
-
+               >
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:maxWidth="250dp"
                     android:padding="10dp"
                     android:layout_margin="10dp"
                     android:text="Tôi không thấy đơn hàng của mình đến?"
                     android:background="@drawable/bg_corner_chat"
                     android:textSize="14sp"
-                    android:layout_marginRight="10dp" />
+                    />
             </LinearLayout>
 
-            <!-- Tin nhắn phản hồi của Shop -->
+            <!-- Tin nhắn phản hồi của shop -->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_gravity="start"
-                android:layout_margin="10dp"
+                android:gravity="start"
                 android:padding="8dp">
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/logo_shop"
-                     />
+                    android:src="@drawable/logo_shop" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
-                    android:text="Xin lỗi vì sự bất tiện này, chúng tôi sẽ kiểm tra ngay."
+                    android:maxWidth="250dp"
+                    android:padding="10dp"
+                    android:text="Xin lỗi vì sự bất tiện này, chúng tôi sẽ kiểm tra ngay!"
                     android:background="@drawable/bg_corner_chat_sendme"
                     android:textColor="#333333"
                     android:textSize="14sp"
                     android:layout_marginLeft="10dp" />
             </LinearLayout>
+
         </LinearLayout>
+    </ScrollView>
+
+    <!-- Thanh nhập tin nhắn -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_gravity="bottom"
-        android:padding="10dp">
+        android:padding="10dp"
+        android:gravity="center_vertical">
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -147,22 +140,18 @@
 
         <EditText
             android:id="@+id/edt_message"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/stroke"
             android:hint="Nhập tin nhắn"
-            android:padding="8dp"
-            android:verticalScrollbarPosition="defaultPosition" />
+            android:padding="10dp" />
 
         <ImageButton
             android:id="@+id/send_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorwhite"
-            android:contentDescription="Gửi"
-            android:padding="5dp"
             android:src="@drawable/baseline_send_24" />
     </LinearLayout>
-
 </LinearLayout>

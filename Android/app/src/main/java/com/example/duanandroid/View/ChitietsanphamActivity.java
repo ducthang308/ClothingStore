@@ -1,8 +1,10 @@
 package com.example.duanandroid.View;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,12 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.duanandroid.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import Adapter.ReviewAdapter;
 import Model.Review;
-
 import Model.User;
 
 public class ChitietsanphamActivity extends AppCompatActivity {
@@ -57,7 +57,7 @@ public class ChitietsanphamActivity extends AppCompatActivity {
         reviewAdapter = new ReviewAdapter(reviewList, userList);
         reviewRecyclerView.setAdapter(reviewAdapter);
 
-        TextView btn=  findViewById(R.id.btn_add_to_cart);
+        ImageButton btn=  findViewById(R.id.btn_add_to_cart);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,21 +75,14 @@ public class ChitietsanphamActivity extends AppCompatActivity {
             }
         });
 
-        ImageView imv=  findViewById(R.id.chat);
-        imv.setOnClickListener(new View.OnClickListener() {
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
+        ImageButton btn_backHome = findViewById(R.id.back_home);
+        btn_backHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ChitietsanphamActivity.this, chatUserActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        ImageView shoppingcart=  findViewById(R.id.shopping_cart);
-        shoppingcart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ChitietsanphamActivity.this, CartActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(ChitietsanphamActivity.this, HomeFragment.class);
+//                startActivity(intent);
+                finish();
             }
         });
     }

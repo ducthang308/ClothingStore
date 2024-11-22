@@ -55,7 +55,16 @@ public class adminAcountActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
+        TextView tvHelp=  findViewById(R.id.tv_help);
+        tvHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(adminAcountActivity.this, ChatAdminActivity.class);
+                intent.putExtra("previousActivity", "adminAccountActivity");
+                startActivity(intent);
+            }
+        });
         LinearLayout backhome=  findViewById(R.id.nav_home);
         backhome.setOnClickListener(new View.OnClickListener() {
             @Override

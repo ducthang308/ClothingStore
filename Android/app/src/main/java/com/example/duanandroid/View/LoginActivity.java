@@ -1,11 +1,11 @@
 package com.example.duanandroid.View;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
+import android.text.InputType;
+import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,48 +15,29 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.duanandroid.R;
 
-import java.io.IOException;
-
-import DTO.UsersDTO;
-
-import Interface.APIClient;
-import Interface.ApiService_Users;
-import Reponse.LoginResponseDTO;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class LoginActivity extends AppCompatActivity {
     private EditText edtPhone;
     private EditText edtPassword;
     private Button btnLogin;
-    private ApiService_Users apiService;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Khởi tạo views
         edtPhone = findViewById(R.id.edt_phone);
         edtPassword = findViewById(R.id.edt_password);
         btnLogin = findViewById(R.id.btn_login);
 
-        // Khởi tạo ApiService một lần
-        apiService = APIClient.getLoginService();
-
+        setupPasswordVisibilityToggle(edtPassword);
         TextView tvSignup = findViewById(R.id.tv_signup);
-        tvSignup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(intent);
-            }
+        tvSignup.setOnClickListener(view -> {
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
         });
+
         btnLogin.setOnClickListener(view -> {
             String phoneNumber = edtPhone.getText().toString().trim();
-            System.out.println(phoneNumber);
             String password = edtPassword.getText().toString().trim();
 
             if (!phoneNumber.isEmpty() && !password.isEmpty()) {
@@ -67,59 +48,67 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void loginUser(String phoneNumber, String password) {
-        UsersDTO usersDTO = new UsersDTO(phoneNumber, password);
-        Call<LoginResponseDTO> call = apiService.login(usersDTO);
-        call.enqueue(new Callback<LoginResponseDTO>() {
-            @Override
-            public void onResponse(Call<LoginResponseDTO> call, Response<LoginResponseDTO> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    LoginResponseDTO loginResponse = response.body();
-                    String token = loginResponse.getToken();
-                    int roleId = loginResponse.getRoleId();
+    private void setupPasswordVisibilityToggle(EditText editText) {
+        // Save the initial drawables (left, top, bottom) and set initial right drawable to eye_close
+        Drawable drawableLeft = editText.getCompoundDrawables()[0];
+        Drawable drawableTop = editText.getCompoundDrawables()[1];
+        Drawable drawableBottom = editText.getCompoundDrawables()[3];
+        Drawable eyeCloseDrawable = getResources().getDrawable(R.drawable.eye_close);
+        Drawable eyeOpenDrawable = getResources().getDrawable(R.drawable.eye_open);
 
-                    Log.d("Login", "Token: " + token);
+        editText.setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop, eyeCloseDrawable, drawableBottom);
 
-                    // Lưu token vào SharedPreferences
-                    SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("token", token);
-                    editor.apply();
-
-                    // Điều hướng dựa trên roleId
-                    if (roleId == 2) {
-                        Intent intent = new Intent(LoginActivity.this, mainpageActivity.class);
-                        intent.putExtra("tabPosition", 2);
-                        startActivity(intent);
-                        finish();
+        editText.setOnTouchListener((view, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (event.getRawX() >= (editText.getRight() - editText.getCompoundDrawables()[2].getBounds().width())) {
+                    // Toggle password visibility
+                    if (editText.getInputType() == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
+                        // Show password
+                        editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                        editText.setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop, eyeOpenDrawable, drawableBottom);
                     } else {
-                        Intent intent = new Intent(LoginActivity.this, mainpageAdminActivity.class);
-                        intent.putExtra("tabPosition", 2);
-                        startActivity(intent);
-                        finish();
+                        // Hide password
+                        editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                        editText.setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop, eyeCloseDrawable, drawableBottom);
                     }
-                } else {
-                    Log.e("Login", "Error - Status Code: " + response.code() + ", Message: " + response.message());
-                    handleErrorResponse(response);
+                    editText.setSelection(editText.getText().length());
+                    return true;
                 }
             }
-
-            @Override
-            public void onFailure(Call<LoginResponseDTO> call, Throwable t) {
-                Log.e("Login", "Failed: " + t.getMessage());
-                Toast.makeText(LoginActivity.this, "Đăng nhập không thành công. Vui lòng thử lại.", Toast.LENGTH_SHORT).show();
-            }
+            return false;
         });
     }
 
-    private void handleErrorResponse(Response<LoginResponseDTO> response) {
-        try {
-            String errorBody = response.errorBody() != null ? response.errorBody().string() : "Unknown error";
-            Log.e("Login", "Error Body: " + errorBody);
-            Toast.makeText(LoginActivity.this, "Lỗi đăng nhập: " + errorBody, Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(LoginActivity.this, "Lỗi khi xử lý phản hồi. Vui lòng thử lại.", Toast.LENGTH_SHORT).show();
+    public void loginUser(String phoneNumber, String password) {
+        if ((phoneNumber.equals("user") && password.equals("1234")) || (phoneNumber.equals("admin") && password.equals("1235"))) {
+            String token = "dummyToken";
+            int roleId;
+
+            if (phoneNumber.equals("user")) {
+                roleId = 2;
+            } else {
+                roleId = 1;
+            }
+
+
+            SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("token", token);
+            editor.apply();
+
+
+            Intent intent;
+            if (roleId == 2) {
+                intent = new Intent(LoginActivity.this, mainpageActivity.class);
+            } else {
+                intent = new Intent(LoginActivity.this, mainpageAdminActivity.class);
+            }
+            intent.putExtra("tabPosition", 1);
+            startActivity(intent);
+            finish();
+        } else {
+
+            Toast.makeText(LoginActivity.this, "Sai tên đăng nhập hoặc mật khẩu", Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -23,7 +23,7 @@
          />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
@@ -37,7 +37,7 @@
 
             <TextView
                 android:id="@+id/tv_name"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
                 android:ellipsize="end"
@@ -60,7 +60,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -75,7 +75,7 @@
                 android:textSize="16sp" />
 
             <LinearLayout
-                android:layout_width="155dp"
+                android:layout_width="match_parent"
                 android:layout_height="38dp"
                 android:gravity="end"
                 android:orientation="horizontal">
@@ -87,7 +87,7 @@
                     android:layout_gravity="center"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="Plus Button"
-                    android:src="@drawable/plus"
+                    android:src="@drawable/minus"
                     tools:ignore="TouchTargetSizeCheck" />
 
                 <TextView
@@ -106,7 +106,7 @@
                     android:layout_gravity="center"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="Minus Button"
-                    android:src="@drawable/minus"
+                    android:src="@drawable/plus"
                     tools:ignore="TouchTargetSizeCheck" />
             </LinearLayout>
         </LinearLayout>

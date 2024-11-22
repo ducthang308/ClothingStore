@@ -94,7 +94,6 @@ public class TabLayOutActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(TabLayOutActivity.this,AccountUserFragment.class);
-//                intent.putExtra("tabPosition", 4);
 //                startActivity(intent);
                 finish();
             }

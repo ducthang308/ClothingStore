@@ -44,20 +44,17 @@ public class WaitingPaymentAdapter extends RecyclerView.Adapter<WaitingPaymentAd
 
     @Override
     public void onBindViewHolder(@NonNull WaitingPaymentViewHolder holder, int position) {
-        // Lấy product, orderDetail từ danh sách tương ứng
+
         Product product = productList.get(position);
         OrderDetail orderDetail = orderDetailList.get(position);
 
-        // Set thông tin sản phẩm
         holder.productName.setText(product.getProductName());
         holder.productSize.setText("Size: " + product.getSize());
         holder.productPrice.setText(String.valueOf(product.getPrice()) + "đ");
         holder.productQuantity.setText("x" + orderDetail.getNumberOfProduct());
         holder.totalPayment.setText(String.valueOf(orderDetail.getTotalMoney()) + "đ");
 
-        // Gán ảnh sản phẩm nếu có
         if (productImageList != null && !productImageList.isEmpty()) {
-            // Lấy ảnh sản phẩm theo productId
             ProductImage productImage = productImageList.get(position);
             holder.productImage.setImageResource(R.drawable.ao); // Hình mặc định
         }

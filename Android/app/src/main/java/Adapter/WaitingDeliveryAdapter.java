@@ -1,9 +1,11 @@
 package Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +16,7 @@ import com.example.duanandroid.R;
 
 import java.util.List;
 
+import Fragment.TabLayOutActivity;
 import Model.OrderDetail;
 import Model.Product;
 import Model.ProductImage;
@@ -25,7 +28,6 @@ public class WaitingDeliveryAdapter extends RecyclerView.Adapter<WaitingDelivery
         private List<Product> productList;
         private List<OrderDetail> orderDetailList;
         private List<ProductImage> productImageList;
-
         public WaitingDeliveryAdapter(Context context, List<Product> productList, List<OrderDetail> orderDetailList, List<ProductImage> productImageList) {
 
                 this.context = context;
@@ -52,9 +54,17 @@ public class WaitingDeliveryAdapter extends RecyclerView.Adapter<WaitingDelivery
                 holder.productQuantity.setText("x" + orderDetail.getNumberOfProduct());
                 holder.totalPayment.setText(String.valueOf(orderDetail.getTotalMoney()) + "đ");
 
-                // Gán ảnh sản phẩm nếu có
+
+                holder.btnReceive.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(context, TabLayOutActivity.class);
+                        intent.putExtra("tabPosition", 3);
+                        context.startActivity(intent);
+                    }
+                });
                 if (productImageList != null && !productImageList.isEmpty()) {
-                    // Lấy ảnh sản phẩm theo productId
+
                     ProductImage productImage = productImageList.get(position);
                     holder.productImage.setImageResource(R.drawable.ao); // Hình mặc định
                 }
@@ -68,7 +78,7 @@ public class WaitingDeliveryAdapter extends RecyclerView.Adapter<WaitingDelivery
 
                 TextView productName, productSize, productPrice, productQuantity, totalPayment;
                 ImageView productImage;
-
+                Button btnReceive;
                 public WaitingDeliveryViewHolder(@NonNull View itemView) {
                     super(itemView);
                     productName = itemView.findViewById(R.id.product_name);
@@ -77,6 +87,7 @@ public class WaitingDeliveryAdapter extends RecyclerView.Adapter<WaitingDelivery
                     productQuantity = itemView.findViewById(R.id.product_quantity);
                     totalPayment = itemView.findViewById(R.id.total_money);
                     productImage = itemView.findViewById(R.id.product_image);
+                    btnReceive = itemView.findViewById(R.id.btn_receive);
                 }
             }
 }

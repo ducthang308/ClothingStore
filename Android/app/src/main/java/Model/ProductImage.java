@@ -40,4 +40,3 @@ public class ProductImage {
         this.imageUrl = imageUrl;
     }
 }
-

@@ -116,17 +116,16 @@ public class BuyandpaymentActivity extends AppCompatActivity {
     // Tạo dữ liệu hình ảnh mẫu
     private List<ProductImage> loadProductImages() {
         List<ProductImage> productImages = new ArrayList<>();
-<<<<<<< HEAD
+
         for (int i = 0; i <= 1; i++) {
             String imageName = "ao";
-=======
-        for (int i = 0; i <=1; i++) {
-            // Giả sử bạn có hình ảnh tương ứng trong drawable với tên ao1, ao2, ...
-            String imageName = "ao" ; // Tạo tên hình ảnh (ao1, ao2,...)
->>>>>>> origin/main
-            int imageResId = getResources().getIdentifier(imageName, "drawable", getPackageName());
-            productImages.add(new ProductImage(i, i, String.valueOf(imageResId)));
+
+                // Giả sử bạn có hình ảnh tương ứng trong drawable với tên ao1, ao2, ...
+               // Tạo tên hình ảnh (ao1, ao2,...)
+                int imageResId = getResources().getIdentifier(imageName, "drawable", getPackageName());
+                productImages.add(new ProductImage(i, i, String.valueOf(imageResId)));
+            }
+            return productImages;
         }
-        return productImages;
     }
-}
+

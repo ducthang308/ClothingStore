@@ -5,8 +5,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import Fragment.HomeFragment;
 import Fragment.AccountUserFragment;
+import Fragment.HomeFragment;
+import Fragment.NoticeFragment;
+import Fragment.StoreFragment;
+
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
@@ -15,16 +18,14 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        switch (position){
+        switch (position) {
             case 0:
-                return new AccountUserFragment();
+                return new StoreFragment();
             case 1:
-                return new AccountUserFragment();
-            case 2:
                 return new HomeFragment();
+            case 2:
+                return new NoticeFragment();
             case 3:
-                return new AccountUserFragment();
-            case 4:
                 return new AccountUserFragment();
             default:
                 return new HomeFragment();
@@ -33,7 +34,6 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 5;
+        return 4;
     }
-
 }

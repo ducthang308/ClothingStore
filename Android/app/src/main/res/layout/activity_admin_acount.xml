@@ -83,6 +83,7 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/tv_help"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -180,13 +181,13 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Bottom Navigation Bar -->
     <LinearLayout
         android:id="@+id/bottomLinearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/lightblue"
         android:orientation="horizontal"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">

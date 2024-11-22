@@ -30,7 +30,7 @@ public class mainpageAdminActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_mainpageadmin);
         {
-// Khởi tạo RecyclerView
+
             productRecyclerView = findViewById(R.id.items);
             productRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
             productRecyclerView.addItemDecoration(new ItemDecoration(2, 24, true)); // 2 cột, khoảng cách 16dp
@@ -60,6 +60,7 @@ public class mainpageAdminActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(mainpageAdminActivity.this, ChatAdminActivity.class);
+                    intent.putExtra("previousActivity", "mainpageAdminActivity");
                     startActivity(intent);
                 }
             });

@@ -3,14 +3,16 @@ package Model;
 public class CartItem {
     private String name;
     private String size;
-    private String price;
-    private int imageUrl;  // Thay đổi từ String sang int
+    private float price;
+    private int imageUrl;
+    private boolean isSelected;
 
-    public CartItem(String name, String size, String price, int imageUrl) { // Chuyển imageUrl sang kiểu int
+    public CartItem(String name, String size, float price, int imageUrl, boolean isSelected) {
         this.name = name;
         this.size = size;
         this.price = price;
         this.imageUrl = imageUrl;
+        this.isSelected = isSelected;
     }
 
     public CartItem() {
@@ -32,19 +34,27 @@ public class CartItem {
         this.size = size;
     }
 
-    public String getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
-    public int getImageUrl() {  // Trả về int thay vì String
+    public int getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(int imageUrl) {  // Chuyển đổi setter thành int
+    public void setImageUrl(int imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }

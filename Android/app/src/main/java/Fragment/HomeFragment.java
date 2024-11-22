@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.duanandroid.R;
 import com.example.duanandroid.View.CartActivity;
 import com.example.duanandroid.View.ItemDecoration;
 import com.example.duanandroid.View.chatUserActivity;

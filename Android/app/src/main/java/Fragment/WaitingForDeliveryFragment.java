@@ -70,6 +70,7 @@ public class WaitingForDeliveryFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @SuppressLint("MissingInflatedId")
@@ -100,5 +101,6 @@ public class WaitingForDeliveryFragment extends Fragment {
 
         return view; // Trả về View
     }
+
 
 }

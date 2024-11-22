@@ -27,17 +27,14 @@ public class mainpageActivity extends AppCompatActivity {
         binding = ActivityPagemainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Kiểm tra token
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         String token = sharedPreferences.getString("token", null); // Lấy token từ SharedPreferences
 
         if (token == null) {
-            // Nếu không có token, quay lại trang đăng nhập
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
-            finish(); // Kết thúc activity hiện tại để không quay lại
+            finish();
         } else {
-            // Nếu có token, tiếp tục khởi tạo ViewPager và BottomNavigationView
             setupViewPager();
         }
     }
@@ -46,14 +43,12 @@ public class mainpageActivity extends AppCompatActivity {
         viewPager = binding.viewPager;
         bottomNavigationView = binding.bottomNavigationView;
 
-        // Thiết lập adapter cho ViewPager
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         viewPager.setAdapter(adapter);
 
-        // Thiết lập item mặc định
-        int tabPosition = 2;  // Mặc định là tab Home (2)
+        int tabPosition = 1;
         if (getIntent() != null) {
-            tabPosition = getIntent().getIntExtra("tabPosition", 2);
+            tabPosition = getIntent().getIntExtra("tabPosition", 1);
         }
         viewPager.setCurrentItem(tabPosition);
         bottomNavigationView.setSelectedItemId(R.id.menu_home);
@@ -68,19 +63,16 @@ public class mainpageActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 switch (position) {
                     case 0:
-                        bottomNavigationView.setSelectedItemId(R.id.menu_location);
-                        break;
-                    case 1:
                         bottomNavigationView.setSelectedItemId(R.id.menu_shop);
                         break;
-                    case 2:
+                    case 1:
                         bottomNavigationView.setSelectedItemId(R.id.menu_home);
                         break;
-                    case 3:
+                    case 2:
                         bottomNavigationView.setSelectedItemId(R.id.menu_notice);
                         break;
-                    case 4:
-                        bottomNavigationView.setSelectedItemId(R.id.menu_acount);  // Sửa thành "menu_account"
+                    case 3:
+                        bottomNavigationView.setSelectedItemId(R.id.menu_acount);
                         break;
                 }
             }
@@ -96,19 +88,17 @@ public class mainpageActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int itemId = item.getItemId();
 
-                if (itemId == R.id.menu_location) {
+                if (itemId == R.id.menu_shop) {
                     viewPager.setCurrentItem(0);
-                } else if (itemId == R.id.menu_shop) {
-                    viewPager.setCurrentItem(1);
                 } else if (itemId == R.id.menu_home) {
-                    viewPager.setCurrentItem(2);
+                    viewPager.setCurrentItem(1);
                 } else if (itemId == R.id.menu_notice) {
+                    viewPager.setCurrentItem(2);
+                } else if (itemId == R.id.menu_acount) {
                     viewPager.setCurrentItem(3);
-                } else if (itemId == R.id.menu_acount) {  // Sửa thành "menu_account"
-                    viewPager.setCurrentItem(4);
                 }
 
-                return true;  // Trả về true để cho phép lựa chọn
+                return true;
             }
         });
     }

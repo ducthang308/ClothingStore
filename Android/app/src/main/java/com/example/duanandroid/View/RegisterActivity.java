@@ -1,20 +1,28 @@
 package com.example.duanandroid.View;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
+import android.text.method.SingleLineTransformationMethod;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import com.example.duanandroid.R;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import DTO.UsersDTO;
 
+import DTO.UsersDTO;
 import Interface.APIClient;
 import Interface.ApiService_Users;
 import retrofit2.Call;
@@ -33,6 +41,11 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         initViews();
+
+        // Setup password visibility toggle cho cả hai trường mật khẩu
+        setupPasswordVisibilityToggle(edtPassword);
+        setupPasswordVisibilityToggle(edtRetypePassword);
+
         apiServiceRegister = APIClient.getRegisterService();
 
         btnRegister.setOnClickListener(view -> handleRegistration());
@@ -49,9 +62,47 @@ public class RegisterActivity extends AppCompatActivity {
         edtPhone = findViewById(R.id.edt_phone);
         edtEmail = findViewById(R.id.edt_email);
         edtAddress = findViewById(R.id.edt_address);
-        edtPassword = findViewById(R.id.edt_password);
+        edtPassword = findViewById(R.id.edt1_password);
         edtRetypePassword = findViewById(R.id.edt_confirm);
         btnRegister = findViewById(R.id.btn_register);
+    }
+
+    private void setupPasswordVisibilityToggle(EditText editText) {
+        // Lấy các Drawable hiện có ở các vị trí
+        Drawable[] drawables = editText.getCompoundDrawables();
+        Drawable drawableLeft = drawables[0];
+        Drawable drawableTop = drawables[1];
+        Drawable drawableBottom = drawables[3];
+
+        // Lấy drawableRight cho eye_close và eye_open
+        Drawable eyeCloseDrawable = ContextCompat.getDrawable(this, R.drawable.eye_close);
+        Drawable eyeOpenDrawable = ContextCompat.getDrawable(this, R.drawable.eye_open);
+
+        // Đặt drawableRight mặc định là eye_close
+        editText.setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop, eyeCloseDrawable, drawableBottom);
+
+        editText.setOnTouchListener((view, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                // Kiểm tra xem người dùng có chạm vào drawableRight không
+                Drawable drawableRightCurrent = editText.getCompoundDrawables()[2];
+                if (drawableRightCurrent != null && event.getRawX() >= (editText.getRight() - drawableRightCurrent.getBounds().width() - editText.getPaddingRight())) {
+                    // Chuyển đổi trạng thái hiển thị mật khẩu
+                    if (editText.getTransformationMethod() instanceof PasswordTransformationMethod) {
+                        // Hiển thị mật khẩu
+                        editText.setTransformationMethod(SingleLineTransformationMethod.getInstance());
+                        editText.setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop, eyeOpenDrawable, drawableBottom);
+                    } else {
+                        // Ẩn mật khẩu
+                        editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                        editText.setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop, eyeCloseDrawable, drawableBottom);
+                    }
+                    // Đặt lại vị trí con trỏ ở cuối chuỗi
+                    editText.setSelection(editText.getText().length());
+                    return true;
+                }
+            }
+            return false;
+        });
     }
 
     private void handleRegistration() {
@@ -66,8 +117,7 @@ public class RegisterActivity extends AppCompatActivity {
         Date dateOfBirth = parseDate(dateOfBirthStr);
 
         if (validateInput(fullName, dateOfBirth, phoneNumber, email, address, password, retypePass)) {
-            // Format date as String in yyyy-MM-dd format
-            String formattedDateOfBirth = dateOfBirth != null ? dateFormat.format(dateOfBirth) : null;
+            String formattedDateOfBirth = dateFormat.format(dateOfBirth);
 
             UsersDTO usersDTO = new UsersDTO(
                     fullName, phoneNumber, address, password, email, retypePass, formattedDateOfBirth
@@ -107,8 +157,8 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "Mật khẩu cần ít nhất 6 ký tự", Toast.LENGTH_SHORT).show();
             return false;
         }
-        Log.d("RegisterActivity", "Password: '" + password + "' Retype Password: '" + retypePass + "'");
-        if (!password.trim().equals(retypePass.trim())) {
+
+        if (!password.equals(retypePass)) {
             Toast.makeText(this, "Mật khẩu và xác nhận mật khẩu không khớp", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -117,7 +167,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private boolean isValidPhoneNumber(String phoneNumber) {
-        phoneNumber = phoneNumber.trim();
         return phoneNumber.length() == 10 && phoneNumber.matches("\\d+");
     }
 

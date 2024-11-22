@@ -1,10 +1,9 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/help">
+    android:background="@color/colorwhite"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,7 +11,9 @@
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:padding="16dp"
-        android:background="#D9F3FF">
+        android:layout_marginTop="10dp"
+        android:background="@color/colorwhite">
+
         <ImageView
             android:id="@+id/back_arrow"
             android:layout_width="wrap_content"
@@ -23,7 +24,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="64dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="64dp"
             android:text="Nhận trợ giúp với TTT"
             android:textColor="@color/colorblack"
@@ -31,172 +32,85 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <LinearLayout
+    <!-- Phần nội dung cuộn -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="6dp">
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:background="@color/colorgray"
-            android:layout_margin="15dp">
-
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/chatsupport"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Trò chuyện trực tiếp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:background="@color/colorgray"
-            android:layout_margin="15dp">
-
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/baseline_phone_24" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Gọi hỗ trợ" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:background="@color/colorgray"
-            android:layout_margin="15dp">
-
-            <ImageView
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/baseline_email_24" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Hỗ trợ qua email" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <!-- LinearLayout chứa các nút -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:layout_weight="1"
-        android:padding="16dp"> <!-- Thêm layout_weight để đẩy phần dưới cùng -->
-
-        <TextView
-            android:layout_width="300dp"
-            android:layout_height="80dp"
-            android:layout_margin="20dp"
-            android:background="@drawable/buttonhelp"
-
-            />
-        <TextView
-            android:layout_width="300dp"
-            android:layout_height="80dp"
-            android:layout_margin="20dp"
-            android:background="@drawable/buttonhelp1"
-
-            />
-        <TextView
-            android:layout_width="300dp"
-            android:layout_height="80dp"
-            android:layout_margin="20dp"
-            android:background="@drawable/buttonhelp2"
-
-            />
-        <TextView
-            android:layout_width="300dp"
-            android:layout_height="80dp"
-            android:layout_margin="20dp"
-            android:background="@drawable/buttonhelp3"
-
-            />
-    </LinearLayout>
-
-    <!-- LinearLayout cuối nằm sát dưới -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-
-        android:background="@color/colorgray"
-        android:orientation="vertical">
-
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="16dp"
-            android:text="Ứng dụng mua sắm lớn nhất thế giới"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorgray"
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="411dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorgray"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:layout_marginTop="20dp">
+                android:padding="6dp">
 
-                <ImageButton
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginRight="20dp"
-                    android:background="@drawable/rounded_button"
-                    android:src="@drawable/facebook"
-                    tools:ignore="SpeakableTextPresentCheck" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:background="@color/colorgray"
+                    android:layout_margin="15dp">
 
-                <ImageButton
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginRight="20dp"
-                    android:background="@drawable/rounded_button"
-                    android:src="@drawable/instagram"
-                    tools:ignore="SpeakableTextPresentCheck" />
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/chatsupport"/>
 
-                <ImageButton
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginRight="20dp"
-                    android:background="@drawable/rounded_button"
-                    android:src="@drawable/telegram"
-                    tools:ignore="SpeakableTextPresentCheck" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Trò chuyện trực tiếp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:background="@color/colorgray"
+                    android:layout_margin="15dp">
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/baseline_phone_24" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Gọi hỗ trợ" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:background="@color/colorgray"
+                    android:layout_margin="15dp">
+
+                    <ImageView
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/baseline_email_24" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Hỗ trợ qua email" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -204,15 +118,107 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:gravity="center"
-                android:layout_marginTop="20dp">
+                android:padding="16dp">
 
                 <TextView
+                    android:layout_width="300dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/buttonhelp" />
+
+                <TextView
+                    android:layout_width="300dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/buttonhelp1" />
+
+                <TextView
+                    android:layout_width="300dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/buttonhelp2" />
+
+                <TextView
+                    android:layout_width="300dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="20dp"
+                    android:background="@drawable/buttonhelp3" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@color/colorgray"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:text="Ứng dụng mua sắm lớn nhất thế giới"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="C\u00A92024 Ứng dụng mua sắm lớn nhất thế giới. Mọi quyền được bảo lưu"
-                    android:textAlignment="center"
-                    android:textSize="17sp" />
+                    android:background="@color/colorgray"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="411dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorgray"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="20dp">
+
+                        <ImageButton
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/rounded_button"
+                            android:src="@drawable/facebook"
+                            tools:ignore="SpeakableTextPresentCheck" />
+
+                        <ImageButton
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/rounded_button"
+                            android:src="@drawable/instagram"
+                            tools:ignore="SpeakableTextPresentCheck" />
+
+                        <ImageButton
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/rounded_button"
+                            android:src="@drawable/telegram"
+                            tools:ignore="SpeakableTextPresentCheck" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_marginBottom="50dp"
+                        android:layout_marginTop="20dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C\u00A92024 Ứng dụng mua sắm lớn nhất thế giới. Mọi quyền được bảo lưu"
+                            android:textAlignment="center"
+                            android:textSize="17sp" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
+
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>

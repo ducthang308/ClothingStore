@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item   android:id="@+id/menu_location"
-        android:icon="@drawable/img_9"
-        android:title="Bản đồ cửa hàng"
-        android:textColor="@color/colorblack"
-        >
-    </item>
     <item   android:id="@+id/menu_shop"
         android:icon="@drawable/shop"
         android:textColor="@color/colorblack"

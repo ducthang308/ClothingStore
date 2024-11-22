@@ -89,29 +89,24 @@
             android:layout_height="48dp"
             android:layout_margin="8dp"
             android:background="@drawable/border_black"
-<<<<<<< HEAD
-            android:drawableLeft="@drawable/baseline_person_24"
-            android:hint="Tên đăng nhập"
             android:textColorHint="@color/colorblack"
-            android:inputType="text"
-=======
             android:drawableLeft="@drawable/address"
             android:hint="Địa chỉ"
             android:inputType="textEmailAddress"
->>>>>>> origin/main
             android:minHeight="48dp"
             android:paddingLeft="5dp">
-
         </EditText>
 
         <EditText
-            android:id="@+id/edt_password"
+            android:id="@+id/edt1_password"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_margin="8dp"
             android:background="@drawable/border_black"
             android:drawableLeft="@drawable/baseline_security_24"
             android:hint="Mật khẩu"
+            android:paddingRight="15dp"
+            android:drawableRight="@drawable/eye_close"
             android:inputType="textPassword"
             android:textColorHint="@color/colorblack"
             android:minHeight="48dp"
@@ -126,6 +121,8 @@
             android:layout_margin="8dp"
             android:background="@drawable/border_black"
             android:drawableLeft="@drawable/baseline_security_24"
+            android:paddingRight="15dp"
+            android:drawableRight="@drawable/eye_close"
             android:hint="Xác nhận mật khẩu"
             android:inputType="textPassword"
             android:textColorHint="@color/colorblack"
