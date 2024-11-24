@@ -48,7 +48,7 @@ public interface ApiProduct {
 
     @PUT("api/v1/product/{id}")
     @Headers("Content-Type: application/json")
-    Call<ResponseBody> updateProduct(@Header("Authorization") String token, @Path("id") int id, @Body Discount discount);
+    Call<ResponseBody> updateProduct(@Header("Authorization") String token, @Path("id") int id, @Body ProductDTO productDTO);
 
     @DELETE("api/v1/product/{id}")
     @Headers("Content-Type: application/json")

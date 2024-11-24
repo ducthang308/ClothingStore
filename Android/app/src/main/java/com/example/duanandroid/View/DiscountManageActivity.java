@@ -30,7 +30,7 @@ public class DiscountManageActivity extends AppCompatActivity {
     private ApiDiscounts apiDiscounts;
     private Button btnAdd, btnEdit, btnDelete;
     private String token;
-    private Discount selectedDiscount; // updated variable name to indicate it's the selected discount
+    private Discount selectedDiscount;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

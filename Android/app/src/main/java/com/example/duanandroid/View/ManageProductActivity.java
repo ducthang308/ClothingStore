@@ -1,99 +1,237 @@
 package com.example.duanandroid.View;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.duanandroid.R;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import Adapter.ProductManageAdapter;
-import Model.Product1;
-import Model.ProductImage;
+import DTO.ProductDTO;
+import Interface.APIClient;
+import Interface.ApiProduct;
+import Interface.PreferenceManager;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ManageProductActivity extends AppCompatActivity {
-    private RecyclerView productManageRecyclerView;
-    private ProductManageAdapter productManageAdapter;
-    private List<Product1> productList;
-    private List<ProductImage> productImageList;
+
+    // UI components
+    private RecyclerView recyclerView;
+    private ProgressBar progressBar;
+    private TextView noDataText;
+    private Button updateButton, btnDelete;
+    private ProductManageAdapter adapter;
+    private Intent intent;
+    private String token;
+
+    // API and Data
+    private List<ProductDTO> productList = new ArrayList<>();
+    private ApiProduct apiProduct;
+    private ProductDTO selectedProduct; // Để lưu sản phẩm được chọn
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manageproduct);
 
-        // Ánh xạ RecyclerView từ layout
-        productManageRecyclerView = findViewById(R.id.rcv_productManage);
-        productManageRecyclerView.setLayoutManager(new GridLayoutManager(this, 1));
-       // LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        // Khởi tạo danh sách sản phẩm và hình ảnh
-        productList = new ArrayList<>();
-        productImageList = new ArrayList<>();
-        productImageList= loadProductImages();
+        PreferenceManager preferenceManager = new PreferenceManager(this);
+        token = preferenceManager.getToken();
 
-        // Thêm dữ liệu mẫu vào danh sách sản phẩm
-        Product1 pr1=new Product1(1, "Áo thun nam", 2, "2", "S", 200000, 20,100) ;
-        productList.add(pr1);
+        initializeViews();
+        setupRecyclerView();
+        apiProduct = APIClient.getProduct();
 
-        Product1 pr2 = new Product1(1, "Áo thun nam", 2, "blue", "M", 200000, 20,200);
-        productList.add(pr2);
-        Product1 pr3 = new Product1(1, "Áo thun nam", 2, "blue", "L", 200000, 20,50);
-        productList.add(pr3);
-        Product1 pr4 = new Product1(2, "Áo thun nữ", 2, "blue", "L", 200000, 20,80);
-        productList.add(pr4);
-        Product1 pr5 = new Product1(3, "Áo khoác", 2, "blue", "M", 200000, 20,300);
-        productList.add(pr5);
-        Product1 pr6 = new Product1(4, "Áo thun nữ", 2, "blue", "S", 200000, 20,40);
-        productList.add(pr6);
-        Product1 pr7 = new Product1(5, "Áo thun nữ", 2, "blue", "M", 200000, 20,100);
-        productList.add(pr7);
-        Product1 pr8 =new Product1(6, "Áo thun nữ", 2, "blue", "L", 200000, 20,30);
-        productList.add(pr8);
+        fetchProducts();
 
+    }
 
-        // Khởi tạo Adapter và kết nối với RecyclerView
-        productManageAdapter = new ProductManageAdapter(this,productList, productImageList);
-//        productManageRecyclerView.setLayoutManager(linearLayoutManager);
-        productManageRecyclerView.setAdapter(productManageAdapter);
-        // Xử lý sự kiện khi nhấn nút quay lại
-        ImageView btnback = findViewById(R.id.back_arrow);
-        btnback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ManageProductActivity.this, adminAcountActivity.class);
+    private void initializeViews() {
+        recyclerView = findViewById(R.id.rcv_productManage);
+        progressBar = findViewById(R.id.progressBar);
+        noDataText = findViewById(R.id.noDataText);
+
+        ImageView backButton = findViewById(R.id.back_arrow);
+        backButton.setOnClickListener(v -> {
+                intent = new Intent(ManageProductActivity.this, adminAcountActivity.class);
                 startActivity(intent);
+        });
+
+        TextView addButton = findViewById(R.id.Addsp);
+        addButton.setOnClickListener(v -> {
+            intent = new Intent(ManageProductActivity.this, AddSanphamActivity.class);
+            startActivity(intent);
+        });
+
+        updateButton = findViewById(R.id.btn_modify);
+        updateButton.setOnClickListener(view -> {
+            selectedProduct = adapter.getSelectedProduct();
+            if (selectedProduct != null) {
+                navigateToEditProduct(selectedProduct);
+            } else {
+                Toast.makeText(this, "Vui lòng chọn sản phẩm để chỉnh sửa.", Toast.LENGTH_SHORT).show();
             }
         });
 
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
-        TextView Addsp = findViewById(R.id.Addsp);
-        Addsp.setOnClickListener(new View.OnClickListener() {
+        btnDelete = findViewById(R.id.btn_delete);
+        btnDelete.setOnClickListener(view -> {
+            selectedProduct = adapter.getSelectedProduct();
+            if (selectedProduct != null) {
+                deleteProduct(selectedProduct.getId());
+            } else {
+                Toast.makeText(ManageProductActivity.this, "Vui lòng chọn sản phẩm cần xóa.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void setupRecyclerView() {
+        int columns = getResources().getDisplayMetrics().widthPixels > 600 ? 3 : 2;
+        recyclerView.setLayoutManager(new GridLayoutManager(this, columns));
+
+        // Initialize adapter with click listener
+        adapter = new ProductManageAdapter(this, productList, product -> {
+            selectedProduct = product;
+            Toast.makeText(this, "Đã chọn: " + product.getProductName(), Toast.LENGTH_SHORT).show();
+        });
+
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void fetchProducts() {
+        showLoading(true);
+
+        apiProduct.getProducts().enqueue(new Callback<List<ProductDTO>>() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ManageProductActivity.this, AddSanphamActivity.class);
-                startActivity(intent);
+            public void onResponse(Call<List<ProductDTO>> call, Response<List<ProductDTO>> response) {
+                showLoading(false);
+
+                if (response.isSuccessful() && response.body() != null) {
+                    productList = response.body();
+                    adapter.updateData(productList);
+
+                    if (productList.isEmpty()) {
+                        showNoData(true);
+                    } else {
+                        showNoData(false);
+                        Log.d("ManageProductActivity", "Số sản phẩm: " + productList.size());
+                    }
+                } else {
+                    handleApiError(response.code(), response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ProductDTO>> call, Throwable t) {
+                showLoading(false);
+                handleNetworkError(t);
             }
         });
     }
-    private List<ProductImage> loadProductImages() {
-        List<ProductImage> productImages = new ArrayList<>();
-        // Tạo dữ liệu hình ảnh mẫu
-        for (int i = 0; i < 8; i++) {
-            // Giả sử bạn có hình ảnh tương ứng trong drawable với tên aokhoac1, aokhoac2, ...
-            String imageName = "ao" ; // Giả sử bạn có ba hình ảnh aokhoac1, aokhoac2, aokhoac3
-            int imageResId = getResources().getIdentifier(imageName, "drawable", getPackageName());
-            productImages.add(new ProductImage(i, i, String.valueOf(imageResId))); // Tạo sản phẩm hình ảnh
+
+    private void showLoading(boolean isLoading) {
+        progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+        recyclerView.setVisibility(isLoading ? View.GONE : View.VISIBLE);
+        noDataText.setVisibility(View.GONE);
+    }
+
+    private void showNoData(boolean isNoData) {
+        noDataText.setVisibility(isNoData ? View.VISIBLE : View.GONE);
+        recyclerView.setVisibility(isNoData ? View.GONE : View.VISIBLE);
+    }
+
+    private void handleApiError(int code, String message) {
+        String errorMessage;
+        switch (code) {
+            case 404:
+                errorMessage = "Sản phẩm không tìm thấy.";
+                break;
+            case 500:
+                errorMessage = "Lỗi server. Vui lòng thử lại sau.";
+                break;
+            default:
+                errorMessage = "Không thể tải danh sách sản phẩm.";
         }
-        return productImages;
+        showToast(errorMessage);
+        Log.e("ManageProductActivity", "Lỗi API: " + code + " - " + message);
+    }
+
+    private void handleNetworkError(Throwable t) {
+        String errorMessage = t instanceof java.net.ConnectException
+                ? "Không có kết nối mạng."
+                : "Lỗi kết nối: " + t.getMessage();
+        showToast(errorMessage);
+        Log.e("ManageProductActivity", "Lỗi kết nối API: ", t);
+    }
+
+    private void navigateToEditProduct(ProductDTO product) {
+        int id = product.getId();
+        Intent intent = new Intent(ManageProductActivity.this, AddSanphamActivity.class);
+        intent.putExtra("productId", id);
+        intent.putExtra("productName", product.getProductName());
+        intent.putExtra("productCategory", product.getCategoryId());
+        intent.putExtra("productColor", product.getColor());
+        intent.putExtra("productPrice", product.getPrice());
+
+        ArrayList<String> imageUrls = new ArrayList<>(product.getImageUrls());
+        intent.putExtra("productImage", imageUrls);
+
+        startActivity(intent);
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void deleteProduct(int productId) {
+        apiProduct.deleteProduct("Bearer " + token, productId).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(ManageProductActivity.this, "Xóa sản phẩm thành công", Toast.LENGTH_SHORT).show();
+                    fetchProducts();
+                } else {
+                    handleDeleteError(response);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(ManageProductActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("Delete", "Failed: " + t.getMessage());
+            }
+        });
+    }
+    private void handleDeleteError(Response<Void> response) {
+        try {
+            String errorBody = response.errorBody() != null ? response.errorBody().string() : "Unknown error";
+            Log.e("Delete", "Error Code: " + response.code() + ", Error Body: " + errorBody);
+
+            if (response.code() == 401) {
+                Toast.makeText(ManageProductActivity.this, "Token không hợp lệ hoặc hết hạn", Toast.LENGTH_SHORT).show();
+            } else if (response.code() == 404) {
+                Toast.makeText(ManageProductActivity.this, "Không tìm thấy mã giảm giá để xóa", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(ManageProductActivity.this, "Xóa không thành công: " + errorBody, Toast.LENGTH_SHORT).show();
+            }
+        } catch (IOException e) {
+            Log.e("DeleteDiscount", "Error parsing error response", e);
+            Toast.makeText(this, "Lỗi khi xử lý phản hồi. Vui lòng thử lại.", Toast.LENGTH_SHORT).show();
+        }
     }
 }
