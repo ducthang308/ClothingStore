@@ -44,7 +44,6 @@
             android:layout_gravity="center"
             android:src="@drawable/baseline_shopping_cart_24" />
 
-        <!-- Menu thả xuống -->
         <ImageView
             android:id="@+id/chat"
             android:background="#FFFF"
@@ -55,7 +54,6 @@
             android:src="@drawable/baseline_chat_24" />
     </LinearLayout>
 
-    <!-- Sử dụng NestedScrollView để chứa các nội dung có thể cuộn được -->
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="0dp"
@@ -70,7 +68,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- LinearLayout chứa ImageView (banner) -->
             <LinearLayout
                 android:id="@+id/imageLayout"
                 android:layout_width="wrap_content"
@@ -78,7 +75,6 @@
                 android:layout_marginTop="20dp"
                 android:orientation="vertical">
 
-                <!-- ImageView cho banner -->
                 <ImageView
                     android:id="@+id/imageView"
                     android:layout_width="match_parent"
@@ -87,7 +83,6 @@
                     android:src="@drawable/banner_hoi_trang_nu_dep" />
             </LinearLayout>
 
-            <!-- CardView chứa phần sản phẩm -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -102,7 +97,6 @@
                     android:background="@color/colorwhite"
                     android:padding="10dp">
 
-                    <!-- Tên danh sách sản phẩm -->
                     <TextView
                         android:id="@+id/new_product_name"
                         android:layout_width="wrap_content"
@@ -113,7 +107,6 @@
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
-                    <!-- RecyclerView hiển thị sản phẩm -->
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/items"
                         android:layout_width="match_parent"
@@ -126,4 +119,13 @@
             </androidx.cardview.widget.CardView>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

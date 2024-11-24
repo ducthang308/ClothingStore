@@ -1,6 +1,7 @@
 package com.example.demo.Services;
 
 import com.example.demo.DTO.ReviewDTO;
+import com.example.demo.DTO.ReviewWithUserFullNameDTO;
 import com.example.demo.Exception.DataNotFoundException;
 import com.example.demo.Models.Orders;
 import com.example.demo.Models.Product;
@@ -46,7 +47,7 @@ public class ReviewService implements IReviewService{
     }
 
     @Override
-    public List<Review> getAllReviewByProductId(Long productId) {
+    public List<ReviewWithUserFullNameDTO> getAllReviewByProductId(Long productId) {
         return reviewRepository.getAllReviewByProductId(productId);
     }
 }

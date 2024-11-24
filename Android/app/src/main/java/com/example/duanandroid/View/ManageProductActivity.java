@@ -4,15 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.duanandroid.R;
 
@@ -32,7 +34,7 @@ import retrofit2.Response;
 public class ManageProductActivity extends AppCompatActivity {
 
     // UI components
-    private RecyclerView recyclerView;
+    private ListView listView;
     private ProgressBar progressBar;
     private TextView noDataText;
     private Button updateButton, btnDelete;
@@ -43,7 +45,7 @@ public class ManageProductActivity extends AppCompatActivity {
     // API and Data
     private List<ProductDTO> productList = new ArrayList<>();
     private ApiProduct apiProduct;
-    private ProductDTO selectedProduct; // Để lưu sản phẩm được chọn
+    private ProductDTO selectedProduct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,22 +56,22 @@ public class ManageProductActivity extends AppCompatActivity {
         token = preferenceManager.getToken();
 
         initializeViews();
-        setupRecyclerView();
+        setupListView();
         apiProduct = APIClient.getProduct();
 
+        // Fetch products from API
         fetchProducts();
-
     }
 
     private void initializeViews() {
-        recyclerView = findViewById(R.id.rcv_productManage);
+        listView = findViewById(R.id.lv_productManage);
         progressBar = findViewById(R.id.progressBar);
         noDataText = findViewById(R.id.noDataText);
 
         ImageView backButton = findViewById(R.id.back_arrow);
         backButton.setOnClickListener(v -> {
-                intent = new Intent(ManageProductActivity.this, adminAcountActivity.class);
-                startActivity(intent);
+            intent = new Intent(ManageProductActivity.this, adminAcountActivity.class);
+            startActivity(intent);
         });
 
         TextView addButton = findViewById(R.id.Addsp);
@@ -97,20 +99,19 @@ public class ManageProductActivity extends AppCompatActivity {
                 Toast.makeText(ManageProductActivity.this, "Vui lòng chọn sản phẩm cần xóa.", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
-    private void setupRecyclerView() {
-        int columns = getResources().getDisplayMetrics().widthPixels > 600 ? 3 : 2;
-        recyclerView.setLayoutManager(new GridLayoutManager(this, columns));
-
-        // Initialize adapter with click listener
+    private void setupListView() {
+        // Cấu hình ListView
         adapter = new ProductManageAdapter(this, productList, product -> {
             selectedProduct = product;
             Toast.makeText(this, "Đã chọn: " + product.getProductName(), Toast.LENGTH_SHORT).show();
         });
 
-        recyclerView.setAdapter(adapter);
+        // Set the adapter for ListView
+        listView.setAdapter(adapter);
+
+        // Xử lý sự kiện khi người dùng chọn một item (removed since handled by adapter)
     }
 
     private void fetchProducts() {
@@ -146,13 +147,13 @@ public class ManageProductActivity extends AppCompatActivity {
 
     private void showLoading(boolean isLoading) {
         progressBar.setVisibility(isLoading ? View.VISIBLE : View.GONE);
-        recyclerView.setVisibility(isLoading ? View.GONE : View.VISIBLE);
+        listView.setVisibility(isLoading ? View.GONE : View.VISIBLE);
         noDataText.setVisibility(View.GONE);
     }
 
     private void showNoData(boolean isNoData) {
         noDataText.setVisibility(isNoData ? View.VISIBLE : View.GONE);
-        recyclerView.setVisibility(isNoData ? View.GONE : View.VISIBLE);
+        listView.setVisibility(isNoData ? View.GONE : View.VISIBLE);
     }
 
     private void handleApiError(int code, String message) {
@@ -180,9 +181,8 @@ public class ManageProductActivity extends AppCompatActivity {
     }
 
     private void navigateToEditProduct(ProductDTO product) {
-        int id = product.getId();
         Intent intent = new Intent(ManageProductActivity.this, AddSanphamActivity.class);
-        intent.putExtra("productId", id);
+        intent.putExtra("productId", product.getId());
         intent.putExtra("productName", product.getProductName());
         intent.putExtra("productCategory", product.getCategoryId());
         intent.putExtra("productColor", product.getColor());
@@ -217,6 +217,7 @@ public class ManageProductActivity extends AppCompatActivity {
             }
         });
     }
+
     private void handleDeleteError(Response<Void> response) {
         try {
             String errorBody = response.errorBody() != null ? response.errorBody().string() : "Unknown error";
@@ -225,12 +226,12 @@ public class ManageProductActivity extends AppCompatActivity {
             if (response.code() == 401) {
                 Toast.makeText(ManageProductActivity.this, "Token không hợp lệ hoặc hết hạn", Toast.LENGTH_SHORT).show();
             } else if (response.code() == 404) {
-                Toast.makeText(ManageProductActivity.this, "Không tìm thấy mã giảm giá để xóa", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ManageProductActivity.this, "Không tìm thấy sản phẩm để xóa", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(ManageProductActivity.this, "Xóa không thành công: " + errorBody, Toast.LENGTH_SHORT).show();
             }
         } catch (IOException e) {
-            Log.e("DeleteDiscount", "Error parsing error response", e);
+            Log.e("Delete", "Error parsing error response", e);
             Toast.makeText(this, "Lỗi khi xử lý phản hồi. Vui lòng thử lại.", Toast.LENGTH_SHORT).show();
         }
     }

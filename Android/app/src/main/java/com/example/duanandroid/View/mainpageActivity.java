@@ -46,12 +46,10 @@ public class mainpageActivity extends AppCompatActivity {
         viewPager = binding.viewPager;
         bottomNavigationView = binding.bottomNavigationView;
 
-        // Thiết lập adapter cho ViewPager
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         viewPager.setAdapter(adapter);
 
-        // Thiết lập item mặc định
-        int tabPosition = 2;  // Mặc định là tab Home (2)
+        int tabPosition = 2;
         if (getIntent() != null) {
             tabPosition = getIntent().getIntExtra("tabPosition", 2);
         }

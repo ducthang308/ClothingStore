@@ -4,8 +4,6 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="8dp">
-
-    <!-- Checkbox -->
     <CheckBox
         android:id="@+id/checkbox"
         android:layout_width="wrap_content"
@@ -15,7 +13,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
-    <!-- Product Image -->
     <ImageView
         android:id="@+id/image_product"
         android:layout_width="80dp"
@@ -28,7 +25,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginEnd="8dp" />
 
-    <!-- LinearLayout chứa thông tin sản phẩm -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"

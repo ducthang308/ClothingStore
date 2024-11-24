@@ -12,6 +12,7 @@ public class ProductDTO {
 
     @SerializedName("category_id")
     private int categoryId;
+
     @SerializedName("color")
     private String color;
 
@@ -34,6 +35,12 @@ public class ProductDTO {
         this.productName = productName;
         this.categoryId = categoryId;
         this.color = color;
+        this.price = price;
+        this.imageUrls = imageUrls;
+    }
+
+    public ProductDTO(String productName, Float price, List<String> imageUrls) {
+        this.productName = productName;
         this.price = price;
         this.imageUrls = imageUrls;
     }
