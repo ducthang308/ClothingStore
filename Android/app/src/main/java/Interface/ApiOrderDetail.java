@@ -3,6 +3,7 @@ package Interface;
 import java.util.List;
 
 import DTO.OrderDetailDTO;
+import DTO.OrderDetailReturnDTO;
 import DTO.OrdersDTO;
 import Model.Order;
 import retrofit2.Call;
@@ -19,15 +20,18 @@ public interface ApiOrderDetail {
     Call<String> createOrder(@Header("Authorization") String token, @Body OrderDetailDTO orderDetailDTO);
 
     @GET("api/v1/orderdetail/{id}")
-    Call<List<OrderDetailDTO>> getOrderById(@Header("Authorization") String token, @Path("id") Long id);
+    Call<List<OrderDetailDTO>> getOrderById(@Header("Authorization") String token, @Path("id") int id);
 
     @GET("api/v1/orderdetail/orders/{orderId}")
-    Call<List<OrderDetailDTO>> getAllOrderDetailByOrder(@Header("Authorization") String token, @Path("orderId") Long orderId);
+    Call<List<OrderDetailDTO>> getAllOrderDetailByOrder(@Header("Authorization") String token, @Path("orderId") int orderId);
 
     @PUT("api/v1/orderdetail/{id}")
-    Call<String> updateOrder(@Header("Authorization") String token, @Path("id") Long id, @Body OrderDetailDTO orderDetailDTO);
+    Call<String> updateOrder(@Header("Authorization") String token, @Path("id") int id, @Body OrderDetailDTO orderDetailDTO);
 
     @DELETE("api/v1/orderdetail/{id}")
-    Call<String> deleteOrder(@Header("Authorization") String token, @Path("id") Long id);
+    Call<String> deleteOrder(@Header("Authorization") String token, @Path("id") int id);
+
+    @GET("api/v1/orderdetail/orders/{orderId}/details")
+    Call<List<OrderDetailReturnDTO>> getOrderDetails(@Header("Authorization") String token, @Path("orderId") int orderId);
 
 }

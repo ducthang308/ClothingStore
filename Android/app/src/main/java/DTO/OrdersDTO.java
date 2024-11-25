@@ -4,11 +4,22 @@ import java.util.Date;
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
+import Model.Discount;
+import Model.User;
+
 public class OrdersDTO {
+<<<<<<< HEAD
     private Long id;
 
     @SerializedName("user_id")
     private Long userId;
+=======
+    @SerializedName("id")
+    private int id;
+
+    @SerializedName("users")
+    private User user;
+>>>>>>> origin/main
 
     @SerializedName("note")
     private String note;
@@ -33,9 +44,10 @@ public class OrdersDTO {
     @SerializedName("payment_method")
     private String paymentMethod;
 
-    @SerializedName("cart_items")
-    private List<CartItemDTO> cartItems;
+    @SerializedName("orderDetails")
+    private List<OrderDetailDTO> orderDetails;
 
+<<<<<<< HEAD
     @SerializedName("discount_id")
     private Long discountId;
 
@@ -55,6 +67,37 @@ public class OrdersDTO {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+=======
+    @SerializedName("discounts")
+    private Discount discounts;
+
+    public OrdersDTO(int id, User user, String note, Date orderDate, String status, Float totalMoney, String paymentMethod, List<OrderDetailDTO> orderDetails, Discount discounts) {
+        this.id = id;
+        this.user = user;
+        this.note = note;
+        this.orderDate = orderDate;
+        this.status = status;
+        this.totalMoney = totalMoney;
+        this.paymentMethod = paymentMethod;
+        this.orderDetails = orderDetails;
+        this.discounts = discounts;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+>>>>>>> origin/main
     }
 
     public String getNote() {
@@ -97,6 +140,7 @@ public class OrdersDTO {
         this.paymentMethod = paymentMethod;
     }
 
+<<<<<<< HEAD
     public List<CartItemDTO> getCartItems() {
         return cartItems;
     }
@@ -113,4 +157,22 @@ public class OrdersDTO {
         this.discountId = discountId;
     }
 
+=======
+    public List<OrderDetailDTO> getOrderDetails() {
+        return orderDetails;
+    }
+
+    public void setOrderDetails(List<OrderDetailDTO> orderDetails) {
+        this.orderDetails = orderDetails;
+    }
+
+    public Discount getDiscounts() {
+        return discounts;
+    }
+
+    public void setDiscounts(Discount discounts) {
+        this.discounts = discounts;
+    }
+>>>>>>> origin/main
 }
+

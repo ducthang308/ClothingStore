@@ -69,6 +69,7 @@ public class ManageoderActivity extends AppCompatActivity {
         ordersList = new ArrayList<>();
 
 
+<<<<<<< HEAD
         manageOrderAdapter = new manage_orderAdapter(this,ordersList);
         recyclerViewOrders.setAdapter(manageOrderAdapter);
         recyclerViewOrders.setLayoutManager(new LinearLayoutManager(this));
@@ -77,6 +78,11 @@ public class ManageoderActivity extends AppCompatActivity {
             Intent intent = new Intent(ManageoderActivity.this, OrderDetailActivity.class);
             intent.putExtra("orderId", order.getId());
             startActivity(intent);
+=======
+                Long orderId = Long.parseLong(orderIdStr);
+                //searchOrderById(orderId);
+            }
+>>>>>>> origin/main
         });
 
 
@@ -112,6 +118,7 @@ public class ManageoderActivity extends AppCompatActivity {
 
     }
 
+<<<<<<< HEAD
     private void searchOrderById(Long orderId) {
         apiOrders = APIClient.getOrderById();
         String authToken = "Bearer " + token;
@@ -188,13 +195,33 @@ public class ManageoderActivity extends AppCompatActivity {
 //                } else {
 //                    Log.e("API_RESPONSE", "Code: " + response.code() + ", Message: " + response.message());
 //                    Toast.makeText(ManageoderActivity.this, "Không thể tải danh sách đơn hàng!", Toast.LENGTH_SHORT).show();
+=======
+//    private void searchOrderById(int orderId) {
+//        ApiOrders apiOrders = APIClient.getOrderById();
+//
+//        apiOrders.getOrderById(orderId).enqueue(new Callback<OrdersDTO>() {
+//            @Override
+//            public void onResponse(Call<OrdersDTO> call, Response<OrdersDTO> response) {
+//                if (response.isSuccessful() && response.body() != null) {
+//                    OrdersDTO order = response.body();
+//                    ListOrder.clear(); // Xóa danh sách cũ
+//                    ListOrder.add(order); // Thêm kết quả mới vào danh sách
+//                    manageOrderAdapter.notifyDataSetChanged(); // Cập nhật giao diện RecyclerView
+//                } else {
+//                    Toast.makeText(ManageoderActivity.this, "Không tìm thấy đơn hàng với mã: " + orderId, Toast.LENGTH_SHORT).show();
+>>>>>>> origin/main
 //                }
 //            }
 //
 //            @Override
+<<<<<<< HEAD
 //            public void onFailure(Call<List<OrdersDTO>> call, Throwable t) {
 //                Log.e("API_CALL", "Error: " + t.getMessage());
 //                Toast.makeText(ManageoderActivity.this, "Lỗi khi gọi API: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+=======
+//            public void onFailure(Call<OrdersDTO> call, Throwable t) {
+//                Toast.makeText(ManageoderActivity.this, "Đã xảy ra lỗi: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+>>>>>>> origin/main
 //            }
 //        });
 //    }
