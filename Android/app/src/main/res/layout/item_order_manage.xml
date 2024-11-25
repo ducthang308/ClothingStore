@@ -1,200 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <!-- Danh sách sản phẩm -->
+    <!-- RecyclerView cho danh sách sản phẩm trong order -->
+
+    <!-- Thông tin đơn hàng -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="5dp"
+            android:text="Mã đơn hàng:"
+            android:textColor="@color/colorblack"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/id_sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="001"
+            android:textColor="@color/colorblack"
+            android:textSize="14sp"
+            android:layout_marginTop="8dp" />
+    </LinearLayout>
 
     <LinearLayout
-        android:background="@drawable/border"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="8dp"
-        android:layout_marginBottom="16dp">
-
-        <!-- Product Information -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <!-- Product Image -->
-            <ImageView
-                android:id="@+id/image_order"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/ao"
-                android:contentDescription="Product Image" />
-
-            <!-- Product Details -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="16dp">
-
-                <!-- Product Name -->
-                <TextView
-                    android:id="@+id/tv_tensp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Áo thun ngắn tay nữ trắng, size M"
-                    android:textColor="@color/colorblack"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <!-- Quantity and Price -->
-               <LinearLayout
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:orientation="horizontal">
-                   <TextView
-
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="x "
-                       android:textSize="14sp"
-                       android:textColor="@color/colorblack"
-                       android:layout_marginTop="4dp" />
-                   <TextView
-                       android:id="@+id/tv_soluong"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text=" 1"
-                       android:textColor="@color/colorblack"
-                       android:textSize="14sp"
-                       android:layout_marginTop="4dp" />
-
-               </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tv_gia"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="200.000đ"
-                    android:textColor="@android:color/holo_red_dark"
-                    android:textSize="16sp"
-                    android:layout_marginTop="4dp" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- Order Information -->
-       <LinearLayout
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:orientation="horizontal">
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="Mã đơn hàng:"
-               android:textSize="14sp"
-               android:textColor="@color/colorblack"
-               android:textStyle="bold"
-               android:padding="5dp"
-               android:layout_marginTop="8dp" />
-           <TextView
-               android:id="@+id/id_sp"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="001"
-               android:textColor="@color/colorblack"
-               android:textSize="14sp"
-               android:layout_marginTop="8dp" />
-       </LinearLayout>
-
-        <LinearLayout
+        android:orientation="horizontal">
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tên khách hàng: "
-                android:textStyle="bold"
-                android:padding="5dp"
-                android:textColor="@color/colorblack"
-                android:textSize="14sp" />
-            <TextView
-                android:id="@+id/name_cus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nguyễn A"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ngày tạo: "
-                android:textStyle="bold"
-                android:padding="5dp"
-                android:textSize="14sp" />
-            <TextView
-                android:id="@+id/date_create"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="15/09/2024"
-                android:textColor="@color/colorblack"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <!-- Total Payment -->
-        <LinearLayout
+            android:text="Tên khách hàng: "
+            android:textStyle="bold"
+            android:padding="5dp"
+            android:textColor="@color/colorblack"
+            android:textSize="14sp" />
+        <TextView
+            android:id="@+id/name_cus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Total: "
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:padding="5dp"
-                android:textColor="@android:color/holo_red_dark"
-                android:layout_marginTop="4dp" />
-            <TextView
-                android:id="@+id/total"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="200.000đ"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/holo_red_dark"
-                android:layout_marginTop="4dp" />
-        </LinearLayout>
+            android:text="Nguyễn A"
+            android:textSize="14sp" />
+    </LinearLayout>
 
-        <!-- Status Radio Buttons -->
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp">
+            android:text="Ngày tạo: "
+            android:textStyle="bold"
+            android:padding="5dp"
+            android:textSize="14sp" />
+        <TextView
+            android:id="@+id/date_create"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="15/09/2024"
+            android:textColor="@color/colorblack"
+            android:textSize="14sp" />
+    </LinearLayout>
 
-            <RadioButton
-                android:id="@+id/radioBtn_delivering"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Đang giao"
-                android:textColor="@color/colorblack"/>
+    <!-- Discount -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giảm giá: "
+            android:textStyle="bold"
+            android:padding="5dp"
+            android:textColor="@color/colorblack"
+            android:textSize="14sp" />
+        <TextView
+            android:id="@+id/tvdiscount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20.000đ"
+            android:textColor="@android:color/holo_green_dark"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
-            <RadioButton
-                android:id="@+id/radioBtn_delivered"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Đã giao"
-                android:textColor="@color/colorblack"
-                android:layout_marginStart="16dp" />
+    <!-- Tổng thanh toán -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total: "
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:padding="5dp"
+            android:textColor="@android:color/holo_red_dark"
+            android:layout_marginTop="4dp" />
+        <TextView
+            android:id="@+id/total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="200.000đ"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/holo_red_dark"
+            android:layout_marginTop="4dp" />
+    </LinearLayout>
 
-            <RadioButton
-                android:id="@+id/radioBtn_cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Hủy"
-                android:textColor="@color/colorblack"
-                android:layout_marginStart="16dp" />
-        </LinearLayout>
+    <!-- Trạng thái đơn hàng -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp">
+
+        <RadioButton
+            android:id="@+id/radioBtn_delivering"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đang giao"
+            android:textColor="@color/colorblack"/>
+
+        <RadioButton
+            android:id="@+id/radioBtn_delivered"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đã giao"
+            android:textColor="@color/colorblack"
+            android:layout_marginStart="16dp" />
+
+        <RadioButton
+            android:id="@+id/radioBtn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hủy"
+            android:textColor="@color/colorblack"
+            android:layout_marginStart="16dp" />
     </LinearLayout>
 </LinearLayout>

@@ -5,6 +5,8 @@ import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
 public class OrdersDTO {
+    private Long id;
+
     @SerializedName("user_id")
     private Long userId;
 
@@ -16,6 +18,14 @@ public class OrdersDTO {
 
     @SerializedName("status")
     private String status;
+
+    public OrdersDTO(Long id, Date orderDate, Float totalMoney, Long userId, String status) {
+        this.id = id;
+        this.orderDate = orderDate;
+        this.totalMoney = totalMoney;
+        this.userId = userId;
+        this.status = status;
+    }
 
     @SerializedName("total_money")
     private Float totalMoney;
@@ -30,6 +40,14 @@ public class OrdersDTO {
     private Long discountId;
 
 
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
     public Long getUserId() {
         return userId;
     }

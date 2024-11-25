@@ -2,6 +2,8 @@ package DTO;
 import com.google.gson.annotations.SerializedName;
 
 public class OrderDetailDTO {
+    private int id;
+
     @SerializedName("order_id")
     private Long orderId;
 
@@ -19,6 +21,14 @@ public class OrderDetailDTO {
 
     @SerializedName("color")
     private String color;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Long getOrderId() {
         return orderId;

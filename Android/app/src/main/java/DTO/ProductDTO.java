@@ -22,6 +22,9 @@ public class ProductDTO {
     public ProductDTO() {
     }
 
+    public ProductDTO(String s, int i, String s1, int ao) {
+    }
+
     public Long getId() {
         return id;
     }

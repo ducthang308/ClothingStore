@@ -48,7 +48,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         Product product = productList.get(position);
         ProductImage productImage = productImageList.get(position);
 
-
         holder.productName.setText(product.getProductName());
         holder.productPrice.setText(String.format("₫%,.0f", product.getPrice()));
 
