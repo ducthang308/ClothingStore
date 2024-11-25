@@ -80,11 +80,4 @@ public class OrderDetailController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
-    @GetMapping("/orders/{orderId}/details")
-    public ResponseEntity<List<OrderDetailReturnDTO>> getOrderDetails(@PathVariable Long orderId) {
-        List<OrderDetailReturnDTO> orderDetails = orderDetailService.getOrderDetailsByOrderId(orderId);
-        return ResponseEntity.ok(orderDetails);
-    }
-
 }

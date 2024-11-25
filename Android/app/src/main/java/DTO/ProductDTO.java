@@ -49,14 +49,10 @@ public class ProductDTO {
 
     }
 
-<<<<<<< HEAD
     public ProductDTO(String s, int i, String s1, int ao) {
     }
 
-    public Long getId() {
-=======
     public int getId() {
->>>>>>> main
         return id;
     }
 

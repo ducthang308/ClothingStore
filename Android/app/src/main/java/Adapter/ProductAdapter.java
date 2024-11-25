@@ -53,13 +53,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         ProductDTO product = productList.get(position);
 
-<<<<<<< HEAD
-        Product product = productList.get(position);
-        ProductImage productImage = productImageList.get(position);
-
-=======
         // Gán dữ liệu cho ViewHolder
->>>>>>> main
         holder.productName.setText(product.getProductName());
         holder.productPrice.setText(String.format("₫%,.0f", product.getPrice())); // Format tiền tệ
         loadProductImage(holder.productImage, product.getImageUrls());

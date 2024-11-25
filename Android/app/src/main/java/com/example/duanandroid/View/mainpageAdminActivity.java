@@ -40,17 +40,6 @@ public class mainpageAdminActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mainpageadmin);
-<<<<<<< HEAD
-        {
-            // Khởi tạo RecyclerView
-            productRecyclerView = findViewById(R.id.items);
-            productRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-            productRecyclerView.addItemDecoration(new ItemDecoration(2, 24, true)); // 2 cột, khoảng cách 16dp
-            // Tạo danh sách sản phẩm và danh sách hình ảnh
-            productList = loadDataFromLayout();
-            productImageList = loadProductImages(); // Tạo dữ liệu hình ảnh
-=======
->>>>>>> main
 
         productRecyclerView = findViewById(R.id.items);
         progressBar = findViewById(R.id.progressBar);

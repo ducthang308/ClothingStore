@@ -36,13 +36,7 @@ public class CartActivity extends AppCompatActivity {
 
         // Sample cart items data
         cartItems = new ArrayList<>();
-        cartItems.add(new CartItem("Áo thun ngắn tay nữ", "trắng, size M", "200.000đ", R.drawable.ao));
-        cartItems.add(new CartItem("Áo thun ngắn tay nữ", "trắng, size M", "200.000đ", R.drawable.ao));
-        cartItems.add(new CartItem("Áo thun ngắn tay nữ", "trắng, size M", "200.000đ", R.drawable.ao));
-        cartItems.add(new CartItem("Áo thun ngắn tay nữ", "trắng, size M", "200.000đ", R.drawable.ao));
-        cartItems.add(new CartItem("Áo thun ngắn tay nữ", "trắng, size M", "200.000đ", R.drawable.ao));
-        cartItems.add(new CartItem("Áo thun ngắn tay nữ", "trắng, size M", "200.000đ", R.drawable.ao));
-        cartItems.add(new CartItem("Áo thun ngắn tay nữ", "trắng, size M", "200.000đ", R.drawable.ao));
+
 
         cartAdapter = new CartAdapter(cartItems);
         recyclerCartItems.setAdapter(cartAdapter);
