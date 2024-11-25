@@ -22,6 +22,8 @@ import com.example.duanandroid.View.changePassActivity;
 import com.example.duanandroid.View.chatUserActivity;
 import com.example.duanandroid.View.editAccountActivity;
 
+import Interface.PreferenceManager;
+
 public class AccountUserFragment extends Fragment {
 
     @Override
@@ -156,6 +158,13 @@ public class AccountUserFragment extends Fragment {
             }
         });
 
+        PreferenceManager preferenceManager = new PreferenceManager(requireContext());
+        String userName = preferenceManager.getName();
+
+        TextView usernameTextView = view.findViewById(R.id.username);
+        if (userName != null && !userName.isEmpty()) {
+            usernameTextView.setText(userName);
+        }
         return view;
     }
 }

@@ -12,27 +12,27 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.duanandroid.R;
+import com.example.duanandroid.View.OrderDetailActivity;
 import com.example.duanandroid.View.ReasoncancelActivity;
 
 import java.util.List;
 
-import Model.OrderDetail;
-import Model.Product;
-import Model.ProductImage;
+import DTO.OrderDetailDTO;
+import DTO.ProductDTO;
 
 public class WaitingPaymentAdapter extends RecyclerView.Adapter<WaitingPaymentAdapter.WaitingPaymentViewHolder> {
 
-    private Context context;
-    private List<Product> productList;
-    private List<OrderDetail> orderDetailList;
-    private List<ProductImage> productImageList;
+    private final Context context;
+    private final List<ProductDTO> productList;
+    private final List<OrderDetailDTO> orderDetailList;
 
-    public WaitingPaymentAdapter(Context context, List<Product> productList, List<OrderDetail> orderDetailList, List<ProductImage> productImageList) {
+    public WaitingPaymentAdapter(Context context, List<ProductDTO> productList, List<OrderDetailDTO> orderDetailList) {
         this.context = context;
         this.productList = productList;
         this.orderDetailList = orderDetailList;
-        this.productImageList = productImageList;
     }
 
     @NonNull
@@ -44,40 +44,47 @@ public class WaitingPaymentAdapter extends RecyclerView.Adapter<WaitingPaymentAd
 
     @Override
     public void onBindViewHolder(@NonNull WaitingPaymentViewHolder holder, int position) {
-//        // Lấy product, orderDetail từ danh sách tương ứng
-//        Product product = productList.get(position);
-//        OrderDetail orderDetail = orderDetailList.get(position);
-//
-//        // Set thông tin sản phẩm
-//        holder.productName.setText(product.getProductName());
-//        holder.productSize.setText("Size: " + product.getSize());
-//        holder.productPrice.setText(String.valueOf(product.getPrice()) + "đ");
-//        holder.productQuantity.setText("x" + orderDetail.getNumberOfProduct());
-//        holder.totalPayment.setText(String.valueOf(orderDetail.getTotalMoney()) + "đ");
-//
-//        // Gán ảnh sản phẩm nếu có
-//        if (productImageList != null && !productImageList.isEmpty()) {
-//            // Lấy ảnh sản phẩm theo productId
-//            ProductImage productImage = productImageList.get(position);
-//            holder.productImage.setImageResource(R.drawable.ao); // Hình mặc định
-//        }
-//
-//        holder.btnCancelOrder.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(context, ReasoncancelActivity.class);
-//                context.startActivity(intent);
-//            }
-//        });
+        // Ensure the positions are valid
+        if (position >= productList.size() || position >= orderDetailList.size()) {
+            return;
+        }
 
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(context, detailOrderActivity.class);
-//                intent.putExtra("product", productList.get(position));
-//                context.startActivity(intent);
-//            }
-//        });
+        ProductDTO product = productList.get(position);
+        OrderDetailDTO orderDetail = orderDetailList.get(position);
+
+        // Set product name, price, quantity, and total money
+        holder.productName.setText(product.getProductName());
+        holder.productPrice.setText(String.format("%,.0fđ", product.getPrice()));
+        holder.productQuantity.setText("x" + orderDetail.getNumberOfProduct());
+        holder.totalPayment.setText(String.format("%,.0fđ", orderDetail.getTotalMoney()));
+
+        // Set product image using Glide
+        if (product.getImageUrls() != null && !product.getImageUrls().isEmpty()) {
+            Glide.with(context)
+                    .load(product.getImageUrls().get(0)) // Load the first image URL
+                    .apply(new RequestOptions()
+                            .placeholder(R.drawable.co4la) // Placeholder image
+                            .error(R.drawable.error) // Error image if loading fails
+                            .centerCrop())
+                    .into(holder.productImage);
+        } else {
+            holder.productImage.setImageResource(R.drawable.co4la); // Fallback image if no image available
+        }
+
+        // Cancel order button logic
+        holder.btnCancelOrder.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ReasoncancelActivity.class);
+            intent.putExtra("orderDetailId", orderDetail.getOrderId());
+            context.startActivity(intent);
+        });
+
+        // On item click listener for details
+        holder.itemView.setOnClickListener(view -> {
+            // Logic for navigating to order details (could open a new activity or fragment)
+            Intent intent = new Intent(context, OrderDetailActivity.class); // Example: OrderDetailActivity to view more details
+            intent.putExtra("orderDetailId", orderDetail.getOrderId());
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -90,10 +97,10 @@ public class WaitingPaymentAdapter extends RecyclerView.Adapter<WaitingPaymentAd
         TextView productName, productSize, productPrice, productQuantity, totalPayment;
         ImageView productImage;
         Button btnCancelOrder;
+
         public WaitingPaymentViewHolder(@NonNull View itemView) {
             super(itemView);
             productName = itemView.findViewById(R.id.product_name);
-            productSize = itemView.findViewById(R.id.product_size);
             productPrice = itemView.findViewById(R.id.product_price);
             productQuantity = itemView.findViewById(R.id.product_quantity);
             totalPayment = itemView.findViewById(R.id.total_money);

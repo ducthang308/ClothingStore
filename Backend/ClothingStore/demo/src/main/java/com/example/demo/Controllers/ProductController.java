@@ -66,13 +66,14 @@ public class ProductController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<Product>> getAllProduct(
+    public ResponseEntity<List<ProductDTO>> getAllProduct(
             @RequestParam(defaultValue = "") String keyword,
             @RequestParam(defaultValue = "0", name = "category_id") Long categoryId
     ) {
-        List<Product> products = productService.getAllProducts(keyword, categoryId);
+        List<ProductDTO> products = productService.getAllProducts(keyword, categoryId);
         return ResponseEntity.ok(products);
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getAllProductById(@PathVariable("id") Long productId)

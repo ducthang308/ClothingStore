@@ -40,7 +40,7 @@ public class DiscountManageAdapter extends RecyclerView.Adapter<DiscountManageAd
     @Override
     public void onBindViewHolder(@NonNull DiscountViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Discount discount = discountList.get(position);
-        holder.tvPercent.setText(discount.getPercent() + "%");
+        holder.tvPercent.setText(String.format("%.0f%%", discount.getPercent() * 100));
         holder.tvNote.setText(discount.getNote());
 
         holder.checkbox.setChecked(position == selectedPosition);

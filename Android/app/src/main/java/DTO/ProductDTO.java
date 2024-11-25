@@ -1,35 +1,66 @@
 package DTO;
 
 import com.google.gson.annotations.SerializedName;
+import java.util.List;
 
 public class ProductDTO {
-    private Long id;
+    @SerializedName("id")
+    private int id;
+
     @SerializedName("product_name")
     private String productName;
+
     @SerializedName("category_id")
     private int categoryId;
-    private String color;
-    private float price;
 
-    public ProductDTO(Long id, String productName, int categoryId, String color, float price) {
+    @SerializedName("color")
+    private String color;
+
+    @SerializedName("price")
+    private Float price;
+
+    @SerializedName("image_urls")
+    private List<String> imageUrls; // Danh sách URL hình ảnh
+
+    public ProductDTO(int id, String productName, int categoryId, String color, Float price, List<String> imageUrls) {
         this.id = id;
         this.productName = productName;
         this.categoryId = categoryId;
         this.color = color;
         this.price = price;
+        this.imageUrls = imageUrls;
+    }
+
+    public ProductDTO(String productName, int categoryId, String color, Float price, List<String> imageUrls) {
+        this.productName = productName;
+        this.categoryId = categoryId;
+        this.color = color;
+        this.price = price;
+        this.imageUrls = imageUrls;
+    }
+
+    public ProductDTO(String productName, Float price, List<String> imageUrls) {
+        this.productName = productName;
+        this.price = price;
+        this.imageUrls = imageUrls;
     }
 
     public ProductDTO() {
+
     }
 
+<<<<<<< HEAD
     public ProductDTO(String s, int i, String s1, int ao) {
     }
 
     public Long getId() {
+=======
+    public int getId() {
+>>>>>>> main
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -41,11 +72,11 @@ public class ProductDTO {
         this.productName = productName;
     }
 
-    public int getCategory() {
+    public int getCategoryId() {
         return categoryId;
     }
 
-    public void setCategory(int categoryId) {
+    public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
 
@@ -57,11 +88,21 @@ public class ProductDTO {
         this.color = color;
     }
 
-    public float getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(Float price) {
         this.price = price;
+    }
+
+    public List<String> getImageUrls() {
+        return imageUrls;
+    }
+
+    public void setImageUrls(List<String> imageUrls) {
+        if (imageUrls != null) {
+            this.imageUrls = imageUrls;
+        }
     }
 }

@@ -54,7 +54,7 @@ public class User implements Serializable {
 
 
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

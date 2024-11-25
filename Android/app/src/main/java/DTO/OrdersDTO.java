@@ -38,6 +38,7 @@ public class OrdersDTO {
 
     @SerializedName("discount_id")
     private Long discountId;
+<<<<<<< HEAD
 
 
 
@@ -111,4 +112,6 @@ public class OrdersDTO {
     public void setDiscountId(Long discountId) {
         this.discountId = discountId;
     }
+=======
+>>>>>>> main
 }

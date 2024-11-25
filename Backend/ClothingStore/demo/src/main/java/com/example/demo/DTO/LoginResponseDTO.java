@@ -11,5 +11,7 @@ import lombok.*;
 public class LoginResponseDTO {
     private String token;
     private Long roleId;
+    private Long userId;
+    private String name;
 
 }

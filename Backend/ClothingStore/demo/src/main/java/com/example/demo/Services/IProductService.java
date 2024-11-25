@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface IProductService {
     Product createProduct(ProductDTO productDTO) throws Exception;
     Product getProductById(long productId) throws Exception;
-    List<Product> getAllProducts(String keyword, Long categoryId);
+    List<ProductDTO> getAllProducts(String keyword, Long categoryId);
     Product updateProduct(long productId, ProductDTO productDTO) throws Exception;
     void deleteProduct(long id);
     boolean existsByName(String name);

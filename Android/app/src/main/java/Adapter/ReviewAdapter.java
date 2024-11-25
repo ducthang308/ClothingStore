@@ -1,5 +1,6 @@
 package Adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,68 +15,65 @@ import com.example.duanandroid.R;
 
 import java.util.List;
 
+import DTO.ReviewWithUserFullNameDTO;
 import Model.Review;
-import Model.User;
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder> {
-    private List<Review> reviewList;
-    private List<User> userList;
 
-    public ReviewAdapter(List<Review> reviewList, List<User> userList) {
-        this.reviewList = reviewList;
-        this.userList = userList;
+    private Context context;
+    private List<ReviewWithUserFullNameDTO> rvDTOList;  // Use List<Object> to handle both types
+
+    // Constructor to handle either List<ReviewWithUserFullNameDTO> or List<Review>
+    public ReviewAdapter(Context context, List<ReviewWithUserFullNameDTO> rvDTOList) {
+        this.context = context;
+        this.rvDTOList = rvDTOList;
     }
 
     @NonNull
     @Override
     public ReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Inflate the review item layout
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_review, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_review, parent, false);
         return new ReviewViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
-        // Get the review data
-        Review review = reviewList.get(position);
+        Object currentItem = rvDTOList.get(position);
 
-        // Find the corresponding user by userId
-        User user = null;
-        for (User u : userList) {
-            if (u.getId() == review.getUserId()) {
-                user = u;
-                break;
-            }
+        if (currentItem instanceof ReviewWithUserFullNameDTO) {
+            // Handle ReviewWithUserFullNameDTO
+            ReviewWithUserFullNameDTO rv = (ReviewWithUserFullNameDTO) currentItem;
+            holder.reviewerImage.setImageResource(R.drawable.user); // Placeholder image for user
+            holder.reviewerName.setText("Họ và tên: " + rv.getFullName());
+            holder.reviewRating.setRating(rv.getReview().getNumberOfStars());
+            holder.reviewContent.setText(rv.getReview().getNote());
+        } else if (currentItem instanceof Review) {
+            // Handle Review
+            Review review = (Review) currentItem;
+            holder.reviewerName.setText("Họ và tên: Unknown"); // Placeholder name
+            holder.reviewRating.setRating(review.getNumberOfStars());
+            holder.reviewContent.setText(review.getNote());
         }
-
-        if (user != null) {
-            // Set reviewer name
-            holder.reviewerName.setText(user.getFullname());
-        }
-        holder.reviewRating.setRating(review.getNumberOfStars());
-        holder.reviewContent.setText(review.getNote());
-        holder.reviewerImage.setImageResource(R.drawable.user); // Placeholder image
     }
 
     @Override
     public int getItemCount() {
-        return reviewList.size();
+        return rvDTOList.size();
     }
 
+    // ViewHolder class
     public static class ReviewViewHolder extends RecyclerView.ViewHolder {
         ImageView reviewerImage;
         TextView reviewerName;
-        TextView reviewContent;
         RatingBar reviewRating;
+        TextView reviewContent;
 
         public ReviewViewHolder(@NonNull View itemView) {
             super(itemView);
             reviewerImage = itemView.findViewById(R.id.reviewer_image);
             reviewerName = itemView.findViewById(R.id.reviewer_name);
-            reviewContent = itemView.findViewById(R.id.review_content);
             reviewRating = itemView.findViewById(R.id.review_rating);
-
+            reviewContent = itemView.findViewById(R.id.review_content);
         }
     }
 }
-

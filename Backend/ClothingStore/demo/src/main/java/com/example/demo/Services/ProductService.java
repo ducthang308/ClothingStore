@@ -12,6 +12,7 @@ import com.example.demo.Repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -47,9 +48,25 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public List<Product> getAllProducts(String keyword, Long categoryId) {
-        return productRepository.searchProducts(categoryId, keyword);
+    public List<ProductDTO> getAllProducts(String keyword, Long categoryId) {
+        List<Product> products = productRepository.searchProducts(categoryId, keyword);
+
+        return products.stream().map(product -> ProductDTO.builder()
+                        .id(product.getId())
+                        .productName(product.getProductName())
+                        .price(product.getPrice())
+                        .color(product.getColor())
+                        .categoryId(product.getCategories() != null ? product.getCategories().getId() : null)
+                        .imageUrls(product.getProductImages() != null
+                                ? product.getProductImages().stream()
+                                .map(ProductImages::getImageUrl)
+                                .collect(Collectors.toList())
+                                : new ArrayList<>())
+                        .build())
+                .collect(Collectors.toList());
+
     }
+
 
     @Override
     public Product updateProduct(long productId, ProductDTO productDTO) throws Exception {
