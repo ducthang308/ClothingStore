@@ -2,10 +2,16 @@ package Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,15 +26,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapter.ProductAdapter;
-import Model.Product;
-import Model.ProductImage;
+import DTO.ProductDTO;
+import Interface.APIClient;
+import Interface.ApiProduct;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
-    private RecyclerView productRecyclerView;
+    private FragmentHomeBinding binding;
     private ProductAdapter productAdapter;
-    private List<Product> productList;
-    private List<ProductImage> productImageList;
-    FragmentHomeBinding binding;
+    private List<ProductDTO> productList = new ArrayList<>();
+    private ApiProduct apiProduct;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -37,61 +46,131 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        apiProduct = APIClient.getProduct(); // Initialize API client
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        setupUI();
+        fetchProducts(""); // Initially load all products
+        return binding.getRoot();
+    }
+
+    private void setupUI() {
+        // Set up RecyclerView
+        binding.items.setLayoutManager(new GridLayoutManager(requireContext(), 2));
+        binding.items.addItemDecoration(new ItemDecoration(2, 24, true));
+        productAdapter = new ProductAdapter(productList, requireContext(), false); // Use requireContext()
+        binding.items.setAdapter(productAdapter);
+
+        // Set up listeners
+        binding.chat.setOnClickListener(v -> {
+            startActivity(new Intent(requireActivity(), chatUserActivity.class));
+        });
+
+        binding.shoppingCart.setOnClickListener(v -> {
+            Intent intent = new Intent(requireActivity(), CartActivity.class);
+            intent.putExtra("origin", "CartToHome");
+            startActivity(intent);
+        });
+
+        // Add a TextWatcher or SearchView to handle search input
+        binding.search.addTextChangedListener(new android.text.TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                // Trigger search when text changes
+                searchProducts(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(android.text.Editable editable) {}
+        });
+    }
+
+    private void searchProducts(String keyword) {
+        // Call your API to fetch filtered results based on the keyword
+        showLoading(true);
+        apiProduct.getProducts(keyword, 0L).enqueue(new Callback<List<ProductDTO>>() {
+            @Override
+            public void onResponse(Call<List<ProductDTO>> call, Response<List<ProductDTO>> response) {
+                showLoading(false);
+                if (response.isSuccessful() && response.body() != null) {
+                    productList.clear();
+                    productList.addAll(response.body());
+                    if (productAdapter == null) {
+                        productAdapter = new ProductAdapter(productList, HomeFragment.this, true);
+                        binding.items.setAdapter(productAdapter);
+                    } else {
+                        productAdapter.notifyDataSetChanged();
+                    }
+                } else {
+                    handleApiError(response.code(), response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ProductDTO>> call, Throwable t) {
+                showLoading(false);
+                handleNetworkError(t);
+            }
+        });
+    }
+
+    private void fetchProducts(String keyword) {
+        showLoading(true); // Show loading indicator
+        apiProduct.getProducts(keyword, 0L).enqueue(new Callback<List<ProductDTO>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<ProductDTO>> call, @NonNull Response<List<ProductDTO>> response) {
+                showLoading(false); // Hide loading indicator
+
+                if (response.isSuccessful() && response.body() != null) {
+                    productList.clear();
+                    productList.addAll(response.body());
+                    productAdapter.notifyDataSetChanged();
+                    Log.d("fetchProducts", "Loaded " + productList.size() + " products.");
+                } else {
+                    handleApiError(response.code(), response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<List<ProductDTO>> call, @NonNull Throwable t) {
+                showLoading(false); // Hide loading indicator
+                handleNetworkError(t);
+            }
+        });
+    }
+
+    private void showLoading(boolean isLoading) {
+        if (isLoading) {
+            binding.progressBar.setVisibility(View.VISIBLE); // Show ProgressBar
+            binding.items.setVisibility(View.GONE); // Hide RecyclerView
+        } else {
+            binding.progressBar.setVisibility(View.GONE); // Hide ProgressBar
+            binding.items.setVisibility(View.VISIBLE); // Show RecyclerView
+        }
+    }
+
+    private void handleApiError(int code, String message) {
+        String errorMessage = "Lỗi API: " + code + " - " + message;
+        Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show();
+        Log.e("HomeFragment", errorMessage);
+    }
+
+    private void handleNetworkError(Throwable t) {
+        String errorMessage = "Lỗi mạng: " + t.getMessage();
+        Toast.makeText(requireActivity(), errorMessage, Toast.LENGTH_SHORT).show();
+        Log.e("HomeFragment", errorMessage, t);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View view = binding.getRoot();
-
-        productRecyclerView = binding.items;
-        productRecyclerView.setLayoutManager(new GridLayoutManager(requireContext(), 2));
-        productRecyclerView.addItemDecoration(new ItemDecoration(2, 24, true));
-
-
-        productList = loadDataFromLayout();
-        productImageList = loadProductImages();
-
-        productAdapter = new ProductAdapter(productList, productImageList, false);
-        productRecyclerView.setAdapter(productAdapter);
-
-        binding.chat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(requireActivity(), chatUserActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        binding.shoppingCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(requireActivity(), CartActivity.class);
-                intent.putExtra("origin", "CartToHome");
-                startActivity(intent);
-            }
-        });
-
-        return view;
-    }
-
-    private List<Product> loadDataFromLayout() {
-        List<Product> products = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            products.add(new Product("Tên sản phẩm " + (i + 1), "M", (i + 1) * 100000));
-        }
-        return products;
-    }
-
-    private List<ProductImage> loadProductImages() {
-        List<ProductImage> productImages = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            String imageName = "ao" ;
-            int imageResId = getResources().getIdentifier(imageName, "drawable", requireContext().getPackageName());
-
-            productImages.add(new ProductImage(i, i, String.valueOf(imageResId)));
-        }
-        return productImages;
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null; // Release binding
     }
 }

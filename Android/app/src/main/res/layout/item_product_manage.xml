@@ -1,80 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="8dp"> <!-- Giảm padding so với ban đầu -->
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="8dp">
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <ImageView
+        android:id="@+id/image_product"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"
+        android:contentDescription="Product Image"
+        android:background="@drawable/border"
+        app:layout_constraintStart_toEndOf="@id/checkbox"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="8dp" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toEndOf="@id/image_product"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
 
-        android:gravity="center_vertical">
-
-        <CheckBox
-            android:id="@+id/checkbox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:id="@+id/image_product"
-            android:background="@drawable/border"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginEnd="10dp"
-           />
-
-        <LinearLayout
+        <!-- Tên sản phẩm -->
+        <TextView
+            android:id="@+id/product_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:text="Tên sản phẩm"
+            android:textColor="@color/colorblack"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
 
-            <TextView
-                android:id="@+id/tv_tensp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Áo thun ngắn tay nữ"
-                android:textSize="16sp"
-                android:textColor="@color/colorblack"
-                android:textStyle="bold" />
+        <!-- Giá sản phẩm -->
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="₫200.000"
+            android:textColor="#FF0000"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="4dp" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Size  "
-                    android:textColor="@color/colorblack"/>
-
-                <TextView
-                    android:id="@+id/size"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="S "
-                    android:textColor="@color/colorblack"/>
-
-                <TextView
-                    android:id="@+id/soluong_sizeS"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" 10"
-                    android:textColor="@color/colorblack"/>
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="200.000đ"
-                android:textColor="#FF0000"
-                android:textStyle="bold" />
-        </LinearLayout>
+        <!-- Màu sắc -->
+        <TextView
+            android:id="@+id/color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Màu sắc: Đỏ"
+            android:textColor="@color/colorblack"
+            android:textSize="14sp"
+            android:textStyle="italic" />
     </LinearLayout>
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,39 +1,44 @@
 package DTO;
+
 import com.google.gson.annotations.SerializedName;
 
 public class OrderDetailDTO {
     @SerializedName("order_id")
-    private Long orderId;
-
+    private int orderId;
     @SerializedName("product_id")
-    private Long productId;
-
+    private int productId;
     @SerializedName("price")
     private Float price;
-
     @SerializedName("number_of_product")
     private int numberOfProduct;
-
     @SerializedName("total_money")
     private Float totalMoney;
-
     @SerializedName("color")
     private String color;
 
-    public Long getOrderId() {
+    public OrderDetailDTO(int orderId, int productId, Float price, int numberOfProduct, Float totalMoney, String color) {
+        this.orderId = orderId;
+        this.productId = productId;
+        this.price = price;
+        this.numberOfProduct = numberOfProduct;
+        this.totalMoney = totalMoney;
+        this.color = color;
+    }
+
+    public int getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Long orderId) {
+    public void setOrderId(int orderId) {
         this.orderId = orderId;
     }
 
-    public Long getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setProductId(int productId) {
+
     }
 
     public Float getPrice() {

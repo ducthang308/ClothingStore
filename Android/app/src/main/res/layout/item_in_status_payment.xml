@@ -54,13 +54,6 @@
                         android:textSize="16sp"
                         android:textStyle="" />
 
-                    <TextView
-                        android:id="@+id/product_size"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Size M"
-                        android:textColor="@color/colorblack"
-                        android:textSize="14sp" />
                 </LinearLayout>
                 <!-- Quantity -->
                 <TextView
@@ -100,6 +93,8 @@
             android:layout_marginVertical="16dp">
 
             <!-- Total Payment Label -->
+
+            <!-- Total Payment Amount -->
             <TextView
 
                 android:layout_width="wrap_content"
@@ -108,7 +103,6 @@
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
-            <!-- Total Payment Amount -->
             <TextView
                 android:id="@+id/total_money"
                 android:layout_width="wrap_content"

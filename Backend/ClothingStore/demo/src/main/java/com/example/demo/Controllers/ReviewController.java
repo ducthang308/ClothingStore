@@ -1,6 +1,7 @@
 package com.example.demo.Controllers;
 
 import com.example.demo.DTO.ReviewDTO;
+import com.example.demo.DTO.ReviewWithUserFullNameDTO;
 import com.example.demo.Models.Review;
 import com.example.demo.Services.ReviewService;
 import jakarta.validation.Valid;
@@ -40,7 +41,7 @@ public class ReviewController {
 
     @GetMapping("/{productId}")
     public ResponseEntity<?> getAllReviewByProductId(@Valid @PathVariable("productId") Long productId){
-        List<Review> reviews = reviewService.getAllReviewByProductId(productId);
+        List<ReviewWithUserFullNameDTO> reviews = reviewService.getAllReviewByProductId(productId);
         return ResponseEntity.ok(reviews);
     }
 }

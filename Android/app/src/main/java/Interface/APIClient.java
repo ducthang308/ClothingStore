@@ -10,7 +10,7 @@ public class APIClient {
     public static Retrofit getClient() {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl("http://192.168.1.110:8088/")
+                    .baseUrl("http://192.168.1.113:8088/")
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
@@ -23,6 +23,10 @@ public class APIClient {
     public static ApiUsers getRegisterService() {
         return getClient().create(ApiUsers.class);
     }
+    public static ApiUsers updatePass() {
+        return getClient().create(ApiUsers.class);
+    }
+
 
     //Category
     public static APICaterogy createcategory() {

@@ -1,25 +1,24 @@
-package Model;
+package DTO;
 
-public class Review {
-    private int id;
+import com.google.gson.annotations.SerializedName;
+
+public class ReviewDTO {
+    @SerializedName("product_id")
     private int productId;
+
+    @SerializedName("user_id")
     private int userId;
+
+    @SerializedName("order_id")
     private int orderId;
+
+    @SerializedName("note")
     private String note;
+
+    @SerializedName("number_of_stars")
     private float numberOfStars;
 
-    public Review() {
-    }
-
-    public Review(int id, int productId, int userId, int orderId, String note, float numberOfStars) {
-        this.id = id;
-        this.productId = productId;
-        this.userId = userId;
-        this.orderId = orderId;
-        this.note = note;
-        this.numberOfStars = numberOfStars;
-    }
-    public Review(int productId, int userId, int orderId, String note, float numberOfStars) {
+    public ReviewDTO(int productId, int userId, int orderId, String note, float numberOfStars) {
         this.productId = productId;
         this.userId = userId;
         this.orderId = orderId;
@@ -27,19 +26,7 @@ public class Review {
         this.numberOfStars = numberOfStars;
     }
 
-    public Review(int userId, int orderId, String note, float numberOfStars) {
-        this.userId = userId;
-        this.orderId = orderId;
-        this.note = note;
-        this.numberOfStars = numberOfStars;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public ReviewDTO() {
     }
 
     public int getProductId() {
@@ -82,4 +69,3 @@ public class Review {
         this.numberOfStars = numberOfStars;
     }
 }
-

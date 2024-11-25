@@ -26,7 +26,6 @@
                 android:layout_centerHorizontal="true"
                 android:contentDescription="User Avatar" />
 
-            <!-- User Name -->
             <TextView
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
@@ -39,7 +38,6 @@
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
-            <!-- Settings Icon -->
             <ImageView
                 android:id="@+id/settingsIcon"
                 android:layout_width="32dp"

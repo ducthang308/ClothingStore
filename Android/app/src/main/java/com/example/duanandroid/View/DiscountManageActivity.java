@@ -23,14 +23,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DiscountManageActivity extends AppCompatActivity {
-
     private RecyclerView recyclerView;
     private DiscountManageAdapter adapter;
     private List<Discount> discountList = new ArrayList<>();
     private ApiDiscounts apiDiscounts;
     private Button btnAdd, btnEdit, btnDelete;
     private String token;
-    private Discount selectedDiscount; // updated variable name to indicate it's the selected discount
+    private Discount selectedDiscount;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

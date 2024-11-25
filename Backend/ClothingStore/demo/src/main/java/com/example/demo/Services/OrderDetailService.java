@@ -1,6 +1,7 @@
 package com.example.demo.Services;
 
 import com.example.demo.DTO.OrderDetailDTO;
+import com.example.demo.DTO.OrderDetailReturnDTO;
 import com.example.demo.Exception.DataNotFoundException;
 import com.example.demo.Models.OrderDetail;
 import com.example.demo.Models.Orders;
@@ -76,5 +77,10 @@ public class OrderDetailService implements IOrderDetailService{
     @Override
     public List<OrderDetail> findByOrdersId(Long orderId) {
         return detailRepository.findByOrdersId(orderId);
+    }
+
+    @Override
+    public List<OrderDetailReturnDTO> getOrderDetailsByOrderId(Long orderId) {
+        return detailRepository.findOrderDetailsByOrderId(orderId);
     }
 }

@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.duanandroid.R;
 
 import java.io.File;
@@ -47,6 +49,7 @@ import Model.Category;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,14 +62,15 @@ public class AddSanphamActivity extends AppCompatActivity {
     private Button btnLuu;
     private String token;
     private ApiProduct apiProduct;
-    private List<Uri> selectedImageUris = new ArrayList<>();;
+    private List<Uri> selectedImageUris = new ArrayList<>();
     private List<Category> categoryList = new ArrayList<>();
+    private List<String> imageUrls = new ArrayList<>();
     private ArrayAdapter<String> adapter;
     private APICaterogy categoriesApi;
     private static final int REQUEST_IMAGE_PICK = 1;
     private static final int PERMISSION_REQUEST_READ_EXTERNAL_STORAGE = 2;
     private int selectedCategoryIdForProduct;
-    private Long id;
+    private int productId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,66 +94,84 @@ public class AddSanphamActivity extends AppCompatActivity {
         }
 
         apiProduct = APIClient.createProduct();
-        apiProduct = uploadImages();
 
         arrow_quanlisp.setOnClickListener(view -> {
             Intent intent = new Intent(AddSanphamActivity.this, ManageProductActivity.class);
             startActivity(intent);
         });
-
-        findViewById(R.id.imageView).setOnClickListener(view -> {
-            checkAndRequestStoragePermission();
-        });
-
         spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 String selectedCategoryName = parentView.getItemAtPosition(position).toString();
                 Integer selectedCategoryId = categoryIds.get(selectedCategoryName);
-
-                // Lưu trữ ID của danh mục đã chọn
                 selectedCategoryIdForProduct = selectedCategoryId;
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
-                // Handle case when nothing is selected
             }
         });
 
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("productId")) {
+            productId = intent.getIntExtra("productId", -1);
+            String productName = intent.getStringExtra("productName");
+            int productCategory = intent.getIntExtra("productCategory", -1);
+            String productColor = intent.getStringExtra("productColor");
+            float productPrice = intent.getFloatExtra("productPrice", 0);
+            ArrayList<String> imageUrls = intent.getStringArrayListExtra("productImage");
+
+            edt_productname.setText(productName);
+            if (productCategory != -1) {
+                for (int i = 0; i < spinnerCategory.getCount(); i++) {
+                    if ((int) spinnerCategory.getItemAtPosition(i) == productCategory) {
+                        spinnerCategory.setSelection(i);
+                        break;
+                    }
+                }
+            }
+            product_color.setText(productColor);
+            product_price.setText(String.valueOf(productPrice));
+            if (imageUrls != null && !imageUrls.isEmpty()) {
+                for (int i = 0; i < imageUrls.size() && i < imageContainer.getChildCount(); i++) {
+                    String imageUrl = imageUrls.get(i);
+                    ImageView imageView = (ImageView) imageContainer.getChildAt(i);
+                    loadImageIntoImageView(imageUrl, imageView);
+                }
+            }
+        }
+
         btnLuu.setOnClickListener(view -> {
             if (validateInput()) {
-                // Lấy danh mục đã chọn dựa trên vị trí chọn trong Spinner
                 int selectedPosition = spinnerCategory.getSelectedItemPosition();
-
-                // Kiểm tra xem vị trí đã chọn có hợp lệ không
                 if (selectedPosition >= 0 && selectedPosition < categoryList.size()) {
-                    Category selectedCategory = categoryList.get(selectedPosition);  // Lấy category từ danh sách
+                    Category selectedCategory = categoryList.get(selectedPosition);
 
-                    // Kiểm tra nếu ID danh mục hợp lệ
-                    if (selectedCategory.getId() != 0) {  // Nếu ID không phải là 0 hoặc null
-                        // Tạo ProductDTO với các thông tin của sản phẩm và ID danh mục
+                    if (selectedCategory.getId() != 0) {
                         ProductDTO productDTO = new ProductDTO();
                         productDTO.setProductName(edt_productname.getText().toString().trim());
                         productDTO.setColor(product_color.getText().toString().trim());
                         productDTO.setPrice((float) Double.parseDouble(product_price.getText().toString().trim()));
+                        productDTO.setCategoryId(selectedCategory.getId());
 
-                        // Thiết lập ID danh mục của sản phẩm
-                        productDTO.setCategory(selectedCategory.getId());  // Gửi ID danh mục
-
-                        // Gọi hàm để tạo sản phẩm
-                        createProduct(productDTO);
-
+                        if (productId == -1) {
+                            createProduct(productDTO);
+                        } else {
+                            updateProduct(productId, productDTO);
+                        }
                     }
                 }
             }
         });
-
-        ProductDTO productDTO = new ProductDTO();
-        productDTO.setCategory(selectedCategoryIdForProduct);
-
+        imageContainer.setOnClickListener(view -> checkAndRequestStoragePermission());
     }
 
+    private void loadImageIntoImageView(String imageUrl, ImageView imageView) {
+        Glide.with(this)
+                .load(imageUrl)
+                .placeholder(R.drawable.co4la)
+                .error(R.drawable.error)
+                .into(imageView);
+    }
     private void initViews() {
         edt_productname = findViewById(R.id.edt_productname);
         product_color = findViewById(R.id.product_color);
@@ -158,13 +180,11 @@ public class AddSanphamActivity extends AppCompatActivity {
         btnLuu = findViewById(R.id.btn_AddProduct); // Thêm dòng này để khởi tạo btnLuu
         imageContainer = findViewById(R.id.imageContainer);
     }
-
     private void setupCategorySpinner() {
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new ArrayList<>());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategory.setAdapter(adapter);
     }
-
     private void checkAndRequestStoragePermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             if (!android.os.Environment.isExternalStorageManager()) {
@@ -185,13 +205,11 @@ public class AddSanphamActivity extends AppCompatActivity {
             }
         }
     }
-
     private void openImagePicker() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true); // Cho phép chọn nhiều ảnh
         startActivityForResult(intent, REQUEST_IMAGE_PICK);
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -222,7 +240,6 @@ public class AddSanphamActivity extends AppCompatActivity {
             selectedImageUris = imageUris;
         }
     }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -234,7 +251,6 @@ public class AddSanphamActivity extends AppCompatActivity {
             }
         }
     }
-
     private void loadCategoryData() {
         categoriesApi = APIClient.getcategory();
         Call<List<Category>> call = categoriesApi.getAllCategories();
@@ -262,8 +278,7 @@ public class AddSanphamActivity extends AppCompatActivity {
                 Toast.makeText(AddSanphamActivity.this, "Lỗi tải danh mục", Toast.LENGTH_SHORT).show();
             }
         });
-        }
-
+    }
     private boolean validateInput() {
         if (edt_productname.getText().toString().trim().isEmpty()) {
             Toast.makeText(this, "Vui lòng nhập tên sản phẩm.", Toast.LENGTH_SHORT).show();
@@ -277,26 +292,26 @@ public class AddSanphamActivity extends AppCompatActivity {
             Toast.makeText(this, "Vui lòng nhập giá sản phẩm.", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if (selectedImageUris == null || selectedImageUris.size() == 0) {
-            Toast.makeText(this, "Vui lòng chọn ít nhất một hình ảnh.", Toast.LENGTH_SHORT).show();
-            return false;
-        }
+//        if (selectedImageUris == null || selectedImageUris.size() == 0) {
+//            Toast.makeText(this, "Vui lòng chọn ít nhất một hình ảnh.", Toast.LENGTH_SHORT).show();
+//            return false;
+//        }
         if (selectedCategoryIdForProduct == 0) { // Kiểm tra nếu danh mục chưa được chọn
             Toast.makeText(this, "Vui lòng chọn danh mục.", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
     }
-
     private void createProduct(ProductDTO product) {
         apiProduct.createProduct("Bearer " + token, product).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     try {
-                        Long productId = Long.valueOf(response.body()); // Parse product ID từ response body
+                        Long productId = Long.valueOf(response.body());
                         Log.d("CreateProduct", "ID sản phẩm: " + productId);
                         uploadImagesToServer(productId); // Gọi hàm upload ảnh
+                        navigateToProductManage();
                     } catch (NumberFormatException e) {
                         Log.e("CreateProduct", "Phản hồi không phải ID hợp lệ: " + response.body(), e);
                         Toast.makeText(AddSanphamActivity.this, "Lỗi khi lấy ID sản phẩm.", Toast.LENGTH_SHORT).show();
@@ -316,15 +331,12 @@ public class AddSanphamActivity extends AppCompatActivity {
     private void showToast(String message) {
         Toast.makeText(AddSanphamActivity.this, message, Toast.LENGTH_SHORT).show();
     }
-
     private void uploadImagesToServer(Long productId) {
         if (productId == null || productId <= 0) {
             Log.e("UploadImages", "ID sản phẩm không hợp lệ: " + productId);
             showToast("ID sản phẩm không hợp lệ.");
             return;
         }
-
-<<<<<<< HEAD
         // Chuẩn bị danh sách MultipartBody.Part[]
         MultipartBody.Part[] imageParts = prepareImagePartsArray();
         if (imageParts.length == 0) {
@@ -332,11 +344,8 @@ public class AddSanphamActivity extends AppCompatActivity {
             showToast("Không có ảnh nào để tải lên.");
             return;
         }
-
         Log.d("UploadImages", "Số ảnh chuẩn bị tải lên: " + imageParts.length);
 
-=======
->>>>>>> NguyenVanThang
         apiProduct.uploadImages("Bearer " + token, productId, imageParts).enqueue(new Callback<List<ProductImageDTO>>() {
             @Override
             public void onResponse(Call<List<ProductImageDTO>> call, Response<List<ProductImageDTO>> response) {
@@ -347,7 +356,6 @@ public class AddSanphamActivity extends AppCompatActivity {
                     handleErrorResponse(response);
                 }
             }
-
             @Override
             public void onFailure(Call<List<ProductImageDTO>> call, Throwable t) {
                 Log.e("UploadImages", "Lỗi kết nối khi tải ảnh: " + t.getMessage());
@@ -355,7 +363,6 @@ public class AddSanphamActivity extends AppCompatActivity {
             }
         });
     }
-
     private MultipartBody.Part[] prepareImagePartsArray() {
         List<MultipartBody.Part> imageParts = new ArrayList<>();
         if (selectedImageUris != null && !selectedImageUris.isEmpty()) {
@@ -379,8 +386,6 @@ public class AddSanphamActivity extends AppCompatActivity {
 
         return imageParts.toArray(new MultipartBody.Part[0]); // Trả về mảng
     }
-
-
     private String getRealPathFromURI(Uri uri) {
         String[] projection = {MediaStore.Images.Media.DATA};
         try (Cursor cursor = getContentResolver().query(uri, projection, null, null, null)) {
@@ -393,7 +398,6 @@ public class AddSanphamActivity extends AppCompatActivity {
         }
         return null;
     }
-
     private void handleErrorResponse(Response<?> response) {
         try {
             String errorMessage = response.errorBody() != null ? response.errorBody().string() : "Unknown error";
@@ -404,12 +408,48 @@ public class AddSanphamActivity extends AppCompatActivity {
             showToast("Lỗi không xác định xảy ra.");
         }
     }
+    private void updateProduct(int productId, ProductDTO product) {
+        apiProduct.updateProduct("Bearer " + token, productId, product).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(AddSanphamActivity.this, "Cập nhật sản phẩm thành công", Toast.LENGTH_SHORT).show();
+                    navigateToProductManage();
+                } else {
+                    handleErrorResponseUpdate(response);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(AddSanphamActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("UpdateProduct", "Failed: " + t.getMessage());
+            }
+        });
+    }
+
+    private void handleErrorResponseUpdate(Response<ResponseBody> response) {
+        try {
+            int statusCode = response.code();
+            String errorMessage = "Unknown error";
+            if (response.errorBody() != null) {
+                errorMessage = response.errorBody().string();
+            }
+            if (statusCode == 400) {
+                Toast.makeText(AddSanphamActivity.this, "Dữ liệu không hợp lệ: " + errorMessage, Toast.LENGTH_SHORT).show();
+            } else if (statusCode == 401) {
+                Toast.makeText(AddSanphamActivity.this, "Token không hợp lệ, vui lòng đăng nhập lại.", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(AddSanphamActivity.this, "Lỗi: " + errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            Log.e("UpdateProduct", "Error handling response: " + e.getMessage());
+            Toast.makeText(AddSanphamActivity.this, "Lỗi không xác định xảy ra", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     private void navigateToProductManage() {
-//        Intent intent = new Intent(AddSanphamActivity.this, ManageProductActivity.class);
-//        //startActivity(intent);
-//        finish();
-//        // Kết thúc AddSanphamActivity để không quay lại khi nhấn nút back
+        startActivity(new Intent(AddSanphamActivity.this, ManageProductActivity.class));
+        finish();
     }
 }

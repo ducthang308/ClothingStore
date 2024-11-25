@@ -1,9 +1,12 @@
 package Model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 public class Product implements Serializable {
     private int id;
+    @SerializedName("product_name")
     private String productName;
     private int categoryId;
     private String color;

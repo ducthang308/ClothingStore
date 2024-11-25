@@ -91,8 +91,10 @@ public class UserService implements IUsersService{
 
         // Generate token and create response DTO with roleId
         String token = jwtToken.generationToken(existingUser);
-        Long roleId = existingUser.getRoles().getId(); // assuming roleId is accessible like this
-        return new LoginResponseDTO(token, roleId);
+        Long roleId = existingUser.getRoles().getId();
+        Long userId = existingUser.getId();
+        String name = existingUser.getFullName();
+        return new LoginResponseDTO(token, roleId, userId, name);
     }
 
     @Override
