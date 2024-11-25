@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -53,7 +54,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         setupUI();
-        fetchProducts();
+        fetchProducts(""); // Initially load all products
         return binding.getRoot();
     }
 
@@ -61,7 +62,7 @@ public class HomeFragment extends Fragment {
         // Set up RecyclerView
         binding.items.setLayoutManager(new GridLayoutManager(requireContext(), 2));
         binding.items.addItemDecoration(new ItemDecoration(2, 24, true));
-        productAdapter = new ProductAdapter(productList, requireActivity(), false);
+        productAdapter = new ProductAdapter(productList, requireContext(), false); // Use requireContext()
         binding.items.setAdapter(productAdapter);
 
         // Set up listeners
@@ -74,11 +75,55 @@ public class HomeFragment extends Fragment {
             intent.putExtra("origin", "CartToHome");
             startActivity(intent);
         });
+
+        // Add a TextWatcher or SearchView to handle search input
+        binding.search.addTextChangedListener(new android.text.TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                // Trigger search when text changes
+                searchProducts(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(android.text.Editable editable) {}
+        });
     }
 
-    private void fetchProducts() {
+    private void searchProducts(String keyword) {
+        // Call your API to fetch filtered results based on the keyword
+        showLoading(true);
+        apiProduct.getProducts(keyword, 0L).enqueue(new Callback<List<ProductDTO>>() {
+            @Override
+            public void onResponse(Call<List<ProductDTO>> call, Response<List<ProductDTO>> response) {
+                showLoading(false);
+                if (response.isSuccessful() && response.body() != null) {
+                    productList.clear();
+                    productList.addAll(response.body());
+                    if (productAdapter == null) {
+                        productAdapter = new ProductAdapter(productList, HomeFragment.this, true);
+                        binding.items.setAdapter(productAdapter);
+                    } else {
+                        productAdapter.notifyDataSetChanged();
+                    }
+                } else {
+                    handleApiError(response.code(), response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ProductDTO>> call, Throwable t) {
+                showLoading(false);
+                handleNetworkError(t);
+            }
+        });
+    }
+
+    private void fetchProducts(String keyword) {
         showLoading(true); // Show loading indicator
-        apiProduct.getProducts().enqueue(new Callback<List<ProductDTO>>() {
+        apiProduct.getProducts(keyword, 0L).enqueue(new Callback<List<ProductDTO>>() {
             @Override
             public void onResponse(@NonNull Call<List<ProductDTO>> call, @NonNull Response<List<ProductDTO>> response) {
                 showLoading(false); // Hide loading indicator

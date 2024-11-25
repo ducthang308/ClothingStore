@@ -22,17 +22,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import DTO.ProductDTO;
+import Fragment.HomeFragment;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
     private List<ProductDTO> productList;
     private Context context;
-    private boolean isAdmin; // Biến để xác định người dùng hiện tại là admin hay user
+    private boolean isAdmin;
 
     public ProductAdapter(List<ProductDTO> productList, Context context, boolean isAdmin) {
         this.productList = productList;
         this.context = context;
-        this.isAdmin = isAdmin; // Truyền thông tin admin từ bên ngoài
+        this.isAdmin = isAdmin;
+    }
+
+    public ProductAdapter(List<ProductDTO> productList, HomeFragment fragment, boolean isAdmin) {
+        this.productList = productList;
+        this.context = fragment.requireContext(); // Use fragment's context
+        this.isAdmin = isAdmin;
     }
 
     @NonNull

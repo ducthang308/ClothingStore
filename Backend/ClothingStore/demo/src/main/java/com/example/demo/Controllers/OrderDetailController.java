@@ -1,6 +1,7 @@
 package com.example.demo.Controllers;
 
 import com.example.demo.DTO.OrderDetailDTO;
+import com.example.demo.DTO.OrderDetailReturnDTO;
 import com.example.demo.Models.OrderDetail;
 import com.example.demo.Services.OrderDetailService;
 import jakarta.validation.Valid;
@@ -78,6 +79,12 @@ public class OrderDetailController {
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
+    }
+
+    @GetMapping("/orders/{orderId}/details")
+    public ResponseEntity<List<OrderDetailReturnDTO>> getOrderDetails(@PathVariable Long orderId) {
+        List<OrderDetailReturnDTO> orderDetails = orderDetailService.getOrderDetailsByOrderId(orderId);
+        return ResponseEntity.ok(orderDetails);
     }
 
 }

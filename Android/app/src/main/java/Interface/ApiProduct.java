@@ -38,6 +38,13 @@ public interface ApiProduct {
     @Headers("Content-Type: application/json")
     Call<List<ProductDTO>> getProducts();
 
+    @GET("api/v1/product")
+    @Headers("Content-Type: application/json")
+    Call<List<ProductDTO>> getProducts(
+            @Query("keyword") String keyword,
+            @Query("category_id") Long categoryId);
+
+
     @GET("api/v1/product/{id}")
     @Headers("Content-Type: application/json")
     Call<List<ProductDTO>> getProductById(@Path("id") int id);

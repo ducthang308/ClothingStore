@@ -11,6 +11,8 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.duanandroid.R;
+
+import Interface.PreferenceManager;
 //import com.example.duanandroid.databinding.ActivityAdminAcountBinding;
 
 public class adminAcountActivity extends AppCompatActivity {
@@ -90,6 +92,13 @@ public class adminAcountActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        PreferenceManager preferenceManager = new PreferenceManager(this);
+        String userName = preferenceManager.getName();
+
+        TextView nameAdmin = findViewById(R.id.name_admin);
+        if (userName != null && !userName.isEmpty()) {
+            nameAdmin.setText(userName);
+        }
     }
 
 }

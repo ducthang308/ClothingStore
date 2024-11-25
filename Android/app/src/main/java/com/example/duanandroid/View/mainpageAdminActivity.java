@@ -3,8 +3,11 @@ package com.example.duanandroid.View;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -66,18 +69,52 @@ public class mainpageAdminActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        EditText searchBox = findViewById(R.id.search);
+        searchBox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                // Trigger search when user types something
+                searchProducts(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
     }
-//    private void navigateToEditProduct(ProductDTO product) {
-//        Intent intent = new Intent(mainpageAdminActivity.this, AdminChitietSpActivity.class);
-//        intent.putExtra("productId", product.getId());
-//        intent.putExtra("productName", product.getProductName());
-//        intent.putExtra("productPrice", product.getPrice());
-//
-//        ArrayList<String> imageUrls = new ArrayList<>(product.getImageUrls());
-//        intent.putExtra("productImage", imageUrls);
-//
-//        startActivity(intent);
-//    }
+
+    private void searchProducts(String keyword) {
+        // Call your API to fetch filtered results based on the keyword
+        showLoading(true);
+        apiProduct.getProducts(keyword, 0L).enqueue(new Callback<List<ProductDTO>>() {
+            @Override
+            public void onResponse(Call<List<ProductDTO>> call, Response<List<ProductDTO>> response) {
+                showLoading(false);
+                if (response.isSuccessful() && response.body() != null) {
+                    productList.clear();
+                    productList.addAll(response.body());
+                    if (productAdapter == null) {
+                        productAdapter = new ProductAdapter(productList, mainpageAdminActivity.this, true);
+                        productRecyclerView.setAdapter(productAdapter);
+                    } else {
+                        productAdapter.notifyDataSetChanged();
+                    }
+                } else {
+                    handleApiError(response.code(), response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ProductDTO>> call, Throwable t) {
+                showLoading(false);
+                handleNetworkError(t);
+            }
+        });
+    }
+
 
     private void fetchProducts() {
         showLoading(true); // Hiển thị ProgressBar
