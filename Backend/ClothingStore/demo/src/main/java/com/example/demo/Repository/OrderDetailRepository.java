@@ -12,10 +12,11 @@ import java.util.List;
 @Repository
 public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long> {
     List<OrderDetail> findByOrdersId(Long orderId);
-
-    @Query("SELECT new com.example.demo.DTO.OrderDetailReturnDTO(od.orders, od.product, od.numberOfProduct, od.totalMoney, pi.imageUrl) " +
-            "FROM OrderDetail od " +
-            "JOIN ProductImages pi ON pi.product.id = od.product.id " +
-            "WHERE od.orders.id = :orderId")
+    @Query("SELECT new com.example.demo.DTO.OrderDetailReturnDTO(od.numberOfProduct, od.totalMoney, p.productName, pi.imageUrl) " +
+            "FROM Orders o " +
+            "JOIN o.orderDetails od " +
+            "JOIN od.product p " +
+            "JOIN p.productImages pi " +
+            "WHERE o.id = :orderId")
     List<OrderDetailReturnDTO> findOrderDetailsByOrderId(@Param("orderId") Long orderId);
 }

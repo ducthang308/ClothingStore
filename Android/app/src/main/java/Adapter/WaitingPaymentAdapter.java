@@ -2,6 +2,7 @@ package Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,18 +21,15 @@ import com.example.duanandroid.View.ReasoncancelActivity;
 
 import java.util.List;
 
-import DTO.OrderDetailDTO;
-import DTO.ProductDTO;
+import DTO.OrderDetailReturnDTO;
 
 public class WaitingPaymentAdapter extends RecyclerView.Adapter<WaitingPaymentAdapter.WaitingPaymentViewHolder> {
 
     private final Context context;
-    private final List<ProductDTO> productList;
-    private final List<OrderDetailDTO> orderDetailList;
+    private final List<OrderDetailReturnDTO> orderDetailList;
 
-    public WaitingPaymentAdapter(Context context, List<ProductDTO> productList, List<OrderDetailDTO> orderDetailList) {
+    public WaitingPaymentAdapter(Context context, List<OrderDetailReturnDTO> orderDetailList) {
         this.context = context;
-        this.productList = productList;
         this.orderDetailList = orderDetailList;
     }
 
@@ -44,62 +42,54 @@ public class WaitingPaymentAdapter extends RecyclerView.Adapter<WaitingPaymentAd
 
     @Override
     public void onBindViewHolder(@NonNull WaitingPaymentViewHolder holder, int position) {
-        // Ensure the positions are valid
-        if (position >= productList.size() || position >= orderDetailList.size()) {
-            return;
-        }
+        OrderDetailReturnDTO orderDetail = orderDetailList.get(position);
 
-        ProductDTO product = productList.get(position);
-        OrderDetailDTO orderDetail = orderDetailList.get(position);
-
-        // Set product name, price, quantity, and total money
-        holder.productName.setText(product.getProductName());
-        holder.productPrice.setText(String.format("%,.0fđ", product.getPrice()));
+        // Hiển thị thông tin sản phẩm
+        holder.productName.setText(orderDetail.getProductName());
+        holder.productPrice.setText(String.format("%,.0fđ", orderDetail.getTotalMoney() / orderDetail.getNumberOfProduct()));
         holder.productQuantity.setText("x" + orderDetail.getNumberOfProduct());
         holder.totalPayment.setText(String.format("%,.0fđ", orderDetail.getTotalMoney()));
 
-        // Set product image using Glide
-        if (product.getImageUrls() != null && !product.getImageUrls().isEmpty()) {
-            Glide.with(context)
-                    .load(product.getImageUrls().get(0)) // Load the first image URL
-                    .apply(new RequestOptions()
-                            .placeholder(R.drawable.co4la) // Placeholder image
-                            .error(R.drawable.error) // Error image if loading fails
-                            .centerCrop())
-                    .into(holder.productImage);
-        } else {
-            holder.productImage.setImageResource(R.drawable.co4la); // Fallback image if no image available
-        }
+        // Load hình ảnh sản phẩm
+        Glide.with(context)
+                .load(orderDetail.getImageUrl()) // URL hình ảnh
+                .apply(new RequestOptions()
+                        .placeholder(R.drawable.co4la) // Hình chờ
+                        .error(R.drawable.error)       // Hình lỗi
+                        .centerCrop())
+                .into(holder.productImage);
 
-        // Cancel order button logic
-        holder.btnCancelOrder.setOnClickListener(v -> {
-            Intent intent = new Intent(context, ReasoncancelActivity.class);
-            intent.putExtra("orderDetailId", orderDetail.getOrderId());
-            context.startActivity(intent);
-        });
-
-        // On item click listener for details
-        holder.itemView.setOnClickListener(view -> {
-            // Logic for navigating to order details (could open a new activity or fragment)
-            Intent intent = new Intent(context, OrderDetailActivity.class); // Example: OrderDetailActivity to view more details
-            intent.putExtra("orderDetailId", orderDetail.getOrderId());
-            context.startActivity(intent);
-        });
+//        // Sự kiện nút "Hủy đơn hàng"
+//        holder.btnCancelOrder.setOnClickListener(v -> {
+//            Intent intent = new Intent(context, ReasoncancelActivity.class);
+//            intent.putExtra("orderDetailId", orderDetail.getOrderDetailId()); // Truyền đúng ID đơn hàng
+//            context.startActivity(intent);
+//        });
+//
+//        // Sự kiện khi nhấn vào toàn bộ item
+//        holder.itemView.setOnClickListener(view -> {
+//            Intent intent = new Intent(context, OrderDetailActivity.class);
+//            intent.putExtra("orderDetailId", orderDetail.getOrderDetailId()); // Truyền đúng ID đơn hàng
+//            context.startActivity(intent);
+//        });
     }
 
     @Override
     public int getItemCount() {
-        return productList.size();
+        // Log số lượng phần tử trong Adapter
+        Log.d("Adapter", "Item count: " + orderDetailList.size());
+        return orderDetailList.size();
     }
 
+    // ViewHolder class
     public static class WaitingPaymentViewHolder extends RecyclerView.ViewHolder {
-
-        TextView productName, productSize, productPrice, productQuantity, totalPayment;
+        TextView productName, productPrice, productQuantity, totalPayment;
         ImageView productImage;
         Button btnCancelOrder;
 
         public WaitingPaymentViewHolder(@NonNull View itemView) {
             super(itemView);
+            // Ánh xạ View
             productName = itemView.findViewById(R.id.product_name);
             productPrice = itemView.findViewById(R.id.product_price);
             productQuantity = itemView.findViewById(R.id.product_quantity);

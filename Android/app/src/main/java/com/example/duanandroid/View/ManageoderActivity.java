@@ -63,7 +63,7 @@ public class ManageoderActivity extends AppCompatActivity {
                 }
 
                 Long orderId = Long.parseLong(orderIdStr);
-                searchOrderById(orderId);
+                //searchOrderById(orderId);
             }
         });
 
@@ -78,27 +78,26 @@ public class ManageoderActivity extends AppCompatActivity {
         });
     }
 
-    // Phương thức tìm kiếm đơn hàng qua API
-    private void searchOrderById(Long orderId) {
-        ApiOrders apiOrders = APIClient.getOrderById(); // Lấy instance từ APIClient
-
-        apiOrders.getOrderById(orderId).enqueue(new Callback<OrdersDTO>() {
-            @Override
-            public void onResponse(Call<OrdersDTO> call, Response<OrdersDTO> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    OrdersDTO order = response.body();
-                    ListOrder.clear(); // Xóa danh sách cũ
-                    ListOrder.add(order); // Thêm kết quả mới vào danh sách
-                    manageOrderAdapter.notifyDataSetChanged(); // Cập nhật giao diện RecyclerView
-                } else {
-                    Toast.makeText(ManageoderActivity.this, "Không tìm thấy đơn hàng với mã: " + orderId, Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<OrdersDTO> call, Throwable t) {
-                Toast.makeText(ManageoderActivity.this, "Đã xảy ra lỗi: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+//    private void searchOrderById(int orderId) {
+//        ApiOrders apiOrders = APIClient.getOrderById();
+//
+//        apiOrders.getOrderById(orderId).enqueue(new Callback<OrdersDTO>() {
+//            @Override
+//            public void onResponse(Call<OrdersDTO> call, Response<OrdersDTO> response) {
+//                if (response.isSuccessful() && response.body() != null) {
+//                    OrdersDTO order = response.body();
+//                    ListOrder.clear(); // Xóa danh sách cũ
+//                    ListOrder.add(order); // Thêm kết quả mới vào danh sách
+//                    manageOrderAdapter.notifyDataSetChanged(); // Cập nhật giao diện RecyclerView
+//                } else {
+//                    Toast.makeText(ManageoderActivity.this, "Không tìm thấy đơn hàng với mã: " + orderId, Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<OrdersDTO> call, Throwable t) {
+//                Toast.makeText(ManageoderActivity.this, "Đã xảy ra lỗi: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 }

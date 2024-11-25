@@ -83,4 +83,5 @@ public class OrderDetailService implements IOrderDetailService{
     public List<OrderDetailReturnDTO> getOrderDetailsByOrderId(Long orderId) {
         return detailRepository.findOrderDetailsByOrderId(orderId);
     }
+
 }

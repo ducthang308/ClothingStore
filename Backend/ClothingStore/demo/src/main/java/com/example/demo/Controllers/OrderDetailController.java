@@ -82,6 +82,7 @@ public class OrderDetailController {
     }
 
     @GetMapping("/orders/{orderId}/details")
+    @PreAuthorize("hasAnyRole('Admin', 'User')")
     public ResponseEntity<List<OrderDetailReturnDTO>> getOrderDetails(@PathVariable Long orderId) {
         List<OrderDetailReturnDTO> orderDetails = orderDetailService.getOrderDetailsByOrderId(orderId);
         return ResponseEntity.ok(orderDetails);
