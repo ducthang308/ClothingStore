@@ -1,6 +1,7 @@
 package Fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +17,13 @@ import com.example.duanandroid.R;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import Adapter.WaitingPaymentAdapter;
-import DTO.OrderDetailDTO;
+import DTO.OrderDetailReturnDTO;
 import DTO.OrdersDTO;
 import DTO.ProductDTO;
 import Interface.APIClient;
+import Interface.ApiOrderDetail;
 import Interface.ApiOrders;
 import Interface.PreferenceManager;
 import retrofit2.Call;
@@ -33,8 +34,9 @@ public class WaitingForPaymentFragment extends Fragment {
     private RecyclerView recyclerView;
     private WaitingPaymentAdapter adapter;
     private ApiOrders apiOrders;
+    private ApiOrderDetail apiOrderDetail;
     private List<ProductDTO> productList = new ArrayList<>();
-    private List<OrderDetailDTO> orderDetailList = new ArrayList<>();
+    private List<OrderDetailReturnDTO> orderDetailList = new ArrayList<OrderDetailReturnDTO>();
     private String token;
     private int userId;
 
@@ -46,54 +48,69 @@ public class WaitingForPaymentFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         PreferenceManager preferenceManager = new PreferenceManager(getContext());
-
         token = preferenceManager.getToken();
         userId = preferenceManager.getUserId();
 
         apiOrders = APIClient.getClient().create(ApiOrders.class);
+        apiOrderDetail = APIClient.getClient().create(ApiOrderDetail.class);
 
-        loadOrdersWaitingForPayment(userId);
 
+        fetchOrdersAndDetails();
 
         return view;
     }
 
-    private void loadOrdersWaitingForPayment(int userId) {
-        apiOrders.getAllOrdersByUser(token, userId).enqueue(new Callback<List<OrdersDTO>>() {
+    private void fetchOrdersAndDetails() {
+        apiOrders.getAllOrdersByUser("Bearer " + token, userId).enqueue(new Callback<List<OrdersDTO>>() {
             @Override
-            public void onResponse(@NonNull Call<List<OrdersDTO>> call, @NonNull Response<List<OrdersDTO>> response) {
+            public void onResponse(Call<List<OrdersDTO>> call, Response<List<OrdersDTO>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<OrdersDTO> orders = response.body();
-
-                    List<OrdersDTO> waitingForPaymentOrders = orders.stream()
-                            .filter(order -> "Waiting for Payment".equalsIgnoreCase(order.getStatus()))
-                            .collect(Collectors.toList());
-
-                    productList = fetchProducts(waitingForPaymentOrders);
-                    orderDetailList = fetchOrderDetails(waitingForPaymentOrders);
-
-                    adapter = new WaitingPaymentAdapter(getContext(), productList, orderDetailList);
-                    recyclerView.setAdapter(adapter);
+                    List<OrdersDTO> ordersList = response.body();
+                    Log.d("API Response", "Orders List: " + ordersList.size());
+                    for (OrdersDTO order : ordersList) {
+                        int orderId = order.getId();
+                        fetchOrderDetails(orderId);
+                    }
                 } else {
-                    Toast.makeText(getContext(), "Failed to fetch orders", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Không thể lấy danh sách đơn hàng!", Toast.LENGTH_SHORT).show();
                 }
             }
 
+
             @Override
-            public void onFailure(@NonNull Call<List<OrdersDTO>> call, @NonNull Throwable t) {
-                Toast.makeText(getContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<List<OrdersDTO>> call, Throwable t) {
+                Toast.makeText(getContext(), "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    private void fetchOrderDetails(int orderId) {
+        apiOrderDetail.getOrderDetails("Bearer " + token, orderId).enqueue(new Callback<List<OrderDetailReturnDTO>>() {
+            @Override
+            public void onResponse(Call<List<OrderDetailReturnDTO>> call, Response<List<OrderDetailReturnDTO>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.d("Order Details", "Received order details: " + response.body().size()); // Log số lượng chi tiết nhận được
+                    orderDetailList.addAll(response.body());
+                    Log.d("OrderDetailList", "Total items in order detail list: " + orderDetailList.size()); // Kiểm tra size sau khi thêm
+                    if (adapter == null) {
+                        adapter = new WaitingPaymentAdapter(getContext(), orderDetailList);
+                        recyclerView.setAdapter(adapter);
+                    } else {
+                        adapter.notifyDataSetChanged();
+                    }
+                } else {
+                    Log.e("API Error", "Error code: " + response.code());
+                    Toast.makeText(getContext(), "Không thể lấy chi tiết đơn hàng! Lỗi: " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
 
-    private List<ProductDTO> fetchProducts(List<OrdersDTO> orders) {
-        // Mock or fetch product data based on the orders
-        return new ArrayList<>(); // Replace with actual implementation
-    }
 
-    private List<OrderDetailDTO> fetchOrderDetails(List<OrdersDTO> orders) {
-        // Mock or fetch order details based on the orders
-        return new ArrayList<>(); // Replace with actual implementation
+
+            @Override
+            public void onFailure(Call<List<OrderDetailReturnDTO>> call, Throwable t) {
+                Toast.makeText(getContext(), "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
+

@@ -16,7 +16,7 @@ public interface ApiOrders {
     Call<String> createOrder(@Header("Authorization") String token, @Body OrdersDTO odersDTO);
 
     @GET("api/v1/orders/{id}")
-    Call<List<OrdersDTO>> getOrderById(@Header("Authorization") String token, @Path("id") Long id);
+    Call<List<OrdersDTO>> getOrderById(@Header("Authorization") String token, @Path("id") int id);
 
     @GET("api/v1/orders/user/{user_id}")
     Call<List<OrdersDTO>> getAllOrdersByUser(@Header("Authorization") String token, @Path("user_id") int userId);
