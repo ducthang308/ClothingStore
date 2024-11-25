@@ -29,4 +29,5 @@ public interface ApiOrders {
 
     @DELETE("api/v1/orders/{id}")
     Call<String> deleteOrder(@Header("Authorization") String token, @Path("id") Long id);
+
 }

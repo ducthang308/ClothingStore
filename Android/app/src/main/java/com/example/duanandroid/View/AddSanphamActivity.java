@@ -337,6 +337,7 @@ public class AddSanphamActivity extends AppCompatActivity {
             showToast("ID sản phẩm không hợp lệ.");
             return;
         }
+        // Chuẩn bị danh sách MultipartBody.Part[]
         MultipartBody.Part[] imageParts = prepareImagePartsArray();
         if (imageParts.length == 0) {
             Log.e("UploadImages", "Không có hình ảnh nào được chuẩn bị.");

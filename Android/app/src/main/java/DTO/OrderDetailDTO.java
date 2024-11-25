@@ -5,19 +5,14 @@ import com.google.gson.annotations.SerializedName;
 public class OrderDetailDTO {
     @SerializedName("order_id")
     private int orderId;
-
     @SerializedName("product_id")
     private int productId;
-
     @SerializedName("price")
     private Float price;
-
     @SerializedName("number_of_product")
     private int numberOfProduct;
-
     @SerializedName("total_money")
     private Float totalMoney;
-
     @SerializedName("color")
     private String color;
 
@@ -43,7 +38,7 @@ public class OrderDetailDTO {
     }
 
     public void setProductId(int productId) {
-        this.productId = productId;
+
     }
 
     public Float getPrice() {
