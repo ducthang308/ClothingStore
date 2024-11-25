@@ -49,6 +49,9 @@ public class ProductDTO {
 
     }
 
+    public ProductDTO(String s, int i, String s1, int ao) {
+    }
+
     public int getId() {
         return id;
     }

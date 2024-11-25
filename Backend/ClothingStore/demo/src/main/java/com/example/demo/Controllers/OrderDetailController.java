@@ -80,6 +80,8 @@ public class OrderDetailController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+<<<<<<< HEAD
+=======
 
     @GetMapping("/orders/{orderId}/details")
     @PreAuthorize("hasAnyRole('Admin', 'User')")
@@ -88,4 +90,5 @@ public class OrderDetailController {
         return ResponseEntity.ok(orderDetails);
     }
 
+>>>>>>> origin/main
 }
