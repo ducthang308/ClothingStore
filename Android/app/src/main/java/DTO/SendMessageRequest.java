@@ -1,51 +1,32 @@
-package Model;
+package DTO;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
-public class Message {
-    @SerializedName("id")
-    private int id;
-
+public class SendMessageRequest {
     @SerializedName("senderId")
     private int senderId;
 
-    @SerializedName("receiver_id")
+    @SerializedName("receiverId")
     private int receiverId;
 
-    @SerializedName("content")
     private String content;
 
-    @SerializedName("create_at")
+    @SerializedName("createAt")
     private Date createAt;
 
-    // Constructor
-    public Message(int id, int senderId, int receiverId, String content, Date createAt) {
-        this.id = id;
+    public SendMessageRequest(int senderId, int receiverId, String content, Date createAt) {
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.content = content;
         this.createAt = createAt;
     }
 
-    public Message(int senderId, int receiverId, String content, Date createAt) {
+    public SendMessageRequest(int senderId, int receiverId, String content) {
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.content = content;
-        this.createAt = createAt;
-    }
-
-    public Message() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getSenderId() {
@@ -76,7 +57,7 @@ public class Message {
         return createAt;
     }
 
-    public void setCreateAt(Date sentAt) {
+    public void setCreateAt(Date createAt) {
         this.createAt = createAt;
     }
 }

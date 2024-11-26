@@ -1,7 +1,10 @@
 package com.example.demo.DTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.Column;
 import lombok.*;
+
+import java.util.Date;
 
 @Data
 @Getter
@@ -21,4 +24,16 @@ public class OrderDetailReturnDTO {
 
     @JsonProperty("image_url")
     private String imageUrl;
+
+    @JsonProperty("address")
+    private String address;
+
+    @JsonProperty("order_date")
+    private Date orderDate;
+
+    @Column(name = "status")
+    private String status;
+
+//    @JsonProperty("id")
+//    private Long id;
 }

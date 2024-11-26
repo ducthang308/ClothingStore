@@ -1,6 +1,7 @@
 package Adapter;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,17 +13,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.duanandroid.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import DTO.ProductDTO;
 import Model.CartItem;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
 
-    private List<CartItem> cartItems;
+    private List<ProductDTO> cartItems;
+    private Context context;
 
-    public CartAdapter(List<CartItem> cartItems) {
+    public CartAdapter(List<ProductDTO> cartItems) {
         this.cartItems = cartItems;
     }
 
@@ -35,20 +40,32 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
-        CartItem cartItem = cartItems.get(position);
+        ProductDTO productDTO = cartItems.get(position);
 
-        holder.tvName.setText(cartItem.getName());
-        holder.tvSize.setText(cartItem.getSize());
-        holder.tvPrice.setText(cartItem.getPrice());
-        holder.ivImage.setImageResource(cartItem.getImageUrl());
-        // Handle checkbox and image loading (use Glide or similar library)
-        // Glide.with(holder.productImage.getContext()).load(cartItem.getImageUrl()).into(holder.productImage);
+        holder.tvName.setText(productDTO.getProductName());
+        holder.tvSize.setText(productDTO.getColor());
+        holder.tvPrice.setText(String.format("₫%,.0f", productDTO.getPrice()));
+        loadProductImage(holder.ivImage, productDTO.getImageUrls());
+    }
+
+    private void loadProductImage(ImageView imageView, List<String> imageUrls) {
+        if (imageUrls != null && !imageUrls.isEmpty()) {
+            String imageUrl = imageUrls.get(0);
+            Glide.with(context)
+                    .load(imageUrl)
+                    .placeholder(R.drawable.co4la) // Hình placeholder
+                    .error(R.drawable.error) // Hình lỗi
+                    .into(imageView);
+        } else {
+            imageView.setImageResource(R.drawable.error); // Ảnh lỗi mặc định
+        }
     }
 
     @Override
     public int getItemCount() {
-        return cartItems.size();
+        return cartItems != null ? cartItems.size() : 0;
     }
+
 
     public static class CartViewHolder extends RecyclerView.ViewHolder {
         CheckBox checkBox;
@@ -62,7 +79,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             super(itemView);
             checkBox = itemView.findViewById(R.id.checkbox);
             tvName = itemView.findViewById(R.id.tv_name);
-            tvSize = itemView.findViewById(R.id.tv_size);
+            tvSize = itemView.findViewById(R.id.tv_color);
             tvPrice = itemView.findViewById(R.id.tv_price);
 //            btnIncrease = itemView.findViewById(R.id.btn_increase);
 //            btnDecrease = itemView.findViewById(R.id.btn_decrease);

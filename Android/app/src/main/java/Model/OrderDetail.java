@@ -9,11 +9,22 @@ public class OrderDetail {
     private float price;
     private int numberOfProduct;
     private float totalMoney;
-    private Date orderDate;
+
+    public OrderDetail(int id, int orderId, int productId) {
+        this.id = id;
+        this.orderId = orderId;
+        this.productId = productId;
+    }
 
     public OrderDetail() {
     }
 
+    public OrderDetail(int id, int orderId, int productId, int numberOfProduct) {
+        this.id = id;
+        this.orderId = orderId;
+        this.productId = productId;
+        this.numberOfProduct = numberOfProduct;
+    }
     // Constructor
     public OrderDetail(int id, int orderId, int productId, float price, int numberOfProduct, float totalMoney, Date orderDate) {
         this.id = id;
@@ -22,7 +33,7 @@ public class OrderDetail {
         this.price = price;
         this.numberOfProduct = numberOfProduct;
         this.totalMoney = totalMoney;
-        this.orderDate = orderDate;
+
     }
 
     // Getters and Setters
@@ -74,12 +85,5 @@ public class OrderDetail {
         this.totalMoney = totalMoney;
     }
 
-    public Date getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
-    }
 }
 

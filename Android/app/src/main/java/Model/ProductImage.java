@@ -15,6 +15,14 @@ public class ProductImage {
         this.imageUrl = imageUrl;
     }
 
+    public ProductImage(int id, String imageUrl) {
+        this.id = id;
+        this.imageUrl = imageUrl;
+    }
+
+    public ProductImage(int id, int ao) {
+    }
+
     // Getters and Setters
     public int getId() {
         return id;

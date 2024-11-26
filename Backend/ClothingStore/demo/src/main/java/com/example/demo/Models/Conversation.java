@@ -1,5 +1,7 @@
 package com.example.demo.Models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,5 +36,6 @@ public class Conversation implements Serializable {
     private Users receiverId;
 
     @OneToMany(mappedBy = "conversation")
+    @JsonBackReference
     private List<Messages> messages = new ArrayList<>();
 }

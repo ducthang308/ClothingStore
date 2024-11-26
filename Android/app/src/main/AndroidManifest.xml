@@ -72,6 +72,8 @@
         <!-- android:name=".View.CartActivity" -->
         <!-- android:exported="false" -->
         <!-- /> -->
+        <activity android:name=".View.ItemProductInItemOrderActivity"/>
+
         <activity android:name=".View.ManageProductActivity" />
         <activity
             android:name="Fragment.TabLayOutActivity"

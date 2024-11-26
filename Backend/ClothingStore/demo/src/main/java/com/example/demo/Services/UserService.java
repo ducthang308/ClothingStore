@@ -6,8 +6,11 @@ import com.example.demo.DTO.UsersDTO;
 import com.example.demo.Exception.DataNotFoundException;
 import com.example.demo.Exception.PermissonDenyException;
 import com.example.demo.JWT.JwtToken;
+import com.example.demo.Models.Conversation;
 import com.example.demo.Models.Roles;
 import com.example.demo.Models.Users;
+import com.example.demo.Repository.ConversationRepository;
+import com.example.demo.Repository.MessagesRepository;
 import com.example.demo.Repository.RolesRepository;
 import com.example.demo.Repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +32,7 @@ public class UserService implements IUsersService{
     private final JwtToken jwtToken;
     private final AuthenticationManager authenticationManager;
     private final RolesRepository rolesRepository;
+    private final ConversationRepository conversationRepository;
 
     @Override
     public Users createUser(UsersDTO usersDTO) throws Exception {
@@ -94,7 +98,9 @@ public class UserService implements IUsersService{
         Long roleId = existingUser.getRoles().getId();
         Long userId = existingUser.getId();
         String name = existingUser.getFullName();
-        return new LoginResponseDTO(token, roleId, userId, name);
+        Long conversationId = conversationRepository.findConversationIdByUserId(userId);
+        String address = existingUser.getAddress();
+        return new LoginResponseDTO(token, roleId, userId, name, conversationId, address);
     }
 
     @Override
@@ -114,5 +120,4 @@ public class UserService implements IUsersService{
     public List<Users> getAllUser(UsersDTO usersDTO) throws Exception {
         return usersRepository.findAll();
     }
-
 }

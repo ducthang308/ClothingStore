@@ -87,5 +87,4 @@ public class OrderDetailController {
         List<OrderDetailReturnDTO> orderDetails = orderDetailService.getOrderDetailsByOrderId(orderId);
         return ResponseEntity.ok(orderDetails);
     }
-
 }

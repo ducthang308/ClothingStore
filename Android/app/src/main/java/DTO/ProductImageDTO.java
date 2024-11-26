@@ -18,6 +18,9 @@ public class ProductImageDTO {
         this.imageUrl = imageUrl;
     }
 
+    public ProductImageDTO(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public ProductImageDTO() {
     }

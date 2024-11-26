@@ -8,6 +8,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
+import java.io.Serializable;
 import java.util.*;
 
 @Data //toString
@@ -18,7 +19,7 @@ import java.util.*;
 @Builder
 @Entity
 @Table(name = "users")
-public class Users implements UserDetails, OAuth2User {
+public class Users implements UserDetails, OAuth2User, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
