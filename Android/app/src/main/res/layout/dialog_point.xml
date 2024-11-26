@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/colorwhite"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tv_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chọn quà tặng"
+        android:background="@color/lightblue"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:paddingBottom="12dp" />
+
+    <!-- RadioGroup để chứa các RadioButton -->
+    <RadioGroup
+        android:id="@+id/radio_group_rewards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <!-- Các RadioButton sẽ được thêm bằng mã Java -->
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btn_confirm_rewards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/blue"
+        android:text="Xác nhận"
+        android:textColor="#FFFFFF" />
+</LinearLayout>

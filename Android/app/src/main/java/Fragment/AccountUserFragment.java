@@ -15,9 +15,11 @@ import androidx.fragment.app.Fragment;
 
 import com.example.duanandroid.R;
 import com.example.duanandroid.View.CartActivity;
+import com.example.duanandroid.View.DanhSachThanhVienActivity;
 import com.example.duanandroid.View.HelpActivity;
 import com.example.duanandroid.View.KhoVoucherActivity;
 import com.example.duanandroid.View.LoginActivity;
+import com.example.duanandroid.View.PointActivity;
 import com.example.duanandroid.View.changePassActivity;
 import com.example.duanandroid.View.chatUserActivity;
 import com.example.duanandroid.View.editAccountActivity;
@@ -80,8 +82,23 @@ public class AccountUserFragment extends Fragment {
             }
         });
 
-
-
+        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
+        RelativeLayout tichdiem = view.findViewById(R.id.tichdiem);
+        tichdiem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), PointActivity.class);
+                startActivity(intent);
+            }
+        });
+        RelativeLayout danhsachnhom = view.findViewById(R.id.danhsachnhom);
+        danhsachnhom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), DanhSachThanhVienActivity.class);
+                startActivity(intent);
+            }
+        });
         RelativeLayout support = view.findViewById(R.id.support);
         support.setOnClickListener(new View.OnClickListener() {
             @Override

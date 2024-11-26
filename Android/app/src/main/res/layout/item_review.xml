@@ -50,6 +50,7 @@
                 android:numStars="5"
                 android:rating="4.5"
                 android:isIndicator="true"
+                android:progressTint="@color/yellow"
                 android:layout_gravity="left"
 
                 />

@@ -81,5 +81,7 @@ public class OrderDetail {
     public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
     }
+
+
 }
 

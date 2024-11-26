@@ -21,8 +21,7 @@ public class Product implements Serializable {
         this.discount = discount;
     }
 
-    public Product(int i, String áoThunNam, int i1, int i2, String m, String number, String s) {
-    }
+
 
     public int getId() {
         return id;

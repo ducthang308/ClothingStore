@@ -199,7 +199,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/chuatienich"
+            android:id="@+id/cacmuctienich"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -207,11 +207,73 @@
             android:layout_margin="10dp">
 
             <RelativeLayout
-                android:id="@+id/My_review"
+                android:id="@+id/danhsachnhom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:background="#F7F7F7">
+
+                <ImageView
+                    android:id="@+id/icon_ds"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/account_icon"
+                    android:layout_marginStart="15dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Danh sách thành viên nhóm 3"
+                    android:textColor="@color/colorblack"
+                    android:layout_marginStart="16dp"
+                    android:textSize="18sp"
+                    android:layout_toEndOf="@id/icon_ds" />
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/img_7"
+                    android:padding="5dp"
+                    android:layout_marginEnd="8dp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/tichdiem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="#F7F7F7"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:id="@+id/icon_tichdiem"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/icon_coin"
+                    android:layout_marginStart="15dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Điểm của tôi"
+                    android:textColor="@color/colorblack"
+                    android:layout_marginStart="16dp"
+                    android:textSize="18sp"
+                    android:layout_toEndOf="@id/icon_tichdiem" />
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/img_7"
+                    android:padding="5dp"
+                    android:layout_marginEnd="8dp" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/My_review"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="#F7F7F7"
+                android:layout_marginTop="20dp">
 
                 <ImageView
                     android:id="@+id/danhgiatrongtienich"

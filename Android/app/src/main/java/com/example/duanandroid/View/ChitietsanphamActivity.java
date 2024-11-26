@@ -3,7 +3,6 @@ package com.example.duanandroid.View;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.duanandroid.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Adapter.ReviewAdapter;
@@ -31,59 +31,56 @@ public class ChitietsanphamActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chitietsanpham);
 
-        // Nhận dữ liệu từ Intent
         String productName = getIntent().getStringExtra("productName");
         float productPrice = getIntent().getFloatExtra("productPrice", 0);
         String productImageResource = getIntent().getStringExtra("imageURL");
 
-        // Tham chiếu đến các view trong layout chitietsanpham
+
         TextView nameTextView = findViewById(R.id.product_description);
         TextView priceTextView = findViewById(R.id.product_price);
         ImageView imageView = findViewById(R.id.product_image);
 
-        // Hiển thị dữ liệu vào các view
         nameTextView.setText(productName);
-        priceTextView.setText(String.format("₫%,.0f", productPrice)); // Định dạng giá thành chuỗi
-        imageView.setImageResource(R.drawable.ao); // Hiển thị hình ảnh (placeholder)
+        priceTextView.setText(String.format("₫%,.0f", productPrice));
+        imageView.setImageResource(R.drawable.ao); // Placeholder image
 
-        // Khởi tạo RecyclerView
         reviewRecyclerView = findViewById(R.id.review_list);
         reviewRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        LoadData();
 
-
-
-        // Thiết lập Adapter cho RecyclerView
         reviewAdapter = new ReviewAdapter(reviewList, userList);
         reviewRecyclerView.setAdapter(reviewAdapter);
 
-        ImageButton btn=  findViewById(R.id.btn_add_to_cart);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ChitietsanphamActivity.this, CartActivity.class);
-                startActivity(intent);
-            }
+        ImageButton btnAddToCart = findViewById(R.id.btn_add_to_cart);
+        btnAddToCart.setOnClickListener(view -> {
+            Intent intent = new Intent(ChitietsanphamActivity.this, CartActivity.class);
+            startActivity(intent);
         });
-        TextView btn1=  findViewById(R.id.btn_buy_now);
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ChitietsanphamActivity.this, BuyandpaymentActivity.class);
-                intent.putExtra("origin", "order_details");
-                startActivity(intent);
-            }
+
+        TextView btnBuyNow = findViewById(R.id.btn_buy_now);
+        btnBuyNow.setOnClickListener(view -> {
+            Intent intent = new Intent(ChitietsanphamActivity.this, BuyandpaymentActivity.class);
+            intent.putExtra("origin", "order_details");
+            startActivity(intent);
         });
 
         @SuppressLint({"MissingInflatedId", "LocalSuppress"})
-        ImageButton btn_backHome = findViewById(R.id.back_home);
-        btn_backHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Intent intent = new Intent(ChitietsanphamActivity.this, HomeFragment.class);
-//                startActivity(intent);
-                finish();
-            }
-        });
+        ImageButton btnBackHome = findViewById(R.id.back_home);
+        btnBackHome.setOnClickListener(view -> finish());
+    }
+
+
+    private void LoadData() {
+
+        userList = new ArrayList<>();
+        userList.add(new User(1, "Nguyen Van A", "123 ABC Street", "0123456789", "a@gmail.com", null, null, "12345", "active", 1, 2));
+        userList.add(new User(2, "Tran Thi B", "456 DEF Street", "0987654321", "b@gmail.com", null, null, "54321", "active", 1, 2));
+
+        reviewList = new ArrayList<>();
+        reviewList.add(new Review( "url1", "Sản phẩm rất tốt!", 4.5f, 4));
+        reviewList.add(new Review( "url2", "Giao hàng nhanh!", 4.0f, 5));
+
+
     }
 }

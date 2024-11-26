@@ -32,16 +32,16 @@ public class ManageProductActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manageproduct);
 
-        // Ánh xạ RecyclerView từ layout
+
         productManageRecyclerView = findViewById(R.id.rcv_productManage);
         productManageRecyclerView.setLayoutManager(new GridLayoutManager(this, 1));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        // Khởi tạo danh sách sản phẩm và hình ảnh
+
         productList = new ArrayList<>();
         productImageList = new ArrayList<>();
         productImageList= loadProductImages();
 
-        // Thêm dữ liệu mẫu vào danh sách sản phẩm
+
         Product1 pr1=new Product1(1, "Áo thun nam", 2, "2", "S", 200000, 20,100) ;
         productList.add(pr1);
 
@@ -61,11 +61,11 @@ public class ManageProductActivity extends AppCompatActivity {
         productList.add(pr8);
 
 
-        // Khởi tạo Adapter và kết nối với RecyclerView
+
         productManageAdapter = new ProductManageAdapter(this,productList, productImageList);
         productManageRecyclerView.setLayoutManager(linearLayoutManager);
         productManageRecyclerView.setAdapter(productManageAdapter);
-        // Xử lý sự kiện khi nhấn nút quay lại
+
         ImageView btnback = findViewById(R.id.back_arrow);
         btnback.setOnClickListener(new View.OnClickListener() {
             @Override

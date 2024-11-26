@@ -15,17 +15,17 @@ import com.example.duanandroid.R;
 import java.util.List;
 
 import Model.OrderDetail;
-import Model.Product1;
+import Model.Product;
 import Model.ProductImage;
 
 public class BuyAndPaymentAdapter extends RecyclerView.Adapter<BuyAndPaymentAdapter.BuyAndPaymentHolder> {
-    private List<Product1> productList;
+    private List<Product> productList;
     private List<OrderDetail> orderDetailList;
     private List<ProductImage> productImageList;
     private Context context;
 
     // Constructor
-    public BuyAndPaymentAdapter(Context context, List<Product1> productList, List<OrderDetail> orderDetailList, List<ProductImage> productImageList) {
+    public BuyAndPaymentAdapter(Context context, List<Product> productList, List<OrderDetail> orderDetailList, List<ProductImage> productImageList) {
         this.productList = productList;
         this.orderDetailList = orderDetailList;
         this.productImageList = productImageList;
@@ -44,7 +44,7 @@ public class BuyAndPaymentAdapter extends RecyclerView.Adapter<BuyAndPaymentAdap
     // Bind dữ liệu sản phẩm và hình ảnh vào ViewHolder
     @Override
     public void onBindViewHolder(@NonNull BuyAndPaymentHolder holder, int position) {
-        Product1 product = productList.get(position);
+        Product product = productList.get(position);
         OrderDetail orderDetail = orderDetailList.get(position);
         ProductImage productImage = productImageList.get(position);
 

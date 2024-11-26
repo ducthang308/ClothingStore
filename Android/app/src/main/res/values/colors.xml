@@ -9,5 +9,7 @@
     <color name="blue">#2A80FF</color>
     <color name="gray">#F7F7F7</color>
     <color name="lightblue">#D9F3FF</color>
+    <color name="yellow">#F6D307</color>
     <color name="lightblue_chat">#8C97DBFA</color>
+    <color name="black_50">#80000000</color>
 </resources>

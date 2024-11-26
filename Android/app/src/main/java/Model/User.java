@@ -38,7 +38,7 @@ public class User implements Serializable {
     @SerializedName("facebook_account_id")
     private int facebookAccountId;
 
-    public User(int id, String fullname, String address, String phoneNumber, String email, Roles roleId, Date dateOfBirth, String userName, String password, String active, int googleAccountId, int facebookAccountId) {
+    public User(int id, String fullname, String address, String phoneNumber, String email, Roles roleId, Date dateOfBirth, String password, String active, int googleAccountId, int facebookAccountId) {
         this.id = id;
         this.fullname = fullname;
         this.address = address;

@@ -1,6 +1,7 @@
 package com.example.duanandroid.View;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,13 +22,13 @@ import java.util.List;
 
 import Adapter.BuyAndPaymentAdapter;
 import Model.OrderDetail;
-import Model.Product1;
+import Model.Product;
 import Model.ProductImage;
 
 public class BuyandpaymentActivity extends AppCompatActivity {
     private RecyclerView rcv_buyandpayment;
     private BuyAndPaymentAdapter buyAndPaymentAdapter;
-    private List<Product1> productList;
+    private List<Product> productList;
     private List<OrderDetail> orderDetailList;
     private List<ProductImage> productImageList;
     private String origin;
@@ -48,13 +50,11 @@ public class BuyandpaymentActivity extends AppCompatActivity {
         orderDetailList = new ArrayList<>();
         productImageList = loadProductImages();
 
-        // Thêm dữ liệu mẫu vào danh sách sản phẩm
-        Product1 pr1 = new Product1(1, "Áo thun ngắn tay cho nữ", 2, "Red", "M", 200000, 20, 100);
+        Product pr1 = new Product("Áo thun ngắn tay cho nữ", "M", 200000);
         productList.add(pr1);
 
         orderDetailList.add(new OrderDetail(1, 1, 1, 200000, 1, 200000, null));
 
-        // Khởi tạo Adapter và kết nối với RecyclerView
         buyAndPaymentAdapter = new BuyAndPaymentAdapter(this, productList, orderDetailList, productImageList);
         rcv_buyandpayment.setLayoutManager(linearLayoutManager);
         rcv_buyandpayment.setAdapter(buyAndPaymentAdapter);
@@ -68,8 +68,7 @@ public class BuyandpaymentActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BuyandpaymentActivity.this, mainpageActivity.class);
-                startActivity(intent);
+                showPointsDialog();
             }
         });
 
@@ -94,6 +93,25 @@ public class BuyandpaymentActivity extends AppCompatActivity {
         });
     }
 
+    private void showPointsDialog() {
+        int points = 100; // Giả sử bạn tính được điểm từ đơn hàng
+        String message = "Đặt hàng thành công, bạn đã tích được " + points + " điểm.";
+
+        // Tạo và hiển thị dialog thông báo
+        AlertDialog.Builder builder = new AlertDialog.Builder(BuyandpaymentActivity.this);
+        builder.setTitle("Thông báo")
+                .setMessage(message)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent intent = new Intent(BuyandpaymentActivity.this, mainpageActivity.class);
+                        startActivity(intent);
+                    }
+                })
+                .setCancelable(false); // Không cho phép đóng dialog ngoài việc nhấn "OK"
+
+        builder.create().show();
+    }
     private void handleBackNavigation() {
         if ("cart".equals(origin)) {
             finish();
@@ -120,12 +138,12 @@ public class BuyandpaymentActivity extends AppCompatActivity {
         for (int i = 0; i <= 1; i++) {
             String imageName = "ao";
 
-                // Giả sử bạn có hình ảnh tương ứng trong drawable với tên ao1, ao2, ...
-               // Tạo tên hình ảnh (ao1, ao2,...)
-                int imageResId = getResources().getIdentifier(imageName, "drawable", getPackageName());
-                productImages.add(new ProductImage(i, i, String.valueOf(imageResId)));
-            }
-            return productImages;
+            // Giả sử bạn có hình ảnh tương ứng trong drawable với tên ao1, ao2, ...
+            // Tạo tên hình ảnh (ao1, ao2,...)
+            int imageResId = getResources().getIdentifier(imageName, "drawable", getPackageName());
+            productImages.add(new ProductImage(i, i, String.valueOf(imageResId)));
         }
+        return productImages;
     }
+}
 
