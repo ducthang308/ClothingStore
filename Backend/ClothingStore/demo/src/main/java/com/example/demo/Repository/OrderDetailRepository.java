@@ -20,5 +20,4 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long> 
             "JOIN p.productImages pi " +
             "WHERE o.id = :orderId")
     List<OrderDetailReturnDTO> findOrderDetailsByOrderId(@Param("orderId") Long orderId);
-
 }

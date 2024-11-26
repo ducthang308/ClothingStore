@@ -10,7 +10,7 @@ public class APIClient {
     public static Retrofit getClient() {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl("http://192.168.1.111:8088/")
+                    .baseUrl("http://192.168.1.215:8088/")
                     .addConverterFactory(ScalarsConverterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
@@ -74,22 +74,19 @@ public class APIClient {
     }
 
     // Orders
-    public static ApiOrders createOrder() {
-        return getClient().create(ApiOrders.class);
-    }
-
+    public static ApiOrders createOrder() {return getClient().create(ApiOrders.class);}
     public static ApiOrders getOrderById() {
         return getClient().create(ApiOrders.class);
     }
-
     public static ApiOrders getAllOrdersByUser() {
         return getClient().create(ApiOrders.class);
     }
-
+    public static ApiOrders getAllOrders() {
+        return getClient().create(ApiOrders.class);
+    }
     public static ApiOrders updateOrder() {
         return getClient().create(ApiOrders.class);
     }
-
     public static ApiOrders deleteOrder() {
         return getClient().create(ApiOrders.class);
     }

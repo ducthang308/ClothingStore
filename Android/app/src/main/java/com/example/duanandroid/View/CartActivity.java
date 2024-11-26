@@ -53,6 +53,9 @@ public class CartActivity extends AppCompatActivity {
 
         boolean isDataValid = getIntentData();
         if (!isDataValid) return;
+        cartItems = new ArrayList<>();
+
+
 
         cartAdapter = new CartAdapter(cartItems);
         recyclerCartItems.setAdapter(cartAdapter);

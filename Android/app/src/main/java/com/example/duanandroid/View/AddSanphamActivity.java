@@ -57,6 +57,7 @@ import retrofit2.Response;
 public class AddSanphamActivity extends AppCompatActivity {
     private Map<String, Integer> categoryIds = new HashMap<>();
     private EditText edt_productname, product_color, product_price;
+    private ImageView imageView;
     private Spinner spinnerCategory;
     private LinearLayout imageContainer;
     private Button btnLuu;
@@ -162,7 +163,7 @@ public class AddSanphamActivity extends AppCompatActivity {
                 }
             }
         });
-        imageContainer.setOnClickListener(view -> checkAndRequestStoragePermission());
+        imageView.setOnClickListener(view -> checkAndRequestStoragePermission());
     }
 
     private void loadImageIntoImageView(String imageUrl, ImageView imageView) {
@@ -179,6 +180,8 @@ public class AddSanphamActivity extends AppCompatActivity {
         spinnerCategory = findViewById(R.id.spinner_category);
         btnLuu = findViewById(R.id.btn_AddProduct); // Thêm dòng này để khởi tạo btnLuu
         imageContainer = findViewById(R.id.imageContainer);
+        imageView = findViewById(R.id.imageView);
+
     }
     private void setupCategorySpinner() {
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new ArrayList<>());
