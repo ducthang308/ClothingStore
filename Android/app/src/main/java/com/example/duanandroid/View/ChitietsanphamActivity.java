@@ -22,6 +22,8 @@ import Adapter.ReviewAdapter;
 import DTO.ReviewWithUserFullNameDTO;
 import Interface.APIClient;
 import Interface.ApiReview;
+import Model.CartItem;
+import Model.CartSingleton;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -153,6 +155,12 @@ public class ChitietsanphamActivity extends AppCompatActivity {
 
         findViewById(R.id.shopping_cart).setOnClickListener(view -> {
             Intent intent = new Intent(ChitietsanphamActivity.this, CartActivity.class);
+
+            intent.putExtra("productId", productId);
+            intent.putExtra("productName", productNameTextView.getText().toString());
+            intent.putExtra("productPrice", Float.parseFloat(productPriceTextView.getText().toString()));
+            intent.putExtra("productImage", getIntent().getStringArrayListExtra("productImage"));
+
             startActivity(intent);
         });
     }

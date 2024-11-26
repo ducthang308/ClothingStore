@@ -8,6 +8,7 @@ public class PreferenceManager {
     private static final String KEY_TOKEN = "token";
     private static final String KEY_USER_ID = "userId";
     private static final String KEY_USER_NAME = "name";
+    private static final String KEY_CONVERSATION = "id";
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
@@ -52,6 +53,18 @@ public class PreferenceManager {
     }
     public void clearName() {
         editor.remove(KEY_USER_NAME);
+        editor.apply();
+    }
+
+    public void saveId(int id) {
+        editor.putInt(KEY_CONVERSATION, id);
+        editor.apply();
+    }
+    public int getId() {
+        return sharedPreferences.getInt(KEY_CONVERSATION, -1);
+    }
+    public void clearId() {
+        editor.remove(KEY_CONVERSATION);
         editor.apply();
     }
 }

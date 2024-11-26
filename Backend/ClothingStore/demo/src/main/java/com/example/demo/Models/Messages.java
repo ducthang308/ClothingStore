@@ -1,4 +1,6 @@
 package com.example.demo.Models;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,10 +20,16 @@ public class Messages {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "sender_id")
+    @ManyToOne
+    @JoinColumn(name = "sender_id", referencedColumnName = "id")
+    @JsonBackReference
     private Users senderId;
-    @Column(name = "receiver_id")
+
+    @ManyToOne
+    @JoinColumn(name = "receiver_id", referencedColumnName = "id")
+    @JsonBackReference
     private Users receiverId;
+
     @Column(name = "content", nullable = false)
     private String content;
     @Column(name = "create_at", nullable = false)
@@ -29,5 +37,6 @@ public class Messages {
 
     @ManyToOne
     @JoinColumn(name = "conversation_id")
+    @JsonManagedReference
     private Conversation conversation;
 }

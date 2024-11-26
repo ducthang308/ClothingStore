@@ -34,6 +34,7 @@ public class mainpageAdminActivity extends AppCompatActivity {
     private ImageView btn_account, btn_home, product_image;
     private Intent intent;
     private ProductDTO selectedProduct;
+    private ImageView chat;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -51,6 +52,15 @@ public class mainpageAdminActivity extends AppCompatActivity {
         apiProduct = APIClient.getProduct();
 
         fetchProducts();
+
+        chat = findViewById(R.id.chat);
+        chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intent = new Intent(mainpageAdminActivity.this, ChatAdminActivity.class);
+                startActivity(intent);
+            }
+        });
 
         btn_account = findViewById(R.id.btn_account);
         btn_account.setOnClickListener(new View.OnClickListener() {

@@ -45,6 +45,13 @@ public class ProductDTO {
         this.imageUrls = imageUrls;
     }
 
+    public ProductDTO(String productName, Float price, String color, List<String> imageUrls) {
+        this.color = color;
+        this.productName = productName;
+        this.price = price;
+        this.imageUrls = imageUrls;
+    }
+
     public ProductDTO() {
 
     }

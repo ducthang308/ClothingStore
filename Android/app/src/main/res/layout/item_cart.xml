@@ -49,11 +49,11 @@
 
 
             <TextView
-                android:id="@+id/tv_size"
+                android:id="@+id/tv_color"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:text="Trắng, size M"
+                android:text="Trắng"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="14sp" />
 

@@ -60,7 +60,7 @@ public class OrdersController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('Admin', 'User')")
-    public ResponseEntity<?> updateProduct(@PathVariable("id") Long id,
+    public ResponseEntity<?> updateOrder(@PathVariable("id") Long id,
                                            @Valid @RequestBody OrdersDTO ordersDTO)
     {
         try {

@@ -80,14 +80,15 @@ public class LoginActivity extends AppCompatActivity {
                     int userId = loginResponse.getUserId();
                     int roleId = loginResponse.getRoleId();
                     String name = loginResponse.getName();
+                    int conversationId = loginResponse.getConversationId();
 
                     Log.d("Login", "Token: " + token);
 
-                    // Lưu token vào SharedPreferences
                     PreferenceManager preferenceManager = new PreferenceManager(LoginActivity.this);
                     preferenceManager.saveToken(token);
                     preferenceManager.saveUserId(userId);
                     preferenceManager.saveName(name);
+                    preferenceManager.saveId(conversationId);
 
                     if (roleId == 2) {
                         Intent intent = new Intent(LoginActivity.this, mainpageActivity.class);

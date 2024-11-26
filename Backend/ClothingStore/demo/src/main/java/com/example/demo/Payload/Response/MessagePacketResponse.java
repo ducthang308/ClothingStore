@@ -9,7 +9,6 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
-
 public class MessagePacketResponse extends CreateMessageRequest {
     private long createAt;
 
@@ -19,7 +18,6 @@ public class MessagePacketResponse extends CreateMessageRequest {
                 "senderId=" + senderId +
                 ", receiverId=" + receiverId +
                 ", content='" + content + '\'' +
-                ", conversationId=" + conversationId +
                 ", time=" + createAt +
                 '}';
     }

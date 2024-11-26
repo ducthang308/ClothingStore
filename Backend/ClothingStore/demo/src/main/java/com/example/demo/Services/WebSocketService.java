@@ -23,7 +23,7 @@ public class WebSocketService implements IWebsocketService {
         response.setSenderId(messages.getSenderId().getId());
         response.setReceiverId(messages.getReceiverId().getId());
         response.setContent(messages.getContent());
-        response.setConversationId(messages.getConversation().getId());
+//        response.setConversationId(messages.getConversation().getId());
 
         System.out.println("==> sendMessagePrivate : " + response.toString());
         messagingTemplate.convertAndSendToUser(String.valueOf(response.getSenderId()), "/message_receive", response);
