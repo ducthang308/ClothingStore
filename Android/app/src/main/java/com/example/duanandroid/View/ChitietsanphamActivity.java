@@ -26,6 +26,7 @@ public class ChitietsanphamActivity extends AppCompatActivity {
     private List<Review> reviewList;
     private List<User> userList;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +81,8 @@ public class ChitietsanphamActivity extends AppCompatActivity {
         reviewList = new ArrayList<>();
         reviewList.add(new Review( "url1", "Sản phẩm rất tốt!", 4.5f, 4));
         reviewList.add(new Review( "url2", "Giao hàng nhanh!", 4.0f, 5));
+
+
 
 
     }

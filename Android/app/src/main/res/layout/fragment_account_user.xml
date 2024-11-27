@@ -222,7 +222,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Danh sách thành viên nhóm 3"
+                    android:text="Thành viên nhóm 3"
                     android:textColor="@color/colorblack"
                     android:layout_marginStart="16dp"
                     android:textSize="18sp"

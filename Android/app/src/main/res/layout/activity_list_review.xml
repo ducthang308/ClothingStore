@@ -15,7 +15,7 @@
         android:padding="8dp">
 
         <ImageButton
-            android:id="@+id/arrow_voucher_lichsu"
+            android:id="@+id/listDanhgia_arrow_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorwhite"
@@ -35,10 +35,10 @@
 
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycleView_lichsu"
+        android:id="@+id/recycleView_listReview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="10dp"
         />
 
 </LinearLayout>

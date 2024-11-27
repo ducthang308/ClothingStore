@@ -1,6 +1,7 @@
 package Fragment;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.example.duanandroid.R;
@@ -18,6 +20,7 @@ import com.example.duanandroid.View.CartActivity;
 import com.example.duanandroid.View.DanhSachThanhVienActivity;
 import com.example.duanandroid.View.HelpActivity;
 import com.example.duanandroid.View.KhoVoucherActivity;
+import com.example.duanandroid.View.ListReviewActivity;
 import com.example.duanandroid.View.LoginActivity;
 import com.example.duanandroid.View.PointActivity;
 import com.example.duanandroid.View.changePassActivity;
@@ -140,16 +143,26 @@ public class AccountUserFragment extends Fragment {
         Dangxuat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
+                new AlertDialog.Builder(getActivity())
+                        .setMessage("Bạn chắc chắn muốn đăng xuất?")
+                        .setCancelable(false)
+                        .setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                                startActivity(intent);
+                                getActivity().finish(); // Kết thúc Activity hiện tại để không quay lại trang này
+                            }
+                        })
+                        .setNegativeButton("Không", null) // Không làm gì nếu người dùng chọn Hủy
+                        .show();
             }
         });
         RelativeLayout myreview = view.findViewById(R.id.My_review);
         myreview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), TabLayOutActivity.class);
-                intent.putExtra("tabPosition", 3);
+                Intent intent = new Intent(getActivity(), ListReviewActivity.class);
                 startActivity(intent);
             }
         });

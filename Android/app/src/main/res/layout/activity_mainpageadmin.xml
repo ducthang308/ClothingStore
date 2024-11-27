@@ -74,18 +74,26 @@
             <!-- LinearLayout chứa ImageView (banner) -->
             <LinearLayout
                 android:id="@+id/imageLayout"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:orientation="vertical">
 
-                <!-- ImageView cho banner -->
-                <ImageView
-                    android:id="@+id/imageView"
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/banner_viewpager"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/banner_hoi_trang_nu_dep" />
+                    android:layout_height="150dp">
+
+                </androidx.viewpager.widget.ViewPager>
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/bannerIndicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    app:tabIndicatorGravity="center"
+                    android:background="@color/colorwhite"
+                    app:tabSelectedTextColor="@color/colorRed"
+                    app:tabIndicatorColor="@color/colorblack" />
             </LinearLayout>
 
             <!-- CardView chứa phần sản phẩm -->

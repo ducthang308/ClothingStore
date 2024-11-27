@@ -26,10 +26,20 @@
             android:name=".View.AdminChitietSpActivity"
             android:exported="false" />
         <activity
+            android:name=".View.DanhSachThanhVienActivity"
+            android:exported="false" />
+        <activity
+
+            android:name=".View.ListReviewActivity"
+            android:exported="false" />
+        <activity
             android:name=".View.PageDanhgiaActivity"
             android:exported="false" />
         <activity
             android:name=".View.SelectVoucherActivity"
+            android:exported="false" />
+        <activity
+            android:name=".View.PointActivity"
             android:exported="false" />
         <activity
             android:name=".View.LichSuVoucherActivity"
@@ -83,7 +93,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
