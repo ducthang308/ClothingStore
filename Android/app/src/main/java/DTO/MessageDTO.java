@@ -1,18 +1,28 @@
 package DTO;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Date;
 
 public class MessageDTO {
     private String content;
     private int receiverId;
+    @SerializedName("senderId")
+    private int senderId;
     private Date createAt;
     private String senderFullName;
+    private int conversationId;
 
-    public MessageDTO(String content, int receiverId, String senderFullName, Date createAt) {
+    public MessageDTO(String content, int receiverId, int senderId, Date createAt, String senderFullName, int conversationId) {
         this.content = content;
         this.receiverId = receiverId;
-        this.senderFullName = senderFullName;
+        this.senderId = senderId;
         this.createAt = createAt;
+        this.senderFullName = senderFullName;
+        this.conversationId = conversationId;
+    }
+
+    public MessageDTO() {
     }
 
     public String getContent() {
@@ -31,12 +41,10 @@ public class MessageDTO {
         this.receiverId = receiverId;
     }
 
-    public String getSenderFullName() {
-        return senderFullName;
-    }
+    public int getSenderId() {return senderId;}
 
-    public void setSenderFullName(String senderFullName) {
-        this.senderFullName = senderFullName;
+    public void setSenderId(int senderId) {
+        this.senderId = senderId;
     }
 
     public Date getCreateAt() {
@@ -45,5 +53,19 @@ public class MessageDTO {
 
     public void setCreateAt(Date createAt) {
         this.createAt = createAt;
+    }
+
+    public String getSenderFullName() {
+        return senderFullName;
+    }
+
+    public void setSenderFullName(String senderFullName) {
+        this.senderFullName = senderFullName;
+    }
+
+    public int getConversationId() {return conversationId;}
+
+    public void setConversationId(int conversationId) {
+        this.conversationId = conversationId;
     }
 }

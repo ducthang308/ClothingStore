@@ -19,6 +19,17 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
 
     private List<MessageDTO> messageList;
     private Context context;
+    private OnItemClickListener onItemClickListener; // Đã xóa khai báo trùng ở constructor
+
+    // Giao diện cho sự kiện click
+    public interface OnItemClickListener {
+        void onItemClick(MessageDTO message);
+    }
+
+    // Hàm set listener
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
+    }
 
     public MessageListAdapter(Context context, List<MessageDTO> messageList) {
         this.context = context;
@@ -37,6 +48,12 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         MessageDTO message = messageList.get(position);
         holder.senderName.setText(message.getSenderFullName());
         holder.messageContent.setText(message.getContent());
+
+        holder.itemView.setOnClickListener(v -> {
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(message);
+            }
+        });
     }
 
     @Override
@@ -45,7 +62,7 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
     }
 
     public static class MessageListAdapterViewHolder extends RecyclerView.ViewHolder {
-        TextView senderName, messageContent, messageTime;
+        TextView senderName, messageContent;
 
         public MessageListAdapterViewHolder(View itemView) {
             super(itemView);
@@ -54,4 +71,3 @@ public class MessageListAdapter extends RecyclerView.Adapter<MessageListAdapter.
         }
     }
 }
-

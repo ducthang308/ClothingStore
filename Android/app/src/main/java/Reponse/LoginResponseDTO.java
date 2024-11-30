@@ -6,13 +6,23 @@ public class LoginResponseDTO {
     private int userId;
     private String name;
     private int conversationId;
+    private int cartId;
 
-    public LoginResponseDTO(String token, int roleId, int userId, String name, int conversationId) {
+    public LoginResponseDTO(String token, int roleId, int userId, String name, int conversationId, int cartId) {
         this.token = token;
         this.roleId = roleId;
         this.userId = userId;
         this.name = name;
         this.conversationId = conversationId;
+        this.cartId = cartId;
+    }
+
+    public int getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
     }
 
     public int getConversationId() {

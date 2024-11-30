@@ -12,4 +12,5 @@ public interface IOrdersService {
     Orders updateOrders(long id, OrdersDTO orderDTO) throws Exception;
     void deleteOrder(long id);
     List<Orders> getAllOrders();
+    Orders updateStatus(long id, OrdersDTO orderDTO) throws Exception;
 }

@@ -8,18 +8,11 @@ import Model.Discount;
 import Model.User;
 
 public class OrdersDTO {
-<<<<<<< HEAD
-    private Long id;
-
-    @SerializedName("user_id")
-    private Long userId;
-=======
     @SerializedName("id")
     private int id;
 
-    @SerializedName("users")
-    private User user;
->>>>>>> origin/main
+    @SerializedName("user_id")
+    private int userId;
 
     @SerializedName("note")
     private String note;
@@ -30,14 +23,6 @@ public class OrdersDTO {
     @SerializedName("status")
     private String status;
 
-    public OrdersDTO(Long id, Date orderDate, Float totalMoney, Long userId, String status) {
-        this.id = id;
-        this.orderDate = orderDate;
-        this.totalMoney = totalMoney;
-        this.userId = userId;
-        this.status = status;
-    }
-
     @SerializedName("total_money")
     private Float totalMoney;
 
@@ -47,33 +32,14 @@ public class OrdersDTO {
     @SerializedName("orderDetails")
     private List<OrderDetailDTO> orderDetails;
 
-<<<<<<< HEAD
-    @SerializedName("discount_id")
-    private Long discountId;
 
 
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-=======
     @SerializedName("discounts")
     private Discount discounts;
 
-    public OrdersDTO(int id, User user, String note, Date orderDate, String status, Float totalMoney, String paymentMethod, List<OrderDetailDTO> orderDetails, Discount discounts) {
+    public OrdersDTO(int id, int userId, String note, Date orderDate, String status, Float totalMoney, String paymentMethod, List<OrderDetailDTO> orderDetails, Discount discounts) {
         this.id = id;
-        this.user = user;
+        this.userId = userId;
         this.note = note;
         this.orderDate = orderDate;
         this.status = status;
@@ -91,13 +57,12 @@ public class OrdersDTO {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
->>>>>>> origin/main
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getNote() {
@@ -140,24 +105,6 @@ public class OrdersDTO {
         this.paymentMethod = paymentMethod;
     }
 
-<<<<<<< HEAD
-    public List<CartItemDTO> getCartItems() {
-        return cartItems;
-    }
-
-    public void setCartItems(List<CartItemDTO> cartItems) {
-        this.cartItems = cartItems;
-    }
-
-    public Long getDiscountId() {
-        return discountId;
-    }
-
-    public void setDiscountId(Long discountId) {
-        this.discountId = discountId;
-    }
-
-=======
     public List<OrderDetailDTO> getOrderDetails() {
         return orderDetails;
     }
@@ -173,6 +120,4 @@ public class OrdersDTO {
     public void setDiscounts(Discount discounts) {
         this.discounts = discounts;
     }
->>>>>>> origin/main
 }
-

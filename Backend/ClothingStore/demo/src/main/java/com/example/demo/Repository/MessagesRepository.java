@@ -28,7 +28,7 @@ public interface MessagesRepository extends JpaRepository<Messages, Long> {
 //            "ORDER BY m.createAt DESC")
 //    List<Messages> getAllSenderId(@Param("receiverId") Long receiverId);
 
-    @Query("SELECT new com.example.demo.DTO.MessageDTO(m.content, m.receiverId.id, m.createAt, s.fullName) " +
+    @Query("SELECT new com.example.demo.DTO.MessageDTO(m.content, m.senderId.id, m.receiverId.id, m.createAt, s.fullName, m.conversation.id) " +
             "FROM Messages m " +
             "JOIN Users u ON m.receiverId.id = u.id " +
             "JOIN Users s ON m.senderId.id = s.id " +
@@ -39,13 +39,6 @@ public interface MessagesRepository extends JpaRepository<Messages, Long> {
             "ORDER BY m.createAt DESC")
     List<MessageDTO> getAllSenderId(@Param("receiverId") Long receiverId);
 
-
-
-
-
-
     @Query("SELECT m FROM Messages m WHERE m.receiverId.id = :receiverId ORDER BY m.createAt DESC")
     List<Messages> findByReceiverId(@Param("receiverId") Long receiverId);
-
-
 }

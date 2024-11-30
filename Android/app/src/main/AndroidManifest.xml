@@ -19,6 +19,9 @@
         android:theme="@style/Theme.DuAnAndroid"
         tools:targetApi="31">
         <activity
+            android:name=".View.ChatDetailAdminActivity"
+            android:exported="false" />
+        <activity
             android:name=".View.AdminChitietSpActivity"
             android:exported="false" />
         <activity
@@ -72,8 +75,7 @@
         <!-- android:name=".View.CartActivity" -->
         <!-- android:exported="false" -->
         <!-- /> -->
-        <activity android:name=".View.ItemProductInItemOrderActivity"/>
-
+        <activity android:name=".View.ItemProductInItemOrderActivity" />
         <activity android:name=".View.ManageProductActivity" />
         <activity
             android:name="Fragment.TabLayOutActivity"
