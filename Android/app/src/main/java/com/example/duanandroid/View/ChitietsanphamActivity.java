@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,29 +16,36 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.duanandroid.R;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import Adapter.ReviewAdapter;
+import DTO.CartItemsDTO;
 import DTO.ReviewWithUserFullNameDTO;
 import Interface.APIClient;
+import Interface.ApiCartItems;
 import Interface.ApiReview;
-import Model.CartItem;
-import Model.CartSingleton;
+import Interface.PreferenceManager;
+import Model.CartItems;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ChitietsanphamActivity extends AppCompatActivity {
     private static final String TAG = "ChitietsanphamActivity";
-
-    // Views
     private RecyclerView reviewRecyclerView;
     private ReviewAdapter reviewAdapter;
     private TextView productNameTextView, productPriceTextView;
-    private ImageView productImageView;
-
-    // Data
+    private ImageView productImageView, shopping_cart;
+    private Button btn_add_to_cart;
+    private String token;
+    private PreferenceManager preferenceManager;
+    private int cartId;
+    private ApiCartItems apiCartItems;
     private List<ReviewWithUserFullNameDTO> reviewList = new ArrayList<>();
     private ApiReview apiReview;
     private int productId = -1;
@@ -49,6 +57,11 @@ public class ChitietsanphamActivity extends AppCompatActivity {
 
         initializeViews();
 
+        apiCartItems = APIClient.getClient().create(ApiCartItems.class);
+        preferenceManager = new PreferenceManager(this);
+        token = preferenceManager.getToken();
+        cartId = preferenceManager.getCartId();
+
         boolean isDataValid = getIntentData();
         if (!isDataValid) return;
 
@@ -58,7 +71,123 @@ public class ChitietsanphamActivity extends AppCompatActivity {
         loadReviews();
 
         setupButtons();
+
+        btn_add_to_cart = findViewById(R.id.btn_add_to_cart);
+        btn_add_to_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addToCart();
+            }
+
+        });
+
+        shopping_cart = findViewById(R.id.shopping_cart);
+        shopping_cart.setOnClickListener(view -> {
+            Intent intent = new Intent(ChitietsanphamActivity.this, CartActivity.class);
+            startActivity(intent);
+        });
+
+
     }
+
+    private void addToCart() {
+        if (cartId == -1 || productId == -1) {
+            Toast.makeText(ChitietsanphamActivity.this, "Invalid Cart or Product ID", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Call<List<CartItemsDTO>> call = apiCartItems.getAllCartItemsByCartId("Bearer " + token, cartId);
+        call.enqueue(new Callback<List<CartItemsDTO>>() {
+            @Override
+            public void onResponse(Call<List<CartItemsDTO>> call, Response<List<CartItemsDTO>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<CartItemsDTO> cartItems = response.body();
+                    CartItemsDTO existingCartItem = null;
+                    for (CartItemsDTO item : cartItems) {
+                        if (item.getProductId() == productId) {
+                            existingCartItem = item;
+                            break;
+                        }
+                    }
+                    if (existingCartItem != null) {
+                        updateCartItem(existingCartItem.getId(), existingCartItem.getQuantity() + 1);
+                    } else {
+                        createCartItem();
+                    }
+                } else {
+                    Log.e(TAG, "Failed to fetch cart items: " + response.message());
+                    Toast.makeText(ChitietsanphamActivity.this, "Failed to fetch cart items", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<CartItemsDTO>> call, Throwable t) {
+                Log.e(TAG, "Error fetching cart items", t);
+                Toast.makeText(ChitietsanphamActivity.this, "Error fetching cart items", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    private void updateCartItem(int itemId, int newQuantity) {
+        CartItemsDTO cartItems = new CartItemsDTO();
+        cartItems.setQuantity(newQuantity);
+
+        Call<ResponseBody> call = apiCartItems.updateCartItem("Bearer " + token, itemId, cartItems);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(ChitietsanphamActivity.this, "Cart updated successfully!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.e(TAG, "Failed to update cart item: " + response.message());
+                    Toast.makeText(ChitietsanphamActivity.this, "Failed to update cart", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e(TAG, "Error updating cart item", t);
+                Toast.makeText(ChitietsanphamActivity.this, "Error updating cart item", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+
+    private void createCartItem() {
+        if (cartId == -1 || productId == -1) {
+            Toast.makeText(ChitietsanphamActivity.this, "Invalid Cart or Product ID", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        CartItems newItem = new CartItems();
+        newItem.setCartId(cartId);
+        newItem.setProductId(productId);
+        newItem.setQuantity(1);
+
+        Log.d(TAG, "Creating CartItem: cartId=" + newItem.getCartId() + ", productId=" + newItem.getProductId() + ", quantity=" + newItem.getQuantity());
+
+        Call<String> call = apiCartItems.createCartItem("Bearer " + token, newItem);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(ChitietsanphamActivity.this, "Added to cart!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.e(TAG, "Failed to add item to cart: " + response.message());
+                    Toast.makeText(ChitietsanphamActivity.this, "Failed to add to cart", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.e(TAG, "Error adding item to cart", t);
+                Toast.makeText(ChitietsanphamActivity.this, "Error adding item to cart", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
 
     private void initializeViews() {
         productNameTextView = findViewById(R.id.product_description);

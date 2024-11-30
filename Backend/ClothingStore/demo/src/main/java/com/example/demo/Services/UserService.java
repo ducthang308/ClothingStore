@@ -9,10 +9,7 @@ import com.example.demo.JWT.JwtToken;
 import com.example.demo.Models.Conversation;
 import com.example.demo.Models.Roles;
 import com.example.demo.Models.Users;
-import com.example.demo.Repository.ConversationRepository;
-import com.example.demo.Repository.MessagesRepository;
-import com.example.demo.Repository.RolesRepository;
-import com.example.demo.Repository.UsersRepository;
+import com.example.demo.Repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,6 +30,7 @@ public class UserService implements IUsersService{
     private final AuthenticationManager authenticationManager;
     private final RolesRepository rolesRepository;
     private final ConversationRepository conversationRepository;
+    private final CartsRepository cartsRepository;
 
     @Override
     public Users createUser(UsersDTO usersDTO) throws Exception {
@@ -100,7 +98,8 @@ public class UserService implements IUsersService{
         String name = existingUser.getFullName();
         Long conversationId = conversationRepository.findConversationIdByUserId(userId);
         String address = existingUser.getAddress();
-        return new LoginResponseDTO(token, roleId, userId, name, conversationId, address);
+        Long cartId = cartsRepository.findCartIdByUserId(userId);
+        return new LoginResponseDTO(token, roleId, userId, name, conversationId, address, cartId);
     }
 
     @Override

@@ -53,7 +53,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
         Message message = messageList.get(position);
 
-        boolean isSender = message.getSenderId() == senderId;
+        boolean isSender = message.getSenderId() == 1;
 
         Log.d("ChatAdapter", "Sender ID: " + senderId + ", Message Sender ID: " + message.getSenderId());
         Log.d("ChatAdapter", "Is Sender: " + isSender);
@@ -66,12 +66,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
                     LinearLayout.LayoutParams.WRAP_CONTENT
             );
         }
-        textParams.gravity = isSender ? Gravity.END : Gravity.START; // Căn nội dung của TextView
+        textParams.gravity = isSender ? Gravity.END : Gravity.START;
 
-        // Cập nhật lại layout params cho TextView
         holder.messageContent.setLayoutParams(textParams);
 
-        // Kiểm tra và thay đổi layoutParams cho ImageView (imgUser)
         LinearLayout.LayoutParams imgParams = (LinearLayout.LayoutParams) holder.imgUser.getLayoutParams();
         if (imgParams == null) {
             imgParams = new LinearLayout.LayoutParams(
@@ -81,13 +79,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         }
         imgParams.gravity = isSender ? Gravity.END : Gravity.START; // Căn avatar
 
-        // Cập nhật lại layout params cho ImageView
         holder.imgUser.setLayoutParams(imgParams);
 
-        // Cập nhật các thuộc tính khác cho TextView và ImageView
         if (isSender) {
-            // Người gửi: căn phải, ẩn avatar
-            holder.imgUser.setVisibility(View.GONE); // Ẩn avatar
+            holder.imgUser.setVisibility(View.GONE);
             holder.messageContent.setBackgroundResource(R.drawable.bg_corner_chat_sendme);
             holder.messageContent.setTextColor(Color.parseColor("#333333"));
         } else {

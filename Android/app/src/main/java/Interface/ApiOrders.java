@@ -27,7 +27,7 @@ public interface ApiOrders {
             @Path("user_id") Long userId);
 
     @GET("api/v1/orders")
-    Call<List<Order>> getAllOrders(
+    Call<List<OrdersDTO>> getAllOrders(
             @Header("Authorization") String token
     );
 
@@ -42,11 +42,9 @@ public interface ApiOrders {
 
     Call<String> createOrder(@Header("Authorization") String token, @Body OrdersDTO odersDTO);
 
-<<<<<<< HEAD
-=======
     @GET("api/v1/orders/{id}")
     Call<List<OrdersDTO>> getOrderById(@Header("Authorization") String token, @Path("id") int id);
->>>>>>> origin/main
+
 
     @GET("api/v1/orders/user/{user_id}")
     Call<List<OrdersDTO>> getAllOrdersByUser(@Header("Authorization") String token, @Path("user_id") int userId);

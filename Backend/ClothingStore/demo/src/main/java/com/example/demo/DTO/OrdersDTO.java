@@ -31,7 +31,7 @@ public class OrdersDTO {
     private String paymentMethod;
 
     @JsonProperty("cart_items")
-    private List<CartItemDTO> cartItems;
+    private List<CartItemsDTO> cartItems;
 
     @JsonProperty("discount_id")
     private Long discountId;

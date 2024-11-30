@@ -63,7 +63,6 @@ public class chatUserActivity extends AppCompatActivity {
         senderId = preferenceManager.getUserId();
         conversationId = preferenceManager.getId();
 
-        // Khởi tạo API
         apiMessage = APIClient.getClient().create(ApiMessage.class);
 
         recyclerViewMessages.setLayoutManager(new LinearLayoutManager(this));
@@ -73,7 +72,6 @@ public class chatUserActivity extends AppCompatActivity {
 
         fetchMessages();
 
-        // Khi bấm nút gửi tin nhắn
         sendButton.setOnClickListener(v -> {
             String messageContent = edtMessage.getText().toString().trim();
             if (!messageContent.isEmpty()) {
@@ -100,12 +98,6 @@ public class chatUserActivity extends AppCompatActivity {
             public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Message> messages = response.body();
-
-//                    runOnUiThread(() -> {
-//                        chatAdapter.updateMessages(messages);
-//                        recyclerViewMessages.scrollToPosition(chatAdapter.getItemCount() - 1);
-//                    });
-
                     chatAdapter.updateMessages(messages); // Cập nhật danh sách tin nhắn
                     recyclerViewMessages.scrollToPosition(chatAdapter.getItemCount() - 1); // Cuộn đến cuối
                 } else {
@@ -129,9 +121,9 @@ public class chatUserActivity extends AppCompatActivity {
             public void onResponse(Call<Message> call, Response<Message> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Message newMessage = response.body();
-                    chatAdapter.addMessage(newMessage); // Thêm tin nhắn mới
-                    recyclerViewMessages.scrollToPosition(chatAdapter.getItemCount() - 1); // Cuộn đến cuối
-                    edtMessage.setText(""); // Làm sạch ô nhập
+                    chatAdapter.addMessage(newMessage);
+                    recyclerViewMessages.scrollToPosition(chatAdapter.getItemCount() - 1);
+                    edtMessage.setText("");
                 } else {
                     Toast.makeText(chatUserActivity.this, "Failed to send message", Toast.LENGTH_SHORT).show();
                 }

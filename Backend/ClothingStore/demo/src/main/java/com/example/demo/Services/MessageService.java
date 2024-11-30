@@ -75,16 +75,11 @@ public class MessageService implements IMessageService{
         Map<String, MessageDTO> latestMessagesBySender = new HashMap<>();
         for (MessageDTO message : allMessages) {
             String senderName = message.getSenderFullName();
-            //Kiểm tra xem Map đã chứa tên người gửi này hay chưa
             if (!latestMessagesBySender.containsKey(senderName)) {
-                //Nếu chưa thì thêm vào Map
                 latestMessagesBySender.put(senderName, message);
             } else {
-                //Lấy tin nhắn hiện tại của người gửi từ Map
                 MessageDTO existingMessage = latestMessagesBySender.get(senderName);
-                //Nếu tin nhắn mới (message) có thời gian createAt lớn hơn tin nhắn đang lưu trong Map
                 if (message.getCreateAt().after(existingMessage.getCreateAt())) {
-                    //Cập nhật lại tin nhắn mới nhất cho người gửi bằng cách đặt tin nhắn mới (message) vào Map
                     latestMessagesBySender.put(senderName, message);
                 }
             }

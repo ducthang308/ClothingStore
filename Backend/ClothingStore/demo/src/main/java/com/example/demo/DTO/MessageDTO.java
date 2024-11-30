@@ -12,6 +12,8 @@ import java.util.Date;
 public class MessageDTO {
     private String content;
     private Long receiverId;
+    private Long senderId;
     private Date createAt;
     private String senderFullName;
+    private Long conversationId;
 }

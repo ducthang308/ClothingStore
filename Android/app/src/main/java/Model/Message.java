@@ -21,13 +21,24 @@ public class Message {
     @SerializedName("create_at")
     private Date createAt;
 
+    private int conversationId;
+
     // Constructor
-    public Message(int id, int senderId, int receiverId, String content, Date createAt) {
+    public Message(int id, int senderId, int receiverId, String content, Date createAt, int conversationId) {
         this.id = id;
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.content = content;
         this.createAt = createAt;
+        this.conversationId = conversationId;
+    }
+
+    public int getConversationId() {
+        return conversationId;
+    }
+
+    public void setConversationId(int conversationId) {
+        this.conversationId = conversationId;
     }
 
     public Message(int senderId, int receiverId, String content, Date createAt) {
