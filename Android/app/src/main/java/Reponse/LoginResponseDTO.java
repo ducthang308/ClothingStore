@@ -5,12 +5,22 @@ public class LoginResponseDTO {
     private int roleId;
     private int userId;
     private String name;
+    private String address;
 
-    public LoginResponseDTO(String token, int roleId, int userId, String name) {
+    public LoginResponseDTO(String token, int roleId, int userId, String name, String address) {
         this.token = token;
         this.roleId = roleId;
         this.userId = userId;
         this.name = name;
+        this.address = address;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getName() {

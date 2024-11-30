@@ -93,4 +93,16 @@ public class OrderService implements IOrdersService {
     public List<Orders> getAllOrders() {
         return ordersRepository.findAll();
     }
+
+
+
+
+    @Override
+    public Orders updateStatus(long id, OrdersDTO orderDTO) throws Exception {
+        Orders orders = ordersRepository.findById(id)
+                .orElseThrow(()->
+                        new DataNotFoundException("Not found orderId: "+id));
+        orders.setStatus(orderDTO.getStatus());
+        return ordersRepository.save(orders);
+    }
 }

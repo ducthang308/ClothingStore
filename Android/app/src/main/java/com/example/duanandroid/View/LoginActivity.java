@@ -80,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                     int userId = loginResponse.getUserId();
                     int roleId = loginResponse.getRoleId();
                     String name = loginResponse.getName();
+                    String address = loginResponse.getAddress();
 
                     Log.d("Login", "Token: " + token);
 
@@ -88,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                     preferenceManager.saveToken(token);
                     preferenceManager.saveUserId(userId);
                     preferenceManager.saveName(name);
+                    preferenceManager.saveAddress(address);
 
                     if (roleId == 2) {
                         Intent intent = new Intent(LoginActivity.this, mainpageActivity.class);

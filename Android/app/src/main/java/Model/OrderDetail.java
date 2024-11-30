@@ -1,10 +1,14 @@
 package Model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.sql.Date;
 
 public class OrderDetail {
     private int id;
+    @SerializedName("order_id")
     private int orderId;
+    @SerializedName("product_id")
     private int productId;
     private float price;
     private int numberOfProduct;

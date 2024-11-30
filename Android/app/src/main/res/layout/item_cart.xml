@@ -87,7 +87,7 @@
                     android:layout_gravity="center"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="Plus Button"
-                    android:src="@drawable/plus"
+                    android:src="@drawable/minus"
                     tools:ignore="TouchTargetSizeCheck" />
 
                 <TextView
@@ -106,7 +106,7 @@
                     android:layout_gravity="center"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="Minus Button"
-                    android:src="@drawable/minus"
+                    android:src="@drawable/plus"
                     tools:ignore="TouchTargetSizeCheck" />
             </LinearLayout>
         </LinearLayout>

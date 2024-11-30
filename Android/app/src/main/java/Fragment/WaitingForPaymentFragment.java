@@ -66,16 +66,31 @@ public class WaitingForPaymentFragment extends Fragment {
             public void onResponse(Call<List<OrdersDTO>> call, Response<List<OrdersDTO>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<OrdersDTO> ordersList = response.body();
-                    Log.d("API Response", "Orders List: " + ordersList.size());
+                    Log.d("API Response", "Total Orders: " + ordersList.size());
+
+                    // Lọc danh sách đơn hàng, bỏ qua những đơn hàng có trạng thái "Cancel"
+                    List<OrdersDTO> filteredOrders = new ArrayList<>();
                     for (OrdersDTO order : ordersList) {
+                        if (!"Cancel".equalsIgnoreCase(order.getStatus())) { // Lọc trạng thái Cancel
+                            filteredOrders.add(order);
+                        }
+                    }
+
+                    Log.d("Filtered Orders", "Orders excluding 'Cancel': " + filteredOrders.size());
+
+                    // Tiếp tục xử lý các đơn hàng sau khi lọc
+                    for (OrdersDTO order : filteredOrders) {
                         int orderId = order.getId();
                         fetchOrderDetails(orderId);
+                    }
+
+                    if (filteredOrders.isEmpty()) {
+                        Toast.makeText(getContext(), "Không có đơn hàng nào phù hợp!", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(getContext(), "Không thể lấy danh sách đơn hàng!", Toast.LENGTH_SHORT).show();
                 }
             }
-
 
             @Override
             public void onFailure(Call<List<OrdersDTO>> call, Throwable t) {

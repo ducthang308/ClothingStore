@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:padding="5dp"
-            android:text="Abc 123556"
+
             android:textColor="@color/colorblack"
             android:textSize="16sp" />
     </LinearLayout>
@@ -79,7 +79,7 @@
             android:id="@+id/pic"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/img_10" />
+             />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -92,39 +92,16 @@
                 android:id="@+id/product_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Áo thun ngắn tay nữ trắng, size M"
+                android:padding="5dp"
+
                 android:textColor="@color/colorblack"
-                android:textSize="16sp"
-                android:padding="5dp"/>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/product_color"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Trắng,"
-                    android:textColor="@color/colorblack"
-                    android:padding="5dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="size "
-                    android:textColor="@color/colorblack"
-                    android:padding="5dp"/>
-                <TextView
-                    android:id="@+id/size"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="M"
-                    android:textColor="@color/colorblack"
-                    android:padding="5dp"/>
-            </LinearLayout>
+                android:textSize="16sp" />
+
             <TextView
                 android:id="@+id/product_soluong"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="x 1"
+
                 android:textColor="@color/colorblack"
                 android:textSize="14sp"
                 android:padding="5dp"/>
@@ -133,8 +110,8 @@
                 android:id="@+id/product_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:text="200.000đ"
+                android:layout_gravity="start"
+
                 android:textColor="@color/colorRed" />
         </LinearLayout>
 </LinearLayout>
@@ -164,13 +141,14 @@
             android:textSize="15sp"
             android:textStyle="bold"
             />
+
         <TextView
+            android:id="@+id/total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="579.000đ"
-            android:textSize="15sp"
             android:textColor="@color/colorRed"
-            />
+            android:textSize="15sp" />
     </LinearLayout>
 
         <LinearLayout
@@ -187,6 +165,7 @@
                 android:textSize="16sp"/>
 
             <TextView
+                android:id="@+id/order_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -205,7 +184,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Trạng thái thanh toán"
+                android:text="Mã đơn hàng"
                 android:textColor="#000"
                 android:textSize="16sp"/>
 
@@ -215,60 +194,18 @@
                 android:layout_weight="1"
                 android:gravity="end"
                 android:orientation="horizontal">
-
                 <TextView
+                    android:id="@+id/tv_orderid"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="đã thanh toán"
-                    android:textColor="#000"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Chưa thanh toán"
+                    android:text="mã đơn"
                     android:textColor="#999"
                     android:textSize="16sp"
                     android:layout_marginStart="16dp"/>
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="10dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Trạng thái giao hàng"
-                android:textColor="#000"
-                android:textSize="16sp"/>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="end"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="đã giao"
-                    android:textColor="#999"
-                    android:textSize="16sp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Đang giao"
-                    android:textColor="#000"
-                    android:textSize="16sp"
-                    android:layout_marginStart="16dp"/>
-            </LinearLayout>
-        </LinearLayout>
 
     </LinearLayout>
 

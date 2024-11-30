@@ -80,8 +80,6 @@ public class OrderDetailController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-<<<<<<< HEAD
-=======
 
     @GetMapping("/orders/{orderId}/details")
     @PreAuthorize("hasAnyRole('Admin', 'User')")
@@ -89,6 +87,4 @@ public class OrderDetailController {
         List<OrderDetailReturnDTO> orderDetails = orderDetailService.getOrderDetailsByOrderId(orderId);
         return ResponseEntity.ok(orderDetails);
     }
-
->>>>>>> origin/main
 }

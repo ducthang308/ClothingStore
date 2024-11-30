@@ -239,7 +239,6 @@ public class AddSanphamActivity extends AppCompatActivity {
                     imageView.setImageURI(imageUri); // Hiển thị ảnh trong ImageView
                 }
             }
-
             selectedImageUris = imageUris;
         }
     }

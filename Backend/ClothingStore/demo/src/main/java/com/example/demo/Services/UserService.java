@@ -29,6 +29,7 @@ public class UserService implements IUsersService{
     private final JwtToken jwtToken;
     private final AuthenticationManager authenticationManager;
     private final RolesRepository rolesRepository;
+    //private final ConversationRepository conversationRepository;
 
     @Override
     public Users createUser(UsersDTO usersDTO) throws Exception {
@@ -94,7 +95,9 @@ public class UserService implements IUsersService{
         Long roleId = existingUser.getRoles().getId();
         Long userId = existingUser.getId();
         String name = existingUser.getFullName();
-        return new LoginResponseDTO(token, roleId, userId, name);
+        //Long conversationId = conversationRepository.findConversationIdByUserId(userId);
+        String address = existingUser.getAddress();
+        return new LoginResponseDTO(token, roleId, userId, name, address);
     }
 
     @Override

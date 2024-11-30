@@ -1,9 +1,11 @@
 package DTO;
 
 import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class ProductDTO {
+public class ProductDTO implements Serializable {
     @SerializedName("id")
     private int id;
 
@@ -12,6 +14,13 @@ public class ProductDTO {
 
     @SerializedName("category_id")
     private int categoryId;
+
+    public ProductDTO(int id, String productName, Float price, List<String> imageUrls) {
+        this.id = id;
+        this.productName = productName;
+        this.price = price;
+        this.imageUrls = imageUrls;
+    }
 
     @SerializedName("color")
     private String color;

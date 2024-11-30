@@ -18,6 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DuAnAndroid"
         tools:targetApi="31">
+
         <activity
             android:name=".View.AdminChitietSpActivity"
             android:exported="false" />
@@ -52,6 +53,7 @@
         <activity android:name=".View.customerManagerActivity" />
         <activity android:name=".View.detailChatAdminActivity" />
         <activity android:name=".View.editAccountActivity" />
+        <activity android:name=".View.PaymentMethodActivity"/>
         <activity android:name=".View.HelpActivity" /> <!-- <activity -->
         <!-- android:name=".View.MainActivity" -->
         <!-- android:exported="false" -->
