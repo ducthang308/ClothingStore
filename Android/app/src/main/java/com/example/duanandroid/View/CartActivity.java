@@ -1,84 +1,134 @@
 package com.example.duanandroid.View;
 
-import android.annotation.SuppressLint;
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.duanandroid.R;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import Adapter.CartAdapter;
-import Model.CartItem;
+import DTO.CartItemsDTO;
+import Interface.APIClient;
+import Interface.ApiCartItems;
+import Interface.PreferenceManager;
+import Model.CartItems;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CartActivity extends AppCompatActivity {
-
-    private RecyclerView recyclerCartItems;
+    private ListView listCartItems;
+    private TextView tv_total_price;
+    private List<CartItemsDTO> cartItems = new ArrayList<>();
     private CartAdapter cartAdapter;
-    private List<CartItem> cartItems;
+    private int cartId;
+    private String token;
+    private ApiCartItems apiCartItems;
+    private PreferenceManager preferenceManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        recyclerCartItems = findViewById(R.id.recycler_cart_items);
-        recyclerCartItems.setLayoutManager(new LinearLayoutManager(this));
+        listCartItems = findViewById(R.id.list_cart_items);
+        tv_total_price = findViewById(R.id.tv_total_price);
 
-        // Sample cart items data
-        cartItems = new ArrayList<>();
+        preferenceManager = new PreferenceManager(this);
+        token = preferenceManager.getToken();
+        cartId = preferenceManager.getCartId();
 
+        if (token == null || token.isEmpty() || cartId <= 0) {
+            Toast.makeText(this, "Lỗi xác thực. Vui lòng đăng nhập lại.", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
-        cartAdapter = new CartAdapter(cartItems);
-        recyclerCartItems.setAdapter(cartAdapter);
-        Intent intent = getIntent();
-        String origin = intent.getStringExtra("origin");
-        TextView btn=  findViewById(R.id.btn_checkout);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(CartActivity.this, BuyandpaymentActivity.class);
-                intent.putExtra("origin", "cart");
-                startActivity(intent);
-            }
+        apiCartItems = APIClient.getClient().create(ApiCartItems.class);
+        cartAdapter = new CartAdapter(this, cartItems, apiCartItems, token, cartId);
+        listCartItems.setAdapter(cartAdapter);
+
+        loadCartItems();
+
+        Button btnCheckout = findViewById(R.id.btn_checkout);
+        btnCheckout.setOnClickListener(view -> {
+            Intent checkoutIntent = new Intent(CartActivity.this, BuyandpaymentActivity.class);
+            checkoutIntent.putExtra("origin", "cart");
+            startActivity(checkoutIntent);
         });
 
+        ImageButton btnBack = findViewById(R.id.btn_back);
+        btnBack.setOnClickListener(view -> finish());
 
-        @SuppressLint({"MissingInflatedId", "LocalSuppress"})
-        ImageButton backArrow = findViewById(R.id.btn_back);
-
-        backArrow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if ("CartToAccount".equals(origin)) {
-                    Intent intent = new Intent(CartActivity.this, ManageAccountActivity.class);
-//                    startActivity(intent);
-                    finish();
-                } else if ("CartToHome".equals(origin)) {
-                    Intent intent = new Intent(CartActivity.this, mainpageActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                } else {
-                    finish();
+        TextView btnDelete = findViewById(R.id.edit);
+        btnDelete.setOnClickListener(view -> {
+            List<Integer> selectedItems = cartAdapter.getSelectedItems();  // Lấy các sản phẩm đã chọn
+            for (int productId : selectedItems) {
+                deleteCartItem(cartId, productId);
+                // Xóa các item khỏi danh sách giỏ hàng
+                for (int i = cartItems.size() - 1; i >= 0; i--) {
+                    if (cartItems.get(i).getProductId() == productId) {
+                        cartItems.remove(i);
+                    }
                 }
             }
+            cartAdapter.notifyDataSetChanged();  // Cập nhật lại ListView
         });
+        
+    }
 
-        ImageView imv=  findViewById(R.id.chat);
-        imv.setOnClickListener(new View.OnClickListener() {
+    private void deleteCartItem(int cartId, int productId) {
+        Call<Void> call = apiCartItems.deleteCartItem("Bearer " + token, cartId, productId);
+        call.enqueue(new Callback<Void>() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(CartActivity.this, chatUserActivity.class);
-                startActivity(intent);
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(CartActivity.this, "Đã xóa sản phẩm khỏi giỏ hàng!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(CartActivity.this, "Lỗi xóa sản phẩm!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(CartActivity.this, "Lỗi kết nối mạng!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void loadCartItems() {
+        Call<List<CartItemsDTO>> call = apiCartItems.getAllCartItemsByCartId("Bearer " + token, cartId);
+        call.enqueue(new Callback<List<CartItemsDTO>>() {
+            @Override
+            public void onResponse(Call<List<CartItemsDTO>> call, Response<List<CartItemsDTO>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    cartItems.clear();
+                    cartItems.addAll(response.body());
+                    cartAdapter.notifyDataSetChanged();
+
+                    // Tính tổng tiền
+                    double totalPrice = 0;
+                    for (CartItemsDTO item : cartItems) {
+                        totalPrice += item.getPrice() * item.getQuantity();
+                    }
+                    tv_total_price.setText(String.format("₫%,.0f", totalPrice));
+                } else {
+                    Toast.makeText(CartActivity.this, "Không tải được dữ liệu giỏ hàng.", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<CartItemsDTO>> call, Throwable t) {
+                Toast.makeText(CartActivity.this, "Lỗi kết nối. Vui lòng thử lại.", Toast.LENGTH_SHORT).show();
             }
         });
     }

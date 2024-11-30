@@ -12,6 +12,7 @@ import java.util.List;
 @Repository
 public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long> {
     List<OrderDetail> findByOrdersId(Long orderId);
+
     @Query("SELECT new com.example.demo.DTO.OrderDetailReturnDTO(od.numberOfProduct, od.totalMoney, p.productName, pi.imageUrl, o.users.address, o.orderDate, o.status) " +
             "FROM Orders o " +
             "JOIN o.orderDetails od " +

@@ -31,6 +31,7 @@ public class OrdersDTO {
     @SerializedName("orderDetails")
     private List<OrderDetailDTO> orderDetails;
 
+
     @SerializedName("discount_id")
     private int discounts;
 
@@ -121,6 +122,4 @@ public class OrdersDTO {
     public void setDiscounts(int discounts) {
         this.discounts = discounts;
     }
-
-
 }

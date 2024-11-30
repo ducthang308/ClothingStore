@@ -6,8 +6,11 @@ public class LoginResponseDTO {
     private int userId;
     private String name;
     private String address;
+    private int conversationId;
+    private int cartId;
 
-    public LoginResponseDTO(String token, int roleId, int userId, String name, String address) {
+    public LoginResponseDTO(String token, int roleId, int userId, String name, int conversationId, int cartId) {
+
         this.token = token;
         this.roleId = roleId;
         this.userId = userId;

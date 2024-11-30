@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ public class HomeFragment extends Fragment {
     private ProductAdapter productAdapter;
     private List<ProductDTO> productList = new ArrayList<>();
     private ApiProduct apiProduct;
+    private ImageView shopping_cart;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -72,7 +74,6 @@ public class HomeFragment extends Fragment {
 
         binding.shoppingCart.setOnClickListener(v -> {
             Intent intent = new Intent(requireActivity(), CartActivity.class);
-            intent.putExtra("origin", "CartToHome");
             startActivity(intent);
         });
 

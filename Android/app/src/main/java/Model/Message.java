@@ -1,23 +1,51 @@
 package Model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Message {
+    @SerializedName("id")
     private int id;
+
+    @SerializedName("senderId")
     private int senderId;
+
+    @SerializedName("receiver_id")
     private int receiverId;
+
+    @SerializedName("content")
     private String content;
-    private LocalDateTime sentAt;
-    private boolean isRead;
+
+    @SerializedName("create_at")
+    private Date createAt;
+
+    private int conversationId;
 
     // Constructor
-    public Message(int id, int senderId, int receiverId, String content, LocalDateTime sentAt, boolean isRead) {
+    public Message(int id, int senderId, int receiverId, String content, Date createAt, int conversationId) {
         this.id = id;
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.content = content;
-        this.sentAt = sentAt;
-        this.isRead = isRead;
+        this.createAt = createAt;
+        this.conversationId = conversationId;
+    }
+
+    public int getConversationId() {
+        return conversationId;
+    }
+
+    public void setConversationId(int conversationId) {
+        this.conversationId = conversationId;
+    }
+
+    public Message(int senderId, int receiverId, String content, Date createAt) {
+        this.senderId = senderId;
+        this.receiverId = receiverId;
+        this.content = content;
+        this.createAt = createAt;
     }
 
     public Message() {
@@ -55,21 +83,12 @@ public class Message {
         this.content = content;
     }
 
-    public LocalDateTime getSentAt() {
-        return sentAt;
+    public Date getCreateAt() {
+        return createAt;
     }
 
-    public void setSentAt(LocalDateTime sentAt) {
-        this.sentAt = sentAt;
+    public void setCreateAt(Date sentAt) {
+        this.createAt = createAt;
     }
-
-    public boolean isRead() {
-        return isRead;
-    }
-
-    public void setRead(boolean isRead) {
-        this.isRead = isRead;
-    }
-
 }
 

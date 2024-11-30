@@ -37,6 +37,10 @@ public interface ApiOrders {
     @DELETE("api/v1/orders/{id}")
     Call<String> deleteOrder(@Path("id") Long id);
 
+
+    Call<String> createOrder(@Header("Authorization") String token, @Body OrdersDTO odersDTO);
+
+
     @GET("api/v1/orders/{id}")
     Call<List<OrdersDTO>> getOrderById(@Header("Authorization") String token, @Path("id") int id);
 
@@ -50,6 +54,7 @@ public interface ApiOrders {
     @DELETE("api/v1/orders/{id}")
     Call<String> deleteOrder(@Header("Authorization") String token, @Path("id") Long id);
 
+
     @PATCH("api/v1/orders/status/{id}")
     Call<String> updateOrderStatus(
             @Header("Authorization") String token,
@@ -57,3 +62,4 @@ public interface ApiOrders {
             @Body OrdersDTO orderDTO
     );
 }
+

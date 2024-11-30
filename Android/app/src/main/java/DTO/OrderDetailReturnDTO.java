@@ -93,4 +93,6 @@ public class OrderDetailReturnDTO {
     public void setStatus(String status) {
         this.status = status;
     }
+
 }
+

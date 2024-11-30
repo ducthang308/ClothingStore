@@ -60,11 +60,24 @@ public class OrdersController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('Admin', 'User')")
-    public ResponseEntity<?> updateProduct(@PathVariable("id") Long id,
+    public ResponseEntity<?> updateOrder(@PathVariable("id") Long id,
                                            @Valid @RequestBody OrdersDTO ordersDTO)
     {
         try {
             orderService.updateOrders(id, ordersDTO);
+            return ResponseEntity.ok("Update successfully");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PatchMapping("/status/{id}")
+    @PreAuthorize("hasAnyRole('Admin', 'User')")
+    public ResponseEntity<?> updateStatus(@PathVariable("id") Long id,
+                                         @Valid @RequestBody OrdersDTO orderDTO)
+    {
+        try {
+            orderService.updateStatus(id, orderDTO);
             return ResponseEntity.ok("Update successfully");
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());

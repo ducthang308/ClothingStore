@@ -15,4 +15,7 @@ public class LoginResponseDTO {
     private String name;
     //private Long conversationId;
     private String address;
+    private Long conversationId;
+    private String address;
+    private Long cartId;
 }

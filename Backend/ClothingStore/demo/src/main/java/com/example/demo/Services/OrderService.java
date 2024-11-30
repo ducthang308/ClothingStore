@@ -1,6 +1,6 @@
 package com.example.demo.Services;
 
-import com.example.demo.DTO.CartItemDTO;
+import com.example.demo.DTO.CartItemsDTO;
 import com.example.demo.DTO.OrdersDTO;
 import com.example.demo.Exception.DataNotFoundException;
 import com.example.demo.Models.*;
@@ -93,8 +93,6 @@ public class OrderService implements IOrdersService {
     public List<Orders> getAllOrders() {
         return ordersRepository.findAll();
     }
-
-
 
 
     @Override

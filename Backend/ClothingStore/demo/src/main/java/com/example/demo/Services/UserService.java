@@ -6,10 +6,10 @@ import com.example.demo.DTO.UsersDTO;
 import com.example.demo.Exception.DataNotFoundException;
 import com.example.demo.Exception.PermissonDenyException;
 import com.example.demo.JWT.JwtToken;
+import com.example.demo.Models.Conversation;
 import com.example.demo.Models.Roles;
 import com.example.demo.Models.Users;
-import com.example.demo.Repository.RolesRepository;
-import com.example.demo.Repository.UsersRepository;
+import com.example.demo.Repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,7 +29,12 @@ public class UserService implements IUsersService{
     private final JwtToken jwtToken;
     private final AuthenticationManager authenticationManager;
     private final RolesRepository rolesRepository;
+
     //private final ConversationRepository conversationRepository;
+
+    private final ConversationRepository conversationRepository;
+    private final CartsRepository cartsRepository;
+
 
     @Override
     public Users createUser(UsersDTO usersDTO) throws Exception {
@@ -95,9 +100,16 @@ public class UserService implements IUsersService{
         Long roleId = existingUser.getRoles().getId();
         Long userId = existingUser.getId();
         String name = existingUser.getFullName();
+
         //Long conversationId = conversationRepository.findConversationIdByUserId(userId);
         String address = existingUser.getAddress();
         return new LoginResponseDTO(token, roleId, userId, name, address);
+
+        Long conversationId = conversationRepository.findConversationIdByUserId(userId);
+        String address = existingUser.getAddress();
+        Long cartId = cartsRepository.findCartIdByUserId(userId);
+        return new LoginResponseDTO(token, roleId, userId, name, conversationId, address, cartId);
+
     }
 
     @Override
@@ -117,5 +129,4 @@ public class UserService implements IUsersService{
     public List<Users> getAllUser(UsersDTO usersDTO) throws Exception {
         return usersRepository.findAll();
     }
-
 }
