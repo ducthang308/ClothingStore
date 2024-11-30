@@ -8,8 +8,11 @@ public class PreferenceManager {
     private static final String KEY_TOKEN = "token";
     private static final String KEY_USER_ID = "userId";
     private static final String KEY_USER_NAME = "name";
+    private static final String KEY_ADDRESS = "address";
+
     private static final String KEY_CONVERSATION = "id";
     private static final String KEY_CART = "cartId";
+
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
@@ -56,6 +59,20 @@ public class PreferenceManager {
         editor.apply();
     }
 
+
+    // Lưu địa chỉ
+    public void saveAddress(String address) {
+        editor.putString(KEY_ADDRESS, address);
+        editor.apply();
+    }
+
+    public String getAddress() {
+        return sharedPreferences.getString(KEY_ADDRESS, null);
+    }
+
+    public void clearAddress() {
+        editor.remove(KEY_ADDRESS);
+
     public void saveId(int id) {
         editor.putInt(KEY_CONVERSATION, id);
         editor.apply();
@@ -77,6 +94,7 @@ public class PreferenceManager {
     }
     public void clearCartId() {
         editor.remove(KEY_CART);
+
         editor.apply();
     }
 }

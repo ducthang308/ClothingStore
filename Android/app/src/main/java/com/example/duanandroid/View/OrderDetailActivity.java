@@ -1,78 +1,67 @@
 package com.example.duanandroid.View;
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.duanandroid.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import Adapter.ItemProductInItemOrderAdapter;
-import Model.OrderDetail;
-import Model.Product;
-import Model.ProductImage;
-
 public class OrderDetailActivity extends AppCompatActivity {
-    private RecyclerView rcvProduct;
-    private ItemProductInItemOrderAdapter itemProductInItemOrderAdapter;
-    private List<Product> productList;
-    private List<ProductImage> productImageList;
-    private List<OrderDetail> orderDetailList;
+    private TextView productName, productPrice, productQuantity, totalPayment, orderDate, deliveryAddress, orderId;
+    private ImageView productImage;
 
-
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.order_detail);
+        setContentView(R.layout.activity_detail_order);
 
-        // Lấy orderId từ Intent
-        int orderId = getIntent().getIntExtra("orderId", -1); // -1 là giá trị mặc định nếu không có dữ liệu
+        // Ánh xạ các views
+        productName = findViewById(R.id.product_name);
+        productPrice = findViewById(R.id.product_price);
+        productQuantity = findViewById(R.id.product_soluong);
+        totalPayment = findViewById(R.id.total);
+        orderDate = findViewById(R.id.order_date);
+        deliveryAddress = findViewById(R.id.delivery_address);
+        productImage = findViewById(R.id.pic);
+        orderId = findViewById(R.id.tv_orderid);  // Ánh xạ TextView cho mã đơn hàng
 
-        // Sử dụng orderId (ví dụ: tải dữ liệu từ cơ sở dữ liệu hoặc API)
-        if (orderId != -1) {
-            // Thực hiện logic, ví dụ:
-            loadOrderDetails(orderId);
+        // Lấy dữ liệu từ Intent
+        Intent intent = getIntent();
+        String productNameStr = intent.getStringExtra("product_name");
+        String productPriceStr = intent.getStringExtra("product_price");
+        int productQuantityValue = intent.getIntExtra("product_quantity", 0);
+        String totalPaymentStr = intent.getStringExtra("total_payment");
+        String productImageUrl = intent.getStringExtra("product_image_url");
+        String deliveryAddressStr = intent.getStringExtra("delivery_address");
+        String orderDateStr = intent.getStringExtra("order_date");
+        int orderIdValue = getIntent().getIntExtra("order_id", -1); // Lấy mã đơn hàng từ Intent
+
+        // Hiển thị dữ liệu lên giao diện
+        productName.setText(productNameStr != null ? productNameStr : "Tên sản phẩm: Chưa rõ");
+        productPrice.setText(productPriceStr != null ? productPriceStr : "0đ");
+        productQuantity.setText("x" + productQuantityValue);
+        totalPayment.setText(totalPaymentStr != null ? totalPaymentStr : "0đ");
+        deliveryAddress.setText(deliveryAddressStr != null ? deliveryAddressStr : "Địa chỉ giao hàng: Chưa có");
+        orderDate.setText(orderDateStr != null ? orderDateStr : "Ngày đặt hàng: Chưa rõ");
+
+        // Hiển thị mã đơn hàng
+        if (orderIdValue != -1) {
+            orderId.setText("Mã đơn hàng: " + orderIdValue);
         } else {
-            // Xử lý lỗi nếu không nhận được orderId
+            orderId.setText("Mã đơn hàng: Chưa rõ");
         }
 
-        rcvProduct = findViewById(R.id.rcv_product);
-        productList = new ArrayList<>();
-        productImageList = new ArrayList<>();
-        orderDetailList = new ArrayList<>();
-        Product product = new Product(1, "Áo thun ngắn tay nữ trắng"," size M", 200000);
-        ProductImage productImage = new ProductImage(1, R.drawable.ao);
-        OrderDetail orderDetail = new OrderDetail(1, 1, 1,1);
-
-        Product product2 = new Product(2, "Áo sơ mi tay dài nam", "size L", 350000);
-        ProductImage productImage2 = new ProductImage(2, R.drawable.ao);
-        OrderDetail orderDetail2 = new OrderDetail(2, 2, 1, 2);
-
-        Product product3 = new Product(3, "Quần jean nam", "size 32", 450000);
-        ProductImage productImage3 = new ProductImage(3, R.drawable.ao);
-        OrderDetail orderDetail3 = new OrderDetail(3, 3, 1, 1);
-
-        productList.add(product);
-        productImageList.add(productImage);
-        orderDetailList.add(orderDetail);
-
-        productList.add(product2);
-        productImageList.add(productImage2);
-        orderDetailList.add(orderDetail2);
-
-        productList.add(product3);
-        productImageList.add(productImage3);
-        orderDetailList.add(orderDetail3);
-        // Cài đặt Adapter
-        itemProductInItemOrderAdapter = new ItemProductInItemOrderAdapter(this, productList, productImageList, orderDetailList);
-        rcvProduct.setLayoutManager(new LinearLayoutManager(this));
-        rcvProduct.setAdapter(itemProductInItemOrderAdapter);
-
-    }
-    private void loadOrderDetails(int orderId) {
-        // Gọi API hoặc truy vấn cơ sở dữ liệu để lấy chi tiết đơn hàng
+        // Hiển thị hình ảnh sản phẩm
+        Glide.with(this)
+                .load(productImageUrl)
+                .placeholder(R.drawable.co4la)
+                .error(R.drawable.error)
+                .into(productImage);
     }
 }

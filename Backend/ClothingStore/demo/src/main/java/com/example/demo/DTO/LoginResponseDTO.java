@@ -13,6 +13,8 @@ public class LoginResponseDTO {
     private Long roleId;
     private Long userId;
     private String name;
+    //private Long conversationId;
+    private String address;
     private Long conversationId;
     private String address;
     private Long cartId;

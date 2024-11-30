@@ -5,84 +5,80 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="411dp"
+        android:layout_height="97dp"
         android:orientation="horizontal"
-        android:layout_marginBottom="16dp"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp">
 
-    <ImageView
-        android:id="@+id/product_image1"
-        android:layout_width="80dp"
-        android:layout_height="match_parent"
-        android:layout_marginEnd="16dp"
-        android:contentDescription="Product Image"
-        />
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="1">
-
-        <TextView
-            android:id="@+id/product_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Áo thun ngắn tay nữ trắng"
-            android:textSize="16sp"
-            android:textColor="#000"/>
+        <ImageView
+            android:id="@+id/product_image1"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="Product Image" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:orientation="vertical">
+
             <TextView
+                android:id="@+id/product_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="size: "
-                android:textSize="14sp"
-                android:textColor="#666"
-                android:layout_marginTop="4dp"/>
+                android:text="Áo thun ngắn tay nữ trắng"
+                android:textColor="#000"
+                android:textSize="16sp" />
+
             <TextView
-                android:id="@+id/product_size"
+                android:id="@+id/product_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="M"
-                android:textSize="14sp"
-                android:textColor="#666"
-                android:layout_marginTop="4dp"/>
+                android:gravity="end"
+                android:text="200.000đ"
+                android:textColor="#FF0000"
+                android:textSize="16sp" />
+
+            <!-- Layout chứa các nút cộng trừ -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="55dp">
+
+                <ImageButton
+                    android:id="@+id/btn_decrease"
+                    android:layout_width="33dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:background="#0000"
+                    android:contentDescription="Plus Button"
+                    android:src="@drawable/minus"
+                    />
+
+                <TextView
+                    android:id="@+id/product_quantity"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="1"
+                    android:textSize="16sp"
+                    android:textColor="#000" />
+
+                <ImageButton
+                    android:id="@+id/btn_increase"
+                    android:layout_width="34dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:background="#0000"
+                    android:contentDescription="Minus Button"
+                    android:src="@drawable/plus"
+                    />
+            </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="x"
-                android:textSize="14sp"
-                android:textColor="#666"
-                android:layout_marginTop="4dp"/>
-            <TextView
-                android:id="@+id/product_quantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" 1"
-                android:textSize="14sp"
-                android:textColor="#666"
-                android:layout_marginTop="4dp"/>
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/product_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="200.000đ"
-            android:textSize="16sp"
-            android:textColor="#FF0000"
-            android:gravity="end"/>
     </LinearLayout>
-    </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

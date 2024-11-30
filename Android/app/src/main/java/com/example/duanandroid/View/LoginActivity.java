@@ -86,8 +86,12 @@ public class LoginActivity extends AppCompatActivity {
                     int userId = loginResponse.getUserId();
                     int roleId = loginResponse.getRoleId();
                     String name = loginResponse.getName();
+
+                    String address = loginResponse.getAddress();
+
                     int conversationId = loginResponse.getConversationId();
                     int cartId = loginResponse.getCartId();
+
 
 
                     Log.d("Login", "Token: " + token);
@@ -96,6 +100,9 @@ public class LoginActivity extends AppCompatActivity {
                     preferenceManager.saveToken(token);
                     preferenceManager.saveUserId(userId);
                     preferenceManager.saveName(name);
+
+                    preferenceManager.saveAddress(address);
+
                     preferenceManager.saveId(conversationId);
 
                     if (cartId == 0) {
@@ -145,6 +152,7 @@ public class LoginActivity extends AppCompatActivity {
                     }else {
                         preferenceManager.saveCartId(cartId);
                     }
+
 
                     if (roleId == 2) {
                         Intent intent = new Intent(LoginActivity.this, mainpageActivity.class);

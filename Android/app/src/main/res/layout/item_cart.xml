@@ -86,7 +86,11 @@
                     android:layout_width="34dp"
                     android:layout_height="34dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
+
+                    android:contentDescription="Plus Button"
+
                     android:contentDescription="Minus Button"
+
                     android:src="@drawable/minus"
                     tools:ignore="TouchTargetSizeCheck" />
 
@@ -103,7 +107,11 @@
                     android:layout_width="34dp"
                     android:layout_height="34dp"
                     android:background="?attr/selectableItemBackgroundBorderless"
+
+                    android:contentDescription="Minus Button"
+
                     android:contentDescription="Plus Button"
+
                     android:src="@drawable/plus"
                     tools:ignore="TouchTargetSizeCheck" />
             </LinearLayout>

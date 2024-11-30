@@ -17,9 +17,11 @@ import java.util.List;
 import Model.Discount;
 
 public class SelectVoucherAdapter extends RecyclerView.Adapter<SelectVoucherAdapter.VoucherViewHolder> {
+
     private List<Discount> discountList;
     private OnVoucherSelectListener selectListener;
 
+    // Constructor
     public SelectVoucherAdapter(List<Discount> discountList, OnVoucherSelectListener selectListener) {
         this.discountList = discountList != null ? discountList : new ArrayList<>();
         this.selectListener = selectListener;
@@ -37,9 +39,11 @@ public class SelectVoucherAdapter extends RecyclerView.Adapter<SelectVoucherAdap
         Discount discount = discountList.get(position);
         if (discount == null) return;
 
-        holder.txtDiscount.setText(String.format("%s%%", discount.getPercent()));
+        // Bind data to item views
+        holder.txtDiscount.setText(String.format("%.0f%%", discount.getPercent() * 100));
         holder.tvMota.setText(discount.getNote());
 
+        // Handle button click
         holder.btnUse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,6 +59,7 @@ public class SelectVoucherAdapter extends RecyclerView.Adapter<SelectVoucherAdap
         return discountList.size();
     }
 
+    // ViewHolder class
     public static class VoucherViewHolder extends RecyclerView.ViewHolder {
         private TextView txtDiscount;
         private TextView tvMota;
@@ -68,6 +73,7 @@ public class SelectVoucherAdapter extends RecyclerView.Adapter<SelectVoucherAdap
         }
     }
 
+    // Callback interface
     public interface OnVoucherSelectListener {
         void onVoucherSelected(Discount discount);
     }
