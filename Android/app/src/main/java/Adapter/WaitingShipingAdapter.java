@@ -2,6 +2,7 @@ package Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,27 +13,26 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.duanandroid.R;
 import com.example.duanandroid.View.ReasoncancelActivity;
 
 import java.util.List;
 
+import DTO.OrderDetailReturnDTO;
 import Model.OrderDetail;
 import Model.Product;
 import Model.ProductImage;
 
 public class WaitingShipingAdapter extends RecyclerView.Adapter<WaitingShipingAdapter.WaitingShipingViewHolder> {
-    private Context context;
-    private List<Product> productList;
-    private List<OrderDetail> orderDetailList;
-    private List<ProductImage> productImageList;
 
-    // Constructor
-    public WaitingShipingAdapter(Context context, List<Product> productList, List<OrderDetail> orderDetailList, List<ProductImage> productImageList) {
+    private final Context context;
+    private final List<OrderDetailReturnDTO> orderDetailList;
+
+    public WaitingShipingAdapter(Context context, List<OrderDetailReturnDTO> orderDetailList) {
         this.context = context;
-        this.productList = productList;
         this.orderDetailList = orderDetailList;
-        this.productImageList = productImageList;
     }
 
     @NonNull
@@ -44,6 +44,22 @@ public class WaitingShipingAdapter extends RecyclerView.Adapter<WaitingShipingAd
 
     @Override
     public void onBindViewHolder(@NonNull WaitingShipingAdapter.WaitingShipingViewHolder holder, int position) {
+        OrderDetailReturnDTO orderDetail = orderDetailList.get(position);
+
+        // Hiển thị thông tin sản phẩm
+        holder.productName.setText(orderDetail.getProductName());
+        holder.productPrice.setText(String.format("%,.0fđ", orderDetail.getTotalMoney() / orderDetail.getNumberOfProduct()));
+        holder.productQuantity.setText("x" + orderDetail.getNumberOfProduct());
+        holder.totalPayment.setText(String.format("%,.0fđ", orderDetail.getTotalMoney()));
+
+        // Load hình ảnh sản phẩm
+        Glide.with(context)
+                .load(orderDetail.getImageUrl()) // URL hình ảnh
+                .apply(new RequestOptions()
+                        .placeholder(R.drawable.co4la) // Hình chờ
+                        .error(R.drawable.error)       // Hình lỗi
+                        .centerCrop())
+                .into(holder.productImage);
 //        Product product = productList.get(position);
 //        OrderDetail orderDetail = orderDetailList.get(position);
 //
@@ -75,7 +91,9 @@ public class WaitingShipingAdapter extends RecyclerView.Adapter<WaitingShipingAd
 
     @Override
     public int getItemCount() {
-        return productList.size();
+        // Log số lượng phần tử trong Adapter
+        Log.d("Adapter", "Item count: " + orderDetailList.size());
+        return orderDetailList.size();
     }
 
     public static class WaitingShipingViewHolder extends RecyclerView.ViewHolder {

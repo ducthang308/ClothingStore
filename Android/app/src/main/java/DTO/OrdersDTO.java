@@ -5,7 +5,6 @@ import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
 import Model.Discount;
-import Model.User;
 
 public class OrdersDTO {
     @SerializedName("id")
@@ -18,7 +17,7 @@ public class OrdersDTO {
     private String note;
 
     @SerializedName("order_date")
-    private Date orderDate;
+    private String orderDate;
 
     @SerializedName("status")
     private String status;
@@ -33,11 +32,14 @@ public class OrdersDTO {
     private List<OrderDetailDTO> orderDetails;
 
 
+    @SerializedName("discount_id")
+    private int discounts;
 
-    @SerializedName("discounts")
-    private Discount discounts;
+    public OrdersDTO() {
+        // Khởi tạo các giá trị mặc định nếu cần
+    }
 
-    public OrdersDTO(int id, int userId, String note, Date orderDate, String status, Float totalMoney, String paymentMethod, List<OrderDetailDTO> orderDetails, Discount discounts) {
+    public OrdersDTO(int id, int userId, String note, String orderDate, String status, Float totalMoney, String paymentMethod, List<OrderDetailDTO> orderDetails, int discounts) {
         this.id = id;
         this.userId = userId;
         this.note = note;
@@ -73,11 +75,11 @@ public class OrdersDTO {
         this.note = note;
     }
 
-    public Date getOrderDate() {
+    public String getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(String orderDate) {
         this.orderDate = orderDate;
     }
 
@@ -113,11 +115,11 @@ public class OrdersDTO {
         this.orderDetails = orderDetails;
     }
 
-    public Discount getDiscounts() {
+    public int getDiscounts() {
         return discounts;
     }
 
-    public void setDiscounts(Discount discounts) {
+    public void setDiscounts(int discounts) {
         this.discounts = discounts;
     }
 }

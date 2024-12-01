@@ -10,6 +10,7 @@ import com.example.demo.Repository.OrderDetailRepository;
 import com.example.demo.Repository.OrdersRepository;
 import com.example.demo.Repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -83,4 +84,6 @@ public class OrderDetailService implements IOrderDetailService{
     public List<OrderDetailReturnDTO> getOrderDetailsByOrderId(Long orderId) {
         return detailRepository.findOrderDetailsByOrderId(orderId);
     }
+
+
 }

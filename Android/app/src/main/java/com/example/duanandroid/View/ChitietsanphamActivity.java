@@ -24,6 +24,7 @@ import java.util.Map;
 
 import Adapter.ReviewAdapter;
 import DTO.CartItemsDTO;
+import DTO.ProductDTO;
 import DTO.ReviewWithUserFullNameDTO;
 import Interface.APIClient;
 import Interface.ApiCartItems;
@@ -272,8 +273,44 @@ public class ChitietsanphamActivity extends AppCompatActivity {
         });
 
         findViewById(R.id.btn_buy_now).setOnClickListener(view -> {
+            String productName = productNameTextView.getText().toString();
+            String productPriceString = productPriceTextView.getText().toString().replace("₫", "").replace(",", "");
+            Float productPrice = null;
+
+            try {
+                productPrice = Float.parseFloat(productPriceString);
+            } catch (NumberFormatException e) {
+                Toast.makeText(this, "Invalid price format!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (productPrice == null || productPrice <= 0.0f) {
+                Toast.makeText(this, "Invalid product price!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            List<String> productImages = getIntent().getStringArrayListExtra("productImage");
+            if (productImages == null || productImages.isEmpty()) {
+                Toast.makeText(this, "Product images are missing!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+
+            int productId = getIntent().getIntExtra("productId", -1);
+            if (productId == -1) {
+                Toast.makeText(this, "Invalid product ID!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Create ProductDTO object
+            ProductDTO productDTO = new ProductDTO(productId, productName, productPrice, productImages);
+
+            // Pass ProductDTO to BuyandpaymentActivity
+            ArrayList<ProductDTO> productList = new ArrayList<>();
+            productList.add(productDTO);
+
             Intent intent = new Intent(ChitietsanphamActivity.this, BuyandpaymentActivity.class);
-            intent.putExtra("origin", "order_details");
+            intent.putExtra("productList", productList);
             startActivity(intent);
         });
 

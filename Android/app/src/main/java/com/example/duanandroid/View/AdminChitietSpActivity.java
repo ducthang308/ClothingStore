@@ -91,7 +91,8 @@ public class AdminChitietSpActivity extends AppCompatActivity {
         return true;
     }
 
-    private void setupRecyclerView() {
+
+    public void setupRecyclerView() {
         reviewAdapter = new ReviewAdapter(this, reviewList);
         reviewRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         reviewRecyclerView.setAdapter(reviewAdapter);

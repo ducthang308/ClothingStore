@@ -5,32 +5,25 @@ public class LoginResponseDTO {
     private int roleId;
     private int userId;
     private String name;
+    private String address;
     private int conversationId;
     private int cartId;
 
     public LoginResponseDTO(String token, int roleId, int userId, String name, int conversationId, int cartId) {
+
         this.token = token;
         this.roleId = roleId;
         this.userId = userId;
         this.name = name;
-        this.conversationId = conversationId;
-        this.cartId = cartId;
+        this.address = address;
     }
 
-    public int getCartId() {
-        return cartId;
+    public String getAddress() {
+        return address;
     }
 
-    public void setCartId(int cartId) {
-        this.cartId = cartId;
-    }
-
-    public int getConversationId() {
-        return conversationId;
-    }
-
-    public void setConversationId(int conversationId) {
-        this.conversationId = conversationId;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getName() {
@@ -63,5 +56,21 @@ public class LoginResponseDTO {
 
     public void setRoleId(int roleId) {
         this.roleId = roleId;
+    }
+
+    public int getConversationId() {
+        return conversationId;
+    }
+
+    public void setConversationId(int conversationId) {
+        this.conversationId = conversationId;
+    }
+
+    public int getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
     }
 }

@@ -34,6 +34,8 @@ public class OrderDetailReturnDTO {
     @Column(name = "status")
     private String status;
 
+
 //    @JsonProperty("id")
 //    private Long id;
+
 }

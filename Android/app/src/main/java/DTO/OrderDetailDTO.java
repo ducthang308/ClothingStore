@@ -13,16 +13,17 @@ public class OrderDetailDTO {
     private int numberOfProduct;
     @SerializedName("total_money")
     private Float totalMoney;
-    @SerializedName("color")
-    private String color;
 
-    public OrderDetailDTO(int orderId, int productId, Float price, int numberOfProduct, Float totalMoney, String color) {
+    public OrderDetailDTO() {
+    }
+
+    public OrderDetailDTO(int orderId, int productId, Float price, int numberOfProduct, Float totalMoney) {
         this.orderId = orderId;
         this.productId = productId;
         this.price = price;
         this.numberOfProduct = numberOfProduct;
         this.totalMoney = totalMoney;
-        this.color = color;
+
     }
 
     public int getOrderId() {
@@ -38,7 +39,7 @@ public class OrderDetailDTO {
     }
 
     public void setProductId(int productId) {
-
+        this.productId = productId;
     }
 
     public Float getPrice() {
@@ -65,11 +66,4 @@ public class OrderDetailDTO {
         this.totalMoney = totalMoney;
     }
 
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
 }

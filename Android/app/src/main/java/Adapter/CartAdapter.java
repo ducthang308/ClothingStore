@@ -167,4 +167,3 @@ public class CartAdapter extends ArrayAdapter<CartItemsDTO> {
         CheckBox checkBox;  // CheckBox cho mỗi item
     }
 }
-
