@@ -10,6 +10,7 @@ import com.example.demo.Models.Conversation;
 import com.example.demo.Models.Roles;
 import com.example.demo.Models.Users;
 import com.example.demo.Repository.*;
+import com.example.demo.Responses.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -116,7 +117,7 @@ public class UserService implements IUsersService{
     }
 
     @Override
-    public List<Users> getAllUser(UsersDTO usersDTO) throws Exception {
-        return usersRepository.findAll();
+    public List<UserResponse> getAllUser(){
+        return usersRepository.getAllUserByRoleUser();
     }
 }
