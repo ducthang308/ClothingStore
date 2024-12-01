@@ -2,16 +2,20 @@ package com.example.duanandroid.View;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.duanandroid.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +30,8 @@ public class CartActivity extends AppCompatActivity {
     private List<CartItem> cartItems;
     private CheckBox cbxSelectAll;
     private TextView tvGia; // Hiển thị tổng giá
-
+    private ViewPager viewPager;
+    private BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +55,39 @@ public class CartActivity extends AppCompatActivity {
         // Thiết lập Adapter
         cartAdapter = new CartAdapter(cartItems, this::onCartItemSelectionChanged);
         recyclerCartItems.setAdapter(cartAdapter);
+
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.menu_cart);
+
+        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+
+                if (itemId == R.id.menu_shop) {
+                    navigateToMainPage(0);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    return true;
+                } else if (itemId == R.id.menu_notice) {
+                    navigateToMainPage(1);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    return true;
+                } else if (itemId == R.id.menu_home) {
+                    navigateToMainPage(2);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    return true;
+                } else if (itemId == R.id.menu_cart) {
+                    return true; // Giữ nguyên nếu đang ở tab Cart
+                } else if (itemId == R.id.menu_acount) {
+                    navigateToMainPage(3);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
 
         // Nút "Thanh toán"
         TextView btnCheckout = findViewById(R.id.btn_checkout);
@@ -79,6 +117,8 @@ public class CartActivity extends AppCompatActivity {
 
         // Tính tổng giá ban đầu
         calculateTotalPrice();
+
+
     }
 
     /**
@@ -113,7 +153,13 @@ public class CartActivity extends AppCompatActivity {
                 totalPrice += item.getPrice();
             }
         }
-        // Hiển thị tổng giá với định dạng "xxx,xxx đ"
+
         tvGia.setText(String.format("%,.0f đ", totalPrice));
+    }
+    private void navigateToMainPage(int tabPosition) {
+        Intent intent = new Intent(CartActivity.this, mainpageActivity.class);
+        intent.putExtra("tabPosition", tabPosition);
+        startActivity(intent);
+        finish(); // Đóng CartActivity
     }
 }

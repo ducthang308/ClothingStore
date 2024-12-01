@@ -103,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
             } else {
                 intent = new Intent(LoginActivity.this, mainpageAdminActivity.class);
             }
-            intent.putExtra("tabPosition", 1);
+            intent.putExtra("tabPosition", 2);
             startActivity(intent);
             finish();
         } else {

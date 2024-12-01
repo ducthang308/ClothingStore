@@ -33,16 +33,6 @@
             android:textColor="@color/colorblack"
             android:textColorHint="#B3B3B3"/>
 
-        <!-- Icon giỏ hàng -->
-        <ImageView
-            android:id="@+id/shopping_cart"
-            android:background="#FFFF"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_gravity="center"
-            android:src="@drawable/baseline_shopping_cart_24" />
-
         <ImageView
             android:id="@+id/chat"
             android:background="#FFFF"

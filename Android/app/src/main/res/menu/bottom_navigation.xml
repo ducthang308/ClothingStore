@@ -5,21 +5,28 @@
         android:textColor="@color/colorblack"
         android:title="Cửa hàng">
     </item>
-    <item   android:id="@+id/menu_home"
-            android:icon="@drawable/home"
-        android:textColor="@color/colorblack"
-            android:title="Trang chủ"
-        >
-    </item>
+
     <item   android:id="@+id/menu_notice"
         android:icon="@drawable/notice"
         android:textColor="@color/colorblack"
         android:title="Thông báo"
         >
     </item>
+    <item   android:id="@+id/menu_home"
+        android:icon="@drawable/home"
+        android:textColor="@color/colorblack"
+        android:title="Trang chủ"
+        >
+    </item>
+    <item   android:id="@+id/menu_cart"
+        android:icon="@drawable/icon_cart_bottom"
+        android:textColor="@color/colorblack"
+        android:title="Giỏ hàng">
+    </item>
     <item   android:id="@+id/menu_acount"
         android:icon="@drawable/user_account_selector"
         android:textColor="@color/colorblack"
         android:title="Tài khoản">
     </item>
+
 </menu>

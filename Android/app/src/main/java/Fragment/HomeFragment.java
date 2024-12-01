@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.duanandroid.R;
-import com.example.duanandroid.View.CartActivity;
 import com.example.duanandroid.View.chatUserActivity;
 import com.google.android.material.tabs.TabLayout;
 
@@ -28,7 +27,7 @@ public class HomeFragment extends Fragment {
 
     private ViewPager viewPager, bannerViewPager;
     private TabLayout tabLayout, bannerIndicator;
-    private ImageView chat, shoppingCart;
+    private ImageView chat;
     private Handler handler = new Handler();
     private Runnable runnable;
     private int currentPage = 0;
@@ -61,16 +60,10 @@ public class HomeFragment extends Fragment {
 
 
         chat = view.findViewById(R.id.chat);
-        shoppingCart = view.findViewById(R.id.shopping_cart);
+
 
         chat.setOnClickListener(v -> {
             Intent intent = new Intent(requireActivity(), chatUserActivity.class);
-            startActivity(intent);
-        });
-
-        shoppingCart.setOnClickListener(v -> {
-            Intent intent = new Intent(requireActivity(), CartActivity.class);
-            intent.putExtra("origin", "CartToHome");
             startActivity(intent);
         });
 

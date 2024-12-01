@@ -22,9 +22,9 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 return new StoreFragment();
             case 1:
-                return new HomeFragment();
-            case 2:
                 return new NoticeFragment();
+            case 2:
+                return new HomeFragment();
             case 3:
                 return new AccountUserFragment();
             default:

@@ -46,13 +46,14 @@ public class mainpageActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         viewPager.setAdapter(adapter);
 
-        int tabPosition = 1;
+        int tabPosition = 2;
         if (getIntent() != null) {
-            tabPosition = getIntent().getIntExtra("tabPosition", 1);
+            tabPosition = getIntent().getIntExtra("tabPosition", 2);
         }
         viewPager.setCurrentItem(tabPosition);
         bottomNavigationView.setSelectedItemId(R.id.menu_home);
 
+        syncBottomNavigationWithViewPager(tabPosition);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -61,20 +62,7 @@ public class mainpageActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                switch (position) {
-                    case 0:
-                        bottomNavigationView.setSelectedItemId(R.id.menu_shop);
-                        break;
-                    case 1:
-                        bottomNavigationView.setSelectedItemId(R.id.menu_home);
-                        break;
-                    case 2:
-                        bottomNavigationView.setSelectedItemId(R.id.menu_notice);
-                        break;
-                    case 3:
-                        bottomNavigationView.setSelectedItemId(R.id.menu_acount);
-                        break;
-                }
+                syncBottomNavigationWithViewPager(position);
             }
 
             @Override
@@ -90,10 +78,15 @@ public class mainpageActivity extends AppCompatActivity {
 
                 if (itemId == R.id.menu_shop) {
                     viewPager.setCurrentItem(0);
-                } else if (itemId == R.id.menu_home) {
-                    viewPager.setCurrentItem(1);
                 } else if (itemId == R.id.menu_notice) {
+                    viewPager.setCurrentItem(1);
+                } else if (itemId == R.id.menu_home) {
                     viewPager.setCurrentItem(2);
+                } else if (itemId == R.id.menu_cart) {
+                    // Điều hướng sang CartActivity
+                    Intent cartIntent = new Intent(mainpageActivity.this, CartActivity.class);
+                    startActivity(cartIntent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 } else if (itemId == R.id.menu_acount) {
                     viewPager.setCurrentItem(3);
                 }
@@ -101,5 +94,21 @@ public class mainpageActivity extends AppCompatActivity {
                 return true;
             }
         });
+    }
+    private void syncBottomNavigationWithViewPager(int position) {
+        switch (position) {
+            case 0:
+                bottomNavigationView.setSelectedItemId(R.id.menu_shop);
+                break;
+            case 1:
+                bottomNavigationView.setSelectedItemId(R.id.menu_notice);
+                break;
+            case 2:
+                bottomNavigationView.setSelectedItemId(R.id.menu_home);
+                break;
+            case 3:
+                bottomNavigationView.setSelectedItemId(R.id.menu_acount);
+                break;
+        }
     }
 }
