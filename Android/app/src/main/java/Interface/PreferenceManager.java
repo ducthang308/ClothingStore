@@ -25,35 +25,44 @@ public class PreferenceManager {
         editor.putString(KEY_TOKEN, token);
         editor.apply();
     }
+
     public String getToken() {
         return sharedPreferences.getString(KEY_TOKEN, null);
     }
+
     public void clearToken() {
         editor.remove(KEY_TOKEN);
         editor.apply();
     }
+
     public void saveUserId(int userId) {
         editor.putInt(KEY_USER_ID, userId);
         editor.apply();
     }
+
     public int getUserId() {
         return sharedPreferences.getInt(KEY_USER_ID, -1);
     }
+
     public void clearUserId() {
         editor.remove(KEY_USER_ID);
         editor.apply();
     }
+
     public void clearAll() {
         editor.clear();
         editor.apply();
     }
+
     public void saveName(String name) {
         editor.putString(KEY_USER_NAME, name);
         editor.apply();
     }
+
     public String getName() {
         return sharedPreferences.getString(KEY_USER_NAME, null);
     }
+
     public void clearName() {
         editor.remove(KEY_USER_NAME);
         editor.apply();
@@ -72,30 +81,31 @@ public class PreferenceManager {
 
     public void clearAddress() {
         editor.remove(KEY_ADDRESS);
-
-    public void saveId(int id) {
-        editor.putInt(KEY_CONVERSATION, id);
-        editor.apply();
-    }
-    public int getId() {
-        return sharedPreferences.getInt(KEY_CONVERSATION, -1);
-    }
-    public void clearId() {
-        editor.remove(KEY_CONVERSATION);
-        editor.apply();
     }
 
-    public void saveCartId(int cartId) {
-        editor.putInt(KEY_CART, cartId);
-        editor.apply();
-    }
-    public int getCartId() {
-        return sharedPreferences.getInt(KEY_CART, -1);
-    }
-    public void clearCartId() {
-        editor.remove(KEY_CART);
+        public void saveId ( int id){
+            editor.putInt(KEY_CONVERSATION, id);
+            editor.apply();
+        }
+        public int getId () {
+            return sharedPreferences.getInt(KEY_CONVERSATION, -1);
+        }
+        public void clearId () {
+            editor.remove(KEY_CONVERSATION);
+            editor.apply();
+        }
 
-        editor.apply();
+        public void saveCartId ( int cartId){
+            editor.putInt(KEY_CART, cartId);
+            editor.apply();
+        }
+        public int getCartId () {
+            return sharedPreferences.getInt(KEY_CART, -1);
+        }
+        public void clearCartId () {
+            editor.remove(KEY_CART);
+            editor.apply();
+        }
     }
-}
+
 
