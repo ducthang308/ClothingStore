@@ -49,6 +49,7 @@ public class BuyandpaymentActivity extends AppCompatActivity {
     private TextView txtVoucher;
     private TextView shippingMethodText;
     private int discountId;
+    private int[] quantities;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

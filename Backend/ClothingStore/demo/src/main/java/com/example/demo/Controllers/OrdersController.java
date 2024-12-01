@@ -99,16 +99,5 @@ public class OrdersController {
 
 
 
-    @PatchMapping("/status/{id}")
-    @PreAuthorize("hasAnyRole('Admin', 'User')")
-    public ResponseEntity<?> updateStatus(@PathVariable("id") Long id,
-                                          @Valid @RequestBody OrdersDTO orderDTO)
-    {
-        try {
-            orderService.updateStatus(id, orderDTO);
-            return ResponseEntity.ok("Update successfully");
-        }catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
+
 }

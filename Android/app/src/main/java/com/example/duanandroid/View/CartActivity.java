@@ -83,7 +83,7 @@ public class CartActivity extends AppCompatActivity {
             }
             cartAdapter.notifyDataSetChanged();  // Cập nhật lại ListView
         });
-        
+
     }
 
     private void deleteCartItem(int cartId, int productId) {

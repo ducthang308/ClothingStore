@@ -57,4 +57,20 @@ public class LoginResponseDTO {
     public void setRoleId(int roleId) {
         this.roleId = roleId;
     }
+
+    public int getConversationId() {
+        return conversationId;
+    }
+
+    public void setConversationId(int conversationId) {
+        this.conversationId = conversationId;
+    }
+
+    public int getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(int cartId) {
+        this.cartId = cartId;
+    }
 }

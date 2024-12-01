@@ -92,8 +92,6 @@ public class LoginActivity extends AppCompatActivity {
                     int conversationId = loginResponse.getConversationId();
                     int cartId = loginResponse.getCartId();
 
-
-
                     Log.d("Login", "Token: " + token);
 
                     preferenceManager = new PreferenceManager(LoginActivity.this);

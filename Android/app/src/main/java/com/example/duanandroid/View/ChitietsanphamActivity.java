@@ -23,11 +23,8 @@ import java.util.List;
 import java.util.Map;
 
 import Adapter.ReviewAdapter;
-
-import DTO.ProductDTO;
-
 import DTO.CartItemsDTO;
-
+import DTO.ProductDTO;
 import DTO.ReviewWithUserFullNameDTO;
 import Interface.APIClient;
 import Interface.ApiCartItems;
@@ -200,7 +197,7 @@ public class ChitietsanphamActivity extends AppCompatActivity {
         reviewRecyclerView = findViewById(R.id.review_list);
     }
 
-    public boolean getIntentData() {
+    private boolean getIntentData() {
         productId = getIntent().getIntExtra("productId", -1);
         String productName = getIntent().getStringExtra("productName");
         float productPrice = getIntent().getFloatExtra("productPrice", 0);
@@ -333,5 +330,4 @@ public class ChitietsanphamActivity extends AppCompatActivity {
             startActivity(intent);
         });
     }
-
 }
