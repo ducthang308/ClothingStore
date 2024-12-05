@@ -12,4 +12,6 @@ import java.util.List;
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Query("Select new com.example.demo.DTO.ReviewWithUserFullNameDTO(v, u.fullName) From Review v INNER JOIN Users u ON v.users.id = u.id Where v.product.id = :productId")
     List<ReviewWithUserFullNameDTO> getAllReviewByProductId(Long productId);
+
+    boolean existsByOrders_IdAndProduct_Id(Long orderId, Long productId);
 }

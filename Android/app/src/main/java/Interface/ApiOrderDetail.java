@@ -36,4 +36,7 @@ public interface ApiOrderDetail {
     @GET("api/v1/orderdetail/orders/{orderId}/details")
     Call<List<OrderDetailReturnDTO>> getOrderDetails(@Header("Authorization") String token, @Path("orderId") int orderId);
 
+    @GET("api/v1/orderdetail/orders/details/{status}")
+    Call<List<OrderDetailReturnDTO>> getOrderDetailsByStatus(@Header("Authorization") String token, @Path("status") String status);
+
 }

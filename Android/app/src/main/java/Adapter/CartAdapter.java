@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.example.duanandroid.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import DTO.CartItemsDTO;
@@ -39,7 +40,8 @@ public class CartAdapter extends ArrayAdapter<CartItemsDTO> {
     private ApiCartItems apiCartItems;
     private String token;
     private int cartId;
-    private List<Integer> selectedItems = new ArrayList<>();  // Lưu trữ các item đã chọn
+    private List<Integer> selectedItems = new ArrayList<>(); // Lưu trữ các item đã chọn
+    private OnTotalPriceChangeListener totalPriceChangeListener;
 
     public CartAdapter(@NonNull Context context, @NonNull List<CartItemsDTO> cartItems,
                        ApiCartItems apiCartItems, String token, int cartId) {
@@ -49,6 +51,10 @@ public class CartAdapter extends ArrayAdapter<CartItemsDTO> {
         this.apiCartItems = apiCartItems;
         this.token = token;
         this.cartId = cartId;
+    }
+
+    public void setOnTotalPriceChangeListener(OnTotalPriceChangeListener listener) {
+        this.totalPriceChangeListener = listener;
     }
 
     @NonNull
@@ -89,9 +95,9 @@ public class CartAdapter extends ArrayAdapter<CartItemsDTO> {
         // Xử lý checkbox
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                selectedItems.add(item.getProductId());  // Thêm ID sản phẩm vào danh sách đã chọn
+                selectedItems.add(item.getProductId()); // Thêm ID sản phẩm vào danh sách đã chọn
             } else {
-                selectedItems.remove(Integer.valueOf(item.getProductId()));  // Xóa ID sản phẩm khỏi danh sách đã chọn
+                selectedItems.remove(Integer.valueOf(item.getProductId())); // Xóa ID sản phẩm khỏi danh sách đã chọn
             }
         });
 
@@ -101,6 +107,7 @@ public class CartAdapter extends ArrayAdapter<CartItemsDTO> {
             item.setQuantity(newQuantity);
             holder.tvQuantity.setText(String.valueOf(newQuantity));
             updateCartItem(item);
+            updateTotalPrice();
         });
 
         holder.btnDecrease.setOnClickListener(v -> {
@@ -114,12 +121,12 @@ public class CartAdapter extends ArrayAdapter<CartItemsDTO> {
                 cartItems.remove(position);
                 notifyDataSetChanged();
             }
+            updateTotalPrice();
         });
 
         return convertView;
     }
 
-    // Thêm các phương thức update và delete (giống như trước)
     private void updateCartItem(CartItemsDTO item) {
         Call<ResponseBody> call = apiCartItems.updateCartItem("Bearer " + token, item.getId(), item);
         call.enqueue(new Callback<ResponseBody>() {
@@ -156,6 +163,27 @@ public class CartAdapter extends ArrayAdapter<CartItemsDTO> {
         });
     }
 
+    private void updateTotalPrice() {
+        double totalPrice = 0;
+        for (CartItemsDTO item : cartItems) {
+            totalPrice += item.getPrice() * item.getQuantity();
+        }
+
+        if (totalPriceChangeListener != null) {
+            totalPriceChangeListener.onTotalPriceChange(totalPrice);
+        }
+    }
+
+    public List<CartItemsDTO> getSelectedCartItems() {
+        List<CartItemsDTO> selectedCartItems = new ArrayList<>();
+        for (CartItemsDTO item : cartItems) {
+            if (selectedItems.contains(item.getProductId())) {
+                selectedCartItems.add(item); // Thêm CartItemsDTO vào danh sách đã chọn
+            }
+        }
+        return selectedCartItems;
+    }
+
     public List<Integer> getSelectedItems() {
         return selectedItems;
     }
@@ -164,6 +192,11 @@ public class CartAdapter extends ArrayAdapter<CartItemsDTO> {
         ImageView ivImage;
         TextView tvName, tvSize, tvPrice, tvQuantity;
         ImageButton btnIncrease, btnDecrease;
-        CheckBox checkBox;  // CheckBox cho mỗi item
+        CheckBox checkBox; // CheckBox cho mỗi item
+    }
+
+    public interface OnTotalPriceChangeListener {
+        void onTotalPriceChange(double newTotalPrice);
     }
 }
+

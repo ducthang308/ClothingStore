@@ -29,6 +29,7 @@ public class UsersDTO {
         this.retypePass = retypePass;
         this.dateOfBirth = dateOfBirth;
     }
+
     public UsersDTO(String phoneNumber, String password) {
         this.phoneNumber = phoneNumber;
         this.password = password;

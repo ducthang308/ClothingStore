@@ -52,9 +52,17 @@ public class User implements Serializable {
         this.facebookAccountId = facebookAccountId;
     }
 
+    public User(String fullname, String phoneNumber, String active) {
+        this.fullname = fullname;
+        this.phoneNumber = phoneNumber;
+        this.active = active;
+    }
 
+    public User(String active) {
+        this.active = active;
+    }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 

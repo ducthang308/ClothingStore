@@ -101,7 +101,6 @@ public class PaymentStatusAdapter extends RecyclerView.Adapter<PaymentStatusAdap
         public PaymentStatusViewHolder(@NonNull View itemView) {
             super(itemView);
             productName = itemView.findViewById(R.id.product_name);
-            productSize = itemView.findViewById(R.id.product_size);
             productPrice = itemView.findViewById(R.id.product_price);
             productQuantity = itemView.findViewById(R.id.product_quantity);
             totalPayment = itemView.findViewById(R.id.total_money);

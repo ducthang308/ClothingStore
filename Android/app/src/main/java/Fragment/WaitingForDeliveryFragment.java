@@ -20,6 +20,7 @@ import java.util.List;
 
 import Adapter.WaitingDeliveryAdapter;
 
+import Adapter.WaitingShipingAdapter;
 import DTO.OrderDetailReturnDTO;
 import DTO.OrdersDTO;
 import DTO.ProductDTO;
@@ -69,24 +70,23 @@ public class WaitingForDeliveryFragment extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     List<OrdersDTO> ordersList = response.body();
 
-                    // Lọc các đơn hàng có trạng thái "Waiting for Delivery"
                     List<OrdersDTO> filteredOrders = new ArrayList<>();
                     for (OrdersDTO order : ordersList) {
                         Log.d("OrderStatus", "Order ID: " + order.getId() + ", Status: " + order.getStatus());
-                        if (order.getStatus() != null && order.getStatus().toLowerCase().contains("waiting for shipping")) {
+                        if (order.getStatus() != null && order.getStatus().toLowerCase().contains("Delivered")) {
                             filteredOrders.add(order);
                         }
                     }
 
-                    Log.d("Filtered Orders", "Orders count with status 'Waiting for Delivery': " + filteredOrders.size());
+                    Log.d("Filtered Orders", "Orders count with status 'Delivered': " + filteredOrders.size());
 
-                    for (OrdersDTO order : filteredOrders) {
-                        int orderId = order.getId();
-                        fetchOrderDetails(orderId);
-                    }
+//                    for (OrdersDTO order : filteredOrders) {
+//                        int orderId = order.getId();
+                        fetchOrderDetails();
+//                    }
 
                     if (filteredOrders.isEmpty()) {
-                        Toast.makeText(getContext(), "Không có đơn hàng nào đang vạna chuyển!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Không có đơn hàng nào đang chờ giao!", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(getContext(), "Không thể lấy danh sách đơn hàng!", Toast.LENGTH_SHORT).show();
@@ -100,14 +100,18 @@ public class WaitingForDeliveryFragment extends Fragment {
         });
     }
 
-    private void fetchOrderDetails(int orderId) {
-        apiOrderDetail.getOrderDetails("Bearer " + token, orderId).enqueue(new Callback<List<OrderDetailReturnDTO>>() {
+    private void fetchOrderDetails() {
+        apiOrderDetail.getOrderDetailsByStatus("Bearer " + token, "Delivered").enqueue(new Callback<List<OrderDetailReturnDTO>>() {
             @Override
             public void onResponse(Call<List<OrderDetailReturnDTO>> call, Response<List<OrderDetailReturnDTO>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Log.d("Order Details", "Received order details: " + response.body().size()); // Log số lượng chi tiết nhận được
+                    Log.d("Order Details", "Received order details: " + response.body().size());
+                    orderDetailList.clear();
+
                     orderDetailList.addAll(response.body());
+
                     Log.d("OrderDetailList", "Total items in order detail list: " + orderDetailList.size()); // Kiểm tra size sau khi thêm
+
                     if (adapter == null) {
                         adapter = new WaitingDeliveryAdapter(getContext(), orderDetailList);
                         recyclerView.setAdapter(adapter);

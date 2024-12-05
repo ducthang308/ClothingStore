@@ -16,4 +16,5 @@ public class LoginResponseDTO {
     private Long conversationId;
     private String address;
     private Long cartId;
+    private String active;
 }

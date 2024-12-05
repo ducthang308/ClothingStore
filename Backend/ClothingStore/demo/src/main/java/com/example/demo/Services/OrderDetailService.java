@@ -85,5 +85,10 @@ public class OrderDetailService implements IOrderDetailService{
         return detailRepository.findOrderDetailsByOrderId(orderId);
     }
 
+    @Override
+    public List<OrderDetailReturnDTO> getOrderDetailsByStatus(String status) {
+        return detailRepository.getAllByStatus(status);
+    }
+
 
 }

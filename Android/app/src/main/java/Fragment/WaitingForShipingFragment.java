@@ -1,6 +1,5 @@
 package Fragment;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,29 +18,22 @@ import com.example.duanandroid.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import Adapter.WaitingDeliveryAdapter;
 import Adapter.WaitingShipingAdapter;
 import DTO.OrderDetailReturnDTO;
 import DTO.OrdersDTO;
-import DTO.ProductDTO;
 import Interface.APIClient;
 import Interface.ApiOrderDetail;
 import Interface.ApiOrders;
 import Interface.PreferenceManager;
-import Model.OrderDetail;
-import Model.Product;
-import Model.ProductImage;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
 
 public class WaitingForShipingFragment extends Fragment {
     private RecyclerView recyclerView;
     private WaitingShipingAdapter adapter;
     private ApiOrders apiOrders;
     private ApiOrderDetail apiOrderDetail;
-    private List<ProductDTO> productList = new ArrayList<>();
     private List<OrderDetailReturnDTO> orderDetailList = new ArrayList<OrderDetailReturnDTO>();
     private String token;
     private int userId;
@@ -60,12 +52,11 @@ public class WaitingForShipingFragment extends Fragment {
         apiOrders = APIClient.getClient().create(ApiOrders.class);
         apiOrderDetail = APIClient.getClient().create(ApiOrderDetail.class);
 
-
         fetchOrdersAndDetails();
 
         return view;
-
     }
+
     private void fetchOrdersAndDetails() {
         apiOrders.getAllOrdersByUser("Bearer " + token, userId).enqueue(new Callback<List<OrdersDTO>>() {
             @Override
@@ -86,7 +77,7 @@ public class WaitingForShipingFragment extends Fragment {
 
                     for (OrdersDTO order : filteredOrders) {
                         int orderId = order.getId();
-                        fetchOrderDetails(orderId);
+                        fetchOrderDetails(orderId, "Waiting for Delivery");
                     }
 
                     if (filteredOrders.isEmpty()) {
@@ -104,14 +95,22 @@ public class WaitingForShipingFragment extends Fragment {
         });
     }
 
-    private void fetchOrderDetails(int orderId) {
-        apiOrderDetail.getOrderDetails("Bearer " + token, orderId).enqueue(new Callback<List<OrderDetailReturnDTO>>() {
+    private void fetchOrderDetails(int orderId, String status) {
+        // Gọi API getOrderDetailsByStatus và truyền vào trạng thái "Waiting for Delivery"
+        apiOrderDetail.getOrderDetailsByStatus("Bearer " + token, status).enqueue(new Callback<List<OrderDetailReturnDTO>>() {
             @Override
             public void onResponse(Call<List<OrderDetailReturnDTO>> call, Response<List<OrderDetailReturnDTO>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.d("Order Details", "Received order details: " + response.body().size()); // Log số lượng chi tiết nhận được
+
+                    // Clear danh sách cũ nếu không muốn dữ liệu cũ bị giữ lại
+                    orderDetailList.clear();
+
+                    // Thêm dữ liệu mới vào danh sách
                     orderDetailList.addAll(response.body());
+
                     Log.d("OrderDetailList", "Total items in order detail list: " + orderDetailList.size()); // Kiểm tra size sau khi thêm
+
                     if (adapter == null) {
                         adapter = new WaitingShipingAdapter(getContext(), orderDetailList);
                         recyclerView.setAdapter(adapter);

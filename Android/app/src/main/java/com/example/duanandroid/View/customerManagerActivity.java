@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,13 +17,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapter.customerAdapter;
+import Interface.APIClient;
+import Interface.ApiUsers;
+import Interface.PreferenceManager;
+import Model.Discount;
+import Model.User;
 import Model.customer;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class customerManagerActivity extends AppCompatActivity {
 
     private RecyclerView rcvCustomer;
-    private List<customer> listCustomer;
+    private List<User> listCustomer;
     private customerAdapter cusAdapter;
+    private ApiUsers apiUsers;
+    private String token;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,27 +44,16 @@ public class customerManagerActivity extends AppCompatActivity {
         rcvCustomer = findViewById(R.id.rcv_customer);
         listCustomer = new ArrayList<>();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        cusAdapter = new customerAdapter(listCustomer);
+        cusAdapter = new customerAdapter(listCustomer, this, token);
         rcvCustomer.setLayoutManager(linearLayoutManager);
         rcvCustomer.setAdapter(cusAdapter);
 
-        customer customer1= new customer("Nguyen Thi Thao","0356621341");
-        customer customer2= new customer("Nguyen Van Thang","031234566");
-        customer customer3= new customer("Nguyen Duc Thang","045225477");
-        customer customer4= new customer("Nguyen Thi Diem","0363545766");
-        customer customer5= new customer("Nguyen A","0123456787");
-        customer customer6= new customer("Nguyen Thi Thao","0123876592");
-        customer customer7= new customer("Nguyen Van Thang","0912765834");
-        customer customer8= new customer("Nguyen Duc Thang","0325836599");
 
-        listCustomer.add(customer1);
-        listCustomer.add(customer2);
-        listCustomer.add(customer3);
-        listCustomer.add(customer4);
-        listCustomer.add(customer5);
-        listCustomer.add(customer6);
-        listCustomer.add(customer7);
-        listCustomer.add(customer8);
+        PreferenceManager preferenceManager = new PreferenceManager(this);
+        token = preferenceManager.getToken();
+
+        apiUsers = APIClient.getClient().create(ApiUsers.class);
+
         img_arrow_customer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,7 +62,27 @@ public class customerManagerActivity extends AppCompatActivity {
             }
         });
 
-
+        loadCustomers();
     }
 
+    private void loadCustomers() {
+        Call<List<User>> call = apiUsers.getAllUser("Bearer " + token);
+        call.enqueue(new Callback<List<User>>() {
+            @Override
+            public void onResponse(Call<List<User>> call, Response<List<User>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    cusAdapter.updateData(response.body());
+                } else {
+                    int statusCode = response.code();
+                    String errorMessage = response.message();
+                    Toast.makeText(customerManagerActivity.this, "Error: " + statusCode + " - " + errorMessage, Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<User>> call, Throwable t) {
+                Toast.makeText(customerManagerActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }
