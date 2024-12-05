@@ -87,4 +87,11 @@ public class OrderDetailController {
         List<OrderDetailReturnDTO> orderDetails = orderDetailService.getOrderDetailsByOrderId(orderId);
         return ResponseEntity.ok(orderDetails);
     }
+
+    @GetMapping("/orders/details/{status}")
+    @PreAuthorize("hasAnyRole('Admin', 'User')")
+    public ResponseEntity<List<OrderDetailReturnDTO>> getOrderDetailsByStatus(@PathVariable String status) {
+        List<OrderDetailReturnDTO> orderDetails = orderDetailService.getOrderDetailsByStatus(status);
+        return ResponseEntity.ok(orderDetails);
+    }
 }

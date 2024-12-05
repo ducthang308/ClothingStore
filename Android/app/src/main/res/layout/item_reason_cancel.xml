@@ -48,13 +48,6 @@
                     android:textSize="16sp"
                     android:textStyle="" />
 
-                <TextView
-                    android:id="@+id/product_size"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Size M"
-                    android:textColor="@color/colorblack"
-                    android:textSize="14sp" />
             </LinearLayout>
             <!-- Quantity -->
             <TextView

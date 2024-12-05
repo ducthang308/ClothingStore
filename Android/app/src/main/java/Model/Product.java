@@ -11,10 +11,10 @@ public class Product implements Serializable {
     private int categoryId;
     private String color;
     private String size;
-    private float price;
+    private Float price;
     private float discount;
 
-    public Product(String productName, String size, float price) {
+    public Product(String productName, String size, Float price) {
         this.id = id;
         this.productName = productName;
         this.categoryId = categoryId;
@@ -24,7 +24,7 @@ public class Product implements Serializable {
         this.discount = discount;
     }
 
-    public Product(int id, String productName, String size, float price) {
+    public Product(int id, String productName, String size, Float price) {
         this.id = id;
         this.productName = productName;
         this.size = size;
@@ -66,11 +66,11 @@ public class Product implements Serializable {
         this.categoryId = categoryId;
     }
 
-    public float getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 

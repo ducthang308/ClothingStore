@@ -274,7 +274,7 @@ public class ChitietsanphamActivity extends AppCompatActivity {
 
         findViewById(R.id.btn_buy_now).setOnClickListener(view -> {
             String productName = productNameTextView.getText().toString();
-            String productPriceString = productPriceTextView.getText().toString().replace("₫", "").replace(",", "");
+            String productPriceString = productPriceTextView.getText().toString().replace("₫", "").replace(",", "").replace(".", "");
             Float productPrice = null;
 
             try {
@@ -302,14 +302,14 @@ public class ChitietsanphamActivity extends AppCompatActivity {
                 return;
             }
 
-            // Create ProductDTO object
+
             ProductDTO productDTO = new ProductDTO(productId, productName, productPrice, productImages);
 
-            // Pass ProductDTO to BuyandpaymentActivity
             ArrayList<ProductDTO> productList = new ArrayList<>();
             productList.add(productDTO);
 
             Intent intent = new Intent(ChitietsanphamActivity.this, BuyandpaymentActivity.class);
+            intent.putExtra("origin", "chitietsanpham");
             intent.putExtra("productList", productList);
             startActivity(intent);
         });

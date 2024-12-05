@@ -15,6 +15,6 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
     boolean existsByPhoneNumber(String phoneNumber);
     Optional<Users> findByPhoneNumber(String phoneNumber);
 
-    @Query("Select new com.example.demo.Responses.UserResponse(u.fullName, u.phoneNumber, u.active) From Users u JOIN Roles r On u.roles.id = r.id Where r.roleName = 'User'")
+    @Query("Select new com.example.demo.Responses.UserResponse(u.id, u.fullName, u.phoneNumber, u.active) From Users u JOIN Roles r On u.roles.id = r.id Where r.roleName = 'User'")
     List<UserResponse> getAllUserByRoleUser();
 }

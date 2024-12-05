@@ -61,9 +61,6 @@ public class SelectVoucherActivity extends AppCompatActivity implements SelectVo
         });
     }
 
-    /**
-     * Gọi API để tải danh sách voucher
-     */
     public void loadVouchers() {
         Call<List<Discount>> call = apiDiscounts.getDiscounts();
         call.enqueue(new Callback<List<Discount>>() {
@@ -88,16 +85,13 @@ public class SelectVoucherActivity extends AppCompatActivity implements SelectVo
         });
     }
 
-    /**
-     * Callback khi chọn một voucher từ Adapter
-     */
     @Override
     public void onVoucherSelected(Discount discount) {
         // Truyền ID, Note và Percent của voucher qua Intent
         Intent resultIntent = new Intent();
-        resultIntent.putExtra("selected_voucher_id", discount.getId()); // ID của voucher
-        resultIntent.putExtra("selected_voucher_note", discount.getNote()); // Ghi chú của voucher
-        resultIntent.putExtra("selected_voucher_percent", discount.getPercent()); // Tỷ lệ giảm giá
+        resultIntent.putExtra("selected_voucher_id", discount.getId());
+        resultIntent.putExtra("selected_voucher_note", discount.getNote());
+        resultIntent.putExtra("selected_voucher_percent", discount.getPercent());
         setResult(RESULT_OK, resultIntent);
 
         // Kết thúc Activity

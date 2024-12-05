@@ -100,7 +100,15 @@ public class UserService implements IUsersService{
         Long conversationId = conversationRepository.findConversationIdByUserId(userId);
         String address = existingUser.getAddress();
         Long cartId = cartsRepository.findCartIdByUserId(userId);
-        return new LoginResponseDTO(token, roleId, userId, name, conversationId, address, cartId);
+        String active = existingUser.getActive();
+
+        if (active.equals("Lock")){
+            throw new BadCredentialsException("Account is banned!");
+        }
+        else {
+            return new LoginResponseDTO(token, roleId, userId, name, conversationId, address, cartId, active);
+        }
+//        return new LoginResponseDTO(token, roleId, userId, name, conversationId, address, cartId, active);
     }
 
     @Override
@@ -119,5 +127,17 @@ public class UserService implements IUsersService{
     @Override
     public List<UserResponse> getAllUser(){
         return usersRepository.getAllUserByRoleUser();
+    }
+
+    @Override
+    public Users updateActive(UserResponse userResponse, Long id) throws Exception {
+        if (userResponse.getActive() == null || userResponse.getActive().isBlank()) {
+            throw new IllegalArgumentException("Active status is required");
+        }
+
+        Users existingUser = usersRepository.findById(id).
+                orElseThrow(()->new DataNotFoundException("Not found userId: "+id));
+        existingUser.setActive(userResponse.getActive());
+        return usersRepository.save(existingUser);
     }
 }

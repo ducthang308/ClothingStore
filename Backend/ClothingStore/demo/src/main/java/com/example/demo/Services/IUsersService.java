@@ -13,4 +13,5 @@ public interface IUsersService {
     LoginResponseDTO login(String phoneNumber, String password) throws Exception;
     Users updatePass(UpdatePassDTO updatePassDTO, Long id) throws Exception;
     List<UserResponse> getAllUser();
+    Users updateActive(UserResponse userResponse, Long id) throws Exception;
 }

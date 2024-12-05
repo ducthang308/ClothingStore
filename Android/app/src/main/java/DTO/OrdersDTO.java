@@ -33,13 +33,13 @@ public class OrdersDTO {
 
 
     @SerializedName("discount_id")
-    private int discounts;
+    private Integer discounts;
 
     public OrdersDTO() {
         // Khởi tạo các giá trị mặc định nếu cần
     }
 
-    public OrdersDTO(int id, int userId, String note, String orderDate, String status, Float totalMoney, String paymentMethod, List<OrderDetailDTO> orderDetails, int discounts) {
+    public OrdersDTO(int id, int userId, String note, String orderDate, String status, Float totalMoney, String paymentMethod, List<OrderDetailDTO> orderDetails, Integer discounts) {
         this.id = id;
         this.userId = userId;
         this.note = note;
@@ -115,11 +115,11 @@ public class OrdersDTO {
         this.orderDetails = orderDetails;
     }
 
-    public int getDiscounts() {
+    public Integer getDiscounts() {
         return discounts;
     }
 
-    public void setDiscounts(int discounts) {
+    public void setDiscounts(Integer discounts) {
         this.discounts = discounts;
     }
 }

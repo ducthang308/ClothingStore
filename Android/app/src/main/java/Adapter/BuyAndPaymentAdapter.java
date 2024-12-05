@@ -15,8 +15,10 @@ import com.bumptech.glide.Glide;
 import com.example.duanandroid.R;
 import com.example.duanandroid.View.BuyandpaymentActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import DTO.CartItemsDTO;
 import DTO.ProductDTO;
 import DTO.ProductImageDTO;
 import Model.OrderDetail;
@@ -25,22 +27,17 @@ import Model.Product1;
 import Model.ProductImage;
 
 public class BuyAndPaymentAdapter extends RecyclerView.Adapter<BuyAndPaymentAdapter.BuyAndPaymentHolder> {
-    private List<ProductDTO> productList;
-    private int[] quantities;
-    private Context context;
+    private final List<ProductDTO> productList;
+    private final List<CartItemsDTO> cartList;
+    private final Context context;
+    private OnQuantityChangeListener quantityChangeListener;
 
-    public BuyAndPaymentAdapter(List<ProductDTO> productList, Context context) {
+    public BuyAndPaymentAdapter(List<ProductDTO> productList, List<CartItemsDTO> cartList, Context context) {
         this.productList = productList;
+        this.cartList = cartList;
         this.context = context;
-        this.quantities = new int[productList.size()];
-
-        // Khởi tạo số lượng mặc định là 1 cho mỗi sản phẩm
-        for (int i = 0; i < productList.size(); i++) {
-            quantities[i] = 1;
-        }
     }
 
-    // Inflate layout cho từng item trong RecyclerView
     @NonNull
     @Override
     public BuyAndPaymentHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -48,58 +45,109 @@ public class BuyAndPaymentAdapter extends RecyclerView.Adapter<BuyAndPaymentAdap
         return new BuyAndPaymentHolder(view);
     }
 
-    // Bind dữ liệu sản phẩm và hình ảnh vào ViewHolder
     @Override
     public void onBindViewHolder(@NonNull BuyAndPaymentHolder holder, int position) {
+        if (isCartMode()) {
+            bindCartItem(holder, position);
+        } else {
+            bindProductItem(holder, position);
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return isCartMode() ? cartList.size() : (productList != null ? productList.size() : 0);
+    }
+
+    private boolean isCartMode() {
+        return cartList != null && !cartList.isEmpty();
+    }
+
+    private void bindCartItem(BuyAndPaymentHolder holder, int position) {
+        CartItemsDTO cartItem = cartList.get(position);
+
+        holder.productName.setText(cartItem.getProductName());
+        holder.productPrice.setText(String.format("₫%,.0f", cartItem.getPrice()));
+        loadProductImage(holder.productImage, cartItem.getImageUrl());
+
+        updateQuantity(holder, position, cartItem.getQuantity());
+    }
+
+    private void bindProductItem(BuyAndPaymentHolder holder, int position) {
         ProductDTO product = productList.get(position);
 
-
-        // Set dữ liệu vào các view
         holder.productName.setText(product.getProductName());
         holder.productPrice.setText(String.format("₫%,.0f", product.getPrice()));
-
-        // Tải hình ảnh sản phẩm
         loadProductImage(holder.productImage, product.getImageUrls());
 
+        updateQuantity(holder, position, 1);
+    }
 
 
-        // Xử lý sự kiện tăng số lượng
+    private void updateQuantity(BuyAndPaymentHolder holder, int position, int initialQuantity) {
+        holder.productQuantity.setText(String.valueOf(initialQuantity));
+
         holder.btnIncrease.setOnClickListener(v -> {
-            quantities[position]++;
-            holder.productQuantity.setText(String.valueOf(quantities[position]));
-            if (context instanceof BuyandpaymentActivity) {
-                ((BuyandpaymentActivity) context).calculateTotalCost();
+            int updatedQuantity = Integer.parseInt(holder.productQuantity.getText().toString()) + 1;
+            holder.productQuantity.setText(String.valueOf(updatedQuantity));
+            updateCartItemQuantity(position, updatedQuantity);
+
+            if (quantityChangeListener != null) {
+                quantityChangeListener.onQuantityChanged(position, updatedQuantity);
             }
         });
 
         holder.btnDecrease.setOnClickListener(v -> {
-            if (quantities[position] > 1) {
-                quantities[position]--;
-                holder.productQuantity.setText(String.valueOf(quantities[position]));
-                if (context instanceof BuyandpaymentActivity) {
-                    ((BuyandpaymentActivity) context).calculateTotalCost();
+            int currentQuantity = Integer.parseInt(holder.productQuantity.getText().toString());
+            if (currentQuantity > 1) {
+                int updatedQuantity = currentQuantity - 1;
+                holder.productQuantity.setText(String.valueOf(updatedQuantity));
+                updateCartItemQuantity(position, updatedQuantity);
+
+                if (quantityChangeListener != null) {
+                    quantityChangeListener.onQuantityChanged(position, updatedQuantity);
                 }
             }
         });
     }
 
-    // Trả về số lượng sản phẩm
-    @Override
-    public int getItemCount() {
-        return productList != null ? productList.size() : 0;
+    private void updateCartItemQuantity(int position, int updatedQuantity) {
+        if (isCartMode()) {
+            cartList.get(position).setQuantity(updatedQuantity);
+        }
+
+        if (context instanceof BuyandpaymentActivity) {
+            ((BuyandpaymentActivity) context).calculateTotalCostForCart();
+        }
     }
 
-    // ViewHolder chứa các view trong item_buy_and_payment.xml
+    public List<Integer> getUpdatedQuantities() {
+        List<Integer> updatedQuantities = new ArrayList<>();
+        if (isCartMode()) {
+            for (CartItemsDTO item : cartList) {
+                updatedQuantities.add(item.getQuantity());
+            }
+        } else if (productList != null) {
+            for (int i = 0; i < productList.size(); i++) {
+                updatedQuantities.add(1);
+            }
+        }
+        return updatedQuantities;
+    }
+
+    public void setOnQuantityChangeListener(OnQuantityChangeListener listener) {
+        this.quantityChangeListener = listener;
+    }
+
     public class BuyAndPaymentHolder extends RecyclerView.ViewHolder {
-        TextView productName, productPrice, productSize, productQuantity;
-        ImageView productImage;
-        ImageButton btnIncrease,btnDecrease;
+        final TextView productName, productPrice, productQuantity;
+        final ImageView productImage;
+        final ImageButton btnIncrease, btnDecrease;
 
         public BuyAndPaymentHolder(@NonNull View itemView) {
             super(itemView);
             productImage = itemView.findViewById(R.id.product_image1);
             productName = itemView.findViewById(R.id.product_name);
-            productSize = itemView.findViewById(R.id.product_size);
             productQuantity = itemView.findViewById(R.id.product_quantity);
             productPrice = itemView.findViewById(R.id.product_price);
             btnIncrease = itemView.findViewById(R.id.btn_increase);
@@ -107,22 +155,32 @@ public class BuyAndPaymentAdapter extends RecyclerView.Adapter<BuyAndPaymentAdap
         }
     }
 
-    // Phương thức để lấy số lượng từng sản phẩm
-    public int[] getQuantities() {
-        return quantities;
-    }
-
-    private void loadProductImage(ImageView imageView, List<String> imageUrls) {
-        if (imageUrls != null && !imageUrls.isEmpty()) {
-            String imageUrl = imageUrls.get(0); // Lấy ảnh đầu tiên
+    private void loadProductImage(ImageView imageView, Object imageSource) {
+        if (imageSource instanceof String) {
             Glide.with(context)
-                    .load(imageUrl)
-                    .placeholder(R.drawable.co4la) // Hình placeholder
-                    .error(R.drawable.error) // Hình lỗi
+                    .load((String) imageSource)
+                    .placeholder(R.drawable.co4la)
+                    .error(R.drawable.error)
+                    .into(imageView);
+        } else if (imageSource instanceof List) {
+            List<String> imageUrls = (List<String>) imageSource;
+            Glide.with(context)
+                    .load(imageUrls.isEmpty() ? null : imageUrls.get(0))
+                    .placeholder(R.drawable.co4la)
+                    .error(R.drawable.error)
                     .into(imageView);
         } else {
-            imageView.setImageResource(R.drawable.error); // Ảnh lỗi mặc định
+            imageView.setImageResource(R.drawable.error);
         }
     }
-}
 
+    public interface OnQuantityChangeListener {
+        void onQuantityChanged(int position, int updatedQuantity);
+    }
+
+    public void updateProductList(List<ProductDTO> products) {
+        this.productList.clear();
+        this.productList.addAll(products);
+        notifyDataSetChanged();
+    }
+}

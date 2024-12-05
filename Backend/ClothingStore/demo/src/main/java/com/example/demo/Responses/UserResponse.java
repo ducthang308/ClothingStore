@@ -12,13 +12,16 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class UserResponse {
+    @JsonProperty("id")
+    private Long id;
+
     @JsonProperty("fullname")
     private String fullName;
 
     @JsonProperty("phone_number")
-    @NotBlank(message = "Phone is required")
     private String phoneNumber;
 
     @JsonProperty("active")
     private String active;
+
 }

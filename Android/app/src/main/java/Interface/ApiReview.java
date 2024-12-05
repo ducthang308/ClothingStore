@@ -1,6 +1,7 @@
 package Interface;
 
 import java.util.List;
+import java.util.Map;
 
 import DTO.ReviewDTO;
 import DTO.ReviewWithUserFullNameDTO;
@@ -18,4 +19,7 @@ public interface ApiReview {
 
     @GET("api/v1/review/{productId}")
     Call<List<ReviewWithUserFullNameDTO>> getAllReview(@Path("productId") int productId);
+
+    @GET("api/v1/review/check/{orderId}/{productId}")
+    Call<Map<String, Boolean>> checkIfReviewed(@Path("orderId") int orderId, @Path("productId") int productId);
 }

@@ -73,4 +73,16 @@ public class UserController {
         List<UserResponse> users = userService.getAllUser();
         return ResponseEntity.ok(users);
     }
+
+    @PutMapping("/active/{id}")
+    @PreAuthorize("hasRole('ROLE_Admin')")
+    public ResponseEntity<?> updateActive(@PathVariable("id") Long id, @Valid @RequestBody UserResponse userResponse) {
+        try {
+            Users users = userService.updateActive(userResponse, id);
+            return ResponseEntity.ok(users);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 }

@@ -5,11 +5,17 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Date;
 
 public class OrderDetailReturnDTO {
+    @SerializedName("product_id")
+    private int productId;
+
+    @SerializedName("order_id")
+    private int orderId;
+
     @SerializedName("number_of_product")
     private int numberOfProduct;
 
     @SerializedName("total_money")
-    private Float totalMoney;
+    private float totalMoney;
 
     @SerializedName("product_name")
     private String productName;
@@ -26,7 +32,7 @@ public class OrderDetailReturnDTO {
     @SerializedName("status")
     private String status;
 
-    public OrderDetailReturnDTO(int numberOfProduct, Float totalMoney, String productName, String imageUrl, String address, Date orderDate, String status) {
+    public OrderDetailReturnDTO(int numberOfProduct, float totalMoney, String productName, String imageUrl, String address, Date orderDate, String status) {
         this.numberOfProduct = numberOfProduct;
         this.totalMoney = totalMoney;
         this.productName = productName;
@@ -34,6 +40,25 @@ public class OrderDetailReturnDTO {
         this.address = address;
         this.orderDate = orderDate;
         this.status = status;
+    }
+
+    public OrderDetailReturnDTO() {
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
     public int getNumberOfProduct() {
@@ -44,11 +69,11 @@ public class OrderDetailReturnDTO {
         this.numberOfProduct = numberOfProduct;
     }
 
-    public Float getTotalMoney() {
+    public float getTotalMoney() {
         return totalMoney;
     }
 
-    public void setTotalMoney(Float totalMoney) {
+    public void setTotalMoney(float totalMoney) {
         this.totalMoney = totalMoney;
     }
 

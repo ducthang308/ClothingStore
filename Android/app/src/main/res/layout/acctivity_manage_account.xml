@@ -105,7 +105,7 @@
                 android:layout_marginTop="8dp"
                 android:baselineAligned="false"
                 android:gravity="center"
-                android:text="Chờ thanh toán"
+                android:text="Chờ vận chuyển"
                 android:textColor="@color/colorblack"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -128,7 +128,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chờ vận chuyển"
+                android:text="Đã nhận hàng"
                 android:textSize="12sp"
                 android:gravity="center"
                 android:textColor="@color/colorblack"
@@ -153,7 +153,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chờ giao hàng"
+                android:text="Hủy hàng"
                 android:textSize="12sp"
                 android:textColor="@color/colorblack"
                 android:gravity="center"

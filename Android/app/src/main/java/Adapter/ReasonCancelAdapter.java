@@ -69,7 +69,6 @@ public class ReasonCancelAdapter extends RecyclerView.Adapter<ReasonCancelAdapte
         public ReasonCancelHolder(@NonNull View itemView) {
             super(itemView);
             productName = itemView.findViewById(R.id.product_name);
-            productSize = itemView.findViewById(R.id.product_size);
             productPrice = itemView.findViewById(R.id.product_price);
             productQuantity = itemView.findViewById(R.id.product_quantity);
             totalPayment = itemView.findViewById(R.id.total_money);

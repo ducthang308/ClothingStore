@@ -25,6 +25,21 @@ public class SelectVoucherAdapter extends RecyclerView.Adapter<SelectVoucherAdap
     public SelectVoucherAdapter(List<Discount> discountList, OnVoucherSelectListener selectListener) {
         this.discountList = discountList != null ? discountList : new ArrayList<>();
         this.selectListener = selectListener;
+
+        // Tự động chọn item đầu tiên nếu có
+        if (!this.discountList.isEmpty() && selectListener != null) {
+            selectListener.onVoucherSelected(this.discountList.get(0)); // Mặc định chọn item đầu tiên
+        }
+    }
+
+    public void setDiscountList(List<Discount> newDiscountList) {
+        this.discountList = newDiscountList != null ? newDiscountList : new ArrayList<>();
+        notifyDataSetChanged();
+
+        // Tự động chọn item đầu tiên nếu danh sách không rỗng
+        if (!this.discountList.isEmpty() && selectListener != null) {
+            selectListener.onVoucherSelected(this.discountList.get(0));
+        }
     }
 
     @NonNull
@@ -44,12 +59,9 @@ public class SelectVoucherAdapter extends RecyclerView.Adapter<SelectVoucherAdap
         holder.tvMota.setText(discount.getNote());
 
         // Handle button click
-        holder.btnUse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (selectListener != null) {
-                    selectListener.onVoucherSelected(discount);
-                }
+        holder.btnUse.setOnClickListener(v -> {
+            if (selectListener != null) {
+                selectListener.onVoucherSelected(discount);
             }
         });
     }
@@ -78,3 +90,4 @@ public class SelectVoucherAdapter extends RecyclerView.Adapter<SelectVoucherAdap
         void onVoucherSelected(Discount discount);
     }
 }
+
