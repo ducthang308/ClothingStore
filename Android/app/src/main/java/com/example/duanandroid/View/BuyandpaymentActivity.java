@@ -8,6 +8,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,15 +20,20 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import Adapter.BuyAndPaymentAdapter;
+import DTO.CartItemsDTO;
 import DTO.OrderDetailDTO;
 import DTO.OrdersDTO;
 import DTO.ProductDTO;
+import Fragment.TabLayOutActivity;
+import Fragment.WaitingForDeliveryFragment;
 import Interface.APIClient;
+import Interface.ApiCartItems;
 import Interface.ApiOrderDetail;
 import Interface.ApiOrders;
 import Interface.PreferenceManager;
@@ -50,48 +56,105 @@ public class BuyandpaymentActivity extends AppCompatActivity {
     private TextView shippingMethodText;
     private int discountId;
     private int[] quantities;
+    private List<CartItemsDTO> cartItemsList;
+    private float voucherPercent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buyandpayment);
 
-        // Initializing views
         initializeViews();
 
-        // Retrieve data from intent
-        productList = (List<ProductDTO>) getIntent().getSerializableExtra("productList");
+        Intent intent = getIntent();
+        String origin = intent.getStringExtra("origin");
+
+        cartItemsList = new ArrayList<>();
+
+        if ("cart".equals(origin)) {
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                List<Integer> idsCart = bundle.getIntegerArrayList("idsCart");
+                List<Integer> ids = bundle.getIntegerArrayList("ids");
+                List<String> names = bundle.getStringArrayList("names");
+                List<String> images = bundle.getStringArrayList("images");
+                List<Float> prices = (List<Float>) bundle.getSerializable("prices");
+                ArrayList<Integer> quantities = intent.getIntegerArrayListExtra("quantities");
+
+                if (ids != null && names != null && images != null && prices != null) {
+                    for (int i = 0; i < ids.size(); i++) {
+                        CartItemsDTO cartItem = new CartItemsDTO();
+                        cartItem.setId(idsCart.get(i));
+                        cartItem.setProductId(ids.get(i));
+                        cartItem.setProductName(names.get(i));
+                        cartItem.setImageUrl(images.get(i));
+                        cartItem.setPrice(prices.get(i));
+                        cartItem.setQuantity(quantities.get(i));
+                        cartItemsList.add(cartItem);
+                    }
+                }
+            }
+            calculateTotalCostForCart();
+        } else if ("chitietsanpham".equals(origin)) {
+            productList = (ArrayList<ProductDTO>) intent.getSerializableExtra("productList");
+            updateTotalCostView(calculateTotalCost());
+        }
+
+        buyAndPaymentAdapter = new BuyAndPaymentAdapter(productList, cartItemsList, this);
+        rcvBuyAndPayment.setLayoutManager(new LinearLayoutManager(this));
+        rcvBuyAndPayment.setAdapter(buyAndPaymentAdapter);
+
+        if (cartItemsList.isEmpty()) {
+            cartItemsList = new ArrayList<>();
+        }
+
         if (productList == null) {
             productList = new ArrayList<>();
         }
 
-        // Setting up adapter and RecyclerView
-        buyAndPaymentAdapter = new BuyAndPaymentAdapter(productList, this);
-        rcvBuyAndPayment.setLayoutManager(new LinearLayoutManager(this));
-        rcvBuyAndPayment.setAdapter(buyAndPaymentAdapter);
+        buyAndPaymentAdapter.setOnQuantityChangeListener(this::calculateTotalCostForCurrentOrigin);
 
-        // Calculating total cost
-        calculateTotalCost();
+        findViewById(R.id.btn_order).setOnClickListener(view -> {
+            List<Integer> updatedQuantities = buyAndPaymentAdapter.getUpdatedQuantities();
 
-        // Handling order button click
-        findViewById(R.id.btn_order).setOnClickListener(view -> handleOrder(buyAndPaymentAdapter.getQuantities()));
+            int[] quantitiesArray = new int[updatedQuantities.size()];
+            for (int i = 0; i < updatedQuantities.size(); i++) {
+                quantitiesArray[i] = updatedQuantities.get(i);
+            }
 
-        // Handling voucher selection
-        findViewById(R.id.click_voucher).setOnClickListener(view -> {
-            Intent intent = new Intent(BuyandpaymentActivity.this, SelectVoucherActivity.class);
-            startActivityForResult(intent, REQUEST_VOUCHER_SELECTION);
+            if (quantitiesArray.length > 0) {
+                handleOrder(quantitiesArray, cartItemsList);
+
+                // Xóa các sản phẩm khỏi giỏ hàng sau khi đặt hàng
+                for (CartItemsDTO cartItem : cartItemsList) {
+                    deleteCartItem(cartItem.getProductId());
+                }
+
+                Intent intent1 = new Intent(BuyandpaymentActivity.this, TabLayOutActivity.class);
+                intent1.putExtra("tabPosition", 0);
+                startActivity(intent1);
+            } else {
+                Toast.makeText(this, "Không có sản phẩm để đặt hàng.", Toast.LENGTH_SHORT).show();
+            }
         });
 
-        // Handling payment method selection
+
+        findViewById(R.id.click_voucher).setOnClickListener(view -> {
+            Intent voucherIntent = new Intent(BuyandpaymentActivity.this, SelectVoucherActivity.class);
+            startActivityForResult(voucherIntent, REQUEST_VOUCHER_SELECTION);
+        });
+
         shippingMethodText.setOnClickListener(view -> {
-            Intent intent = new Intent(BuyandpaymentActivity.this, PaymentMethodActivity.class);
-            startActivityForResult(intent, REQUEST_PAYMENT_METHOD_SELECTION);
+            Intent paymentIntent = new Intent(BuyandpaymentActivity.this, PaymentMethodActivity.class);
+            startActivityForResult(paymentIntent, REQUEST_PAYMENT_METHOD_SELECTION);
             calculateTotalCost();
         });
 
-        // Handling back navigation
-        findViewById(R.id.back_arrow).setOnClickListener(view -> handleBackNavigation());
+        findViewById(R.id.back_arrow).setOnClickListener(view -> {
+            onBackPressed();
+        });
     }
+
 
     private void initializeViews() {
         totalCostTextView = findViewById(R.id.shipping_cost);
@@ -107,60 +170,47 @@ public class BuyandpaymentActivity extends AppCompatActivity {
         txtAddress.setText(address != null && !address.isEmpty() ? address : "Chưa có địa chỉ được lưu");
     }
 
-    private void handleBackNavigation() {
-        if ("cart".equals(origin) || "order_details".equals(origin)) {
-            finish();
-        } else {
-            Toast.makeText(this, "Quay lại không xác định!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    /**
-     * Nhận kết quả từ các activity con
-     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_VOUCHER_SELECTION && resultCode == RESULT_OK && data != null) {
-            // Lấy thông tin từ SelectVoucherActivity
             String voucherNote = data.getStringExtra("selected_voucher_note");
-            double voucherPercent = data.getDoubleExtra("selected_voucher_percent", 0);
-            int selectedDiscountId = data.getIntExtra("selected_voucher_id", -1); // Lấy ID của discount
+            voucherPercent = data.getFloatExtra("selected_voucher_percent", 0);
+            int selectedDiscountId = data.getIntExtra("selected_voucher_id", -1);
 
-            // Cập nhật discountId
-            if (selectedDiscountId != -1) {
-                discountId = selectedDiscountId;
+            if (selectedDiscountId == -1) {
+                voucherNote = "Default Voucher";
+                voucherPercent = 0.1f;
+                selectedDiscountId = 1;
             }
 
-            // Hiển thị voucher đã chọn
+            discountId = selectedDiscountId;
+
             if (voucherPercent > 0) {
                 txtVoucher.setText(String.format("%s (%.0f%%)", voucherNote, voucherPercent * 100));
             } else {
-                txtVoucher.setText(voucherNote); // Chỉ hiển thị ghi chú của voucher
+                txtVoucher.setText(voucherNote);
             }
 
-            // Cập nhật tổng tiền sau khi áp dụng giảm giá
-            calculateTotalCost();
-        }
-
-        if (requestCode == REQUEST_PAYMENT_METHOD_SELECTION && resultCode == RESULT_OK && data != null) {
-            // Xử lý kết quả từ PaymentMethodActivity
-            String selectedMethod = data.getStringExtra("selectedPaymentMethod");
-            if (selectedMethod != null) {
-                shippingMethodText.setText(selectedMethod);
+            if ("cart".equals(origin)) {
+                calculateTotalCostForCart();
+            } else if ("chitietsanpham".equals(origin)) {
+                calculateTotalCost();
             }
         }
+        updateTotalCostView(calculateTotalCost());
     }
 
-    public void handleOrder(int[] quantities) {
-        if (productList.isEmpty()) {
-            Toast.makeText(this, "Không có sản phẩm để đặt hàng!", Toast.LENGTH_SHORT).show();
+
+    public void handleOrder(int[] quantities, List<CartItemsDTO> selectedProducts) {
+        if ((selectedProducts == null || selectedProducts.isEmpty()) && (cartItemsList == null || cartItemsList.isEmpty())) {
+            showToast("Không có sản phẩm để đặt hàng!");
             return;
         }
 
         for (int quantity : quantities) {
             if (quantity <= 0) {
-                Toast.makeText(this, "Số lượng sản phẩm không hợp lệ!", Toast.LENGTH_SHORT).show();
+                showToast("Số lượng sản phẩm không hợp lệ!");
                 return;
             }
         }
@@ -168,62 +218,70 @@ public class BuyandpaymentActivity extends AppCompatActivity {
         PreferenceManager preferenceManager = new PreferenceManager(this);
         int userId = preferenceManager.getUserId();
         if (userId == -1) {
-            Toast.makeText(this, "Không tìm thấy thông tin người dùng!", Toast.LENGTH_SHORT).show();
+            showToast("Không tìm thấy thông tin người dùng!");
             return;
         }
 
-        String paymentMethod = shippingMethodText.getText().toString().trim();
+        String paymentMethod = shippingMethodText.getText() != null ? shippingMethodText.getText().toString().trim() : "";
         if (paymentMethod.isEmpty()) {
-            Toast.makeText(this, "Vui lòng chọn phương thức thanh toán!", Toast.LENGTH_SHORT).show();
+            showToast("Vui lòng chọn phương thức thanh toán!");
             return;
         }
 
-        float totalPayment = calculateTotalPayment(quantities);
+        float totalPayment = calculateTotalCost();
+        if (discountId > 0) {
+            totalPayment *= voucherPercent;
+        }
+
         if (totalPayment <= 0) {
-            Toast.makeText(this, "Tổng thanh toán không hợp lệ!", Toast.LENGTH_SHORT).show();
+            showToast("Tổng thanh toán không hợp lệ!");
             return;
         }
 
         OrdersDTO orderData = createOrderData(userId, totalPayment, paymentMethod);
-        String token = preferenceManager.getToken(); // Lấy token từ PreferenceManager
+
+        String token = preferenceManager.getToken();
         if (token == null || token.isEmpty()) {
-            Toast.makeText(this, "Token không hợp lệ, vui lòng đăng nhập lại!", Toast.LENGTH_SHORT).show();
+            showToast("Token không hợp lệ, vui lòng đăng nhập lại!");
             return;
         }
 
         ApiOrders apiOrders = APIClient.getClient().create(ApiOrders.class);
         Call<OrdersDTO> callCreateOrder = apiOrders.createOrder("Bearer " + token, orderData);
-        handleOrderApiResponse(callCreateOrder, quantities);
+
+        // Truyền sản phẩm phù hợp vào hàm xử lý API
+        if (selectedProducts != null && !selectedProducts.isEmpty()) {
+            handleOrderApiResponse(callCreateOrder, quantities, selectedProducts);
+        } else {
+            handleOrderApiResponse(callCreateOrder, quantities, cartItemsList);
+        }
     }
 
-    private float calculateTotalPayment(int[] quantities) {
-        float totalPayment = 0f;
-        for (int i = 0; i < productList.size(); i++) {
-            ProductDTO product = productList.get(i);
-            int quantity = quantities[i];
-            totalPayment += product.getPrice() * quantity;
+    public void buyFromProductDetails(int productId, int selectedQuantity) {
+        if (selectedQuantity <= 0) {
+            showToast("Số lượng sản phẩm không hợp lệ!");
+            return;
         }
 
-        String voucherText = txtVoucher.getText().toString();
-        float discountPercent = (float) extractDiscountPercent(voucherText);
-        float totalDiscount = totalPayment * discountPercent;
-        totalPayment -= totalDiscount;
+        // Tạo sản phẩm tạm thời
+        CartItemsDTO product = new CartItemsDTO();
+        product.setProductId(productId);
+        product.setProductName("Tên sản phẩm"); // Lấy từ giao diện
+        product.setPrice(100.0f); // Giá sản phẩm, lấy từ giao diện
 
-        return totalPayment;
+        List<CartItemsDTO> selectedProducts = new ArrayList<>();
+        selectedProducts.add(product);
+
+        // Truyền danh sách sản phẩm và số lượng vào handleOrder
+        int[] quantities = new int[]{selectedQuantity};
+        handleOrder(quantities, selectedProducts);
     }
 
-    private double extractDiscountPercent(String voucherText) {
-        if (voucherText.matches(".*\\d+%.*")) {
-            try {
-                String percentString = voucherText.replaceAll("[^\\d]", "");
-                return Double.parseDouble(percentString) / 100.0;
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-                Toast.makeText(this, "Voucher không hợp lệ, không thể trích xuất giảm giá.", Toast.LENGTH_SHORT).show();
-            }
-        }
-        return 0;
+
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+
 
     private OrdersDTO createOrderData(int userId, float totalPayment, String paymentMethod) {
         Date orderDate = new Date();
@@ -235,40 +293,37 @@ public class BuyandpaymentActivity extends AppCompatActivity {
         orderData.setTotalMoney(totalPayment);
         orderData.setOrderDate(formattedDate);
         orderData.setPaymentMethod(paymentMethod);
-        orderData.setDiscounts(discountId);
+
+        if (discountId <= 0) {
+            orderData.setDiscounts(null);
+        } else {
+            orderData.setDiscounts(discountId);
+        }
+
         orderData.setStatus("Waiting for delivery");
         return orderData;
     }
 
-    private void handleOrderApiResponse(Call<OrdersDTO> call, int[] quantities) {
+
+    private void handleOrderApiResponse(Call<OrdersDTO> call, int[] quantities, List<CartItemsDTO> productList) {
         call.enqueue(new Callback<OrdersDTO>() {
             @Override
             public void onResponse(Call<OrdersDTO> call, Response<OrdersDTO> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    try {
-                         int orderId = response.body().getId();
-                        Log.d("OrderResponse", "Order ID: " + orderId);
+                    int orderId = response.body().getId();
+                    Log.d("OrderResponse", "Order ID: " + orderId);
 
-                        if (orderId > 0) {
-                            Toast.makeText(BuyandpaymentActivity.this, "Tạo đơn hàng thành công! Order ID: " + orderId, Toast.LENGTH_SHORT).show();
-                            createOrderDetails(orderId, quantities);
-                        } else {
-                            Log.e("OrderError", "Order ID không hợp lệ: " + orderId);
-                            Toast.makeText(BuyandpaymentActivity.this, "Order ID không hợp lệ.", Toast.LENGTH_LONG).show();
-                        }
-                    } catch (NumberFormatException e) {
-                        Log.e("OrderError", "Không thể parse Order ID từ response: " + response.body(), e);
-                        Toast.makeText(BuyandpaymentActivity.this, "Lỗi khi xử lý Order ID.", Toast.LENGTH_LONG).show();
+                    if (orderId > 0) {
+                        Toast.makeText(BuyandpaymentActivity.this, "Tạo đơn hàng thành công! Order ID: " + orderId, Toast.LENGTH_SHORT).show();
+
+                        // Tạo chi tiết đơn hàng với danh sách sản phẩm
+                        createOrderDetails(orderId, quantities, productList);
+                    } else {
+                        Log.e("OrderError", "Order ID không hợp lệ: " + orderId);
+                        Toast.makeText(BuyandpaymentActivity.this, "Order ID không hợp lệ.", Toast.LENGTH_LONG).show();
                     }
                 } else {
-                    try {
-                        String errorMessage = response.errorBody() != null ? response.errorBody().string() : "Không rõ lỗi.";
-                        Log.e("OrderError", "Tạo đơn hàng thất bại: " + errorMessage);
-                        Toast.makeText(BuyandpaymentActivity.this, "Tạo đơn hàng thất bại: " + errorMessage, Toast.LENGTH_LONG).show();
-                    } catch (IOException e) {
-                        Log.e("OrderError", "Không thể đọc lỗi từ API.", e);
-                        Toast.makeText(BuyandpaymentActivity.this, "Không thể đọc lỗi từ API.", Toast.LENGTH_LONG).show();
-                    }
+                    handleErrorResponse(response);
                 }
             }
 
@@ -280,90 +335,149 @@ public class BuyandpaymentActivity extends AppCompatActivity {
         });
     }
 
-    private void createOrderDetails(int orderId, int[] quantities) {
+
+    private void createOrderDetails(int orderId, int[] quantities, List<CartItemsDTO> productList) {
         ApiOrderDetail apiOrderDetail = APIClient.getClient().create(ApiOrderDetail.class);
 
-        if (productList.size() != quantities.length) {
-            Log.e("OrderDetailsError", "Kích thước productList và quantities không khớp.");
-            Toast.makeText(this, "Kích thước danh sách sản phẩm và số lượng không khớp.", Toast.LENGTH_LONG).show();
-            return;
-        }
+        if (!productList.isEmpty()) {
+            for (int i = 0; i < productList.size(); i++) {
+                CartItemsDTO cartItem = productList.get(i);
+                int quantity = quantities[i];
 
-        for (int i = 0; i < productList.size(); i++) {
-            ProductDTO product = productList.get(i);
-            int quantity = quantities[i];
+                if (quantity <= 0) {
+                    Log.e("OrderDetailsError", "Số lượng sản phẩm không hợp lệ: " + cartItem.getProductName());
+                    Toast.makeText(this, "Số lượng sản phẩm không hợp lệ: " + cartItem.getProductName(), Toast.LENGTH_SHORT).show();
+                    continue;
+                }
 
-            if (quantity <= 0) {
-                Log.e("OrderDetailsError", "Số lượng sản phẩm không hợp lệ: " + product.getProductName());
-                Toast.makeText(this, "Số lượng sản phẩm không hợp lệ: " + product.getProductName(), Toast.LENGTH_SHORT).show();
-                continue;
+                float totalMoney = cartItem.getPrice() * quantity;
+
+                OrderDetailDTO orderDetailData = new OrderDetailDTO();
+                orderDetailData.setOrderId(orderId);
+                orderDetailData.setProductId(cartItem.getProductId());
+                orderDetailData.setNumberOfProduct(quantity);
+                orderDetailData.setPrice(cartItem.getPrice());
+                orderDetailData.setTotalMoney(totalMoney);
+
+                sendOrderDetailToApi(apiOrderDetail, orderDetailData, cartItem.getProductName());
             }
-
-            // Tính tổng tiền cho sản phẩm
-            Float totalMoney = product.getPrice() * quantity;
-
-            int productId = product.getId();
-
-            OrderDetailDTO orderDetailData = new OrderDetailDTO();
-            orderDetailData.setOrderId(orderId); // Sử dụng Order ID từ API
-            orderDetailData.setProductId(productId);
-            orderDetailData.setNumberOfProduct(quantity);
-            orderDetailData.setPrice(product.getPrice());
-            orderDetailData.setTotalMoney(totalMoney);
-
-            Log.d("OrderDetailDTO", "OrderDetail: " + orderDetailData.toString());
-
-            PreferenceManager preferenceManager = new PreferenceManager(this);
-            String token = preferenceManager.getToken();
-            Call<String> callCreateOrderDetail = apiOrderDetail.createOrderdetail("Bearer " + token, orderDetailData);
-
-            callCreateOrderDetail.enqueue(new Callback<String>() {
-                @Override
-                public void onResponse(Call<String> call, Response<String> response) {
-                    if (response.isSuccessful()) {
-                        Log.d("OrderDetailSuccess", "Tạo chi tiết đơn hàng thành công! Sản phẩm: " + product.getProductName());
-                        Toast.makeText(BuyandpaymentActivity.this, "Tạo chi tiết đơn hàng thành công! Sản phẩm: " + product.getProductName(), Toast.LENGTH_SHORT).show();
-                    } else {
-                        try {
-                            String errorMessage = response.errorBody() != null ? response.errorBody().string() : "Không rõ lỗi.";
-                            Log.e("OrderDetailError", "Tạo chi tiết đơn hàng thất bại: " + errorMessage);
-                            Toast.makeText(BuyandpaymentActivity.this, "Tạo chi tiết đơn hàng thất bại: " + errorMessage, Toast.LENGTH_LONG).show();
-                        } catch (IOException e) {
-                            Log.e("OrderDetailError", "Không thể đọc lỗi từ API.", e);
-                            Toast.makeText(BuyandpaymentActivity.this, "Không thể đọc lỗi từ API.", Toast.LENGTH_LONG).show();
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<String> call, Throwable t) {
-                    Log.e("OrderDetailError", "Lỗi khi gọi API tạo chi tiết đơn hàng.", t);
-                    Toast.makeText(BuyandpaymentActivity.this, "Lỗi khi gọi API tạo chi tiết đơn hàng: " + t.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            });
+        } else {
+            Log.e("OrderDetailsError", "Không có sản phẩm nào để tạo chi tiết đơn hàng.");
+            Toast.makeText(this, "Không có sản phẩm nào để tạo chi tiết đơn hàng.", Toast.LENGTH_LONG).show();
         }
     }
 
 
 
-    public void calculateTotalCost() {
-        float totalCost = 0f;
-        for (ProductDTO product : productList) {
-            totalCost += product.getPrice();
+    private void sendOrderDetailToApi(ApiOrderDetail apiOrderDetail, OrderDetailDTO orderDetailData, String productName) {
+        PreferenceManager preferenceManager = new PreferenceManager(this);
+        String token = preferenceManager.getToken();
+
+        Call<String> callCreateOrderDetail = apiOrderDetail.createOrderdetail("Bearer " + token, orderDetailData);
+        callCreateOrderDetail.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    Log.d("OrderDetailSuccess", "Tạo chi tiết đơn hàng thành công! Sản phẩm: " + productName);
+                    Toast.makeText(BuyandpaymentActivity.this, "Tạo chi tiết đơn hàng thành công! Sản phẩm: " + productName, Toast.LENGTH_SHORT).show();
+                } else {
+                    handleErrorResponse(response);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.e("OrderDetailError", "Lỗi khi gọi API tạo chi tiết đơn hàng.", t);
+                Toast.makeText(BuyandpaymentActivity.this, "Lỗi khi gọi API tạo chi tiết đơn hàng: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
+    private void handleErrorResponse(Response<?> response) {
+        try {
+            String errorMessage = response.errorBody() != null ? response.errorBody().string() : "Không rõ lỗi.";
+            Log.e("OrderError", "Tạo đơn hàng thất bại: " + errorMessage);
+            Toast.makeText(BuyandpaymentActivity.this, "Tạo đơn hàng thất bại: " + errorMessage, Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            Log.e("OrderError", "Không thể đọc lỗi từ API.", e);
+            Toast.makeText(BuyandpaymentActivity.this, "Không thể đọc lỗi từ API.", Toast.LENGTH_LONG).show();
         }
-        totalCostTextView.setText(String.format("Tổng tiền: %.2f VNĐ", totalCost));
+    }
+
+    private void calculateTotalCostForCurrentOrigin(int position, int updatedQuantity) {
+        if ("cart".equals(origin)) {
+            calculateTotalCostForCart();
+        } else if ("chitietsanpham".equals(origin)) {
+            calculateTotalCost();
+        }
+    }
+
+    public void calculateTotalCostForCart() {
+        float totalCost = 0f;
+        for (CartItemsDTO cartItem : cartItemsList) {
+            if(voucherPercent == 0) {
+                totalCost += cartItem.getPrice() * cartItem.getQuantity();
+            }else{
+                totalCost += cartItem.getPrice() * cartItem.getQuantity() * voucherPercent;
+            }
+        }
+
+        updateTotalCostView(totalCost);
+    }
+
+    private float calculateTotalCost() {
+        float totalCost = 0;
+        if (cartItemsList != null && !cartItemsList.isEmpty()) {
+            for (CartItemsDTO cartItem : cartItemsList) {
+                totalCost += cartItem.getPrice() * cartItem.getQuantity();
+            }
+        } else {
+            for (ProductDTO product : productList) {
+                totalCost += product.getPrice() * 1;
+            }
+        }
+        return totalCost;
+    }
+
+    private void updateTotalCostView(float totalCost) {
+        totalCostTextView.setText(String.format("%,.0f VNĐ", totalCost));
 
         String voucherText = txtVoucher.getText().toString().trim();
         if (voucherText.matches(".*\\d+%.*")) {
-            float discountPercent = (float) extractDiscountPercent(voucherText);
-            float totalDiscount = totalCost * discountPercent;
+            float totalDiscount = totalCost * voucherPercent;
             float totalPayment = totalCost - totalDiscount;
 
-            totalPaymentTextView.setText(String.format("Thanh toán: %.2f VNĐ (đã giảm %s)", totalPayment, voucherText));
-            totalPaymentTextView1.setText(String.format("Thanh toán: %.2f VNĐ", totalPayment));
+            totalPaymentTextView.setText(String.format("%,.0f VNĐ (đã giảm %s)", totalPayment, voucherPercent*100));
+            totalPaymentTextView1.setText(String.format("%,.0f VNĐ", totalPayment));
         } else {
-            totalPaymentTextView.setText(String.format("Thanh toán: %.2f VNĐ", totalCost));
-            totalPaymentTextView1.setText(String.format("Thanh toán: %.2f VNĐ", totalCost));
+            totalPaymentTextView.setText(String.format("%,.0f VNĐ", totalCost));
+            totalPaymentTextView1.setText(String.format("%,.0f VNĐ", totalCost));
         }
     }
+
+    private void deleteCartItem(int productId) {
+        ApiCartItems apiCartItems = APIClient.getClient().create(ApiCartItems.class);
+        PreferenceManager preferenceManager = new PreferenceManager(this);
+        String token = preferenceManager.getToken();
+        int cartId = preferenceManager.getCartId();
+
+        Call<Void> call = apiCartItems.deleteCartItem("Bearer " + token, cartId, productId);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(BuyandpaymentActivity.this, "Đã xóa sản phẩm khỏi giỏ hàng!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(BuyandpaymentActivity.this, "Lỗi xóa sản phẩm!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(BuyandpaymentActivity.this, "Lỗi kết nối mạng!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }

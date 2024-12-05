@@ -10,4 +10,5 @@ import java.util.List;
 public interface IReviewService {
     Review createReview(ReviewDTO reviewDTO) throws DataNotFoundException;
     List<ReviewWithUserFullNameDTO> getAllReviewByProductId(Long productId);
+    boolean hasReviewed(Long orderId, Long productId);
 }

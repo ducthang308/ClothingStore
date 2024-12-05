@@ -4,6 +4,7 @@ import com.example.demo.DTO.LoginResponseDTO;
 import com.example.demo.DTO.UpdatePassDTO;
 import com.example.demo.DTO.UsersDTO;
 import com.example.demo.Models.Users;
+import com.example.demo.Responses.UserResponse;
 import com.example.demo.Services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -62,6 +63,24 @@ public class UserController {
             Users users = userService.updatePass(updatePassDTO, id);
             return ResponseEntity.ok(users);
         }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("")
+    @PreAuthorize("hasRole('ROLE_Admin')")
+    public ResponseEntity<List<UserResponse>> getAllUserByRoleUser(){
+        List<UserResponse> users = userService.getAllUser();
+        return ResponseEntity.ok(users);
+    }
+
+    @PutMapping("/active/{id}")
+    @PreAuthorize("hasRole('ROLE_Admin')")
+    public ResponseEntity<?> updateActive(@PathVariable("id") Long id, @Valid @RequestBody UserResponse userResponse) {
+        try {
+            Users users = userService.updateActive(userResponse, id);
+            return ResponseEntity.ok(users);
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

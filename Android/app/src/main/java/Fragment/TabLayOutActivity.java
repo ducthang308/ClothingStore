@@ -27,35 +27,33 @@ public class TabLayOutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab_lay_out);
 
-        // Ánh xạ ViewPager và TabLayout
         viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.tabLayout);
 
-        // Tạo và thiết lập adapter cho ViewPager
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager(),
                 FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
             @Override
             public Fragment getItem(int position) {
                 switch (position) {
                     case 0:
-                        return new WaitingForPaymentFragment();
-                    case 1:
                         return new WaitingForShipingFragment();
-                    case 2:
+//                    case 1:
+//                        return new WaitingForPaymentFragment();
+                    case 1:
                         return new WaitingForDeliveryFragment();
-                    case 3:
+                    case 2:
                         return new ReviewFragment();
-                    case 4:
+                    case 3:
                         return new ReturnAndCancelFragment();
                     default:
-                        return new WaitingForPaymentFragment();
+                        return new WaitingForShipingFragment();
                 }
             }
 
             @Override
             public int getCount() {
                 // Số lượng tab
-                return 5;
+                return 4;
             }
 
             @Override
@@ -63,17 +61,17 @@ public class TabLayOutActivity extends AppCompatActivity {
                 // Thiết lập tiêu đề cho từng tab
                 switch (position) {
                     case 0:
-                        return "Chờ thanh toán";
-                    case 1:
                         return "Chờ vận chuyển";
+//                    case 1:
+//                        return "Chờ thanh toán";
+                    case 1:
+                        return "Đã nhận hàng";
                     case 2:
-                        return "Chờ giao hàng";
-                    case 3:
                         return "Đánh giá";
-                    case 4:
+                    case 3:
                         return "Hủy/ Trả hàng";
                     default:
-                        return "Chờ thanh toán";
+                        return "Chờ vận chuyển";
                 }
             }
         });
@@ -95,8 +93,8 @@ public class TabLayOutActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(TabLayOutActivity.this,AccountUserFragment.class);
 //                intent.putExtra("tabPosition", 4);
-//                startActivity(intent);
-                finish();
+                startActivity(intent);
+//                finish();
             }
         });
 

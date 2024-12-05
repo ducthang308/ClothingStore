@@ -50,4 +50,9 @@ public class ReviewService implements IReviewService{
     public List<ReviewWithUserFullNameDTO> getAllReviewByProductId(Long productId) {
         return reviewRepository.getAllReviewByProductId(productId);
     }
+
+    @Override
+    public boolean hasReviewed(Long orderId, Long productId) {
+        return reviewRepository.existsByOrders_IdAndProduct_Id(orderId, productId);
+    }
 }

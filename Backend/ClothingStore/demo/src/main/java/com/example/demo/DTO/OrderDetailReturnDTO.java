@@ -12,6 +12,11 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDetailReturnDTO {
+    @JsonProperty("product_id")
+    private Long productId;
+
+    @JsonProperty("order_id")
+    private Long orderId;
 
     @JsonProperty("number_of_product")
     private Integer numberOfProduct;

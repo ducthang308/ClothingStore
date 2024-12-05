@@ -79,6 +79,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 Pair.of(String.format("%s/categories", apiPrefix), "GET"),
                 Pair.of(String.format("%s/discounts", apiPrefix), "GET"),
                 Pair.of(String.format("%s/review", apiPrefix), "GET"),
+                Pair.of(String.format("%s/review/**", apiPrefix), "GET"),
                 Pair.of(String.format("%s/users/login", apiPrefix), "POST"),
                 Pair.of(String.format("%s/users/register", apiPrefix), "POST")
         );

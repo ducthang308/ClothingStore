@@ -29,7 +29,7 @@ public class ManageAccountActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(ManageAccountActivity.this, TabLayOutActivity.class);
-                    intent.putExtra("tabPosition", 3);
+                    intent.putExtra("tabPosition", 0);
                     startActivity(intent);
                 }
             });
@@ -59,7 +59,7 @@ public class ManageAccountActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(ManageAccountActivity.this, TabLayOutActivity.class);
-                    intent.putExtra("tabPosition", 2);
+                    intent.putExtra("tabPosition", 3);
                     startActivity(intent);
                 }
             });
@@ -69,7 +69,7 @@ public class ManageAccountActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(ManageAccountActivity.this, TabLayOutActivity.class);
-                    intent.putExtra("tabPosition", 3);
+                    intent.putExtra("tabPosition", 2);
                     startActivity(intent);
                 }
             });

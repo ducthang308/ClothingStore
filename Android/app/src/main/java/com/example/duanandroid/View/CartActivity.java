@@ -12,10 +12,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.duanandroid.R;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import Adapter.CartAdapter;
 import DTO.CartItemsDTO;
+import DTO.ProductDTO;
 import Interface.APIClient;
 import Interface.ApiCartItems;
 import Interface.PreferenceManager;
@@ -61,10 +64,73 @@ public class CartActivity extends AppCompatActivity {
 
         Button btnCheckout = findViewById(R.id.btn_checkout);
         btnCheckout.setOnClickListener(view -> {
+            List<CartItemsDTO> selectedCartItems = cartAdapter.getSelectedCartItems(); // Lấy danh sách CartItemsDTO đã chọn
+            if (selectedCartItems == null || selectedCartItems.isEmpty()) {
+                Toast.makeText(CartActivity.this, "Vui lòng chọn sản phẩm để thanh toán.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             Intent checkoutIntent = new Intent(CartActivity.this, BuyandpaymentActivity.class);
             checkoutIntent.putExtra("origin", "cart");
+
+            List<Integer> ids = new ArrayList<>();
+            List<String> names = new ArrayList<>();
+            List<String> images = new ArrayList<>();
+            List<Float> prices = new ArrayList<>();
+            List<Integer> quantities = new ArrayList<>(); // Thêm danh sách số lượng
+
+            for (CartItemsDTO cartItem : selectedCartItems) {
+                ids.add(cartItem.getProductId());
+                names.add(cartItem.getProductName());
+                images.add(cartItem.getImageUrl());
+                prices.add(cartItem.getPrice());
+                quantities.add(cartItem.getQuantity()); // Lấy số lượng
+            }
+
+            checkoutIntent.putIntegerArrayListExtra("ids", (ArrayList<Integer>) ids);
+            checkoutIntent.putStringArrayListExtra("names", (ArrayList<String>) names);
+            checkoutIntent.putStringArrayListExtra("images", (ArrayList<String>) images);
+            checkoutIntent.putExtra("prices", (Serializable) prices);
+            checkoutIntent.putIntegerArrayListExtra("quantities", (ArrayList<Integer>) quantities); // Truyền thêm số lượng
+
             startActivity(checkoutIntent);
         });
+        btnCheckout.setOnClickListener(view -> {
+            List<CartItemsDTO> selectedCartItems = cartAdapter.getSelectedCartItems(); // Lấy danh sách CartItemsDTO đã chọn
+            if (selectedCartItems == null || selectedCartItems.isEmpty()) {
+                Toast.makeText(CartActivity.this, "Vui lòng chọn sản phẩm để thanh toán.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Intent checkoutIntent = new Intent(CartActivity.this, BuyandpaymentActivity.class);
+            checkoutIntent.putExtra("origin", "cart");
+
+            List<Integer> idsCart = new ArrayList<>();
+            List<Integer> ids = new ArrayList<>();
+            List<String> names = new ArrayList<>();
+            List<String> images = new ArrayList<>();
+            List<Float> prices = new ArrayList<>();
+            List<Integer> quantities = new ArrayList<>(); // Thêm danh sách số lượng
+
+            for (CartItemsDTO cartItem : selectedCartItems) {
+                idsCart.add(cartItem.getId());
+                ids.add(cartItem.getProductId());
+                names.add(cartItem.getProductName());
+                images.add(cartItem.getImageUrl());
+                prices.add(cartItem.getPrice());
+                quantities.add(cartItem.getQuantity()); // Lấy số lượng
+            }
+
+            checkoutIntent.putIntegerArrayListExtra("idsCart", (ArrayList<Integer>) idsCart);
+            checkoutIntent.putIntegerArrayListExtra("ids", (ArrayList<Integer>) ids);
+            checkoutIntent.putStringArrayListExtra("names", (ArrayList<String>) names);
+            checkoutIntent.putStringArrayListExtra("images", (ArrayList<String>) images);
+            checkoutIntent.putExtra("prices", (Serializable) prices);
+            checkoutIntent.putIntegerArrayListExtra("quantities", (ArrayList<Integer>) quantities); // Truyền thêm số lượng
+
+            startActivity(checkoutIntent);
+        });
+
 
         ImageButton btnBack = findViewById(R.id.btn_back);
         btnBack.setOnClickListener(view -> finish());
@@ -83,7 +149,6 @@ public class CartActivity extends AppCompatActivity {
             }
             cartAdapter.notifyDataSetChanged();  // Cập nhật lại ListView
         });
-
     }
 
     private void deleteCartItem(int cartId, int productId) {
@@ -121,6 +186,10 @@ public class CartActivity extends AppCompatActivity {
                         totalPrice += item.getPrice() * item.getQuantity();
                     }
                     tv_total_price.setText(String.format("₫%,.0f", totalPrice));
+                    cartAdapter.setOnTotalPriceChangeListener(newTotalPrice -> {
+                        tv_total_price.setText(String.format("₫%,.0f", newTotalPrice));
+                    });
+
                 } else {
                     Toast.makeText(CartActivity.this, "Không tải được dữ liệu giỏ hàng.", Toast.LENGTH_SHORT).show();
                 }

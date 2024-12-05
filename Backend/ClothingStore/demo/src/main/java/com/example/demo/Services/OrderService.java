@@ -25,8 +25,13 @@ public class OrderService implements IOrdersService {
     public Orders createOrder(OrdersDTO orderDTO) throws Exception {
         Users existingUser = usersRepository.findById(orderDTO.getUserId())
                 .orElseThrow(() -> new DataNotFoundException("Not found userId: " + orderDTO.getUserId()));
-        Discounts existingDiscount = discountsRepository.findById(orderDTO.getDiscountId())
-                .orElseThrow(() -> new DataNotFoundException("Not found userId: " + orderDTO.getDiscountId()));
+
+        Discounts existingDiscount = null;
+        if (orderDTO.getDiscountId() != null) {
+            existingDiscount = discountsRepository.findById(orderDTO.getDiscountId())
+                    .orElseThrow(() -> new DataNotFoundException("Not found discountId: " + orderDTO.getDiscountId()));
+        }
+
         Orders orders = Orders.builder()
                 .users(existingUser)
                 .note(orderDTO.getNote())
@@ -36,7 +41,6 @@ public class OrderService implements IOrdersService {
                 .paymentMethod(orderDTO.getPaymentMethod())
                 .discounts(existingDiscount)
                 .build();
-        ordersRepository.save(orders);
 //        List<OrderDetail> orderDetails = new ArrayList<>();
 //
 //        for (CartItemDTO cartItemDTO : orderDTO.getCartItems()) {
@@ -50,6 +54,7 @@ public class OrderService implements IOrdersService {
 //        orderDetailRepository.saveAll(orderDetails)
 //        orders.setOrderDetails(orderDetails);
 
+        ordersRepository.save(orders);
         return orders;
     }
     @Override

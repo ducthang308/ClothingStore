@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.duanandroid.R;
 
+import Fragment.TabLayoutAdminActivity;
 import Interface.PreferenceManager;
 //import com.example.duanandroid.databinding.ActivityAdminAcountBinding;
 
@@ -43,7 +44,7 @@ public class adminAcountActivity extends AppCompatActivity {
         odermanage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(adminAcountActivity.this, ManageoderActivity.class);
+                Intent intent = new Intent(adminAcountActivity.this, TabLayoutAdminActivity.class);
                 startActivity(intent);
             }
         });

@@ -51,9 +51,11 @@ public class AdminChitietSpActivity extends AppCompatActivity {
 
         setupRecyclerView();
 
+
         loadProductDetails();
         loadReviews();
     }
+
 
     private void initializeViews() {
         productNameTextView = findViewById(R.id.tv_detail_name);
@@ -88,6 +90,7 @@ public class AdminChitietSpActivity extends AppCompatActivity {
 
         return true;
     }
+
 
     public void setupRecyclerView() {
         reviewAdapter = new ReviewAdapter(this, reviewList);

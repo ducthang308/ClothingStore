@@ -43,12 +43,12 @@
 
             <!-- Layout chứa các nút cộng trừ -->
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="165dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="55dp">
+                android:layout_marginLeft="55dp"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
 
                 <ImageButton
                     android:id="@+id/btn_decrease"
@@ -57,8 +57,7 @@
                     android:layout_gravity="center"
                     android:background="#0000"
                     android:contentDescription="Plus Button"
-                    android:src="@drawable/minus"
-                    />
+                    android:src="@drawable/minus" />
 
                 <TextView
                     android:id="@+id/product_quantity"
@@ -66,8 +65,8 @@
                     android:layout_height="40dp"
                     android:gravity="center"
                     android:text="1"
-                    android:textSize="16sp"
-                    android:textColor="#000" />
+                    android:textColor="#000"
+                    android:textSize="16sp" />
 
                 <ImageButton
                     android:id="@+id/btn_increase"
@@ -76,8 +75,7 @@
                     android:layout_gravity="center"
                     android:background="#0000"
                     android:contentDescription="Minus Button"
-                    android:src="@drawable/plus"
-                    />
+                    android:src="@drawable/plus" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

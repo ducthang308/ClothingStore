@@ -66,7 +66,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
 
     private void navigateToDetailPage(ProductDTO product) {
-        if (product == null || product.getId() <= 0 || product.getProductName() == null || product.getPrice() == null || product.getPrice() <= 0.0) {
+        if (product == null || product.getId() <= 0 || product.getProductName() == null || product.getPrice() == 0 || product.getPrice() <= 0.0) {
             Log.e("ProductAdapter", "Invalid product data. Cannot navigate to detail page.");
             Toast.makeText(context, "Dữ liệu sản phẩm không hợp lệ!", Toast.LENGTH_SHORT).show();
             return;

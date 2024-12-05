@@ -35,8 +35,7 @@ public class WaitingForPaymentFragment extends Fragment {
     private WaitingPaymentAdapter adapter;
     private ApiOrders apiOrders;
     private ApiOrderDetail apiOrderDetail;
-    private List<ProductDTO> productList = new ArrayList<>();
-    private List<OrderDetailReturnDTO> orderDetailList = new ArrayList<OrderDetailReturnDTO>();
+    private List<OrderDetailReturnDTO> orderDetailList = new ArrayList<>();
     private String token;
     private int userId;
 
@@ -54,13 +53,14 @@ public class WaitingForPaymentFragment extends Fragment {
         apiOrders = APIClient.getClient().create(ApiOrders.class);
         apiOrderDetail = APIClient.getClient().create(ApiOrderDetail.class);
 
-
+        // Gọi hàm fetchOrdersAndDetails
         fetchOrdersAndDetails();
 
         return view;
     }
 
     private void fetchOrdersAndDetails() {
+        // Lọc đơn hàng có trạng thái "Waiting for Payment"
         apiOrders.getAllOrdersByUser("Bearer " + token, userId).enqueue(new Callback<List<OrdersDTO>>() {
             @Override
             public void onResponse(Call<List<OrdersDTO>> call, Response<List<OrdersDTO>> response) {
@@ -68,24 +68,24 @@ public class WaitingForPaymentFragment extends Fragment {
                     List<OrdersDTO> ordersList = response.body();
                     Log.d("API Response", "Total Orders: " + ordersList.size());
 
-                    // Lọc danh sách đơn hàng, bỏ qua những đơn hàng có trạng thái "Cancel"
+                    // Lọc danh sách đơn hàng có trạng thái "Waiting for Payment"
                     List<OrdersDTO> filteredOrders = new ArrayList<>();
                     for (OrdersDTO order : ordersList) {
-                        if (!"Cancel".equalsIgnoreCase(order.getStatus())) { // Lọc trạng thái Cancel
+                        if (order.getStatus() != null && order.getStatus().equalsIgnoreCase("Waiting for Payment")) {
                             filteredOrders.add(order);
                         }
                     }
 
-                    Log.d("Filtered Orders", "Orders excluding 'Cancel': " + filteredOrders.size());
+                    Log.d("Filtered Orders", "Orders with status 'Waiting for Payment': " + filteredOrders.size());
 
-                    // Tiếp tục xử lý các đơn hàng sau khi lọc
+                    // Tiếp tục xử lý các đơn hàng đã lọc
                     for (OrdersDTO order : filteredOrders) {
                         int orderId = order.getId();
                         fetchOrderDetails(orderId);
                     }
 
                     if (filteredOrders.isEmpty()) {
-                        Toast.makeText(getContext(), "Không có đơn hàng nào phù hợp!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Không có đơn hàng nào chờ thanh toán!", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(getContext(), "Không thể lấy danh sách đơn hàng!", Toast.LENGTH_SHORT).show();
@@ -100,13 +100,18 @@ public class WaitingForPaymentFragment extends Fragment {
     }
 
     private void fetchOrderDetails(int orderId) {
+        // Gọi API lấy chi tiết đơn hàng
         apiOrderDetail.getOrderDetails("Bearer " + token, orderId).enqueue(new Callback<List<OrderDetailReturnDTO>>() {
             @Override
             public void onResponse(Call<List<OrderDetailReturnDTO>> call, Response<List<OrderDetailReturnDTO>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Log.d("Order Details", "Received order details: " + response.body().size()); // Log số lượng chi tiết nhận được
+                    Log.d("Order Details", "Received order details: " + response.body().size());
+
+                    // Thêm dữ liệu vào danh sách chi tiết đơn hàng
                     orderDetailList.addAll(response.body());
-                    Log.d("OrderDetailList", "Total items in order detail list: " + orderDetailList.size()); // Kiểm tra size sau khi thêm
+                    Log.d("OrderDetailList", "Total items in order detail list: " + orderDetailList.size());
+
+                    // Kiểm tra xem adapter đã được khởi tạo chưa
                     if (adapter == null) {
                         adapter = new WaitingPaymentAdapter(getContext(), orderDetailList);
                         recyclerView.setAdapter(adapter);
@@ -119,8 +124,6 @@ public class WaitingForPaymentFragment extends Fragment {
                 }
             }
 
-
-
             @Override
             public void onFailure(Call<List<OrderDetailReturnDTO>> call, Throwable t) {
                 Toast.makeText(getContext(), "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
@@ -128,4 +131,3 @@ public class WaitingForPaymentFragment extends Fragment {
         });
     }
 }
-

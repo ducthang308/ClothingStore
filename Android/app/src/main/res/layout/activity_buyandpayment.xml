@@ -100,9 +100,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Chọn voucher"
+                    android:text="Voucher"
                     android:textColor="#000"
-                    android:layout_marginEnd="10dp"
                     android:textSize="15sp" />
 
                 <TextView
@@ -202,20 +201,21 @@
                     android:layout_marginTop="8dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="223dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
                         android:text="Tổng thanh toán"
-                        android:textSize="14sp"
                         android:textColor="#666"
-                        android:layout_weight="1"/>
+                        android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/total_payment"
-                        android:layout_width="wrap_content"
+                        android:layout_width="236dp"
                         android:layout_height="wrap_content"
                         android:text="200.000đ"
-                        android:textSize="14sp"
-                        android:textColor="#FF0000"/>
+
+                        android:textColor="#FF0000"
+                        android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -234,7 +234,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tổng thanh toán:"
+            android:text="Tổng:"
             android:textColor="#666"
             android:textSize="16sp" />
 
@@ -244,10 +244,10 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_weight="1"
-            android:gravity="end"
             android:text="200.000đ"
             android:textColor="#FF0000"
-            android:textSize="16sp" />
+            android:textAlignment="center"
+            android:textSize="13dp" />
 
         <Button
             android:id="@+id/btn_order"
