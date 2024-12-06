@@ -48,7 +48,13 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        apiProduct = APIClient.getProduct(); // Initialize API client
+        apiProduct = APIClient.getProduct();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        binding.search.setText("");
     }
 
     @Nullable
@@ -56,7 +62,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         setupUI();
-        fetchProducts(""); // Initially load all products
+        fetchProducts("");
         return binding.getRoot();
     }
 
@@ -94,7 +100,6 @@ public class HomeFragment extends Fragment {
     }
 
     private void searchProducts(String keyword) {
-        // Call your API to fetch filtered results based on the keyword
         showLoading(true);
         apiProduct.getProducts(keyword, 0L).enqueue(new Callback<List<ProductDTO>>() {
             @Override

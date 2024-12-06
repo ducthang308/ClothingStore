@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
@@ -29,63 +30,57 @@ public class PageDanhgiaActivity extends AppCompatActivity {
     private ApiReview apiReview;
     private String token;
     private int productId, orderId, userId;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_page_danhgia);
 
-        // Retrieve token and userId from shared preferences
         PreferenceManager preferenceManager = new PreferenceManager(this);
         token = preferenceManager.getToken();
         userId = preferenceManager.getUserId();
 
-        // Get product and order IDs from the intent
-        Intent intent = getIntent();
+        intent = getIntent();
         productId = intent.getIntExtra("productId", -1);
         orderId = intent.getIntExtra("orderId", -1);
 
         Log.d("PageDanhgiaActivity", "Received productId: " + productId + ", orderId: " + orderId);
 
-        // Map views
         reviewContent = findViewById(R.id.et_review_input);
         ratingBar = findViewById(R.id.rating_bar);
         btnSendReview = findViewById(R.id.btn_send_review);
 
-        // Initialize API client
         apiReview = APIClient.getClient().create(ApiReview.class);
 
-        // Set a listener for the RatingBar to capture user interaction
         ratingBar.setOnRatingBarChangeListener((ratingBar, rating, fromUser) -> {
             if (fromUser) {
                 Log.d("RatingBar", "User changed rating: " + rating);
             }
         });
-
-        // Set onClickListener for the submit button
         btnSendReview.setOnClickListener(v -> sendReview());
+
+        ImageView back_arrow_review = findViewById(R.id.back_arrow_review);
+        back_arrow_review.setOnClickListener(v -> {
+            intent = new Intent(PageDanhgiaActivity.this, ManageAccountActivity.class);
+            finish();
+        });
     }
 
     private void sendReview() {
         String content = reviewContent.getText().toString();
         float rating = ratingBar.getRating();
-
-        // Check if both content and rating are valid
         if (content.isEmpty() || rating == 0) {
             Toast.makeText(this, "Vui lòng nhập nội dung và đánh giá sao!", Toast.LENGTH_SHORT).show();
             return;
         }
-
-        // Create a ReviewDTO object with the input data
         ReviewDTO reviewDTO = new ReviewDTO(productId, userId, orderId, content, rating);
-
-        // Make API call to submit the review
         apiReview.createReview("Bearer " + token, reviewDTO).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(PageDanhgiaActivity.this, "Đánh giá thành công!", Toast.LENGTH_SHORT).show();
-                    finish(); // Close the activity after review submission
+                    finish();
                 } else {
                     Toast.makeText(PageDanhgiaActivity.this, "Không thể gửi đánh giá! Lỗi: " + response.code(), Toast.LENGTH_SHORT).show();
                 }

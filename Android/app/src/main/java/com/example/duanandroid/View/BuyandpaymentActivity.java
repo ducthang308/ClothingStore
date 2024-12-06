@@ -30,6 +30,7 @@ import DTO.CartItemsDTO;
 import DTO.OrderDetailDTO;
 import DTO.OrdersDTO;
 import DTO.ProductDTO;
+import Fragment.HomeFragment;
 import Fragment.TabLayOutActivity;
 import Fragment.WaitingForDeliveryFragment;
 import Interface.APIClient;
@@ -350,14 +351,17 @@ public class BuyandpaymentActivity extends AppCompatActivity {
                     continue;
                 }
 
-                float totalMoney = cartItem.getPrice() * quantity;
-
                 OrderDetailDTO orderDetailData = new OrderDetailDTO();
+
+                float totalMoney = cartItem.getPrice() * quantity * (voucherPercent == 0 ? 1 : (1 - voucherPercent));
+
                 orderDetailData.setOrderId(orderId);
                 orderDetailData.setProductId(cartItem.getProductId());
                 orderDetailData.setNumberOfProduct(quantity);
                 orderDetailData.setPrice(cartItem.getPrice());
                 orderDetailData.setTotalMoney(totalMoney);
+
+
 
                 sendOrderDetailToApi(apiOrderDetail, orderDetailData, cartItem.getProductName());
             }

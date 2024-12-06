@@ -59,7 +59,6 @@ public class ManageProductActivity extends AppCompatActivity {
         setupListView();
         apiProduct = APIClient.getProduct();
 
-        // Fetch products from API
         fetchProducts();
     }
 
@@ -98,6 +97,12 @@ public class ManageProductActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(ManageProductActivity.this, "Vui lòng chọn sản phẩm cần xóa.", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        ImageView back_arrow = findViewById(R.id.back_arrow);
+        back_arrow.setOnClickListener(v -> {
+            intent = new Intent(ManageProductActivity.this, adminAcountActivity.class);
+            startActivity(intent);
         });
     }
 

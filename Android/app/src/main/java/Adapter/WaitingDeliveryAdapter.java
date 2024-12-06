@@ -71,10 +71,15 @@ public class WaitingDeliveryAdapter extends RecyclerView.Adapter<WaitingDelivery
             .centerCrop())
         .into(holder.productImage);
 
+        if ("Shipped".equalsIgnoreCase(orderDetail.getStatus())) {
+            holder.btn_payment.setVisibility(View.GONE);
+        } else {
+            holder.btn_payment.setVisibility(View.VISIBLE);
+        }
+
         holder.btn_payment.setOnClickListener(v -> {
             OrdersDTO orderDTO = new OrdersDTO();
             orderDTO.setStatus("Shipped");
-
             updateOrderStatus(orderDetail.getOrderId(), orderDTO, holder.getAdapterPosition());
         });
     }
@@ -105,21 +110,16 @@ public class WaitingDeliveryAdapter extends RecyclerView.Adapter<WaitingDelivery
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful()) {
-                    // Successfully updated status
                     Toast.makeText(context, "Đơn hàng đã được nhận!", Toast.LENGTH_SHORT).show();
-
-                    // Remove item from the list or update UI
                     orderDetailList.remove(position);
                     notifyItemRemoved(position);
                 } else {
-                    // Handle error
                     Toast.makeText(context, "Lỗi cập nhật trạng thái đơn hàng!", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                // Handle failure
                 Toast.makeText(context, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

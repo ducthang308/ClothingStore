@@ -3,8 +3,11 @@ package com.example.duanandroid.View;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,6 +55,7 @@ public class LoginActivity extends AppCompatActivity {
 
         apiService = APIClient.getLoginService();
         apiCart = APIClient.getClient().create(ApiCart.class);
+        setupPasswordVisibilityToggle(edtPassword);
 
         TextView tvSignup = findViewById(R.id.tv_signup);
         tvSignup.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +78,36 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void setupPasswordVisibilityToggle(EditText editText) {
+        // Save the initial drawables (left, top, bottom) and set initial right drawable to eye_close
+        Drawable drawableLeft = editText.getCompoundDrawables()[0];
+        Drawable drawableTop = editText.getCompoundDrawables()[1];
+        Drawable drawableBottom = editText.getCompoundDrawables()[3];
+        Drawable eyeCloseDrawable = getResources().getDrawable(R.drawable.hide);
+        Drawable eyeOpenDrawable = getResources().getDrawable(R.drawable.eye_open);
+
+        editText.setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop, eyeCloseDrawable, drawableBottom);
+
+        editText.setOnTouchListener((view, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (event.getRawX() >= (editText.getRight() - editText.getCompoundDrawables()[2].getBounds().width())) {
+                    // Toggle password visibility
+                    if (editText.getInputType() == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
+                        // Show password
+                        editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                        editText.setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop, eyeOpenDrawable, drawableBottom);
+                    } else {
+                        // Hide password
+                        editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                        editText.setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop, eyeCloseDrawable, drawableBottom);
+                    }
+                    editText.setSelection(editText.getText().length());
+                    return true;
+                }
+            }
+            return false;
+        });
+    }
     public void loginUser(String phoneNumber, String password) {
         UsersDTO usersDTO = new UsersDTO(phoneNumber, password);
         Call<LoginResponseDTO> call = apiService.login(usersDTO);

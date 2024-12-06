@@ -19,6 +19,9 @@
         android:theme="@style/Theme.DuAnAndroid"
         tools:targetApi="31">
         <activity
+            android:name=".View.DanhSachThanhVienActivity"
+            android:exported="false" />
+        <activity
             android:name="Fragment.TabLayoutAdminActivity"
             android:exported="true" />
         <activity
