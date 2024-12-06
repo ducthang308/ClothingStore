@@ -91,6 +91,12 @@ public class QuanLiDanhMucSPActivity extends AppCompatActivity {
                 Toast.makeText(QuanLiDanhMucSPActivity.this, "Vui lòng chọn mã giảm giá cần xóa.", Toast.LENGTH_SHORT).show();
             }
         });
+
+        ImageView back_accountAdmin = findViewById(R.id.back_accountAdmin);
+        back_accountAdmin.setOnClickListener(v->{
+            Intent intent = new Intent(QuanLiDanhMucSPActivity.this, adminAcountActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void loadCategory() {

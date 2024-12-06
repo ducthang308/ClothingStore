@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +31,7 @@ public class DiscountManageActivity extends AppCompatActivity {
     private Button btnAdd, btnEdit, btnDelete;
     private String token;
     private Discount selectedDiscount;
+    private ImageView arrow_account;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,6 +80,12 @@ public class DiscountManageActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(DiscountManageActivity.this, "Vui lòng chọn mã giảm giá cần xóa.", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        arrow_account = findViewById(R.id.arrow_account);
+        arrow_account.setOnClickListener(v -> {
+            Intent intent = new Intent(DiscountManageActivity.this, adminAcountActivity.class);
+            startActivity(intent);
         });
     }
 

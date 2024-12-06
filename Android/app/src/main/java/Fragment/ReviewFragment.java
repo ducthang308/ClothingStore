@@ -17,9 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapter.WaitingReviewAdapter;
+import Adapter.WaitingShipingAdapter;
 import DTO.OrderDetailReturnDTO;
+import DTO.OrdersDTO;
 import Interface.APIClient;
 import Interface.ApiOrderDetail;
+import Interface.ApiOrders;
 import Interface.ApiReview;
 import Interface.PreferenceManager;
 import retrofit2.Call;
@@ -33,6 +36,8 @@ public class ReviewFragment extends Fragment {
     private List<OrderDetailReturnDTO> orderDetailList = new ArrayList<>();
     private String token;
     private ApiReview apiReview;
+    private int userId;
+    private ApiOrders apiOrders;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,38 +45,72 @@ public class ReviewFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_review, container, false);
         recyclerView = view.findViewById(R.id.itemReviewList);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // Lấy token từ SharedPreferences
         PreferenceManager preferenceManager = new PreferenceManager(getContext());
         token = preferenceManager.getToken();
+        userId = preferenceManager.getUserId();
 
 
         apiReview = APIClient.getClient().create(ApiReview.class);
-
+        apiOrders = APIClient.getClient().create(ApiOrders.class);
         apiOrderDetail = APIClient.getClient().create(ApiOrderDetail.class);
 
-        // Lấy danh sách đơn hàng đã giao (Shipped)
         fetchOrdersAndDetails();
 
         return view;
     }
 
     private void fetchOrdersAndDetails() {
-        // Truyền trạng thái "Shipped" để lấy đơn hàng đã giao
-        apiOrderDetail.getOrderDetailsByStatus("Bearer " + token, "Shipped").enqueue(new Callback<List<OrderDetailReturnDTO>>() {
+        apiOrders.getAllOrdersByUser("Bearer " + token, userId).enqueue(new Callback<List<OrdersDTO>>() {
+            @Override
+            public void onResponse(Call<List<OrdersDTO>> call, Response<List<OrdersDTO>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<OrdersDTO> ordersList = response.body();
+
+                    List<OrdersDTO> filteredOrders = new ArrayList<>();
+                    for (OrdersDTO order : ordersList) {
+                        Log.d("OrderStatus", "Order ID: " + order.getId() + ", Status: " + order.getStatus());
+                        if (order.getStatus() != null && order.getStatus().toLowerCase().contains("Shipped")) {
+                            filteredOrders.add(order);
+                        }
+                    }
+
+                    Log.d("Filtered Orders", "Orders count with status 'Shipped': " + filteredOrders.size());
+
+                    fetchOrderDetails("Shipped");
+
+                    if (filteredOrders.isEmpty()) {
+                        Toast.makeText(getContext(), "Không có đơn hàng nào đang chờ giao!", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getContext(), "Không thể lấy danh sách đơn hàng!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<OrdersDTO>> call, Throwable t) {
+                Toast.makeText(getContext(), "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void fetchOrderDetails(String status) {
+        apiOrderDetail.getOrderDetailsByStatus("Bearer " + token, status).enqueue(new Callback<List<OrderDetailReturnDTO>>() {
             @Override
             public void onResponse(Call<List<OrderDetailReturnDTO>> call, Response<List<OrderDetailReturnDTO>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    // Log để kiểm tra số lượng đơn hàng nhận được
-                    Log.d("Order Details", "Received order details: " + response.body().size());
+                    Log.d("Order Details", "Received order details: " + response.body().size()); // Log số lượng chi tiết nhận được
+
+                    orderDetailList.clear();
+
                     orderDetailList.addAll(response.body());
 
-                    // Cập nhật Adapter sau khi nhận dữ liệu
+                    Log.d("OrderDetailList", "Total items in order detail list: " + orderDetailList.size()); // Kiểm tra size sau khi thêm
+
                     if (adapter == null) {
                         adapter = new WaitingReviewAdapter(getContext(), orderDetailList, apiReview);
                         recyclerView.setAdapter(adapter);
@@ -79,7 +118,6 @@ public class ReviewFragment extends Fragment {
                         adapter.notifyDataSetChanged();
                     }
                 } else {
-                    // Log lỗi khi không thể lấy dữ liệu
                     Log.e("API Error", "Error code: " + response.code());
                     Toast.makeText(getContext(), "Không thể lấy chi tiết đơn hàng! Lỗi: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
@@ -87,7 +125,6 @@ public class ReviewFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<OrderDetailReturnDTO>> call, Throwable t) {
-                // Xử lý lỗi kết nối
                 Toast.makeText(getContext(), "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

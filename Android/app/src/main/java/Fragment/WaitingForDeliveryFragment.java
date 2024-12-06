@@ -80,10 +80,8 @@ public class WaitingForDeliveryFragment extends Fragment {
 
                     Log.d("Filtered Orders", "Orders count with status 'Delivered': " + filteredOrders.size());
 
-//                    for (OrdersDTO order : filteredOrders) {
-//                        int orderId = order.getId();
-                        fetchOrderDetails();
-//                    }
+                    fetchOrderDetailsStatusDelivered();
+                    fetchOrderDetailsStatusShipped();
 
                     if (filteredOrders.isEmpty()) {
                         Toast.makeText(getContext(), "Không có đơn hàng nào đang chờ giao!", Toast.LENGTH_SHORT).show();
@@ -100,8 +98,39 @@ public class WaitingForDeliveryFragment extends Fragment {
         });
     }
 
-    private void fetchOrderDetails() {
+    private void fetchOrderDetailsStatusDelivered() {
         apiOrderDetail.getOrderDetailsByStatus("Bearer " + token, "Delivered").enqueue(new Callback<List<OrderDetailReturnDTO>>() {
+            @Override
+            public void onResponse(Call<List<OrderDetailReturnDTO>> call, Response<List<OrderDetailReturnDTO>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Log.d("Order Details", "Received order details: " + response.body().size());
+                    orderDetailList.clear();
+
+                    orderDetailList.addAll(response.body());
+
+                    Log.d("OrderDetailList", "Total items in order detail list: " + orderDetailList.size()); // Kiểm tra size sau khi thêm
+
+                    if (adapter == null) {
+                        adapter = new WaitingDeliveryAdapter(getContext(), orderDetailList);
+                        recyclerView.setAdapter(adapter);
+                    } else {
+                        adapter.notifyDataSetChanged();
+                    }
+                } else {
+                    Log.e("API Error", "Error code: " + response.code());
+                    Toast.makeText(getContext(), "Không thể lấy chi tiết đơn hàng! Lỗi: " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<OrderDetailReturnDTO>> call, Throwable t) {
+                Toast.makeText(getContext(), "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void fetchOrderDetailsStatusShipped() {
+        apiOrderDetail.getOrderDetailsByStatus("Bearer " + token, "Shipped").enqueue(new Callback<List<OrderDetailReturnDTO>>() {
             @Override
             public void onResponse(Call<List<OrderDetailReturnDTO>> call, Response<List<OrderDetailReturnDTO>> response) {
                 if (response.isSuccessful() && response.body() != null) {

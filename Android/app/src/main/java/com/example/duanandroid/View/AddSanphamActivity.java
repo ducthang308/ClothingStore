@@ -72,6 +72,7 @@ public class AddSanphamActivity extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_READ_EXTERNAL_STORAGE = 2;
     private int selectedCategoryIdForProduct;
     private int productId = -1;
+    private ImageView arrow_quanlisp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +80,7 @@ public class AddSanphamActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_sanpham);
 
         imageContainer = findViewById(R.id.imageContainer);
-        ImageView arrow_quanlisp = findViewById(R.id.arrow_quanlisp);
+        arrow_quanlisp = findViewById(R.id.arrow_quanlisp);
 
         initViews();
         setupCategorySpinner();
@@ -164,6 +165,8 @@ public class AddSanphamActivity extends AppCompatActivity {
             }
         });
         imageView.setOnClickListener(view -> checkAndRequestStoragePermission());
+
+
     }
 
     private void loadImageIntoImageView(String imageUrl, ImageView imageView) {

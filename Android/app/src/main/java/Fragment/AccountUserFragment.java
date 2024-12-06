@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.duanandroid.R;
 import com.example.duanandroid.View.CartActivity;
+import com.example.duanandroid.View.DanhSachThanhVienActivity;
 import com.example.duanandroid.View.HelpActivity;
 import com.example.duanandroid.View.KhoVoucherActivity;
 import com.example.duanandroid.View.LoginActivity;
@@ -126,6 +127,14 @@ public class AccountUserFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+        RelativeLayout danhsachnhom = view.findViewById(R.id.danhsachnhom);
+        danhsachnhom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), DanhSachThanhVienActivity.class);
                 startActivity(intent);
             }
         });

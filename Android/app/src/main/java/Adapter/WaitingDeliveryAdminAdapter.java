@@ -112,20 +112,17 @@ public class WaitingDeliveryAdminAdapter extends RecyclerView.Adapter<WaitingDel
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful()) {
-                    // Successfully updated status
                     Toast.makeText(context, "Đơn hàng đã được nhận!", Toast.LENGTH_SHORT).show();
 
                     orderDetailList.remove(position);
                     notifyItemRemoved(position);
                 } else {
-                    // Handle error
                     Toast.makeText(context, "Lỗi cập nhật trạng thái đơn hàng!", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                // Handle failure
                 Toast.makeText(context, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

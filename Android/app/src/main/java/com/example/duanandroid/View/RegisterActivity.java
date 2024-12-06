@@ -1,13 +1,19 @@
 package com.example.duanandroid.View;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
+import android.text.method.SingleLineTransformationMethod;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import com.example.duanandroid.R;
 import java.io.IOException;
 import java.text.ParseException;
@@ -27,6 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
     private ApiUsers apiServiceRegister;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,9 +44,51 @@ public class RegisterActivity extends AppCompatActivity {
 
         btnRegister.setOnClickListener(view -> handleRegistration());
 
+        setupPasswordVisibilityToggle(edtPassword);
+        setupPasswordVisibilityToggle(edtRetypePassword);
         TextView tvSignin = findViewById(R.id.tv_signin);
         tvSignin.setOnClickListener(view -> {
             startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+        });
+    }
+
+
+
+    private void setupPasswordVisibilityToggle(EditText editText) {
+        // Lấy các Drawable hiện có ở các vị trí
+        Drawable[] drawables = editText.getCompoundDrawables();
+        Drawable drawableLeft = drawables[0];
+        Drawable drawableTop = drawables[1];
+        Drawable drawableBottom = drawables[3];
+
+        // Lấy drawableRight cho eye_close và eye_open
+        Drawable eyeCloseDrawable = ContextCompat.getDrawable(this, R.drawable.hide);
+        Drawable eyeOpenDrawable = ContextCompat.getDrawable(this, R.drawable.eye_open);
+
+        // Đặt drawableRight mặc định là eye_close
+        editText.setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop, eyeCloseDrawable, drawableBottom);
+
+        editText.setOnTouchListener((view, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                // Kiểm tra xem người dùng có chạm vào drawableRight không
+                Drawable drawableRightCurrent = editText.getCompoundDrawables()[2];
+                if (drawableRightCurrent != null && event.getRawX() >= (editText.getRight() - drawableRightCurrent.getBounds().width() - editText.getPaddingRight())) {
+                    // Chuyển đổi trạng thái hiển thị mật khẩu
+                    if (editText.getTransformationMethod() instanceof PasswordTransformationMethod) {
+                        // Hiển thị mật khẩu
+                        editText.setTransformationMethod(SingleLineTransformationMethod.getInstance());
+                        editText.setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop, eyeOpenDrawable, drawableBottom);
+                    } else {
+                        // Ẩn mật khẩu
+                        editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                        editText.setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop, eyeCloseDrawable, drawableBottom);
+                    }
+                    // Đặt lại vị trí con trỏ ở cuối chuỗi
+                    editText.setSelection(editText.getText().length());
+                    return true;
+                }
+            }
+            return false;
         });
     }
 

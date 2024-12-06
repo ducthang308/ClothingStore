@@ -1,11 +1,15 @@
 package com.example.duanandroid.View;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.InputType;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -23,9 +27,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class changePassActivity extends AppCompatActivity {
-
-    private String token;
     private ApiUsers apiUsers;
+    private PreferenceManager preferenceManager;
+    private String token, userName;
+    private int userId;
+    private EditText etCurrentPassword, etNewPassword, etConfirmNewPassword;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +43,60 @@ public class changePassActivity extends AppCompatActivity {
 
         apiUsers = APIClient.updatePass();
         initView();
+
+        preferenceManager = new PreferenceManager(this);
+        token = preferenceManager.getToken();
+        userName = preferenceManager.getName();
+        userId = preferenceManager.getUserId();
+
+
+
+        setupPasswordVisibilityToggle(etCurrentPassword);
+        setupPasswordVisibilityToggle(etNewPassword);
+        setupPasswordVisibilityToggle(etConfirmNewPassword);
+
+        TextView tvUserName = findViewById(R.id.tvUserName);
+        if (userName != null && !userName.isEmpty()) {
+            tvUserName.setText(userName);
+        }
+
+        initView();
     }
 
+    private void setupPasswordVisibilityToggle(EditText editText) {
+        Drawable drawableLeft = editText.getCompoundDrawables()[0];
+        Drawable drawableTop = editText.getCompoundDrawables()[1];
+        Drawable drawableBottom = editText.getCompoundDrawables()[3];
+        Drawable eyeCloseDrawable = getResources().getDrawable(R.drawable.hide);
+        Drawable eyeOpenDrawable = getResources().getDrawable(R.drawable.eye_open);
+
+        editText.setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop, eyeCloseDrawable, drawableBottom);
+
+        editText.setOnTouchListener((view, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (event.getRawX() >= (editText.getRight() - editText.getCompoundDrawables()[2].getBounds().width())) {
+                    togglePasswordVisibility(editText, drawableLeft, drawableTop, drawableBottom, eyeOpenDrawable, eyeCloseDrawable);
+                    return true;
+                }
+            }
+            return false;
+        });
+    }
+    private void togglePasswordVisibility(EditText editText, Drawable drawableLeft, Drawable drawableTop, Drawable drawableBottom, Drawable eyeOpenDrawable, Drawable eyeCloseDrawable) {
+        if (editText.getInputType() == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
+            editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            editText.setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop, eyeOpenDrawable, drawableBottom);
+        } else {
+            editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            editText.setCompoundDrawablesWithIntrinsicBounds(drawableLeft, drawableTop, eyeCloseDrawable, drawableBottom);
+        }
+        editText.setSelection(editText.getText().length());
+    }
     private void initView() {
-        // Ánh xạ các view từ layout
         ImageButton imgArrow = findViewById(R.id.arrow_changepass);
-        EditText etCurrentPassword = findViewById(R.id.etCurrentPassword);
-        EditText etNewPassword = findViewById(R.id.etNewPassword);
-        EditText etConfirmNewPassword = findViewById(R.id.etConfirmNewPassword);
+        etCurrentPassword = findViewById(R.id.etCurrentPassword);
+        etNewPassword = findViewById(R.id.etNewPassword);
+        etConfirmNewPassword = findViewById(R.id.etConfirmNewPassword);
         Button btnSave = findViewById(R.id.btnSave);
 
         imgArrow.setOnClickListener(view -> finish());
@@ -62,9 +115,6 @@ public class changePassActivity extends AppCompatActivity {
             }
             UpdatePassDTO updatePassDTO = new UpdatePassDTO(currentPassword, newPassword, confirmNewPassword);
 
-            PreferenceManager preferenceManager = new PreferenceManager(this);
-            String token = preferenceManager.getToken();
-            int userId = preferenceManager.getUserId();
 
             if (token == null || token.isEmpty() || userId == -1) {
                 Toast.makeText(this, "Token không hợp lệ. Vui lòng đăng nhập lại.", Toast.LENGTH_SHORT).show();
@@ -73,6 +123,8 @@ public class changePassActivity extends AppCompatActivity {
 
             changePassword(token, userId, updatePassDTO);
         });
+
+
     }
 
 

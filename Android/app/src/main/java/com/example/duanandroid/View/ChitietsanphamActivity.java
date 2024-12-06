@@ -1,10 +1,12 @@
 package com.example.duanandroid.View;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,7 +44,7 @@ public class ChitietsanphamActivity extends AppCompatActivity {
     private ReviewAdapter reviewAdapter;
     private TextView productNameTextView, productPriceTextView;
     private ImageView productImageView, shopping_cart;
-    private Button btn_add_to_cart;
+    private ImageButton btn_add_to_cart, back_home;
     private String token;
     private PreferenceManager preferenceManager;
     private int cartId;
@@ -51,6 +53,7 @@ public class ChitietsanphamActivity extends AppCompatActivity {
     private ApiReview apiReview;
     private int productId = -1;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +77,7 @@ public class ChitietsanphamActivity extends AppCompatActivity {
         setupButtons();
 
         btn_add_to_cart = findViewById(R.id.btn_add_to_cart);
+        back_home = findViewById(R.id.back_home);
         btn_add_to_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,7 +85,12 @@ public class ChitietsanphamActivity extends AppCompatActivity {
             }
 
         });
-
+        back_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         shopping_cart = findViewById(R.id.shopping_cart);
         shopping_cart.setOnClickListener(view -> {
             Intent intent = new Intent(ChitietsanphamActivity.this, CartActivity.class);

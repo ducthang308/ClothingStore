@@ -205,10 +205,43 @@
             android:layout_margin="10dp">
 
             <RelativeLayout
+                android:id="@+id/danhsachnhom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#F7F7F7"
+                android:padding="10dp">
+
+                <ImageView
+                    android:id="@+id/icon_ds"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginStart="15dp"
+                    android:src="@drawable/account_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_toEndOf="@id/icon_ds"
+                    android:text="Thành viên nhóm 3"
+                    android:textColor="@color/colorblack"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="8dp"
+                    android:padding="5dp"
+                    android:src="@drawable/img_7" />
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/My_review"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+                android:layout_marginTop="20dp"
                 android:background="#F7F7F7">
 
                 <ImageView
