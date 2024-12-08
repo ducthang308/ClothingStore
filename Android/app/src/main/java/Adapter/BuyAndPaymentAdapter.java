@@ -33,8 +33,8 @@ public class BuyAndPaymentAdapter extends RecyclerView.Adapter<BuyAndPaymentAdap
     private OnQuantityChangeListener quantityChangeListener;
 
     public BuyAndPaymentAdapter(List<ProductDTO> productList, List<CartItemsDTO> cartList, Context context) {
-        this.productList = productList;
-        this.cartList = cartList;
+        this.productList = productList != null ? productList : new ArrayList<>();
+        this.cartList = cartList != null ? cartList : new ArrayList<>();
         this.context = context;
     }
 
@@ -56,11 +56,11 @@ public class BuyAndPaymentAdapter extends RecyclerView.Adapter<BuyAndPaymentAdap
 
     @Override
     public int getItemCount() {
-        return isCartMode() ? cartList.size() : (productList != null ? productList.size() : 0);
+        return isCartMode() ? cartList.size() : productList.size();
     }
 
     private boolean isCartMode() {
-        return cartList != null && !cartList.isEmpty();
+        return !cartList.isEmpty();
     }
 
     private void bindCartItem(BuyAndPaymentHolder holder, int position) {
@@ -70,7 +70,7 @@ public class BuyAndPaymentAdapter extends RecyclerView.Adapter<BuyAndPaymentAdap
         holder.productPrice.setText(String.format("₫%,.0f", cartItem.getPrice()));
         loadProductImage(holder.productImage, cartItem.getImageUrl());
 
-        updateQuantity(holder, position, cartItem.getQuantity());
+        updateQuantity(holder, position, cartItem.getQuantity(), true);
     }
 
     private void bindProductItem(BuyAndPaymentHolder holder, int position) {
@@ -80,17 +80,16 @@ public class BuyAndPaymentAdapter extends RecyclerView.Adapter<BuyAndPaymentAdap
         holder.productPrice.setText(String.format("₫%,.0f", product.getPrice()));
         loadProductImage(holder.productImage, product.getImageUrls());
 
-        updateQuantity(holder, position, 1);
+        updateQuantity(holder, position, 1, false);
     }
 
-
-    private void updateQuantity(BuyAndPaymentHolder holder, int position, int initialQuantity) {
+    private void updateQuantity(BuyAndPaymentHolder holder, int position, int initialQuantity, boolean isCart) {
         holder.productQuantity.setText(String.valueOf(initialQuantity));
 
         holder.btnIncrease.setOnClickListener(v -> {
             int updatedQuantity = Integer.parseInt(holder.productQuantity.getText().toString()) + 1;
             holder.productQuantity.setText(String.valueOf(updatedQuantity));
-            updateCartItemQuantity(position, updatedQuantity);
+            updateItemQuantity(position, updatedQuantity, isCart);
 
             if (quantityChangeListener != null) {
                 quantityChangeListener.onQuantityChanged(position, updatedQuantity);
@@ -102,7 +101,7 @@ public class BuyAndPaymentAdapter extends RecyclerView.Adapter<BuyAndPaymentAdap
             if (currentQuantity > 1) {
                 int updatedQuantity = currentQuantity - 1;
                 holder.productQuantity.setText(String.valueOf(updatedQuantity));
-                updateCartItemQuantity(position, updatedQuantity);
+                updateItemQuantity(position, updatedQuantity, isCart);
 
                 if (quantityChangeListener != null) {
                     quantityChangeListener.onQuantityChanged(position, updatedQuantity);
@@ -111,15 +110,31 @@ public class BuyAndPaymentAdapter extends RecyclerView.Adapter<BuyAndPaymentAdap
         });
     }
 
-    private void updateCartItemQuantity(int position, int updatedQuantity) {
-        if (isCartMode()) {
+    private void updateItemQuantity(int position, int updatedQuantity, boolean isCart) {
+        if (isCart) {
             cartList.get(position).setQuantity(updatedQuantity);
+        } else {
+            productList.get(position).setQuantity(updatedQuantity);
+        }
+        if (quantityChangeListener != null) {
+            quantityChangeListener.onQuantityChanged(position, updatedQuantity);
         }
 
         if (context instanceof BuyandpaymentActivity) {
-            ((BuyandpaymentActivity) context).calculateTotalCostForCart();
+            float totalCost = 0f;
+            if (isCart) {
+                for (CartItemsDTO cartItem : cartList) {
+                    totalCost += cartItem.getPrice() * cartItem.getQuantity();
+                }
+            } else {
+                for (ProductDTO product : productList) {
+                    totalCost += product.getPrice() * product.getQuantity();
+                }
+            }
+            ((BuyandpaymentActivity) context).updateTotalCostView(totalCost);
         }
     }
+
 
     public List<Integer> getUpdatedQuantities() {
         List<Integer> updatedQuantities = new ArrayList<>();
@@ -127,9 +142,9 @@ public class BuyAndPaymentAdapter extends RecyclerView.Adapter<BuyAndPaymentAdap
             for (CartItemsDTO item : cartList) {
                 updatedQuantities.add(item.getQuantity());
             }
-        } else if (productList != null) {
-            for (int i = 0; i < productList.size(); i++) {
-                updatedQuantities.add(1);
+        } else {
+            for (ProductDTO product : productList) {
+                updatedQuantities.add(product.getQuantity());
             }
         }
         return updatedQuantities;
@@ -156,31 +171,24 @@ public class BuyAndPaymentAdapter extends RecyclerView.Adapter<BuyAndPaymentAdap
     }
 
     private void loadProductImage(ImageView imageView, Object imageSource) {
+        String imageUrl = null;
         if (imageSource instanceof String) {
-            Glide.with(context)
-                    .load((String) imageSource)
-                    .placeholder(R.drawable.co4la)
-                    .error(R.drawable.error)
-                    .into(imageView);
+            imageUrl = (String) imageSource;
         } else if (imageSource instanceof List) {
             List<String> imageUrls = (List<String>) imageSource;
-            Glide.with(context)
-                    .load(imageUrls.isEmpty() ? null : imageUrls.get(0))
-                    .placeholder(R.drawable.co4la)
-                    .error(R.drawable.error)
-                    .into(imageView);
-        } else {
-            imageView.setImageResource(R.drawable.error);
+            if (!imageUrls.isEmpty()) {
+                imageUrl = imageUrls.get(0);
+            }
         }
+
+        Glide.with(context)
+                .load(imageUrl)
+                .placeholder(R.drawable.co4la)
+                .error(R.drawable.error)
+                .into(imageView);
     }
 
     public interface OnQuantityChangeListener {
         void onQuantityChanged(int position, int updatedQuantity);
-    }
-
-    public void updateProductList(List<ProductDTO> products) {
-        this.productList.clear();
-        this.productList.addAll(products);
-        notifyDataSetChanged();
     }
 }

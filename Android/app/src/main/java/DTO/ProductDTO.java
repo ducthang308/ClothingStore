@@ -15,6 +15,18 @@ public class ProductDTO implements Serializable {
     @SerializedName("category_id")
     private int categoryId;
 
+    private int quantity;
+
+    public ProductDTO(int id, String productName, int categoryId, int quantity, String color, Float price, List<String> imageUrls) {
+        this.id = id;
+        this.productName = productName;
+        this.categoryId = categoryId;
+        this.quantity = quantity;
+        this.color = color;
+        this.price = price;
+        this.imageUrls = imageUrls;
+    }
+
     public ProductDTO(int id, String productName, Float price, List<String> imageUrls) {
         this.id = id;
         this.productName = productName;
@@ -74,6 +86,14 @@ public class ProductDTO implements Serializable {
     }
 
     public ProductDTO(String s, int i, String s1, int ao) {
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public int getId() {
