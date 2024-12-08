@@ -42,7 +42,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BuyandpaymentActivity extends AppCompatActivity {
+public class BuyandpaymentActivity extends AppCompatActivity implements BuyAndPaymentAdapter.OnQuantityChangeListener{
     private TextView totalCostTextView;
     private TextView totalPaymentTextView1;
     private TextView totalPaymentTextView;
@@ -59,6 +59,8 @@ public class BuyandpaymentActivity extends AppCompatActivity {
     private int[] quantities;
     private List<CartItemsDTO> cartItemsList;
     private float voucherPercent;
+    private boolean isFromCart;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +69,7 @@ public class BuyandpaymentActivity extends AppCompatActivity {
 
         initializeViews();
 
-        Intent intent = getIntent();
+        intent = getIntent();
         String origin = intent.getStringExtra("origin");
 
         cartItemsList = new ArrayList<>();
@@ -116,29 +118,42 @@ public class BuyandpaymentActivity extends AppCompatActivity {
         buyAndPaymentAdapter.setOnQuantityChangeListener(this::calculateTotalCostForCurrentOrigin);
 
         findViewById(R.id.btn_order).setOnClickListener(view -> {
-            List<Integer> updatedQuantities = buyAndPaymentAdapter.getUpdatedQuantities();
+            boolean isCartMode = !cartItemsList.isEmpty();
 
-            int[] quantitiesArray = new int[updatedQuantities.size()];
-            for (int i = 0; i < updatedQuantities.size(); i++) {
-                quantitiesArray[i] = updatedQuantities.get(i);
-            }
+            if (isCartMode) {
+                List<Integer> updatedQuantities = buyAndPaymentAdapter.getUpdatedQuantities();
+                if (updatedQuantities == null || updatedQuantities.isEmpty()) {
+                    Toast.makeText(this, "Không lấy được số lượng sản phẩm.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-            if (quantitiesArray.length > 0) {
+                Log.d("OrderQuantities", "Quantities: " + updatedQuantities);
+
+                int[] quantitiesArray = updatedQuantities.stream().mapToInt(i -> i).toArray();
                 handleOrder(quantitiesArray, cartItemsList);
-
-                // Xóa các sản phẩm khỏi giỏ hàng sau khi đặt hàng
                 for (CartItemsDTO cartItem : cartItemsList) {
                     deleteCartItem(cartItem.getProductId());
                 }
+            } else if (productList != null && !productList.isEmpty()) {
+                ProductDTO selectedProduct = productList.get(0);
 
-                Intent intent1 = new Intent(BuyandpaymentActivity.this, TabLayOutActivity.class);
-                intent1.putExtra("tabPosition", 0);
-                startActivity(intent1);
-            } else {
-                Toast.makeText(this, "Không có sản phẩm để đặt hàng.", Toast.LENGTH_SHORT).show();
+                int selectedQuantity = 1;
+                if (selectedQuantity <= 0) {
+                    Toast.makeText(this, "Số lượng sản phẩm không hợp lệ!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                CartItemsDTO cartItem = convertToCartItemsDTO(selectedProduct, selectedQuantity);
+
+                List<CartItemsDTO> selectedProducts = new ArrayList<>();
+                selectedProducts.add(cartItem);
+
+                int[] quantitiesArray = new int[]{selectedQuantity};
+                handleOrder(quantitiesArray, selectedProducts);
             }
+            intent = new Intent(BuyandpaymentActivity.this, TabLayOutActivity.class);
+            startActivity(intent);
         });
-
 
         findViewById(R.id.click_voucher).setOnClickListener(view -> {
             Intent voucherIntent = new Intent(BuyandpaymentActivity.this, SelectVoucherActivity.class);
@@ -195,17 +210,25 @@ public class BuyandpaymentActivity extends AppCompatActivity {
 
             if ("cart".equals(origin)) {
                 calculateTotalCostForCart();
+                updateTotalCostView(calculateTotalCost());
             } else if ("chitietsanpham".equals(origin)) {
-                calculateTotalCost();
+                calculateTotalCostForDetail();
+                updateTotalCostView(calculateTotalCost());
             }
         }
-        updateTotalCostView(calculateTotalCost());
+//        updateTotalCostView(calculateTotalCost());
     }
 
 
     public void handleOrder(int[] quantities, List<CartItemsDTO> selectedProducts) {
-        if ((selectedProducts == null || selectedProducts.isEmpty()) && (cartItemsList == null || cartItemsList.isEmpty())) {
-            showToast("Không có sản phẩm để đặt hàng!");
+        // Kiểm tra nguồn gốc
+        if (!isFromCart && (selectedProducts == null || selectedProducts.isEmpty())) {
+            showToast("Không có sản phẩm để đặt hàng từ chi tiết sản phẩm!");
+            return;
+        }
+
+        if (isFromCart && (cartItemsList == null || cartItemsList.isEmpty())) {
+            showToast("Không có sản phẩm trong giỏ hàng để đặt hàng!");
             return;
         }
 
@@ -250,30 +273,38 @@ public class BuyandpaymentActivity extends AppCompatActivity {
         ApiOrders apiOrders = APIClient.getClient().create(ApiOrders.class);
         Call<OrdersDTO> callCreateOrder = apiOrders.createOrder("Bearer " + token, orderData);
 
-        // Truyền sản phẩm phù hợp vào hàm xử lý API
-        if (selectedProducts != null && !selectedProducts.isEmpty()) {
-            handleOrderApiResponse(callCreateOrder, quantities, selectedProducts);
-        } else {
+        if (isFromCart) {
             handleOrderApiResponse(callCreateOrder, quantities, cartItemsList);
+        } else {
+            handleOrderApiResponse(callCreateOrder, quantities, selectedProducts);
         }
     }
-
-    public void buyFromProductDetails(int productId, int selectedQuantity) {
+    private CartItemsDTO convertToCartItemsDTO(ProductDTO product, int quantity) {
+        CartItemsDTO cartItem = new CartItemsDTO();
+        cartItem.setProductId(product.getId());
+        cartItem.setProductName(product.getProductName());
+        cartItem.setPrice(product.getPrice());
+        cartItem.setQuantity(quantity);
+        cartItem.setImageUrl(product.getImageUrls() != null && !product.getImageUrls().isEmpty() ? product.getImageUrls().get(0) : ""); // Chọn ảnh đầu tiên
+        return cartItem;
+    }
+    public void buyFromProductDetails(int productId, int selectedQuantity, String productName, float productPrice, List<String> productImages) {
         if (selectedQuantity <= 0) {
             showToast("Số lượng sản phẩm không hợp lệ!");
             return;
         }
 
-        // Tạo sản phẩm tạm thời
-        CartItemsDTO product = new CartItemsDTO();
-        product.setProductId(productId);
-        product.setProductName("Tên sản phẩm"); // Lấy từ giao diện
-        product.setPrice(100.0f); // Giá sản phẩm, lấy từ giao diện
+        ProductDTO product = new ProductDTO();
+        product.setId(productId);
+        product.setProductName(productName);
+        product.setPrice(productPrice);
+        product.setImageUrls(productImages);
+
+        CartItemsDTO cartItem = convertToCartItemsDTO(product, selectedQuantity);
 
         List<CartItemsDTO> selectedProducts = new ArrayList<>();
-        selectedProducts.add(product);
+        selectedProducts.add(cartItem);
 
-        // Truyền danh sách sản phẩm và số lượng vào handleOrder
         int[] quantities = new int[]{selectedQuantity};
         handleOrder(quantities, selectedProducts);
     }
@@ -315,13 +346,11 @@ public class BuyandpaymentActivity extends AppCompatActivity {
                     Log.d("OrderResponse", "Order ID: " + orderId);
 
                     if (orderId > 0) {
-                        Toast.makeText(BuyandpaymentActivity.this, "Tạo đơn hàng thành công! Order ID: " + orderId, Toast.LENGTH_SHORT).show();
-
-                        // Tạo chi tiết đơn hàng với danh sách sản phẩm
+                        showToast("Tạo đơn hàng thành công! Order ID: " + orderId);
                         createOrderDetails(orderId, quantities, productList);
                     } else {
                         Log.e("OrderError", "Order ID không hợp lệ: " + orderId);
-                        Toast.makeText(BuyandpaymentActivity.this, "Order ID không hợp lệ.", Toast.LENGTH_LONG).show();
+                        showToast("Order ID không hợp lệ.");
                     }
                 } else {
                     handleErrorResponse(response);
@@ -331,7 +360,7 @@ public class BuyandpaymentActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<OrdersDTO> call, Throwable t) {
                 Log.e("OrderError", "Lỗi khi gọi API tạo đơn hàng.", t);
-                Toast.makeText(BuyandpaymentActivity.this, "Lỗi khi gọi API tạo đơn hàng: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                showToast("Lỗi khi gọi API tạo đơn hàng: " + t.getMessage());
             }
         });
     }
@@ -347,12 +376,11 @@ public class BuyandpaymentActivity extends AppCompatActivity {
 
                 if (quantity <= 0) {
                     Log.e("OrderDetailsError", "Số lượng sản phẩm không hợp lệ: " + cartItem.getProductName());
-                    Toast.makeText(this, "Số lượng sản phẩm không hợp lệ: " + cartItem.getProductName(), Toast.LENGTH_SHORT).show();
+                    showToast("Số lượng sản phẩm không hợp lệ: " + cartItem.getProductName());
                     continue;
                 }
 
                 OrderDetailDTO orderDetailData = new OrderDetailDTO();
-
                 float totalMoney = cartItem.getPrice() * quantity * (voucherPercent == 0 ? 1 : (1 - voucherPercent));
 
                 orderDetailData.setOrderId(orderId);
@@ -361,17 +389,10 @@ public class BuyandpaymentActivity extends AppCompatActivity {
                 orderDetailData.setPrice(cartItem.getPrice());
                 orderDetailData.setTotalMoney(totalMoney);
 
-
-
                 sendOrderDetailToApi(apiOrderDetail, orderDetailData, cartItem.getProductName());
             }
-        } else {
-            Log.e("OrderDetailsError", "Không có sản phẩm nào để tạo chi tiết đơn hàng.");
-            Toast.makeText(this, "Không có sản phẩm nào để tạo chi tiết đơn hàng.", Toast.LENGTH_LONG).show();
         }
     }
-
-
 
     private void sendOrderDetailToApi(ApiOrderDetail apiOrderDetail, OrderDetailDTO orderDetailData, String productName) {
         PreferenceManager preferenceManager = new PreferenceManager(this);
@@ -409,26 +430,36 @@ public class BuyandpaymentActivity extends AppCompatActivity {
         }
     }
 
-    private void calculateTotalCostForCurrentOrigin(int position, int updatedQuantity) {
+    public void calculateTotalCostForCurrentOrigin(int position, int updatedQuantity) {
         if ("cart".equals(origin)) {
             calculateTotalCostForCart();
         } else if ("chitietsanpham".equals(origin)) {
-            calculateTotalCost();
+            calculateTotalCostForDetail();
         }
     }
 
     public void calculateTotalCostForCart() {
         float totalCost = 0f;
         for (CartItemsDTO cartItem : cartItemsList) {
-            if(voucherPercent == 0) {
+            if (voucherPercent == 0) {
                 totalCost += cartItem.getPrice() * cartItem.getQuantity();
-            }else{
+            } else {
                 totalCost += cartItem.getPrice() * cartItem.getQuantity() * voucherPercent;
             }
         }
 
         updateTotalCostView(totalCost);
     }
+
+    public void calculateTotalCostForDetail() {
+        float totalCost = 0f;
+        if (productList != null && !productList.isEmpty()) {
+            ProductDTO product = productList.get(0);
+            totalCost += product.getPrice() * product.getQuantity();
+        }
+        updateTotalCostView(totalCost);
+    }
+
 
     private float calculateTotalCost() {
         float totalCost = 0;
@@ -444,7 +475,7 @@ public class BuyandpaymentActivity extends AppCompatActivity {
         return totalCost;
     }
 
-    private void updateTotalCostView(float totalCost) {
+    public void updateTotalCostView(float totalCost) {
         totalCostTextView.setText(String.format("%,.0f VNĐ", totalCost));
 
         String voucherText = txtVoucher.getText().toString().trim();
@@ -452,7 +483,7 @@ public class BuyandpaymentActivity extends AppCompatActivity {
             float totalDiscount = totalCost * voucherPercent;
             float totalPayment = totalCost - totalDiscount;
 
-            totalPaymentTextView.setText(String.format("%,.0f VNĐ (đã giảm %s)", totalPayment, voucherPercent*100));
+            totalPaymentTextView.setText(String.format("%,.0f VNĐ (đã giảm %s)", totalPayment, voucherPercent * 100));
             totalPaymentTextView1.setText(String.format("%,.0f VNĐ", totalPayment));
         } else {
             totalPaymentTextView.setText(String.format("%,.0f VNĐ", totalCost));
@@ -484,4 +515,11 @@ public class BuyandpaymentActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onQuantityChanged(int position, int updatedQuantity) {
+        List<Integer> updatedQuantities = buyAndPaymentAdapter.getUpdatedQuantities();
+        for (int i = 0; i < updatedQuantities.size(); i++) {
+            Log.d("OrderCreation", "Product " + i + " has quantity: " + updatedQuantities.get(i));
+        }
+    }
 }
