@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 
 public class CartItems {
     private int id;
-
     @SerializedName("cart_id")
     private int cartId;
 
@@ -26,6 +25,7 @@ public class CartItems {
         this.cartId = cartId;
         this.productId = productId;
         this.quantity = quantity;
+
     }
 
     public CartItems() {
@@ -79,4 +79,6 @@ public class CartItems {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+
 }

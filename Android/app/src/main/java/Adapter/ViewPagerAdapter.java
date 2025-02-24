@@ -5,11 +5,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import Fragment.HomeFragment;
 import Fragment.AccountUserFragment;
+import Fragment.HomeFragment;
+import Fragment.NoticeFragment;
+import Fragment.StoreFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
-
     public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
     }
@@ -19,22 +20,20 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new AccountUserFragment(); // Tab 0 - Location
+                return new StoreFragment();
             case 1:
-                return new AccountUserFragment(); // Tab 1 - Shop
+                return new NoticeFragment();
             case 2:
-                return new HomeFragment(); // Tab 2 - Home
+                return new HomeFragment();
             case 3:
-                return new AccountUserFragment(); // Tab 3 - Notice
-            case 4:
-                return new AccountUserFragment(); // Tab 4 - Account/User
+                return new AccountUserFragment();
             default:
-                throw new IllegalArgumentException("Invalid position: " + position);
+                return new HomeFragment();
         }
     }
 
     @Override
     public int getCount() {
-        return 5; // Số lượng tabs
+        return 4;
     }
 }

@@ -1,6 +1,7 @@
 package Adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,8 @@ import Model.Review;
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder> {
 
     private Context context;
-    private List<ReviewWithUserFullNameDTO> rvDTOList;  // Use List<Object> to handle both types
+    private List<ReviewWithUserFullNameDTO> rvDTOList;
+    private RatingBar reviewRating;// Use List<Object> to handle both types
 
     // Constructor to handle either List<ReviewWithUserFullNameDTO> or List<Review>
     public ReviewAdapter(Context context, List<ReviewWithUserFullNameDTO> rvDTOList) {
@@ -39,6 +41,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
     @Override
     public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
         Object currentItem = rvDTOList.get(position);
+        holder.reviewRating.setRating(Color.YELLOW);
 
         if (currentItem instanceof ReviewWithUserFullNameDTO) {
             // Handle ReviewWithUserFullNameDTO

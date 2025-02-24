@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.duanandroid.R;
 
 import DTO.ReviewDTO;
+import Fragment.AccountUserFragment;
 import Interface.APIClient;
 import Interface.ApiReview;
 import Interface.PreferenceManager;
@@ -80,6 +81,8 @@ public class PageDanhgiaActivity extends AppCompatActivity {
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(PageDanhgiaActivity.this, "Đánh giá thành công!", Toast.LENGTH_SHORT).show();
+                    intent = new Intent(PageDanhgiaActivity.this, AccountUserFragment.class);
+                    startActivity(intent);
                     finish();
                 } else {
                     Toast.makeText(PageDanhgiaActivity.this, "Không thể gửi đánh giá! Lỗi: " + response.code(), Toast.LENGTH_SHORT).show();

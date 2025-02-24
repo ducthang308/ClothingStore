@@ -27,8 +27,21 @@ public class CartItemsDTO {
     @SerializedName("image_url")
     private String imageUrl;
 
+    private boolean isSelected;
+
     public CartItemsDTO() {
+
     }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.isSelected = selected;
+    }
+
+
 
     public int getId() {
         return id;
@@ -93,4 +106,6 @@ public class CartItemsDTO {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+
 }

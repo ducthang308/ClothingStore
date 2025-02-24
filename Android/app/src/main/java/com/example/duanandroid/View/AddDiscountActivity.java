@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,6 +37,7 @@ public class AddDiscountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_discount);
 
+        String action = getIntent().getStringExtra("action");
         initViews();
 
         PreferenceManager preferenceManager = new PreferenceManager(this);
@@ -55,6 +57,15 @@ public class AddDiscountActivity extends AppCompatActivity {
 
         apiDiscounts = APIClient.createDiscount();
         apiDiscounts = APIClient.updateDiscounts();
+
+        // Xác định title
+        TextView titleTextView = findViewById(R.id.tvTitle_profile); // Thay R.id.title bằng ID của TextView tiêu đề trong layout
+        if ("add".equals(action)) {
+            titleTextView.setText("Thêm mã giảm giá");
+        } else if ("edit".equals(action)) {
+            titleTextView.setText("Sửa mã giảm giá");
+
+        }
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("discountId")) {

@@ -15,6 +15,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiOrderDetail {
     @POST("api/v1/orderdetail")
@@ -36,7 +37,7 @@ public interface ApiOrderDetail {
     @GET("api/v1/orderdetail/orders/{orderId}/details")
     Call<List<OrderDetailReturnDTO>> getOrderDetails(@Header("Authorization") String token, @Path("orderId") int orderId);
 
-    @GET("api/v1/orderdetail/orders/details/{status}")
-    Call<List<OrderDetailReturnDTO>> getOrderDetailsByStatus(@Header("Authorization") String token, @Path("status") String status);
+    @GET("api/v1/orderdetail/orders/details/{status}/by-ids")
+    Call<List<OrderDetailReturnDTO>> getOrderDetailsByStatus(@Header("Authorization") String token, @Path("status") String status, @Query("ids") List<Integer> ids);
 
 }

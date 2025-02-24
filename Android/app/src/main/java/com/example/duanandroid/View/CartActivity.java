@@ -5,13 +5,18 @@ import static android.content.ContentValues.TAG;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.duanandroid.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -37,7 +42,8 @@ public class CartActivity extends AppCompatActivity {
     private String token;
     private ApiCartItems apiCartItems;
     private PreferenceManager preferenceManager;
-
+    private CheckBox cbxSelectAll;
+    private BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +51,7 @@ public class CartActivity extends AppCompatActivity {
 
         listCartItems = findViewById(R.id.list_cart_items);
         tv_total_price = findViewById(R.id.tv_total_price);
-
+        cbxSelectAll = findViewById(R.id.cbx_select_all);
         preferenceManager = new PreferenceManager(this);
         token = preferenceManager.getToken();
         cartId = preferenceManager.getCartId();
@@ -57,7 +63,7 @@ public class CartActivity extends AppCompatActivity {
         }
 
         apiCartItems = APIClient.getClient().create(ApiCartItems.class);
-        cartAdapter = new CartAdapter(this, cartItems, apiCartItems, token, cartId);
+        cartAdapter = new CartAdapter(this, cartItems, apiCartItems, token, cartId, this::onCartItemSelectionChanged);
         listCartItems.setAdapter(cartAdapter);
 
         loadCartItems();
@@ -132,6 +138,45 @@ public class CartActivity extends AppCompatActivity {
         });
 
 
+
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.menu_cart);
+
+        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int itemId = item.getItemId();
+
+                if (itemId == R.id.menu_shop) {
+                    navigateToMainPage(0);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    return true;
+                } else if (itemId == R.id.menu_notice) {
+                    navigateToMainPage(1);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    return true;
+                } else if (itemId == R.id.menu_home) {
+                    navigateToMainPage(2);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    return true;
+                } else if (itemId == R.id.menu_cart) {
+                    return true; // Giữ nguyên nếu đang ở tab Cart
+                } else if (itemId == R.id.menu_acount) {
+                    navigateToMainPage(3);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    return true;
+                }
+
+                return false;
+            }
+        });
+        CheckBox selectAllCheckBox = findViewById(R.id.cbx_select_all);
+
+        selectAllCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            cartAdapter.selectAllItems(isChecked);
+        });
+
+
         ImageButton btnBack = findViewById(R.id.btn_back);
         btnBack.setOnClickListener(view -> finish());
 
@@ -200,5 +245,26 @@ public class CartActivity extends AppCompatActivity {
                 Toast.makeText(CartActivity.this, "Lỗi kết nối. Vui lòng thử lại.", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    private void onCartItemSelectionChanged() {
+        updateSelectAllCheckBox();
+    }
+
+    private void updateSelectAllCheckBox() {
+        boolean allSelected = true;
+        for (CartItemsDTO item : cartItems) {
+            if (!item.isSelected()) {
+                allSelected = false;
+                break;
+            }
+        }
+        cbxSelectAll.setChecked(allSelected);
+    }
+
+    private void navigateToMainPage(int tabPosition) {
+        Intent intent = new Intent(CartActivity.this, mainpageActivity.class);
+        intent.putExtra("tabPosition", tabPosition);
+        startActivity(intent);
+        finish();
     }
 }

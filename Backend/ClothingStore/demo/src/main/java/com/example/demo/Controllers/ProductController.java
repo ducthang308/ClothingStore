@@ -165,7 +165,6 @@ public class ProductController {
                 if (file.isEmpty()) {
                     continue;
                 }
-                // Upload file lên Cloudinary
                 Map<String, Object> uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
                 String imageUrl = uploadResult.get("url").toString();
 

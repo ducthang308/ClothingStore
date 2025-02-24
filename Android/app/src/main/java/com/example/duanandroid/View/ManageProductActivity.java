@@ -76,6 +76,7 @@ public class ManageProductActivity extends AppCompatActivity {
         TextView addButton = findViewById(R.id.Addsp);
         addButton.setOnClickListener(v -> {
             intent = new Intent(ManageProductActivity.this, AddSanphamActivity.class);
+            intent.putExtra("action", "add");
             startActivity(intent);
         });
 
@@ -84,6 +85,8 @@ public class ManageProductActivity extends AppCompatActivity {
             selectedProduct = adapter.getSelectedProduct();
             if (selectedProduct != null) {
                 navigateToEditProduct(selectedProduct);
+                Intent intent = new Intent(ManageProductActivity.this, AddSanphamActivity.class);
+                intent.putExtra("action", "edit"); // Truyền dữ liệu xác định chức năng Sửa
             } else {
                 Toast.makeText(this, "Vui lòng chọn sản phẩm để chỉnh sửa.", Toast.LENGTH_SHORT).show();
             }

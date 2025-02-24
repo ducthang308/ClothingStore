@@ -69,21 +69,34 @@ public class WaitingForDeliveryFragment extends Fragment {
             public void onResponse(Call<List<OrdersDTO>> call, Response<List<OrdersDTO>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<OrdersDTO> ordersList = response.body();
+                    List<Integer> deliveredOrderIds = new ArrayList<>();
+                    List<Integer> shippedOrderIds = new ArrayList<>();
 
-                    List<OrdersDTO> filteredOrders = new ArrayList<>();
                     for (OrdersDTO order : ordersList) {
                         Log.d("OrderStatus", "Order ID: " + order.getId() + ", Status: " + order.getStatus());
-                        if (order.getStatus() != null && order.getStatus().toLowerCase().contains("Delivered")) {
-                            filteredOrders.add(order);
+                        if (order.getStatus() != null) {
+                            String status = order.getStatus().toLowerCase();
+                            if (status.contains("delivered")) {
+                                deliveredOrderIds.add(order.getId());
+                            } else if (status.contains("shipped")) {
+                                shippedOrderIds.add(order.getId());
+                            }
                         }
                     }
 
-                    Log.d("Filtered Orders", "Orders count with status 'Delivered': " + filteredOrders.size());
+                    if (!deliveredOrderIds.isEmpty()) {
+                        fetchOrderDetailsByStatus("Delivered", deliveredOrderIds);
+                    } else {
+                        Log.d("Filtered Orders", "No orders with status 'Delivered'");
+                    }
 
-                    fetchOrderDetailsStatusDelivered();
-                    fetchOrderDetailsStatusShipped();
+                    if (!shippedOrderIds.isEmpty()) {
+                        fetchOrderDetailsByStatus("Shipped", shippedOrderIds);
+                    } else {
+                        Log.d("Filtered Orders", "No orders with status 'Shipped'");
+                    }
 
-                    if (filteredOrders.isEmpty()) {
+                    if (deliveredOrderIds.isEmpty() && shippedOrderIds.isEmpty()) {
                         Toast.makeText(getContext(), "Không có đơn hàng nào đang chờ giao!", Toast.LENGTH_SHORT).show();
                     }
                 } else {
@@ -98,17 +111,14 @@ public class WaitingForDeliveryFragment extends Fragment {
         });
     }
 
-    private void fetchOrderDetailsStatusDelivered() {
-        apiOrderDetail.getOrderDetailsByStatus("Bearer " + token, "Delivered").enqueue(new Callback<List<OrderDetailReturnDTO>>() {
+    private void fetchOrderDetailsByStatus(String status, List<Integer> orderIds) {
+        apiOrderDetail.getOrderDetailsByStatus("Bearer " + token, status, orderIds).enqueue(new Callback<List<OrderDetailReturnDTO>>() {
             @Override
             public void onResponse(Call<List<OrderDetailReturnDTO>> call, Response<List<OrderDetailReturnDTO>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Log.d("Order Details", "Received order details: " + response.body().size());
+                    Log.d("OrderDetails", "Received " + response.body().size() + " order details for status: " + status);
                     orderDetailList.clear();
-
                     orderDetailList.addAll(response.body());
-
-                    Log.d("OrderDetailList", "Total items in order detail list: " + orderDetailList.size()); // Kiểm tra size sau khi thêm
 
                     if (adapter == null) {
                         adapter = new WaitingDeliveryAdapter(getContext(), orderDetailList);
@@ -117,7 +127,7 @@ public class WaitingForDeliveryFragment extends Fragment {
                         adapter.notifyDataSetChanged();
                     }
                 } else {
-                    Log.e("API Error", "Error code: " + response.code());
+                    Log.e("API Error", "Failed to fetch order details for status: " + status + ", Error code: " + response.code());
                     Toast.makeText(getContext(), "Không thể lấy chi tiết đơn hàng! Lỗi: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -129,34 +139,4 @@ public class WaitingForDeliveryFragment extends Fragment {
         });
     }
 
-    private void fetchOrderDetailsStatusShipped() {
-        apiOrderDetail.getOrderDetailsByStatus("Bearer " + token, "Shipped").enqueue(new Callback<List<OrderDetailReturnDTO>>() {
-            @Override
-            public void onResponse(Call<List<OrderDetailReturnDTO>> call, Response<List<OrderDetailReturnDTO>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    Log.d("Order Details", "Received order details: " + response.body().size());
-                    orderDetailList.clear();
-
-                    orderDetailList.addAll(response.body());
-
-                    Log.d("OrderDetailList", "Total items in order detail list: " + orderDetailList.size()); // Kiểm tra size sau khi thêm
-
-                    if (adapter == null) {
-                        adapter = new WaitingDeliveryAdapter(getContext(), orderDetailList);
-                        recyclerView.setAdapter(adapter);
-                    } else {
-                        adapter.notifyDataSetChanged();
-                    }
-                } else {
-                    Log.e("API Error", "Error code: " + response.code());
-                    Toast.makeText(getContext(), "Không thể lấy chi tiết đơn hàng! Lỗi: " + response.code(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<OrderDetailReturnDTO>> call, Throwable t) {
-                Toast.makeText(getContext(), "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 }
