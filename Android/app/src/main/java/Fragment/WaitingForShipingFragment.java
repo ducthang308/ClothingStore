@@ -63,24 +63,20 @@ public class WaitingForShipingFragment extends Fragment {
             public void onResponse(Call<List<OrdersDTO>> call, Response<List<OrdersDTO>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<OrdersDTO> ordersList = response.body();
+                    List<Integer> waitingForDeliveryOrderIds = new ArrayList<>();
 
-                    // Lọc các đơn hàng có trạng thái "Waiting for Delivery"
-                    List<OrdersDTO> filteredOrders = new ArrayList<>();
                     for (OrdersDTO order : ordersList) {
                         Log.d("OrderStatus", "Order ID: " + order.getId() + ", Status: " + order.getStatus());
                         if (order.getStatus() != null && order.getStatus().toLowerCase().contains("waiting for delivery")) {
-                            filteredOrders.add(order);
+                            waitingForDeliveryOrderIds.add(order.getId());
                         }
                     }
 
-                    Log.d("Filtered Orders", "Orders count with status 'Waiting for Delivery': " + filteredOrders.size());
+                    Log.d("Filtered Orders", "Orders count with status 'Waiting for Delivery': " + waitingForDeliveryOrderIds.size());
 
-                    for (OrdersDTO order : filteredOrders) {
-                        int orderId = order.getId();
-                        fetchOrderDetails(orderId, "Waiting for Delivery");
-                    }
-
-                    if (filteredOrders.isEmpty()) {
+                    if (!waitingForDeliveryOrderIds.isEmpty()) {
+                        fetchOrderDetails(waitingForDeliveryOrderIds, "Waiting for Delivery");
+                    } else {
                         Toast.makeText(getContext(), "Không có đơn hàng nào đang chờ giao!", Toast.LENGTH_SHORT).show();
                     }
                 } else {
@@ -95,21 +91,18 @@ public class WaitingForShipingFragment extends Fragment {
         });
     }
 
-    private void fetchOrderDetails(int orderId, String status) {
-        // Gọi API getOrderDetailsByStatus và truyền vào trạng thái "Waiting for Delivery"
-        apiOrderDetail.getOrderDetailsByStatus("Bearer " + token, status).enqueue(new Callback<List<OrderDetailReturnDTO>>() {
+    private void fetchOrderDetails(List<Integer> orderIds, String status) {
+        apiOrderDetail.getOrderDetailsByStatus("Bearer " + token, status, orderIds).enqueue(new Callback<List<OrderDetailReturnDTO>>() {
             @Override
             public void onResponse(Call<List<OrderDetailReturnDTO>> call, Response<List<OrderDetailReturnDTO>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Log.d("Order Details", "Received order details: " + response.body().size()); // Log số lượng chi tiết nhận được
+                    List<OrderDetailReturnDTO> details = response.body();
+                    Log.d("OrderDetails", "Received " + details.size() + " order details for status: " + status);
 
-                    // Clear danh sách cũ nếu không muốn dữ liệu cũ bị giữ lại
                     orderDetailList.clear();
+                    orderDetailList.addAll(details);
 
-                    // Thêm dữ liệu mới vào danh sách
-                    orderDetailList.addAll(response.body());
-
-                    Log.d("OrderDetailList", "Total items in order detail list: " + orderDetailList.size()); // Kiểm tra size sau khi thêm
+                    Log.d("OrderDetailList", "Total items in order detail list: " + orderDetailList.size());
 
                     if (adapter == null) {
                         adapter = new WaitingShipingAdapter(getContext(), orderDetailList);
@@ -118,7 +111,7 @@ public class WaitingForShipingFragment extends Fragment {
                         adapter.notifyDataSetChanged();
                     }
                 } else {
-                    Log.e("API Error", "Error code: " + response.code());
+                    Log.e("API Error", "Failed to fetch order details for status: " + status + ". Error code: " + response.code());
                     Toast.makeText(getContext(), "Không thể lấy chi tiết đơn hàng! Lỗi: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -129,4 +122,5 @@ public class WaitingForShipingFragment extends Fragment {
             }
         });
     }
+
 }

@@ -26,7 +26,7 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long> 
             "JOIN o.orderDetails od " +
             "JOIN od.product p " +
             "JOIN p.productImages pi " +
-            "WHERE o.status = :status")
-    List<OrderDetailReturnDTO> getAllByStatus(String status);
+            "WHERE o.status = :status AND o.id IN :ids")
+    List<OrderDetailReturnDTO> getAllByStatus(String status, @Param("ids") List<Long> ids);
 
 }

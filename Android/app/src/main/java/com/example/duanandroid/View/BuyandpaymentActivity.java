@@ -151,7 +151,7 @@ public class BuyandpaymentActivity extends AppCompatActivity implements BuyAndPa
                 int[] quantitiesArray = new int[]{selectedQuantity};
                 handleOrder(quantitiesArray, selectedProducts);
             }
-            intent = new Intent(BuyandpaymentActivity.this, TabLayOutActivity.class);
+            intent = new Intent(BuyandpaymentActivity.this, mainpageActivity.class);
             startActivity(intent);
         });
 
@@ -208,20 +208,19 @@ public class BuyandpaymentActivity extends AppCompatActivity implements BuyAndPa
                 txtVoucher.setText(voucherNote);
             }
 
-            if ("cart".equals(origin)) {
-                calculateTotalCostForCart();
-                updateTotalCostView(calculateTotalCost());
-            } else if ("chitietsanpham".equals(origin)) {
-                calculateTotalCostForDetail();
-                updateTotalCostView(calculateTotalCost());
-            }
+//            if ("cart".equals(origin)) {
+//                calculateTotalCostForCart();
+//                updateTotalCostView(calculateTotalCost());
+//            } else if ("chitietsanpham".equals(origin)) {
+//                calculateTotalCostForDetail();
+//                updateTotalCostView(calculateTotalCost());
+//            }
         }
-//        updateTotalCostView(calculateTotalCost());
+        updateTotalCostView(calculateTotalCost());
     }
 
 
     public void handleOrder(int[] quantities, List<CartItemsDTO> selectedProducts) {
-        // Kiểm tra nguồn gốc
         if (!isFromCart && (selectedProducts == null || selectedProducts.isEmpty())) {
             showToast("Không có sản phẩm để đặt hàng từ chi tiết sản phẩm!");
             return;
@@ -288,6 +287,7 @@ public class BuyandpaymentActivity extends AppCompatActivity implements BuyAndPa
         cartItem.setImageUrl(product.getImageUrls() != null && !product.getImageUrls().isEmpty() ? product.getImageUrls().get(0) : ""); // Chọn ảnh đầu tiên
         return cartItem;
     }
+
     public void buyFromProductDetails(int productId, int selectedQuantity, String productName, float productPrice, List<String> productImages) {
         if (selectedQuantity <= 0) {
             showToast("Số lượng sản phẩm không hợp lệ!");

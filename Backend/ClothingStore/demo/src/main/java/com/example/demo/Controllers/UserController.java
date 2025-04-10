@@ -5,9 +5,11 @@ import com.example.demo.DTO.UpdatePassDTO;
 import com.example.demo.DTO.UsersDTO;
 import com.example.demo.Models.Users;
 import com.example.demo.Responses.UserResponse;
+import com.example.demo.Services.EmailService;
 import com.example.demo.Services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
@@ -21,6 +23,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+
+    @Autowired
+    private EmailService emailService;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody UsersDTO usersDTO,
@@ -37,6 +42,7 @@ public class UserController {
                 return ResponseEntity.badRequest().body("Password and retypepass not same");
             }
             Users users = userService.createUser(usersDTO);
+            emailService.sendRegistrationEmail(users.getEmail(), usersDTO.getFullName());
             return ResponseEntity.ok(users);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());

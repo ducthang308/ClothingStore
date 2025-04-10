@@ -79,6 +79,8 @@ public class AddSanphamActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_sanpham);
 
+        String action = getIntent().getStringExtra("action");
+
         imageContainer = findViewById(R.id.imageContainer);
         arrow_quanlisp = findViewById(R.id.arrow_quanlisp);
 
@@ -93,6 +95,20 @@ public class AddSanphamActivity extends AppCompatActivity {
             Toast.makeText(this, "Token không hợp lệ. Vui lòng đăng nhập lại.", Toast.LENGTH_SHORT).show();
             finish();
             return;
+        }
+
+        // Xác định title
+        TextView titleTextView = findViewById(R.id.title); // Thay R.id.title bằng ID của TextView tiêu đề trong layout
+        if ("add".equals(action)) {
+            titleTextView.setText("Thêm sản phẩm");
+        } else if ("edit".equals(action)) {
+            titleTextView.setText("Sửa sản phẩm");
+
+            // Load thông tin sản phẩm để sửa nếu cần
+            int productId = getIntent().getIntExtra("productId", -1);
+            if (productId != -1) {
+                // Thực hiện xử lý để tải dữ liệu sản phẩm và hiển thị
+            }
         }
 
         apiProduct = APIClient.createProduct();

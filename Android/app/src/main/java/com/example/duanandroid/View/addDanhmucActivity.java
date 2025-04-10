@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,6 +39,8 @@ public class addDanhmucActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_danhmuc);
 
+        String action = getIntent().getStringExtra("action");
+
         initViews();
 
         PreferenceManager preferenceManager = new PreferenceManager(this);
@@ -57,6 +60,15 @@ public class addDanhmucActivity extends AppCompatActivity {
 
         apiCategory = APIClient.createcategory();
         apiCategory = APIClient.updatecategory();
+
+        // Xác định title
+        TextView titleTextView = findViewById(R.id.tvTitle_addDM); // Thay R.id.title bằng ID của TextView tiêu đề trong layout
+        if ("add".equals(action)) {
+            titleTextView.setText("Thêm danh mục");
+        } else if ("edit".equals(action)) {
+            titleTextView.setText("Sửa danh mục");
+
+        }
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("categoryId")) {

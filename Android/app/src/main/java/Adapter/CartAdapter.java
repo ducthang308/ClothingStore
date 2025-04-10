@@ -29,6 +29,7 @@ import DTO.ProductDTO;
 import Interface.APIClient;
 import Interface.ApiCartItems;
 import Interface.PreferenceManager;
+import Model.CartItems;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,15 +43,20 @@ public class CartAdapter extends ArrayAdapter<CartItemsDTO> {
     private int cartId;
     private List<Integer> selectedItems = new ArrayList<>(); // Lưu trữ các item đã chọn
     private OnTotalPriceChangeListener totalPriceChangeListener;
+    private OnItemCheckedChangeListener onItemCheckedChangeListener;
+    public interface OnItemCheckedChangeListener {
+        void onItemCheckedChanged();
+    }
 
     public CartAdapter(@NonNull Context context, @NonNull List<CartItemsDTO> cartItems,
-                       ApiCartItems apiCartItems, String token, int cartId) {
+                       ApiCartItems apiCartItems, String token, int cartId , OnItemCheckedChangeListener listener) {
         super(context, R.layout.item_cart, cartItems);
         this.context = context;
         this.cartItems = cartItems;
         this.apiCartItems = apiCartItems;
         this.token = token;
         this.cartId = cartId;
+        this.onItemCheckedChangeListener = listener;
     }
 
     public void setOnTotalPriceChangeListener(OnTotalPriceChangeListener listener) {
@@ -73,6 +79,7 @@ public class CartAdapter extends ArrayAdapter<CartItemsDTO> {
             holder.btnIncrease = convertView.findViewById(R.id.btn_increase);
             holder.btnDecrease = convertView.findViewById(R.id.btn_decrease);
             holder.checkBox = convertView.findViewById(R.id.checkbox);
+
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -101,6 +108,16 @@ public class CartAdapter extends ArrayAdapter<CartItemsDTO> {
             }
         });
 
+        holder.checkBox.setChecked(item.isSelected());
+
+        holder.checkBox.setOnClickListener(v -> {
+            CartItemsDTO Item = cartItems.get(position);
+            Item.setSelected(holder.checkBox.isChecked());
+
+            if (onItemCheckedChangeListener != null) {
+                onItemCheckedChangeListener.onItemCheckedChanged();
+            }
+        });
         // Xử lý nút tăng giảm số lượng
         holder.btnIncrease.setOnClickListener(v -> {
             int newQuantity = item.getQuantity() + 1;
@@ -178,7 +195,7 @@ public class CartAdapter extends ArrayAdapter<CartItemsDTO> {
         List<CartItemsDTO> selectedCartItems = new ArrayList<>();
         for (CartItemsDTO item : cartItems) {
             if (selectedItems.contains(item.getProductId())) {
-                selectedCartItems.add(item); // Thêm CartItemsDTO vào danh sách đã chọn
+                selectedCartItems.add(item);
             }
         }
         return selectedCartItems;
@@ -192,11 +209,28 @@ public class CartAdapter extends ArrayAdapter<CartItemsDTO> {
         ImageView ivImage;
         TextView tvName, tvSize, tvPrice, tvQuantity;
         ImageButton btnIncrease, btnDecrease;
-        CheckBox checkBox; // CheckBox cho mỗi item
+        CheckBox checkBox;
     }
 
     public interface OnTotalPriceChangeListener {
         void onTotalPriceChange(double newTotalPrice);
     }
+
+    public void selectAllItems(boolean isSelected) {
+        selectedItems.clear(); // Xóa danh sách các item đã chọn
+
+        for (CartItemsDTO item : cartItems) {
+            item.setSelected(isSelected);
+            if (isSelected) {
+                selectedItems.add(item.getProductId());
+            }
+        }
+
+        notifyDataSetChanged();
+        if (onItemCheckedChangeListener != null) {
+            onItemCheckedChangeListener.onItemCheckedChanged();
+        }
+    }
+
 }
 

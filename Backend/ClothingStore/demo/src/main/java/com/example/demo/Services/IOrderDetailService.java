@@ -14,6 +14,6 @@ public interface IOrderDetailService {
     void deleteById(Long id);
     List<OrderDetail> findByOrdersId(Long orderId);
     List<OrderDetailReturnDTO> getOrderDetailsByOrderId(Long orderId);
-    List<OrderDetailReturnDTO> getOrderDetailsByStatus(String status);
+    List<OrderDetailReturnDTO> getOrderDetailsByStatus(String status, List<Long> orderIds);
 }
 

@@ -88,10 +88,10 @@ public class OrderDetailController {
         return ResponseEntity.ok(orderDetails);
     }
 
-    @GetMapping("/orders/details/{status}")
+    @GetMapping("/orders/details/{status}/by-ids")
     @PreAuthorize("hasAnyRole('Admin', 'User')")
-    public ResponseEntity<List<OrderDetailReturnDTO>> getOrderDetailsByStatus(@PathVariable String status) {
-        List<OrderDetailReturnDTO> orderDetails = orderDetailService.getOrderDetailsByStatus(status);
+    public ResponseEntity<List<OrderDetailReturnDTO>> getOrderDetailsByStatus(@PathVariable String status, @RequestParam("ids") List<Long> ids) {
+        List<OrderDetailReturnDTO> orderDetails = orderDetailService.getOrderDetailsByStatus(status, ids);
         return ResponseEntity.ok(orderDetails);
     }
 }

@@ -1,6 +1,7 @@
 package Fragment;
 
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,21 +71,28 @@ public class ReviewFragment extends Fragment {
             public void onResponse(Call<List<OrdersDTO>> call, Response<List<OrdersDTO>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<OrdersDTO> ordersList = response.body();
-
                     List<OrdersDTO> filteredOrders = new ArrayList<>();
+                    List<Integer> reviewOrderIds = new ArrayList<>();
+
                     for (OrdersDTO order : ordersList) {
                         Log.d("OrderStatus", "Order ID: " + order.getId() + ", Status: " + order.getStatus());
-                        if (order.getStatus() != null && order.getStatus().toLowerCase().contains("Shipped")) {
-                            filteredOrders.add(order);
+                        if (order.getStatus() != null && order.getStatus().equalsIgnoreCase("Shipped")) {
+                            reviewOrderIds.add(order.getId());
                         }
+                    }
+
+                    Log.d("Filtered Orders", "Orders count with status 'Shipped': " + reviewOrderIds.size());
+
+                    if (!reviewOrderIds.isEmpty()) {
+                        fetchOrderDetails(reviewOrderIds, "Shipped");
+                    } else {
+                        Toast.makeText(getContext(), "Không có đơn hàng nào đang chờ giao!", Toast.LENGTH_SHORT).show();
                     }
 
                     Log.d("Filtered Orders", "Orders count with status 'Shipped': " + filteredOrders.size());
 
-                    fetchOrderDetails("Shipped");
-
                     if (filteredOrders.isEmpty()) {
-                        Toast.makeText(getContext(), "Không có đơn hàng nào đang chờ giao!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Không có đơn hàng nào đang chờ chờ đánh giá!", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(getContext(), "Không thể lấy danh sách đơn hàng!", Toast.LENGTH_SHORT).show();
@@ -98,35 +106,37 @@ public class ReviewFragment extends Fragment {
         });
     }
 
-    private void fetchOrderDetails(String status) {
-        apiOrderDetail.getOrderDetailsByStatus("Bearer " + token, status).enqueue(new Callback<List<OrderDetailReturnDTO>>() {
-            @Override
-            public void onResponse(Call<List<OrderDetailReturnDTO>> call, Response<List<OrderDetailReturnDTO>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    Log.d("Order Details", "Received order details: " + response.body().size()); // Log số lượng chi tiết nhận được
+    private void fetchOrderDetails(List<Integer> orderId, String status) {
+        apiOrderDetail.getOrderDetailsByStatus("Bearer " + token, status, orderId)
+                .enqueue(new Callback<List<OrderDetailReturnDTO>>() {
+                    @Override
+                    public void onResponse(Call<List<OrderDetailReturnDTO>> call, Response<List<OrderDetailReturnDTO>> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            List<OrderDetailReturnDTO> details = response.body();
+                            Log.d("Order Details", "Order ID: " + orderId + " - Received order details: " + details.size());
 
-                    orderDetailList.clear();
+                            orderDetailList.clear();
+                            orderDetailList.addAll(details);
 
-                    orderDetailList.addAll(response.body());
+                            Log.d("OrderDetailList", "Total items in order detail list: " + orderDetailList.size());
 
-                    Log.d("OrderDetailList", "Total items in order detail list: " + orderDetailList.size()); // Kiểm tra size sau khi thêm
-
-                    if (adapter == null) {
-                        adapter = new WaitingReviewAdapter(getContext(), orderDetailList, apiReview);
-                        recyclerView.setAdapter(adapter);
-                    } else {
-                        adapter.notifyDataSetChanged();
+                            if (adapter == null) {
+                                adapter = new WaitingReviewAdapter(getContext(), orderDetailList, apiReview);
+                                recyclerView.setAdapter(adapter);
+                            } else {
+                                adapter.notifyDataSetChanged();
+                            }
+                        } else {
+                            Log.e("API Error", "Error fetching details for Order ID: " + orderId + ". Code: " + response.code());
+                            Toast.makeText(getContext(), "Không thể lấy chi tiết đơn hàng! Lỗi: " + response.code(), Toast.LENGTH_SHORT).show();
+                        }
                     }
-                } else {
-                    Log.e("API Error", "Error code: " + response.code());
-                    Toast.makeText(getContext(), "Không thể lấy chi tiết đơn hàng! Lỗi: " + response.code(), Toast.LENGTH_SHORT).show();
-                }
-            }
 
-            @Override
-            public void onFailure(Call<List<OrderDetailReturnDTO>> call, Throwable t) {
-                Toast.makeText(getContext(), "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                    @Override
+                    public void onFailure(Call<List<OrderDetailReturnDTO>> call, Throwable t) {
+                        Toast.makeText(getContext(), "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
+
 }

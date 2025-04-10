@@ -70,12 +70,14 @@ public class QuanLiDanhMucSPActivity extends AppCompatActivity {
 
         btnAdd.setOnClickListener(view -> {
             Intent intent = new Intent(this, addDanhmucActivity.class);
+            intent.putExtra("action", "add");
             startActivity(intent);
         });
 
         btnEdit.setOnClickListener(view -> {
             if (selectedCategory != null) {
                 Intent intent = new Intent(QuanLiDanhMucSPActivity.this, addDanhmucActivity.class);
+                intent.putExtra("action", "edit");
                 intent.putExtra("categoryId", selectedCategory.getId());
                 intent.putExtra("categoryname", selectedCategory.getCategoryName());// Giả sử `id` là duy nhất
                 startActivity(intent);

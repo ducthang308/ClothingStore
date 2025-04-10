@@ -38,6 +38,8 @@ public class DiscountManageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discount_manage);
 
+
+
         recyclerView = findViewById(R.id.recycleView_manageDiscount);
         btnAdd = findViewById(R.id.btnAdd);
         btnEdit = findViewById(R.id.btnEdit);
@@ -59,12 +61,14 @@ public class DiscountManageActivity extends AppCompatActivity {
 
         btnAdd.setOnClickListener(view -> {
             Intent intent = new Intent(this, AddDiscountActivity.class);
+            intent.putExtra("action", "add");
             startActivity(intent);
         });
 
         btnEdit.setOnClickListener(view -> {
             if (selectedDiscount != null) {
-                Intent intent = new Intent(DiscountManageActivity.this, AddDiscountActivity.class);
+                Intent intent = new Intent(DiscountManageActivity.this, AddDiscountActivity.class);intent.putExtra("action", "edit"); // Truyền dữ liệu xác định chức năng Sửa
+                intent.putExtra("action", "edit"); // Truyền dữ liệu xác định chức năng Sửa
                 intent.putExtra("discountId", selectedDiscount.getId());
                 intent.putExtra("discountPercent", selectedDiscount.getPercent());
                 intent.putExtra("discountNote", selectedDiscount.getNote());

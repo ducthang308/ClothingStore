@@ -68,22 +68,31 @@ public class WaitingForDeliveryAdminFragment extends Fragment {
             public void onResponse(Call<List<OrdersDTO>> call, Response<List<OrdersDTO>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<OrdersDTO> ordersList = response.body();
+                    List<Integer> deliveredOrderIds = new ArrayList<>();
+                    List<Integer> shippedOrderIds = new ArrayList<>();
 
-                    List<OrdersDTO> filteredOrders = new ArrayList<>();
                     for (OrdersDTO order : ordersList) {
                         Log.d("OrderStatus", "Order ID: " + order.getId() + ", Status: " + order.getStatus());
-                        if (order.getStatus() != null && order.getStatus().toLowerCase().contains("Delivered")) {
-                            filteredOrders.add(order);
+                        if (order.getStatus() != null) {
+                            String status = order.getStatus().toLowerCase();
+                            if (status.contains("delivered")) {
+                                deliveredOrderIds.add(order.getId());
+                            } else if (status.contains("shipped")) {
+                                shippedOrderIds.add(order.getId());
+                            }
                         }
                     }
 
-                    Log.d("Filtered Orders", "Orders count with status 'Delivered': " + filteredOrders.size());
+                    if (!deliveredOrderIds.isEmpty()) {
+                        fetchOrderDetails(deliveredOrderIds);
+                    } else {
+                        Log.d("Filtered Orders", "No orders with status 'Delivered'");
+                    }
 
-                    fetchOrderDetails();
-                    fetchShippedOrders();
-
-                    if (filteredOrders.isEmpty()) {
-                        Toast.makeText(getContext(), "Không có đơn hàng nào đang chờ giao!", Toast.LENGTH_SHORT).show();
+                    if (!shippedOrderIds.isEmpty()) {
+                        fetchShippedOrders(shippedOrderIds);
+                    } else {
+                        Log.d("Filtered Orders", "No orders with status 'Shipped'");
                     }
                 } else {
                     Toast.makeText(getContext(), "Không thể lấy danh sách đơn hàng!", Toast.LENGTH_SHORT).show();
@@ -97,8 +106,9 @@ public class WaitingForDeliveryAdminFragment extends Fragment {
         });
     }
 
-    private void fetchOrderDetails() {
-        apiOrderDetail.getOrderDetailsByStatus("Bearer " + token, "Delivered").enqueue(new Callback<List<OrderDetailReturnDTO>>() {
+
+    private void fetchOrderDetails(List<Integer> orderId) {
+        apiOrderDetail.getOrderDetailsByStatus("Bearer " + token, "Delivered", orderId).enqueue(new Callback<List<OrderDetailReturnDTO>>() {
             @Override
             public void onResponse(Call<List<OrderDetailReturnDTO>> call, Response<List<OrderDetailReturnDTO>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -128,8 +138,8 @@ public class WaitingForDeliveryAdminFragment extends Fragment {
         });
     }
 
-    private void fetchShippedOrders() {
-        apiOrderDetail.getOrderDetailsByStatus("Bearer " + token, "Shipped").enqueue(new Callback<List<OrderDetailReturnDTO>>() {
+    private void fetchShippedOrders(List<Integer> orderId) {
+        apiOrderDetail.getOrderDetailsByStatus("Bearer " + token, "Shipped", orderId).enqueue(new Callback<List<OrderDetailReturnDTO>>() {
             @Override
             public void onResponse(Call<List<OrderDetailReturnDTO>> call, Response<List<OrderDetailReturnDTO>> response) {
                 if (response.isSuccessful() && response.body() != null) {
