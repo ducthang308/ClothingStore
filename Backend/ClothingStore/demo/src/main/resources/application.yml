@@ -1,5 +1,5 @@
 server:
-  port: 8088
+  port: 8080
   tomcat:
     max-http-post-size: 10000000
 spring:
@@ -12,7 +12,17 @@ spring:
       username: root
       password:
       driver-class-name: com.mysql.cj.jdbc.Driver
-
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ducthang30082004@gmail.com
+    password: xyjo iidy wmqj vfco
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
   jpa:
     hibernate:
@@ -44,3 +54,4 @@ cloudinary:
   cloud-name: de7vukn0u
   api-key: 686791876384614
   api-secret: JBllHsZTWjsPiwUEt6tBvTVul3M
+
